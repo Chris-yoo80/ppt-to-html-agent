@@ -78,7 +78,8 @@ def main():
             problems.append('skill ZIP does not match the explicit public skill tree')
         for name,path in source_files.items():
             entry='ppt-to-html/'+name
-            if entry in members and archive.read(entry)!=path.read_bytes():
+            content = path.read_bytes() if path.suffix == '.woff2' else path.read_text(encoding='utf-8').encode('utf-8')
+            if entry in members and archive.read(entry)!=content:
                 problems.append(f'stale ZIP entry: {name}')
     if problems:
         for problem in problems:

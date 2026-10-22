@@ -25,7 +25,8 @@ def main():
             info.compress_type = zipfile.ZIP_STORED
             info.create_system = 3
             info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes())
+            content = path.read_bytes() if path.suffix == '.woff2' else path.read_text(encoding='utf-8').encode('utf-8')
+            archive.writestr(info, content)
     print(f'Packaged {len(files)} public skill files into {OUTPUT.relative_to(ROOT)}')
 
 
