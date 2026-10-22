@@ -22,7 +22,10 @@ Local checks completed on 2026-10-22. This is an early preview, not an end-to-en
 | Browser rendering, clipping, controls and fullscreen | Not verified: local HTML navigation was blocked by browser tool policy; no bypass was attempted |
 | Claude Code and Codex complete PPT-to-HTML sessions | Not verified |
 | Claude source review | Received a read-only review of four public source files. Confirmed issues in keyboard routing, line breaks and hidden/SmartArt handling were corrected; browser behavior still requires verification. Reported garbled text was a command-pipe encoding issue rather than damage to the UTF-8 source files. |
-| GitHub Actions, Pages deployment and public URLs | Not run; no public repository deployed yet |
+| GitHub repository and Pages deployment | Public repository created on 2026-10-22. GitHub Pages build and deployment succeeded from main/docs. Korean and English landing pages and motion galleries included. |
+| GitHub Actions checks | Initial run passed tool tests and artifact validation; ZIP byte reproducibility differed across Windows/Linux. Packaging now fixes ZIP platform attributes and uses stored entries. Follow-up CI result is recorded in the repository Actions tab. |
+| Public-site browser QA | Not completed: opening the public origin was denied by the browser approval gate; no workaround attempted. |
+| English localization | Landing page, starting prompt, motion-story text and controls, plus license explanation localized. English motion build checked for remaining Korean text. |
 
 The sample source is independently authored Markdown. The synthetic extractor fixture is not presented as a real PowerPoint or a full conversion example. A new fictional PPTX and permitted browser QA are still required for broader release claims.
 
