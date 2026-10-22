@@ -18,7 +18,7 @@ def main():
     files.extend(path for path in (SKILL/'assets/fonts').iterdir() if path.is_file() and path.suffix in {'.woff2','.txt','.json'})
     # Stored entries avoid zlib-version differences across Windows/Linux hosts.
     with zipfile.ZipFile(OUTPUT, 'w', compression=zipfile.ZIP_STORED) as archive:
-        for path in sorted(files):
+        for path in sorted(files, key=lambda item: item.relative_to(SKILL).as_posix()):
             if path.is_symlink():
                 raise ValueError(f'Symlinks are not packaged: {path.name}')
             info = zipfile.ZipInfo('ppt-to-html/' + path.relative_to(SKILL).as_posix(), date_time=(2026, 1, 1, 0, 0, 0))
