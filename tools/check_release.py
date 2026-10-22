@@ -13,6 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'skills/ppt-to-html/scripts'))
 from build_deck import build
 from build_motion_demo import build as build_motion
+from build_marketing_examples import outputs as marketing_outputs
+from build_guides import build as build_guide
 
 
 class References(HTMLParser):
@@ -68,6 +70,11 @@ def main():
         problems.append('generated presentation is missing its output license or notice')
     if (ROOT/'docs/library-demo.html').read_text(encoding='utf-8') != build(json.loads((ROOT/'examples/library/deck.json').read_text(encoding='utf-8'))):
         problems.append('library-demo.html does not match current source')
+    for filename,expected_content in marketing_outputs().items():
+        if (ROOT/filename).read_text(encoding='utf8')!=expected_content:problems.append(f'stale marketing artifact: {filename}')
+    for language in ['ko','en']:
+        for filename in [f'docs/guide.{language}.html',f'skills/ppt-to-html/assets/guide.{language}.html']:
+            if (ROOT/filename).read_text(encoding='utf8')!=build_guide(language):problems.append(f'stale HTML guide: {filename}')
     skill=ROOT/'skills/ppt-to-html'
     source_files={p.relative_to(skill).as_posix():p for p in skill.rglob('*') if p.is_file() and '__pycache__' not in p.parts}
     package=ROOT/'docs/downloads/ppt-to-html.zip'

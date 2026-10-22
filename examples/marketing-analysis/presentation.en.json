@@ -1,0 +1,89 @@
+{
+  "title": "Campaign review",
+  "language": "en",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "scope",
+      "title": "Campaign scope",
+      "lead": "Open Additional resources to explore the supporting HTML.",
+      "layout": "cards",
+      "motion": "none",
+      "items": [
+        {
+          "label": "Fictional data",
+          "body": "24 records across four weeks, three channels and two markets."
+        },
+        {
+          "label": "Supporting analysis",
+          "body": "Controls and slicers on the left, visual results on the right."
+        }
+      ],
+      "message": "Original fictional data, not measured campaign performance.",
+      "source": "Campaign!A1:H25",
+      "duration": 8
+    },
+    {
+      "id": "results",
+      "title": "Source campaign totals",
+      "layout": "compare",
+      "motion": "none",
+      "items": [
+        {
+          "label": "Ad spend (KRW)",
+          "value": "33,661,480",
+          "body": "Sum of source spend."
+        },
+        {
+          "label": "Revenue (KRW)",
+          "value": "197,711,000",
+          "body": "Sum of source revenue."
+        },
+        {
+          "label": "ROAS",
+          "value": "5.87×",
+          "body": "Total revenue / total ad spend."
+        },
+        {
+          "label": "Conversion",
+          "value": "4.64%",
+          "body": "3,383 / 72,906 purchases / clicks"
+        }
+      ],
+      "message": "Do not average individual-row rates.",
+      "source": "Campaign!D2:H25",
+      "duration": 8
+    },
+    {
+      "id": "interpretation",
+      "title": "Explore the evidence",
+      "layout": "flow",
+      "motion": "lines",
+      "motion_caption": "Illustrative review sequence",
+      "items": [
+        {
+          "label": "Filter",
+          "body": "Choose the period, channel and market."
+        },
+        {
+          "label": "Compare",
+          "body": "Read the trend, funnel and weighted channel metrics."
+        },
+        {
+          "label": "Extend",
+          "body": "Add detail or a separately labeled hypothetical scenario."
+        }
+      ],
+      "message": "Close supporting analysis to return to the same presentation step.",
+      "source": "Original fictional example / 새 가상 예제",
+      "duration": 8
+    }
+  ]
+}

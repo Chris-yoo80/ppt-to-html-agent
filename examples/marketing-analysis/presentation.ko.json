@@ -1,0 +1,89 @@
+{
+  "title": "가상 캠페인 성과 검토",
+  "language": "ko",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "scope",
+      "title": "캠페인 분석 범위",
+      "lead": "아래 추가 자료를 열어 마케팅 분석 HTML을 조작할 수 있습니다.",
+      "layout": "cards",
+      "motion": "none",
+      "items": [
+        {
+          "label": "새 가상 데이터",
+          "body": "4주, 3개 채널, 2개 시장의 가상 기록 24개입니다."
+        },
+        {
+          "label": "보충 분석",
+          "body": "왼쪽 조정값·슬라이서, 오른쪽 수치·차트로 근거를 확인합니다."
+        }
+      ],
+      "message": "실측 성과가 아닌 신규 가상 캠페인입니다.",
+      "source": "Campaign!A1:H25",
+      "duration": 8
+    },
+    {
+      "id": "results",
+      "title": "원본 캠페인 집계",
+      "layout": "compare",
+      "motion": "none",
+      "items": [
+        {
+          "label": "광고비 (원)",
+          "value": "33,661,480",
+          "body": "전체 광고비 합계입니다."
+        },
+        {
+          "label": "매출 (원)",
+          "value": "197,711,000",
+          "body": "전체 매출 합계입니다."
+        },
+        {
+          "label": "ROAS",
+          "value": "5.87×",
+          "body": "매출 합계 ÷ 광고비 합계입니다."
+        },
+        {
+          "label": "구매 전환율",
+          "value": "4.64%",
+          "body": "3,383 / 72,906 구매 ÷ 클릭"
+        }
+      ],
+      "message": "행별 비율의 단순 평균을 사용하지 않습니다.",
+      "source": "Campaign!D2:H25",
+      "duration": 8
+    },
+    {
+      "id": "interpretation",
+      "title": "근거를 확인하는 순서",
+      "layout": "flow",
+      "motion": "lines",
+      "motion_caption": "분석 순서를 설명하는 개념도",
+      "items": [
+        {
+          "label": "범위 선택",
+          "body": "기간·채널·시장을 좁혀 같은 범위를 비교합니다."
+        },
+        {
+          "label": "성과 비교",
+          "body": "추이·전환 흐름·채널별 집계 지표를 확인합니다."
+        },
+        {
+          "label": "필요 시 확장",
+          "body": "상세표나 별도로 표시한 가정 시나리오를 추가합니다."
+        }
+      ],
+      "message": "추가 자료를 닫으면 같은 발표 단계로 돌아옵니다.",
+      "source": "Original fictional example / 새 가상 예제",
+      "duration": 8
+    }
+  ]
+}

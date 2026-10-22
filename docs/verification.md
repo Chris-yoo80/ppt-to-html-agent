@@ -1,5 +1,7 @@
 # Verification record
 
+Latest: [real Edge browser verification and marketing supporting HTML, 2026-10-23](browser-verification-2026-10-23.md). The dated table below preserves the earlier 2026-10-22 check scope; previously blocked browser items are superseded only where the new record explicitly reports an observation.
+
 Local checks completed on 2026-10-22. This is an early preview, not an end-to-end compatibility certification.
 
 | Check | Result |
@@ -20,7 +22,7 @@ Local checks completed on 2026-10-22. This is an early preview, not an end-to-en
 | Motion scenes | Hand-authored delivery, marketing and warehouse presets built with 24-second timelines; browser rendering, actual playback and scrubbing have not been independently verified |
 | Known internal company terms and paths | No matches in 29 public text files after license updates; this is a targeted scan, not proof of all possible sensitive-data absence |
 | Browser rendering, clipping, controls and fullscreen | Not verified: local HTML navigation was blocked by browser tool policy; no bypass was attempted |
-| Claude Code and Codex complete PPT-to-HTML sessions | Not verified |
+| Claude Code and Codex PPT-to-HTML CLI workflow | One fictional five-slide fixture completed in both CLIs, including intake, extraction, build, source fidelity and requested revision. See [the dated acceptance report](acceptance-2026-10-22.md) for the encoding repair, Claude continuation and unverified browser scope. |
 | Claude source review | Received a read-only review of four public source files. Confirmed issues in keyboard routing, line breaks and hidden/SmartArt handling were corrected; browser behavior still requires verification. Reported garbled text was a command-pipe encoding issue rather than damage to the UTF-8 source files. |
 | GitHub repository and Pages deployment | Public repository created on 2026-10-22. GitHub Pages build and deployment succeeded from main/docs. Korean and English landing pages and motion galleries included. |
 | GitHub Actions checks | Initial run passed tool tests and artifact validation; ZIP byte reproducibility differed across Windows/Linux. Packaging now fixes ZIP platform attributes and uses stored entries. Follow-up CI result is recorded in the repository Actions tab. |

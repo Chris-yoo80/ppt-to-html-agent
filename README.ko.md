@@ -4,7 +4,19 @@
 
 PPT 내용을 읽고 발표 흐름을 설계해, 직접 조작하는 HTML 발표로 재구성하는 에이전트 스킬입니다. 흐름은 영상처럼 재생하고, 설명할 순간에는 멈추거나 한 단계씩 진행합니다.
 
-**초기 버전입니다.** 스킬 지침·PPTX 추출기·HTML 생성기·가상 데모·소개 페이지를 작성했습니다. Claude Code와 Codex 각각에서 입력부터 결과 검증까지 실행하는 확인은 아직 완료되지 않았습니다.
+**초기 버전입니다.** Claude Code·Codex CLI에서 가상 PPT 입력·변환·수정 과정을 확인했습니다. 실제 Edge에서는 마케팅 보충 HTML의 조작과 발표 복귀를 검증했습니다. 모든 파일·환경의 호환성을 보장하는 것은 아닙니다.
+
+[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.html)
+
+## 발표 안에 추가 HTML 넣기
+
+**추가 자료**를 누르면 마케팅 분석과 HTML 설명서를 열 수 있습니다. 발표 자동 재생은 멈추고, 닫으면 같은 단계로 돌아옵니다. 분석 설정은 같은 발표 세션에서 자료를 오가거나 다시 열어도 유지됩니다.
+
+![실제 Edge에서 확인한 좌측 조정값·우측 차트의 마케팅 분석 화면](docs/assets/marketing-dashboard.jpg)
+
+처음에는 목적·지표·화면·글꼴·공유 설정을 질문합니다. 왼쪽 기간·채널·시장 슬라이서로 범위를 정하고, 오른쪽 KPI·추이·전환 흐름·채널 비교를 확인합니다. 상세표와 가정 시나리오는 기초 화면을 정한 뒤 추가합니다. HTML 저장은 현재 설정과 필터를 함께 보관합니다.
+
+새로 작성한 가상 캠페인 24개 기록을 사용했습니다. 원본 엑셀은 자동 첨부하지 않습니다. CSV 버튼을 꺼도 HTML에 포함된 분석 데이터가 제거되지는 않습니다. 임의의 엑셀 수식을 자동 변환하는 기능은 아닙니다. [실제 브라우저 검증 기록](docs/browser-verification-2026-10-23.md)을 참고하세요. 저장 파일의 `file://` 재열기는 브라우저 정책상 미검증입니다.
 
 ![배송·마케팅·창고의 가상 모션 예제 개념도](docs/assets/motion-preview.svg)
 

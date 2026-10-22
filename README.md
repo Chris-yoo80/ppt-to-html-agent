@@ -2,9 +2,26 @@
 
 **Motion you can pause. A story you can explain.**
 
-A source-available agent skill for turning slide content into interactive HTML presentations. Play a process continuously, pause at the point that matters, or explain it one phase at a time. Designed for Claude Code and Codex; end-to-end host verification is pending.
+A source-available agent skill for turning slide content into interactive HTML presentations, with supporting analysis as additional HTML. Play a process, pause to explain, or open the evidence without losing your place. A fictional PPTX workflow was tested in Claude Code and Codex CLI; broader file/host compatibility still needs validation.
 
 [한국어](README.ko.md) · [Install](docs/install.md) · [Verification](docs/verification.md) · [Release status](docs/release-plan.md)
+
+[English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [한국어 HTML 설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [Presentation + supporting HTML](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
+
+## Supporting HTML, inside the presentation
+
+Open **Additional resources** to view the fictional marketing analysis or the HTML user guide. The presentation pauses and keeps its current reveal; the analysis keeps its settings when you switch resources or return later in the same session.
+
+![Marketing analysis in a real Edge browser, with left-side controls and right-side charts](docs/assets/marketing-dashboard.jpg)
+
+Start with purpose, metrics, screen, font and sharing settings. Use period/channel/market slicers on the left and weighted KPIs, trends, funnel counts and channel charts on the right. Add detail tables and explicitly hypothetical scenarios after the basics. Save HTML retains the current analysis settings. No raw workbook is attached automatically; disabling CSV buttons does not remove the data embedded in HTML.
+
+The new sample contains 24 original fictional records, not measured results or arbitrary Excel formula conversion. See the [real-browser verification record](docs/browser-verification-2026-10-23.md). Standalone file reopening (`file://`) remains unverified due to browser policy.
+
+```sh
+python skills/ppt-to-html/scripts/build_analysis.py examples/marketing-analysis/data.json --language en --output output/marketing-analysis.html
+python skills/ppt-to-html/scripts/build_deck.py examples/marketing-analysis/presentation.en.json --supplement "Marketing analysis=output/marketing-analysis.html" --output output/presentation.html
+```
 
 ![Conceptual preview of delivery routes, a marketing funnel and an isometric warehouse](docs/assets/motion-preview.svg)
 
@@ -87,7 +104,7 @@ The [intake reference](skills/ppt-to-html/references/intake.md) defines the star
 
 `docs/index.html` is a buildless GitHub Pages introduction page. `docs/demo.html` is generated from `examples/motion-stories/stories.json`; `docs/library-demo.html` retains the smaller starter. The website builds a request prompt locally; visitors run the actual agent in their own AI environment.
 
-After the public repository is created, enable GitHub Pages from `main` → `/docs`. Hosting setup and publication are not complete. The tentative public repository name is `ppt-to-html-agent`.
+GitHub Pages serves the bilingual introduction, HTML guides and examples from `main` → `/docs`. Rebuild guides with `python tools/build_guides.py`, supporting examples with `python tools/build_marketing_examples.py`, and the English landing page with `python tools/localize_site.py`.
 
 ## Current limits
 
@@ -95,7 +112,7 @@ After the public repository is created, enable GitHub Pages from `main` → `/do
 - The starter supports 1–4 short items per scene, cards/flow/compare layouts and three diagram styles. Richer layouts and custom fonts require additional implementation.
 - Extraction has synthetic fixture tests. The library example demonstrates JSON-to-HTML generation, not a complete PPT-to-HTML conversion.
 - Static and syntax checks do not prove visual quality. Browser layout, interaction, accessibility and alternative ratios still require verification.
-- Claude Code and Codex end-to-end compatibility is pending. Other ChatGPT/Claude surfaces are not claimed as supported.
+- One fictional five-slide conversion and revision completed in Claude Code and Codex CLI. Other files, hosts and regular ChatGPT/Claude surfaces are not claimed as universally supported.
 - MP4 export, a hosted AI conversion app and verified multipage PDF output are deferred.
 
 ## Development checks

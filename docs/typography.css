@@ -48,5 +48,6 @@
 @media(max-width:950px){.hero-copy{grid-template-columns:1.3fr 1fr;gap:0 25px}.hero h1{font-size:41px}.hero-description{font-size:17px}.hero-detail{font-size:12px}}
 html[lang="en"] .hero h1{font-size:clamp(30px,3.5vw,48px);line-height:1.15;letter-spacing:-.035em}
 html[lang="en"] .story-title{letter-spacing:-.03em}
+.analysis-preview{display:block;width:100%;height:auto;border:1px solid #dae1d4;border-radius:14px;margin:20px 0 24px}.analysis-section .actions{display:flex;gap:13px;align-items:center;flex-wrap:wrap}.analysis-section .section-heading h2{margin-bottom:12px}
 @media(max-width:650px){.site-header nav{flex-wrap:wrap;justify-content:flex-end;gap:10px}html[lang="en"] .hero h1{font-size:clamp(29px,7vw,42px)}}
 @media(max-width:650px){.hero{padding-top:22px;padding-bottom:28px}.hero-copy{display:block}.hero-copy>.kicker{font-size:9px;margin-bottom:18px}.hero h1{font-size:clamp(32px,7.2vw,44px);line-height:1.28}.hero-context{margin-top:24px}.hero-description{font-size:19px}.hero-detail{font-size:13px}.hero .actions{flex-wrap:wrap}.demo-heading h2{font-size:19px}.demo-heading>p{margin-top:12px}.motion-usecases{margin-top:24px}}

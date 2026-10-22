@@ -1,0 +1,102 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>User guide · PPT to HTML Agent</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f5ee;color:#22392e;font:15px/1.85 "Malgun Gothic",system-ui,sans-serif}main{max-width:980px;margin:auto;padding:40px 28px}nav{display:flex;gap:16px;flex-wrap:wrap;font-size:12px}a{color:#286449}h1{font-size:38px;line-height:1.25;letter-spacing:-1.5px;margin:22px 0 14px}h2{font-size:23px;margin:36px 0 12px;letter-spacing:-.6px}h3{font-size:16px}p{margin:8px 0}.eyebrow{font-size:10px;letter-spacing:2px;color:#7e9382}.lead{font-size:17px;color:#6a806b;max-width:760px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:25px 0}.step{border-top:2px solid #6c9474;padding-top:12px}.step b{font-size:13px}.step p{font-size:12px;color:#788a76}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e6eee0;padding:20px;border-radius:10px;font:12px/1.9 Consolas,monospace}code{font-family:Consolas,monospace;font-size:13px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;border-bottom:1px solid #d5dfcf;padding:12px 10px;vertical-align:top}th{color:#6c846b;font-weight:500}.notice{border-left:3px solid #668f72;padding:8px 17px;font-size:13px;background:#eaf0e3}.links{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.links a{background:#fff;border:1px solid #ccd9c6;padding:9px 14px;border-radius:7px;text-decoration:none;font-size:12px}footer{margin-top:40px;border-top:1px solid #d3dfcc;padding-top:20px;font-size:11px;color:#7c8d74}@media(max-width:600px){main{padding:25px 18px}h1{font-size:29px}.steps{grid-template-columns:1fr}th,td{padding:10px 6px;font-size:12px}}</style></head><body><main><nav><a href="https://github.com/Chris-yoo80/ppt-to-html-agent">GitHub ↗</a> <a href="guide.ko.html">한국어</a></nav><p class="eyebrow">PPT TO HTML AGENT / USER GUIDE</p><h1>A presentation, with its supporting analysis.</h1><p class="lead">Use the skill in your AI environment. Keep the presentation concise, then open an additional HTML analysis whenever you need the evidence.</p><div class="links"><a href="downloads/ppt-to-html.zip">Download skill ZIP</a><a href="marketing-presentation.en.html">Presentation + resources demo</a><a href="marketing-analysis.en.html">Standalone supporting HTML</a></div><section><h2>1. Install the skill</h2><p>Download the skill ZIP and copy the complete <code>ppt-to-html/</code> folder into your working project:</p><table><tr><th>Host</th><th>Project directory</th><th>Invoke</th></tr><tr><td>Claude Code</td><td><code>.claude/skills/ppt-to-html/</code></td><td><code>/ppt-to-html</code></td></tr><tr><td>Codex</td><td><code>.agents/skills/ppt-to-html/</code></td><td><code>$ppt-to-html</code></td></tr></table><p>Open that project in the selected host and provide an accessible PPTX. Python 3.10+ is needed for bundled helpers. The website does not upload or convert files. Your AI provider’s subscription or usage charges still apply. Installation links require an internet connection.</p></section><section><h2>2. Start with the brief</h2><pre>Use the ppt-to-html skill to reconstruct this PPT as an HTML presentation.
+Ask only for missing settings: purpose, audience, time, screen size,
+typeface, motion frequency, playback and supporting material.
+I want marketing analysis as additional HTML inside the presentation.
+Place controls and slicers on the left, visual results on the right.
+Show the outline and one representative scene before building the rest.</pre><p>For the supporting analysis, agree on the workbook sheets, period, currency, KPI definitions, filters, screen, font, language and sharing scope. Accept recommended defaults in one answer if you prefer. Reuse answers already supplied.</p></section><section><h2>3. Build the basics, then extend</h2><div class="steps"><div class="step"><b>01 / Agree</b><p>Confirm the brief, source meaning and layout.</p></div><div class="step"><b>02 / Review</b><p>Check an outline and a representative scene or chart.</p></div><div class="step"><b>03 / Extend</b><p>Add detail, scenarios and exports after the base is accepted.</p></div></div><p>The finished deliverables are presentation HTML, supporting-analysis HTML and editable sources. Supporting HTML can be embedded in the presentation, so the main file works offline without a sidecar server.</p></section><section><h2>4. Present and open additional resources</h2><table><tr><th>Control</th><th>Behavior</th></tr><tr><td>← / →</td><td>Move through reveal steps. Home returns to the start.</td></tr><tr><td>Autoplay / A</td><td>Optional automatic progression. Stops at the end by default.</td></tr><tr><td>Additional resources</td><td>Pauses autoplay and opens supporting HTML over the presentation.</td></tr><tr><td>Back to presentation / Escape</td><td>Returns to the same reveal step. Resume autoplay explicitly.</td></tr><tr><td>Resources tabs</td><td>Choose the marketing analysis or this HTML guide.</td></tr></table></section><section><h2>5. Explore the marketing supplement</h2><p>On first open, choose purpose, priority metrics, viewing context, font and CSV controls. On the left, select period, channels and market. On the right, review KPIs, revenue/spend trends, conversion counts and channel ROAS. Add the source detail table only when needed.</p><p>What-if sliders keep source results unchanged. They assume constant cost per click and channel mix, with separate conversion and order-value multipliers. These are hypothetical scenarios, not forecasts. ROAS uses total revenue / total spend; conversion uses total purchases / total clicks. A zero denominator is unavailable.</p><p><b>Save HTML</b> retains the current brief, filters and assumptions in one file. CSV downloads are opt-in in Initial setup. The source workbook is not automatically attached.</p></section><section><h2>6. Share the right information</h2><div class="notice">Offline HTML contains the data needed for its charts. Turning off CSV buttons does not remove that data or secure confidential information.</div><p>Review notes, hidden sheets, embedded files, personal information, internal paths and source attachments before sharing. Include raw PPT or Excel files only when explicitly selected and reviewed. Public examples in this project use newly authored fictional data.</p></section><section><h2>7. Supported scope</h2><p>The skill redesigns the narrative rather than reproducing PPT pixels. Basic PPTX extraction reads text, tables and separate notes; OCR, SmartArt text and chart workbook interpretation are not included. The campaign starter accepts a reviewed data model; it does not automatically interpret arbitrary Excel formulas, macros or external connections. Other workbook types require a separately validated adapter. MP4 export is deferred.</p><p>Static checks, host CLI tests and real browser checks cover different things. See the verification record for the exact observations; a single fictional example does not establish compatibility with every workbook or browser.</p></section><footer>Personal/internal use is free. Paid redistribution of the tool or external generation services require separate written permission.<details><summary>Complete license</summary><pre>PPT to HTML Agent Community License 1.0
+Internal Use and Presentation Output Exception
+
+Copyright (c) 2026 Chris-yoo80
+
+This is a project-specific, source-available license. It is not the MIT
+License, an OSI-approved open source license, or n8n&#x27;s license.
+
+1. Scope and ownership
+
+These terms cover the original skill instructions, helper programs, player
+code, templates, examples, and documentation distributed with this license
+(the Package). The copyright holder identified above is the Licensor.
+Third-party materials retain their own terms. Your input documents, data,
+original presentation content, and independently created assets are not
+claimed by the Licensor through this license.
+
+2. No-charge permitted use
+
+You may obtain, run, study, and adapt the Package without paying the
+Licensor for personal purposes, noncommercial activities, and work within
+your own organization. This includes internal use by a for-profit company
+to prepare its reports, proposals, training materials, and presentations.
+AI providers, hosting providers, and other third parties may charge their
+own fees; those fees are not covered by this permission.
+
+You may give another person an unmodified or modified copy of the Package
+without charging for it when the distribution itself has a noncommercial
+purpose. The recipient receives these same permissions and restrictions.
+Identify material modifications and retain the notices described below.
+
+3. Uses requiring separate written permission
+
+The permissions above do not include any of the following:
+
+(a) Selling, renting, sublicensing, or charging for access to the Package,
+    its modifications, or a product that includes its generator, reusable
+    player, templates, or skill instructions as a tool for others.
+(b) Operating an external presentation-generation or conversion service
+    based on the Package as a business, whether provided through an API,
+    website, application, subscription, or other automated interface.
+    Keeping the Package on your own server does not avoid this restriction.
+(c) Bundling the Package into a paid tool or a paid skill collection, or
+    relabeling it as a different commercial generation product.
+
+Contact the Licensor through the source repository for a separate grant
+covering such a use. No commercial permission is implied by silence,
+public access to the repository, or possession of a copy.
+
+4. Presentation Output Exception
+
+A Presentation Output is a completed presentation generated for particular
+content. It may include the runtime player code, styles, and supporting
+assets embedded by this Package for viewing that presentation.
+
+You may view, host, copy, share, and deliver Presentation Outputs as part
+of your personal or organizational communications, including reports,
+proposals, training, and presentations delivered to customers. You may
+edit the output to revise its content or presentation behavior. The
+presence of the embedded player does not by itself prohibit this sharing.
+Recipients may view and redistribute that completed presentation with its
+embedded runtime and retained notices for the same presentation purposes.
+
+This exception does not authorize extracting the embedded runtime or
+templates to redistribute them as a tool, offering the generation service
+described in section 3, or distributing the Package under the label of a
+presentation output. Those activities remain governed by sections 2 and 3.
+Rights in input content and third-party assets must be obtained separately.
+
+5. Notices and attribution
+
+Copies of the Package, including modifications, must carry this complete
+license and the Licensor&#x27;s copyright and license notices. Presentation
+Outputs must retain a copy of this license and the embedded legal notice;
+these may be included in the HTML source or an accompanying file that
+travels with the output. A visible watermark is not required by this
+version of the license. There is no requirement to star the repository,
+publish your private source documents, or disclose your internal changes.
+
+6. Reserved rights and termination
+
+Rights not expressly given here remain with their respective holders.
+No right to use the Licensor&#x27;s name or marks to imply endorsement is
+granted. Permissions under these terms cease for a use that violates
+them. The Licensor may give separate permissions in writing.
+
+7. Warranty and liability
+
+The Package is supplied without a promise of fitness, correctness,
+availability, or continued support. To the extent applicable law permits,
+the Licensor gives no warranties and accepts no liability for loss or
+damage arising from its use. Nothing here removes a right or liability
+that applicable law does not allow the parties to exclude.
+
+The English text above is the controlling license. Translations and
+plain-language summaries are explanatory and do not add permissions.
+</pre></details><br>Copyright © 2026 Chris-yoo80 · Community License 1.0</footer></main></body></html>

@@ -13,6 +13,7 @@ from build_deck import build
 from deck_model import validate_deck
 from extract_pptx import extract, paragraphs, NS
 from build_motion_demo import build as build_motion, validate as validate_motion
+from build_analysis import build as build_analysis
 from xml.etree import ElementTree as ET
 
 
@@ -45,6 +46,49 @@ class ToolTests(unittest.TestCase):
     def test_paragraph_breaks_and_tabs_survive_extraction(self):
         root=ET.fromstring(f'<text xmlns:a="{NS["a"]}"><a:p><a:r><a:t>첫 줄</a:t></a:r><a:br/><a:r><a:t>둘째 줄</a:t></a:r><a:tab/><a:r><a:t>끝</a:t></a:r></a:p></text>')
         self.assertEqual(paragraphs(root),['첫 줄\n둘째 줄\t끝'])
+
+    def test_supporting_html_is_inert_in_parent_and_sandboxed(self):
+        self.deck['supplements']=[{'id':'extra','label':'Marketing','html':'<!doctype html><script>globalThis.EXTRA=true</script>'}]
+        result=build(self.deck)
+        self.assertNotIn('<script>globalThis.EXTRA',result)
+        self.assertIn('sandbox="allow-scripts allow-downloads allow-forms"',result)
+        self.assertNotIn('allow-same-origin',result)
+        payload=json.loads(result.split('id="deck-data">',1)[1].split('</script>',1)[0])
+        self.assertEqual(payload['supplements'],self.deck['supplements'])
+        self.deck['supplements'].append(dict(self.deck['supplements'][0]))
+        with self.assertRaises(ValueError):build(self.deck)
+
+    def test_analysis_builder_escapes_input_and_rejects_invalid_counts(self):
+        config=json.loads((ROOT/'examples/marketing-analysis/data.json').read_text(encoding='utf8'))
+        config['title']='</title><script>globalThis.UNSAFE=true</script>'
+        result=build_analysis(config)
+        self.assertNotIn('<script>globalThis.UNSAFE',result)
+        self.assertIn('analysis-license',result)
+        self.assertIn('Presentation Output Exception',result)
+        config['records'][0]['clicks']=config['records'][0]['impressions']+1
+        with self.assertRaises(ValueError):build_analysis(config)
+
+    def test_campaign_workbook_rows_and_cached_formulas_match_reviewed_json(self):
+        config=json.loads((ROOT/'examples/marketing-analysis/data.json').read_text(encoding='utf8'))
+        ns={'x':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+        with zipfile.ZipFile(ROOT/'examples/marketing-analysis/campaign-source.xlsx') as archive:
+            strings=[]
+            if 'xl/sharedStrings.xml' in archive.namelist():
+                strings=[''.join(n.itertext()) for n in ET.fromstring(archive.read('xl/sharedStrings.xml')).findall('x:si',ns)]
+            root=ET.fromstring(archive.read('xl/worksheets/sheet1.xml'))
+            cells={}
+            for cell in root.findall('.//x:c',ns):
+                value=cell.findtext('x:v',namespaces=ns)
+                if cell.get('t')=='s':value=strings[int(value)]
+                elif cell.get('t')=='inlineStr':value=''.join(cell.find('x:is',ns).itertext())
+                elif value is not None and cell.get('t') not in ('str','e','d'):value=float(value)
+                cells[cell.get('r')]=value
+        keys=['week','channel','region','spend','impressions','clicks','orders','revenue']
+        for number,record in enumerate(config['records'],2):
+            self.assertEqual([cells[f'{col}{number}'] for col in 'ABCDEFGH'],[record[k] for k in keys])
+        expected=config['expected']
+        for cell,key in [('K2','spend'),('K3','revenue'),('K4','orders'),('K5','clicks')]:self.assertEqual(cells[cell],expected[key])
+        self.assertAlmostEqual(cells['K6'],expected['revenue']/expected['spend'])
 
     def test_motion_route_validation_rejects_missing_or_duplicated_stops(self):
         config=json.loads((ROOT/'examples/motion-stories/stories.json').read_text(encoding='utf-8'))

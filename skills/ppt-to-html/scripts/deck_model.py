@@ -12,6 +12,15 @@ def validate_deck(deck):
 
     require(isinstance(deck, dict), 'deck must be an object')
     string(deck.get('title'), 'title')
+    require(deck.get('language','ko') in ('ko','en'), 'language: ko or en required')
+    supplements=deck.get('supplements',[])
+    require(isinstance(supplements,list) and len(supplements)<=8,'supplements: at most eight HTML resources')
+    supplement_ids=set()
+    for item in supplements:
+        require(isinstance(item,dict),'supplement must be an object')
+        for key in ('id','label','html'):string(item.get(key),'supplement.'+key)
+        require(item['id'] not in supplement_ids,'duplicate supplement id');supplement_ids.add(item['id'])
+        require(len(item['html'].encode('utf8'))<=2*1024*1024,'supplement exceeds 2 MiB')
     settings = deck.get('settings', {})
     require(isinstance(settings, dict), 'settings must be an object')
     for name, default in [('width', 1600), ('height', 900)]:

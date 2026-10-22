@@ -12,5 +12,8 @@ output/
 Thumbs.db
 .agents/
 .claude/
+.omc/
 dist/
 .font-build/
+*.inspect.ndjson
+docs/browser-qa.html

@@ -1,0 +1,253 @@
+{
+  "title": "Campaign analysis / 가상 캠페인 분석",
+  "fictional": true,
+  "source": "campaign-source.xlsx / Campaign!A1:H25",
+  "records": [
+    {
+      "week": "2026-09-07",
+      "channel": "Search",
+      "region": "Domestic",
+      "spend": 2592000,
+      "impressions": 80000,
+      "clicks": 3600,
+      "orders": 137,
+      "revenue": 7946000
+    },
+    {
+      "week": "2026-09-07",
+      "channel": "Search",
+      "region": "International",
+      "spend": 1425600,
+      "impressions": 44000,
+      "clicks": 1980,
+      "orders": 75,
+      "revenue": 4350000
+    },
+    {
+      "week": "2026-09-07",
+      "channel": "Social",
+      "region": "Domestic",
+      "spend": 1435200,
+      "impressions": 130000,
+      "clicks": 2990,
+      "orders": 78,
+      "revenue": 4056000
+    },
+    {
+      "week": "2026-09-07",
+      "channel": "Social",
+      "region": "International",
+      "spend": 789600,
+      "impressions": 71500,
+      "clicks": 1645,
+      "orders": 43,
+      "revenue": 2236000
+    },
+    {
+      "week": "2026-09-07",
+      "channel": "Email",
+      "region": "Domestic",
+      "spend": 573750,
+      "impressions": 45000,
+      "clicks": 3375,
+      "orders": 219,
+      "revenue": 13359000
+    },
+    {
+      "week": "2026-09-07",
+      "channel": "Email",
+      "region": "International",
+      "spend": 315520,
+      "impressions": 24750,
+      "clicks": 1856,
+      "orders": 121,
+      "revenue": 7381000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Search",
+      "region": "Domestic",
+      "spend": 2903040,
+      "impressions": 89600,
+      "clicks": 4032,
+      "orders": 159,
+      "revenue": 9222000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Search",
+      "region": "International",
+      "spend": 1596960,
+      "impressions": 49280,
+      "clicks": 2218,
+      "orders": 88,
+      "revenue": 5104000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Social",
+      "region": "Domestic",
+      "spend": 1607520,
+      "impressions": 145600,
+      "clicks": 3349,
+      "orders": 91,
+      "revenue": 4732000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Social",
+      "region": "International",
+      "spend": 884160,
+      "impressions": 80080,
+      "clicks": 1842,
+      "orders": 50,
+      "revenue": 2600000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Email",
+      "region": "Domestic",
+      "spend": 642600,
+      "impressions": 50400,
+      "clicks": 3780,
+      "orders": 256,
+      "revenue": 15616000
+    },
+    {
+      "week": "2026-09-14",
+      "channel": "Email",
+      "region": "International",
+      "spend": 353430,
+      "impressions": 27720,
+      "clicks": 2079,
+      "orders": 141,
+      "revenue": 8601000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Search",
+      "region": "Domestic",
+      "spend": 3214080,
+      "impressions": 99200,
+      "clicks": 4464,
+      "orders": 183,
+      "revenue": 10614000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Search",
+      "region": "International",
+      "spend": 1767600,
+      "impressions": 54560,
+      "clicks": 2455,
+      "orders": 101,
+      "revenue": 5858000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Social",
+      "region": "Domestic",
+      "spend": 1779840,
+      "impressions": 161200,
+      "clicks": 3708,
+      "orders": 104,
+      "revenue": 5408000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Social",
+      "region": "International",
+      "spend": 978720,
+      "impressions": 88660,
+      "clicks": 2039,
+      "orders": 57,
+      "revenue": 2964000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Email",
+      "region": "Domestic",
+      "spend": 711450,
+      "impressions": 55800,
+      "clicks": 4185,
+      "orders": 294,
+      "revenue": 17934000
+    },
+    {
+      "week": "2026-09-21",
+      "channel": "Email",
+      "region": "International",
+      "spend": 391340,
+      "impressions": 30690,
+      "clicks": 2302,
+      "orders": 162,
+      "revenue": 9882000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Search",
+      "region": "Domestic",
+      "spend": 3525120,
+      "impressions": 108800,
+      "clicks": 4896,
+      "orders": 208,
+      "revenue": 12064000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Search",
+      "region": "International",
+      "spend": 1938960,
+      "impressions": 59840,
+      "clicks": 2693,
+      "orders": 115,
+      "revenue": 6670000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Social",
+      "region": "Domestic",
+      "spend": 1951680,
+      "impressions": 176800,
+      "clicks": 4066,
+      "orders": 118,
+      "revenue": 6136000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Social",
+      "region": "International",
+      "spend": 1073760,
+      "impressions": 97240,
+      "clicks": 2237,
+      "orders": 65,
+      "revenue": 3380000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Email",
+      "region": "Domestic",
+      "spend": 780300,
+      "impressions": 61200,
+      "clicks": 4590,
+      "orders": 334,
+      "revenue": 20374000
+    },
+    {
+      "week": "2026-09-28",
+      "channel": "Email",
+      "region": "International",
+      "spend": 429250,
+      "impressions": 33660,
+      "clicks": 2525,
+      "orders": 184,
+      "revenue": 11224000
+    }
+  ],
+  "expected": {
+    "spend": 33661480,
+    "revenue": 197711000,
+    "orders": 3383,
+    "clicks": 72906
+  }
+}

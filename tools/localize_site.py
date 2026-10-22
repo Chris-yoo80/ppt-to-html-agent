@@ -15,7 +15,7 @@ PPT의 내용을 읽고 흐름을 설계해,|Read your slides. Shape the narrati
 직접 조작하는 HTML 발표로 만드는 에이전트 스킬.|An agent skill for interactive HTML presentations.
 모션 데모 보기|Explore the motion
 내 발표 설정하기 →|Set up your presentation →
-Claude Code · Codex용 스킬 / 전체 실행 검증 진행 예정|For Claude Code and Codex / end-to-end verification pending
+Claude Code · Codex 가상 예제 검증 / 실제 자료별 확인 필요|Claude Code and Codex fictional fixture checked / verify your own files
 배송 · 마케팅 · 창고. 지금 움직여보세요.|Delivery. Marketing. Warehousing. In motion.
 각 24초 · 주제 선택|24 seconds each · choose a story
 재생하거나, 단계별로 설명하거나.|Play the flow or explain it chapter by chapter.
@@ -40,7 +40,7 @@ PPT의 내용과 표, 메모를 읽고 원문 근거를 정리합니다.|Read sl
 핵심 메시지와 설명 순서, 적합한 모션을 제안합니다.|Propose the message, narrative order and meaningful motion.
 검토한 구성을 단계별 HTML 발표로 제작합니다.|Build the reviewed outline into a step-by-step HTML presentation.
 수치·화면 넘침·단계 진행을 점검하고 수정합니다.|Check figures, overflow and navigation, then refine.
-현재는 스킬·PPTX 텍스트 추출·기본 HTML 생성 도구의 초기 버전입니다. 두 AI 환경의 전체 작업 흐름과 시각 검증은 진행 예정입니다.|This early preview includes the skill, PPTX text extraction and basic HTML tools. Full workflows in both AI hosts and visual verification remain pending.
+가상 예제로 두 CLI의 변환·수정을 확인했습니다. 마케팅 보충 HTML의 실제 Edge 조작도 검증했습니다. 상세 범위와 한계는 검증 기록을 확인하세요.|Fictional conversion and revision checked in both CLIs. Marketing supporting HTML was exercised in Edge. See the verification record for scope and limits.
 첫 질문부터, 내 발표에 맞게.|Start with the right questions.
 설정을 고르면 시작 요청문을 만들어드립니다.|Choose your settings to create a starting prompt.
 설치한 AI 환경에 PPT와 함께 전달하세요.|Use it with your PPT in the AI environment where you installed the skill.
@@ -76,7 +76,7 @@ PPT의 내용과 표, 메모를 읽고 원문 근거를 정리합니다.|Read sl
 AI 구독료·API 사용료는 사용하는 서비스의 조건을 따릅니다.|AI subscriptions and API fees follow your provider’s terms.
 GitHub에서 설치하기|Install from GitHub
 저장소의 |See 
-에서 Claude Code·Codex별 설치 경로와 실행 예시를 확인하세요. 호스트 간 전체 동작 검증은 아직 완료되지 않았습니다.| in the repository for Claude Code and Codex installation paths and examples. Cross-host end-to-end verification is still pending.
+에서 Claude Code·Codex별 설치 경로와 실행 예시를 확인하세요. 가상 예제의 두 CLI 흐름을 확인했으며, 실제 자료는 별도 검증이 필요합니다.| in the repository for Claude Code and Codex installation paths and examples. The fictional CLI fixture was checked; verify your own source files separately.
 스킬 ZIP 내려받기 ↓|Download skill ZIP ↓
 GitHub에서 코드 보기 ↗|View source on GitHub ↗
 몇 가지, 분명하게.|A few things to know.
@@ -103,9 +103,11 @@ def main():
     pairs=[line.split('|',1) for line in TRANSLATIONS.splitlines()]
     # Match all original strings in one pass so translations cannot translate each other.
     mapping=dict(pairs)
+    mapping.update({'발표 안에서, 근거까지 열어보세요.':'Open the evidence inside your presentation.','마케팅 분석을 추가 HTML로 함께 담았습니다.':'Marketing analysis, included as supporting HTML.','왼쪽 조정값·슬라이서, 오른쪽 수치·차트.':'Controls and slicers on the left. Visual results on the right.','기초 설정부터 시작하고, 필요한 분석을 추가하세요.':'Start with the basics, then add the analysis you need.','실제 브라우저에서 확인한 마케팅 분석 화면: 왼쪽 필터와 오른쪽 성과 차트':'Marketing analysis verified in a real browser: left-side filters and right-side performance charts','발표 + 추가 자료 체험 ↗':'Try the presentation + resources ↗','국문 사용설명서 ↗':'English user guide ↗','분석 HTML만 열기 ↗':'Open supporting HTML only ↗','신규 가상 캠페인 24개 기록입니다. 실제 성과나 임의의 엑셀 자동 변환을 뜻하지 않습니다. 추가 자료를 닫으면 같은 발표 단계로 돌아옵니다.':'24 original fictional campaign records, not measured results or arbitrary Excel conversion. Close the supporting material to return to the same presentation step.'})
     page=re.sub('|'.join(re.escape(k) for k in sorted(mapping,key=len,reverse=True)),lambda m:mapping[m[0]],page)
     page=page.replace('lang="ko"','lang="en"').replace('demo.html','demo.en.html').replace('href="index.en.html" lang="en"','href="index.html" lang="ko"').replace('English</a>','한국어</a>')
     page=page.replace('lang="ko" hreflang="en"','lang="ko" hreflang="ko"').replace('href="license.html"','href="license.en.html"')
+    page=page.replace('marketing-presentation.html','marketing-presentation.en.html').replace('marketing-analysis.html','marketing-analysis.en.html').replace('guide.ko.html','guide.en.html')
     (ROOT/'docs/index.en.html').write_text(page,encoding='utf-8',newline='\n')
     config=json.loads((ROOT/'examples/motion-stories/stories.json').read_text(encoding='utf-8'))
     config['language']='en'

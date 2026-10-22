@@ -15,6 +15,14 @@ def build(deck):
     data = json.dumps(deck, ensure_ascii=False, allow_nan=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
     css = '\n'.join((ASSETS / name).read_text(encoding='utf-8') for name in ('player.css', 'motion.css'))
     js = (ASSETS / 'player.js').read_text(encoding='utf-8')
+    english=deck.get('language')=='en'
+    supplement_ui=''
+    supplement_button=''
+    if deck.get('supplements'):
+        css+='\n'+(ASSETS/'supplements.css').read_text(encoding='utf8')
+        js+='\n'+(ASSETS/'supplements.js').read_text(encoding='utf8')
+        supplement_button='<button id="open-supplements" type="button">'+('Additional resources' if english else '추가 자료')+'</button>'
+        supplement_ui='<dialog id="supplements-dialog" aria-labelledby="supplements-title"><header><strong id="supplements-title">'+('Additional resources' if english else '추가 자료')+'</strong><nav id="supplement-tabs" aria-label="'+('Resource selection' if english else '추가 자료 선택')+'"></nav><button id="close-supplements" type="button">'+('Back to presentation ×' if english else '발표로 돌아가기 ×')+'</button></header><iframe id="supplement-frame" title="'+('Additional analysis' if english else '추가 분석 화면')+'" sandbox="allow-scripts allow-downloads allow-forms"></iframe></dialog>'
     license_text = (ASSETS.parent / 'LICENSE').read_text(encoding='utf-8')
     font_legal = ''
     if deck.get('settings', {}).get('font') == 'story':
@@ -33,13 +41,14 @@ def build(deck):
 <!--
 {legal_notice}
 -->
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="{'en' if english else 'ko'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(deck['title'])}</title><style>{css}</style></head>
-<body>{font_legal}<main id="viewport" aria-label="발표 화면"><section id="stage" aria-label="현재 발표 장면"></section></main>
-<nav class="controls" aria-label="발표 조작"><button id="prev" type="button" aria-label="이전 단계">←</button>
-<span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="다음 단계">→</button>
-<button id="play" type="button" aria-pressed="false">자동 재생</button><button id="replay" type="button">처음부터</button>
-<button id="fullscreen" type="button">전체 화면</button><span class="keyhint">← → 단계 이동 · Home 처음 · A 재생</span></nav>
+<body>{font_legal}<main id="viewport" aria-label="{'Presentation' if english else '발표 화면'}"><section id="stage" aria-label="{'Current scene' if english else '현재 발표 장면'}"></section></main>
+<nav class="controls" aria-label="{'Presentation controls' if english else '발표 조작'}"><button id="prev" type="button" aria-label="{'Previous step' if english else '이전 단계'}">←</button>
+<span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="{'Next step' if english else '다음 단계'}">→</button>
+<button id="play" type="button" aria-pressed="false">{'Autoplay' if english else '자동 재생'}</button><button id="replay" type="button">{'Restart' if english else '처음부터'}</button>
+<button id="fullscreen" type="button">{'Fullscreen' if english else '전체 화면'}</button>{supplement_button}<span class="keyhint">{'← → Steps · Home Start · A Play' if english else '← → 단계 이동 · Home 처음 · A 재생'}</span></nav>
+{supplement_ui}
 <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
 <script type="application/json" id="deck-data">{data}</script><script>{js}</script></body></html>'''
 
@@ -48,9 +57,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('input', type=Path, help='scene JSON, authored by the agent')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--supplement',action='append',default=[],metavar='LABEL=FILE',help='Explicitly embed a reviewed supporting HTML; repeat for more resources')
     args = parser.parse_args()
     try:
-        output = build(json.loads(args.input.read_text(encoding='utf-8-sig')))
+        deck=json.loads(args.input.read_text(encoding='utf-8-sig'))
+        for index,value in enumerate(args.supplement):
+            label,separator,filename=value.partition('=')
+            if not separator or not label.strip():raise ValueError('--supplement expects LABEL=FILE')
+            deck.setdefault('supplements',[]).append({'id':f'additional-{index+1}','label':label,'html':Path(filename).read_text(encoding='utf-8-sig')})
+        output = build(deck)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(output, encoding='utf-8', newline='\n')
     except (ValueError, OSError) as error:

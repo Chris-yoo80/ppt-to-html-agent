@@ -14,6 +14,8 @@ The extractor follows presentation relationship order, not slide filenames. It r
 
 The AI reads the extracted material and authors the outline; the builder does not autonomously decide the narrative. Store the brief, source trace and editable JSON in the user's working folder.
 
+On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text through PowerShell. Do not pipe a non-ASCII Python program into Python under the default console encoding. Write a UTF-8 script file, use ASCII `\uXXXX` escapes, or explicitly set the pipe encoding first. After text edits, read the saved JSON and HTML back and compare the requested string exactly; a successful build alone does not detect replacement `?` characters.
+
 ```json
 {
   "title": "Presentation title",

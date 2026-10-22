@@ -3,6 +3,7 @@
   'use strict';
   const deck = JSON.parse(document.getElementById('deck-data').textContent);
   const settings = {width:1600,height:900,motion:'key',playback:'manual',font:'system',end:'stop',...deck.settings};
+  const english=deck.language==='en';
   const stage = document.getElementById('stage');
   const viewport = document.getElementById('viewport');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -48,7 +49,7 @@
     clearTimeout(timer); timer=null;
     playing = value && (position < steps.length-1 || settings.end === 'loop');
     const button = document.getElementById('play');
-    button.textContent=playing?'일시 정지':'자동 재생'; button.setAttribute('aria-pressed',String(playing));
+    button.textContent=playing?(english?'Pause':'일시 정지'):(english?'Autoplay':'자동 재생'); button.setAttribute('aria-pressed',String(playing));
     if (playing) timer=setTimeout(next,deck.scenes[steps[position].sceneIndex].duration*1000 || 7000);
   }
   function render() {
@@ -77,7 +78,7 @@
     stage.append(bottom);
     document.getElementById('prev').disabled=position===0;
     document.getElementById('next').disabled=position===steps.length-1 && settings.end==='stop';
-    document.getElementById('position').textContent=`${position+1} / ${steps.length} 단계${position===steps.length-1?' · 끝':''}`;
+    document.getElementById('position').textContent=`${position+1} / ${steps.length} ${english?'steps':'단계'}${position===steps.length-1?(english?' · End':' · 끝'):''}`;
     document.getElementById('announcement').textContent=`${scene.title}. ${scene.items[itemIndex].label}`;
     fit(); setPlaying(playing);
   }
@@ -93,6 +94,7 @@
     catch{document.getElementById('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
   });
   addEventListener('keydown',event=>{
+    if(document.getElementById('supplements-dialog')?.open)return;
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep
     // their native button/link activation instead of triggering two actions.
@@ -105,6 +107,7 @@
     else if(event.key==='Escape')setPlaying(false);
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
+  addEventListener('ppt-open-supplement',()=>setPlaying(false));
   addEventListener('resize',fit); reduced.addEventListener('change',render);
   render(); if(settings.playback==='auto')setPlaying(true);
 })();

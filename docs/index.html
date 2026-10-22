@@ -24,7 +24,7 @@
           <p class="hero-description">영상처럼 이어서 보여주고,<br>설명할 순간에는 멈추세요.</p>
           <p class="hero-detail">PPT의 내용을 읽고 흐름을 설계해,<br>직접 조작하는 HTML 발표로 만드는 에이전트 스킬.</p>
           <div class="actions"><a class="button primary" href="#demo">모션 데모 보기 <span>↘</span></a><a class="button secondary" href="#start">내 발표 설정하기 →</a></div>
-          <p class="hero-note">Claude Code · Codex용 스킬 / 전체 실행 검증 진행 예정</p>
+          <p class="hero-note">Claude Code · Codex 가상 예제 검증 / 실제 자료별 확인 필요</p>
         </div>
       </div>
     </section>
@@ -40,10 +40,11 @@
       <p class="demo-disclosure">모두 새로 작성한 가상 시나리오입니다. 실제 최적화·캠페인·시설 성능이나 자동 PPT 변환 결과가 아닙니다. 이 페이지는 자료를 업로드하거나 AI에 전송하지 않습니다.</p>
     </section>
     <div class="fact-strip"><div class="wrap"><span><strong>Play the flow</strong> 영상처럼 연속 재생</span><span><strong>Pause to explain</strong> 단계 선택·타임라인 탐색</span><span><strong>Keep it portable</strong> 오프라인 단일 HTML</span></div></div>
+    <section class="section wrap analysis-section" id="analysis" aria-labelledby="analysis-title"><p class="eyebrow">SUPPORTING HTML / OPTIONAL</p><div class="section-heading"><div><h2 id="analysis-title">발표 안에서, 근거까지 열어보세요.</h2><p>마케팅 분석을 추가 HTML로 함께 담았습니다.</p></div><p>왼쪽 조정값·슬라이서, 오른쪽 수치·차트.<br>기초 설정부터 시작하고, 필요한 분석을 추가하세요.</p></div><a href="marketing-presentation.html"><img class="analysis-preview" src="assets/marketing-dashboard.jpg" alt="실제 브라우저에서 확인한 마케팅 분석 화면: 왼쪽 필터와 오른쪽 성과 차트" loading="lazy" width="1897" height="1026"></a><div class="actions"><a class="button primary" href="marketing-presentation.html">발표 + 추가 자료 체험 ↗</a><a class="button secondary" href="guide.ko.html">국문 사용설명서 ↗</a><a class="text-link" href="marketing-analysis.html">분석 HTML만 열기 ↗</a></div><p class="demo-disclosure">신규 가상 캠페인 24개 기록입니다. 실제 성과나 임의의 엑셀 자동 변환을 뜻하지 않습니다. 추가 자료를 닫으면 같은 발표 단계로 돌아옵니다.</p></section>
     <section class="workflow-section"><div class="wrap section">
       <div class="section-heading"><div><p class="eyebrow">02 / THE AGENT WORKFLOW</p><h2>디자인보다 먼저,<br>무엇을 설명할지 정합니다.</h2></div><p>AI가 만드는 과정에도 기준이 필요하니까.<br>확인 가능한 절차를 스킬로 묶었습니다.</p></div>
       <ol class="workflow"><li><span>01</span><h3>Read</h3><p>PPT의 내용과 표, 메모를 읽고 원문 근거를 정리합니다.</p></li><li><span>02</span><h3>Direct</h3><p>핵심 메시지와 설명 순서, 적합한 모션을 제안합니다.</p></li><li><span>03</span><h3>Build</h3><p>검토한 구성을 단계별 HTML 발표로 제작합니다.</p></li><li><span>04</span><h3>Refine</h3><p>수치·화면 넘침·단계 진행을 점검하고 수정합니다.</p></li></ol>
-      <p class="status-note">현재는 스킬·PPTX 텍스트 추출·기본 HTML 생성 도구의 초기 버전입니다. 두 AI 환경의 전체 작업 흐름과 시각 검증은 진행 예정입니다.</p>
+      <p class="status-note">가상 예제로 두 CLI의 변환·수정을 확인했습니다. 마케팅 보충 HTML의 실제 Edge 조작도 검증했습니다. 상세 범위와 한계는 검증 기록을 확인하세요.</p>
     </div></section>
     <section class="section wrap" id="start" aria-labelledby="start-title">
       <div class="section-heading"><div><p class="eyebrow">03 / MAKE IT YOURS</p><h2 id="start-title">첫 질문부터, 내 발표에 맞게.</h2></div><p>설정을 고르면 시작 요청문을 만들어드립니다.<br>설치한 AI 환경에 PPT와 함께 전달하세요.</p></div>
@@ -61,7 +62,7 @@
         <div class="prompt-panel"><div class="panel-heading"><span>YOUR STARTING PROMPT</span><span class="tiny-dot" aria-hidden="true"></span></div><pre id="prompt-preview" tabindex="0" aria-label="생성된 시작 요청문"></pre><button type="button" class="button primary" id="copy-prompt">요청문 복사 <span>↗</span></button><p id="copy-status" role="status" aria-live="polite">현재 브라우저 안에서만 생성됩니다.</p></div>
       </div>
     </section>
-    <section class="install-section wrap" aria-labelledby="install-title"><div><p class="eyebrow">04 / USE THE SKILL</p><h2 id="install-title">당신이 쓰는 AI에서<br>이어서 시작하세요.</h2><p>스킬과 도구는 개인·내부 업무에 무료입니다.<br>AI 구독료·API 사용료는 사용하는 서비스의 조건을 따릅니다.</p></div><div class="install-body"><p class="install-label">GitHub에서 설치하기</p><code>git clone https://github.com/Chris-yoo80/ppt-to-html-agent.git</code><p>저장소의 <strong>docs/install.md</strong>에서 Claude Code·Codex별 설치 경로와 실행 예시를 확인하세요. 호스트 간 전체 동작 검증은 아직 완료되지 않았습니다.</p><a class="text-link" href="downloads/ppt-to-html.zip" download>스킬 ZIP 내려받기 ↓</a><br><a class="text-link repo-link" href="https://github.com/Chris-yoo80/ppt-to-html-agent">GitHub에서 코드 보기 ↗</a></div></section>
+    <section class="install-section wrap" aria-labelledby="install-title"><div><p class="eyebrow">04 / USE THE SKILL</p><h2 id="install-title">당신이 쓰는 AI에서<br>이어서 시작하세요.</h2><p>스킬과 도구는 개인·내부 업무에 무료입니다.<br>AI 구독료·API 사용료는 사용하는 서비스의 조건을 따릅니다.</p></div><div class="install-body"><p class="install-label">GitHub에서 설치하기</p><code>git clone https://github.com/Chris-yoo80/ppt-to-html-agent.git</code><p>저장소의 <strong>docs/install.md</strong>에서 Claude Code·Codex별 설치 경로와 실행 예시를 확인하세요. 가상 예제의 두 CLI 흐름을 확인했으며, 실제 자료는 별도 검증이 필요합니다.</p><a class="text-link" href="downloads/ppt-to-html.zip" download>스킬 ZIP 내려받기 ↓</a><br><a class="text-link repo-link" href="https://github.com/Chris-yoo80/ppt-to-html-agent">GitHub에서 코드 보기 ↗</a></div></section>
     <section class="section wrap faq-section" aria-labelledby="faq-title"><p class="eyebrow">GOOD TO KNOW</p><h2 id="faq-title">몇 가지, 분명하게.</h2><div class="faq-list"><details><summary>이 페이지에서 바로 PPT를 변환하나요?</summary><p>아니요. 이곳은 소개·예제 체험·시작 요청문 생성 페이지입니다. 실제 변환은 스킬을 설치한 AI 환경에서 수행합니다.</p></details><details><summary>원본 PPT와 똑같은 배치를 복원하나요?</summary><p>내용을 바탕으로 설명 구조와 화면을 재설계합니다. 원본 배치의 완전 복원은 지원하지 않습니다. 기본 추출기는 PPTX의 텍스트·표·메모를 읽으며 이미지 OCR과 차트 데이터 해석은 포함하지 않습니다.</p></details><details><summary>동영상 파일도 만들 수 있나요?</summary><p>첫 버전은 HTML 안의 점·선·면 모션 그래픽에 집중합니다. MP4 영상 파일 출력은 후속 기능입니다.</p></details><details><summary>어떤 내용이 GitHub에 공개되나요?</summary><p>일반적인 제작 지침과 코드, 새로 작성한 가상 예제만 공개합니다. 사용자의 실제 PPT·메모·내장 자료는 공개 예제로 자동 전환하지 않습니다.</p></details></div></section>
   </main>
   <footer class="site-footer wrap"><a class="brand" href="#">PPT → HTML / Agent</a><p>개인·내부 업무 무료 / 도구의 유료 제공은 별도 허가</p><a href="license.html">Community License 1.0 ↗</a></footer>

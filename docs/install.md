@@ -1,6 +1,8 @@
 # Install and try the skill
 
-Status: early preview. Packaging and helper checks can be tested locally; a complete run in both Claude Code and Codex is still pending. These tools do not connect to an AI API. Actual agent execution uses your existing AI environment and its applicable subscription or usage charges.
+Status: early preview. A fictional five-slide input/build/revision workflow was tested in Claude Code and Codex CLI. The marketing supporting HTML and parent presentation were also exercised in Edge; see the [browser record](browser-verification-2026-10-23.md) for scope and limits. These tools do not connect to an AI API. Actual agent execution uses your existing AI environment and its applicable subscription or usage charges.
+
+Self-contained user manuals: [English HTML](guide.en.html) / [한국어 HTML](guide.ko.html). They are also included as additional HTML inside the marketing presentation example.
 
 Use is governed by the project-specific [Community License 1.0](../LICENSE). Personal, noncommercial and internal company use is free. Selling the tool or operating an external generation/conversion business requires separate written permission. Completed presentations may be shared for the purposes in the presentation output exception, with retained notices. This package is source-available, not MIT or OSI-approved open source.
 
