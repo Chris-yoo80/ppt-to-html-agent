@@ -11,6 +11,7 @@ The marketing analysis is supporting HTML within a presentation, not a separate 
 | Check | Browser observation |
 |---|---|
 | Initial brief | Setup dialog showed purpose, priority metrics, viewing context, typeface and CSV controls. Applying it opened the analysis. |
+| Brief changes | Selecting serif and conversion priority applied the serif class and highlighted the conversion KPI. The final saved HTML retained those settings and the bilingual text catalog. |
 | Desktop composition | Left-side controls/slicers; right-side KPIs, trend chart, funnel counts and channel comparison. Actual desktop page width was 1897 CSS pixels with no document-level horizontal overflow. |
 | Full-source totals | 24 records; source ad spend KRW 33,661,480; revenue KRW 197,711,000; ROAS 5.87×; conversion 4.64%. |
 | Slicer intersection | First week + Search + Domestic showed one source record: KRW 2,592,000 spend, KRW 7,946,000 revenue, 137 purchases / 3,600 clicks, ROAS 3.07×, conversion 3.81%. |
@@ -45,6 +46,7 @@ The advertised top-level viewport override did not change the observed Edge page
 
 ## Explicitly unverified
 
+- Direct browser inspection of the deployed `chris-yoo80.github.io` origin was denied by a saved site-permission policy. No alternate fetch/control path was used to bypass it. GitHub's checks and Pages deployment for runtime commit `dd89c6a` both succeeded; these backend signals are distinct from opening the live URL in a browser.
 - Opening the downloaded file through `file://` was denied by the browser URL policy (HTTP/HTTPS only). No alternate control path or serving of the downloaded file was used to bypass that block. Real direct-file/offline reopening remains unverified, although saved content/state and self-contained resources were checked.
 - Native PowerPoint/Excel execution, Safari/Firefox, physical mobile devices, exhaustive accessibility and arbitrary workbook formulas/macros/external connections.
 - The old motion-gallery's complete continuous timeline and all fullscreen cases are not certified by this marketing-specific check.
