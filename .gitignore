@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+private-inputs/
+work/
+output/
+.DS_Store
+Thumbs.db
+.agents/
+.claude/
+dist/
+.font-build/

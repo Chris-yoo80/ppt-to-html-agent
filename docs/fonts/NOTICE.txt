@@ -1,0 +1,5 @@
+Story Sans review subsets, derived from Pretendard 1.3.9.
+Source: https://raw.githubusercontent.com/orioncactus/pretendard/v1.3.9/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2
+Subset and renamed for the current public demo; original glyph shapes retained.
+Font files remain under SIL OFL 1.1, not the project Community License.
+Only current demo characters are bundled. Other characters use the system fallback.

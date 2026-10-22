@@ -1,0 +1,10 @@
+/* Finite entrances: no unattended decorative looping. */
+@keyframes point-in{from{opacity:.12;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
+@keyframes line-in{from{stroke-dashoffset:180;opacity:.12}to{stroke-dashoffset:0;opacity:1}}
+@keyframes plane-in{from{opacity:.12;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes item-in{from{opacity:.22;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.motion-point.on.active{transform-box:fill-box;transform-origin:center;animation:point-in .6s ease both}
+.motion-link.on.active{animation:line-in .9s ease both}
+.motion-plane.on.active{animation:plane-in .7s ease both}
+body.motion-rich .item.on.active{animation:item-in .45s ease both}
+@media(prefers-reduced-motion:reduce){.motion-point.on.active,.motion-link.on.active,.motion-plane.on.active,body.motion-rich .item.on.active{animation:none;transition:none}}

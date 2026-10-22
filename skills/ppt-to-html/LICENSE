@@ -1,0 +1,96 @@
+PPT to HTML Agent Community License 1.0
+Internal Use and Presentation Output Exception
+
+Copyright (c) 2026 Chris-yoo80
+
+This is a project-specific, source-available license. It is not the MIT
+License, an OSI-approved open source license, or n8n's license.
+
+1. Scope and ownership
+
+These terms cover the original skill instructions, helper programs, player
+code, templates, examples, and documentation distributed with this license
+(the Package). The copyright holder identified above is the Licensor.
+Third-party materials retain their own terms. Your input documents, data,
+original presentation content, and independently created assets are not
+claimed by the Licensor through this license.
+
+2. No-charge permitted use
+
+You may obtain, run, study, and adapt the Package without paying the
+Licensor for personal purposes, noncommercial activities, and work within
+your own organization. This includes internal use by a for-profit company
+to prepare its reports, proposals, training materials, and presentations.
+AI providers, hosting providers, and other third parties may charge their
+own fees; those fees are not covered by this permission.
+
+You may give another person an unmodified or modified copy of the Package
+without charging for it when the distribution itself has a noncommercial
+purpose. The recipient receives these same permissions and restrictions.
+Identify material modifications and retain the notices described below.
+
+3. Uses requiring separate written permission
+
+The permissions above do not include any of the following:
+
+(a) Selling, renting, sublicensing, or charging for access to the Package,
+    its modifications, or a product that includes its generator, reusable
+    player, templates, or skill instructions as a tool for others.
+(b) Operating an external presentation-generation or conversion service
+    based on the Package as a business, whether provided through an API,
+    website, application, subscription, or other automated interface.
+    Keeping the Package on your own server does not avoid this restriction.
+(c) Bundling the Package into a paid tool or a paid skill collection, or
+    relabeling it as a different commercial generation product.
+
+Contact the Licensor through the source repository for a separate grant
+covering such a use. No commercial permission is implied by silence,
+public access to the repository, or possession of a copy.
+
+4. Presentation Output Exception
+
+A Presentation Output is a completed presentation generated for particular
+content. It may include the runtime player code, styles, and supporting
+assets embedded by this Package for viewing that presentation.
+
+You may view, host, copy, share, and deliver Presentation Outputs as part
+of your personal or organizational communications, including reports,
+proposals, training, and presentations delivered to customers. You may
+edit the output to revise its content or presentation behavior. The
+presence of the embedded player does not by itself prohibit this sharing.
+Recipients may view and redistribute that completed presentation with its
+embedded runtime and retained notices for the same presentation purposes.
+
+This exception does not authorize extracting the embedded runtime or
+templates to redistribute them as a tool, offering the generation service
+described in section 3, or distributing the Package under the label of a
+presentation output. Those activities remain governed by sections 2 and 3.
+Rights in input content and third-party assets must be obtained separately.
+
+5. Notices and attribution
+
+Copies of the Package, including modifications, must carry this complete
+license and the Licensor's copyright and license notices. Presentation
+Outputs must retain a copy of this license and the embedded legal notice;
+these may be included in the HTML source or an accompanying file that
+travels with the output. A visible watermark is not required by this
+version of the license. There is no requirement to star the repository,
+publish your private source documents, or disclose your internal changes.
+
+6. Reserved rights and termination
+
+Rights not expressly given here remain with their respective holders.
+No right to use the Licensor's name or marks to imply endorsement is
+granted. Permissions under these terms cease for a use that violates
+them. The Licensor may give separate permissions in writing.
+
+7. Warranty and liability
+
+The Package is supplied without a promise of fitness, correctness,
+availability, or continued support. To the extent applicable law permits,
+the Licensor gives no warranties and accepts no liability for loss or
+damage arising from its use. Nothing here removes a right or liability
+that applicable law does not allow the parties to exclude.
+
+The English text above is the controlling license. Translations and
+plain-language summaries are explanatory and do not add permissions.

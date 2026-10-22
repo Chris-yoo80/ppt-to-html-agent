@@ -1,0 +1,52 @@
+/* Story Sans: a renamed subset derived from Pretendard, licensed under SIL OFL 1.1. */
+@font-face{font-family:"Story Sans";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/story-sans-regular.woff2") format("woff2")}
+@font-face{font-family:"Story Sans";font-style:normal;font-weight:700;font-display:swap;src:url("fonts/story-sans-bold.woff2") format("woff2")}
+:root{font-family:"Story Sans","Malgun Gothic","Apple SD Gothic Neo",sans-serif;font-feature-settings:"ss01";font-synthesis:none}
+.hero h1{font-weight:700;letter-spacing:-.065em;line-height:1.08}
+.hero-description{font-weight:700;letter-spacing:-.035em;line-height:1.55}
+.hero-detail{font-size:15px;line-height:1.85;letter-spacing:-.015em}
+.section h2,.install-section h2{font-weight:700;letter-spacing:-.045em;line-height:1.4}
+.section-heading>p{font-size:14px;line-height:1.85}
+.source-slide h3{font-weight:700;line-height:1.45}
+.workflow p,.install-section p,.faq-list details p{font-size:13px;line-height:1.85}
+.field label{font-size:12px}
+.field input,.field select{font-size:13px}
+#prompt-preview{font-size:13px;line-height:1.9;letter-spacing:-.01em}
+.kicker,.eyebrow{letter-spacing:.09em}
+.brand{letter-spacing:-.035em}
+@media(max-width:650px){.hero h1{font-size:70px}.hero-detail{font-size:14px}.section-heading>p{font-size:13px}.field label,.field input,.field select{font-size:12px}}
+.comparison.motion-gallery{display:block;background:#101622;border-color:#233145;box-shadow:0 18px 45px #1721190d}
+.motion-gallery .panel-heading{background:#182332;color:#a4b9d3;border-color:#ffffff12}
+.motion-gallery .pill.dark{background:#2b4132;color:#d6edb9;border-color:#476045}
+.motion-gallery .after-panel{container-type:inline-size}
+.motion-gallery .after-panel iframe{aspect-ratio:auto;height:calc(56.25vw + 220px);height:calc(56.25cqw + 220px);min-height:0;width:100%;flex:none}
+.motion-gallery .demo-footer{background:#182332;color:#a4b9d3;border-color:#ffffff12}
+.motion-gallery .demo-footer span{color:#849ab5}
+.motion-usecases{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:30px}
+.motion-usecases article{border-top:1px solid #ccd7c1;padding-top:17px}
+.motion-usecases article>span{font-size:10px;color:#687b53;letter-spacing:.09em}
+.motion-usecases h3{font-size:18px;font-weight:700;letter-spacing:-.03em;margin:12px 0 8px}
+.motion-usecases p{font-size:13px;line-height:1.85;color:#66705f;margin:0;word-break:keep-all}
+@media(max-width:650px){.motion-usecases{grid-template-columns:1fr;gap:22px}.motion-gallery .panel-heading{font-size:9px}}
+/* The working demo is now the opening visual, immediately after the brief. */
+.hero{display:block;padding-top:34px;padding-bottom:36px}
+.hero-copy{display:grid;grid-template-columns:1.4fr 1fr;gap:0 42px;align-items:center}
+.hero-copy>.kicker{grid-column:1/-1;margin-bottom:22px}
+.hero h1{font-size:clamp(40px,4.5vw,58px);letter-spacing:-.055em;line-height:1.25;margin:0}
+.hero-context{padding-top:3px}
+.hero-description{font-size:20px;line-height:1.55;margin:0 0 13px}
+.hero-detail{font-size:13px;line-height:1.8;margin:0 0 20px}
+.hero .actions{gap:10px}
+.hero .button{padding:12px 16px;font-size:12px;gap:18px}
+.hero-note{font-size:10px;margin-top:14px}
+#demo.section{padding-top:17px;padding-bottom:50px}
+.demo-heading{margin-bottom:22px}
+.demo-heading .eyebrow{margin-bottom:9px}
+.demo-heading h2{font-size:21px;letter-spacing:-.035em}
+.demo-heading>p{font-size:11px;line-height:1.7}
+.site-footer>a:last-child{font-size:10px;color:#66705f}
+@media(max-width:950px){.hero-copy{grid-template-columns:1.3fr 1fr;gap:0 25px}.hero h1{font-size:41px}.hero-description{font-size:17px}.hero-detail{font-size:12px}}
+html[lang="en"] .hero h1{font-size:clamp(30px,3.5vw,48px);line-height:1.15;letter-spacing:-.035em}
+html[lang="en"] .story-title{letter-spacing:-.03em}
+@media(max-width:650px){.site-header nav{flex-wrap:wrap;justify-content:flex-end;gap:10px}html[lang="en"] .hero h1{font-size:clamp(29px,7vw,42px)}}
+@media(max-width:650px){.hero{padding-top:22px;padding-bottom:28px}.hero-copy{display:block}.hero-copy>.kicker{font-size:9px;margin-bottom:18px}.hero h1{font-size:clamp(32px,7.2vw,44px);line-height:1.28}.hero-context{margin-top:24px}.hero-description{font-size:19px}.hero-detail{font-size:13px}.hero .actions{flex-wrap:wrap}.demo-heading h2{font-size:19px}.demo-heading>p{margin-top:12px}.motion-usecases{margin-top:24px}}

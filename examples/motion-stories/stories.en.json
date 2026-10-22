@@ -1,0 +1,149 @@
+{
+  "title": "See the story move.",
+  "duration": 24,
+  "stories": [
+    {
+      "id": "delivery",
+      "label": "Delivery routes",
+      "eyebrow": "01 / DELIVERY NETWORK",
+      "title": "Complex routes become one clear flow.",
+      "lead": "Orders gather, regions take shape, and vehicles start moving.",
+      "phases": [
+        "Collect orders",
+        "Group regions",
+        "Connect routes",
+        "Follow deliveries"
+      ],
+      "note": "Fictional coordinates and predefined routes. Not an optimization engine or measured road performance.",
+      "hub": [
+        160,
+        350
+      ],
+      "stops": [
+        [
+          355,
+          160
+        ],
+        [
+          530,
+          120
+        ],
+        [
+          660,
+          235
+        ],
+        [
+          425,
+          275
+        ],
+        [
+          805,
+          140
+        ],
+        [
+          1035,
+          205
+        ],
+        [
+          1080,
+          350
+        ],
+        [
+          840,
+          385
+        ],
+        [
+          340,
+          485
+        ],
+        [
+          520,
+          560
+        ],
+        [
+          750,
+          550
+        ],
+        [
+          970,
+          515
+        ]
+      ],
+      "before": [
+        [
+          0,
+          10,
+          5,
+          8
+        ],
+        [
+          1,
+          11,
+          4,
+          9
+        ],
+        [
+          2,
+          7,
+          3,
+          6
+        ]
+      ],
+      "after": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          4,
+          5,
+          6,
+          7
+        ],
+        [
+          8,
+          9,
+          10,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "marketing",
+      "label": "Marketing funnel",
+      "eyebrow": "02 / CAMPAIGN JOURNEY",
+      "title": "When attention becomes conversion.",
+      "lead": "Follow the flow from channels to engagement, purchase and return visits.",
+      "phases": [
+        "Reach people",
+        "Build interest",
+        "Create conversions",
+        "Bring people back"
+      ],
+      "note": "All counts and conversion rates are fictional. Moving dots are visual symbols, not customer counts.",
+      "counts": [
+        1200,
+        360,
+        72,
+        24
+      ]
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse flow",
+      "eyebrow": "03 / FULFILLMENT IN MOTION",
+      "title": "From receiving to shipping, in one view.",
+      "lead": "Watch parcels move, racks fill, and orders leave the warehouse.",
+      "phases": [
+        "Receive and inspect",
+        "Sort and store",
+        "Pick orders",
+        "Pack and ship"
+      ],
+      "note": "An original fictional warehouse. Not a real facility layout, operating condition or throughput claim."
+    }
+  ],
+  "language": "en"
+}

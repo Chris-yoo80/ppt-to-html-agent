@@ -1,0 +1,9 @@
+{
+  "title": "작은 도서관, 함께 만드는 이야기",
+  "settings": {"width":1600,"height":900,"font":"story","motion":"key","playback":"both","end":"stop"},
+  "scenes": [
+    {"id":"people","eyebrow":"01 · POINTS / 점에서 시작하기","title":"도서관은 사람들의 만남에서 시작됩니다.","lead":"서로 다른 질문이 모이면, 배움의 공간이 만들어집니다.","layout":"cards","motion":"points","motion_caption":"점으로 표현한 연결의 시작 · 가상 예제","items":[{"label":"독자","body":"사람마다 다른 궁금증을 가지고 찾아옵니다."},{"label":"책","body":"책마다 새로운 관점과 이야기를 건넵니다."},{"label":"대화","body":"읽은 이야기를 나누며 서로의 생각을 연결합니다."}],"message":"작은 만남이 함께 배우는 공간을 만듭니다.","source":"가상 예제 · source.md 1번 장면","duration":6},
+    {"id":"journey","eyebrow":"02 · LINES / 흐름을 설명하기","title":"한 권의 책이 세 단계를 이어줍니다.","lead":"복잡한 규칙 대신 누구나 이해할 수 있는 흐름을 보여줍니다.","layout":"flow","motion":"lines","motion_caption":"선으로 연결하는 참여의 순서 · 가상 예제","items":[{"label":"빌리기","body":"마음에 드는 책을 골라 집에서 읽습니다."},{"label":"돌려주기","body":"다음 독자를 위해 책을 다시 가져옵니다."},{"label":"나누기","body":"짧은 추천 글로 다음 사람의 선택을 돕습니다."}],"message":"명확한 순서가 참여를 쉽게 만듭니다.","source":"가상 예제 · source.md 2번 장면","duration":6},
+    {"id":"spaces","eyebrow":"03 · PLANES / 공간을 나누기","title":"서로 다른 속도를 위한 자리를 만듭니다.","lead":"혼자 읽는 시간과 함께 이야기하는 시간이 한 공간에 공존합니다.","layout":"cards","motion":"planes","motion_caption":"면으로 구분한 활동 영역 · 확정 설계도 아님","items":[{"label":"읽기","body":"집중해서 읽을 수 있는 조용한 자리."},{"label":"만나기","body":"생각과 이야기를 나누는 공동 테이블."},{"label":"만들기","body":"작은 워크숍을 위한 유연한 코너."}],"message":"다른 활동이 하나의 환영하는 공간에 담깁니다.","source":"가상 예제 · source.md 3번 장면","duration":6}
+  ]
+}

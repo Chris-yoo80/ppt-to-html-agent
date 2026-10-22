@@ -1,0 +1,7 @@
+/* Preserve a clear visual region on a narrow embedded player. */
+@media(max-width:650px){
+  .story-head h1{font-size:clamp(15px,3.3vw,22px);max-width:100%;line-height:1.25}
+  .story-head .story-lead{display:none}
+  .story-eyebrow{font-size:8px;margin-bottom:5px}
+  .story-captions{bottom:3%}
+}

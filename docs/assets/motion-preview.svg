@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title description">
+<title id="title">Motion you can pause. A story you can explain.</title><desc id="description">Static conceptual illustrations of a fictional delivery network, a marketing funnel and an isometric warehouse. The live gallery supports play, pause, phase selection and scrubbing.</desc>
+<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#b2c9ef" opacity=".12"/></pattern></defs>
+<rect width="1200" height="420" rx="18" fill="#101622"/>
+<g font-family="Arial, sans-serif"><text x="36" y="39" font-size="11" letter-spacing="2" fill="#a6bcda">THREE FICTIONAL MOTION STUDIES</text><text x="36" y="80" font-size="30" font-weight="700" fill="#edf3fb">Play the flow. Pause to explain.</text><text x="1162" y="40" text-anchor="end" font-size="11" fill="#7f95b0">24 SEC / STORY</text>
+<g transform="translate(24 105)"><rect width="376" height="235" rx="12" fill="#172333"/><rect width="376" height="235" rx="12" fill="url(#dots)"/>
+<text x="20" y="29" font-size="11" letter-spacing="1.5" fill="#93b4e9">01 / DELIVERY</text>
+<path d="M55 135 L135 79 L205 87 L169 124 L55 135 M55 135 L254 85 L314 117 L289 149 L55 135 M55 135 L119 184 L206 191 L294 180 L55 135" fill="none" stroke="#9ebbf7" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M55 135 L119 184 L206 191 L294 180 L55 135" fill="none" stroke="#c5e69b" stroke-width="2.5"/>
+<path d="M55 135 L254 85 L314 117 L289 149 L55 135" fill="none" stroke="#f1bd89" stroke-width="2.5"/>
+<g fill="#9ebbf7"><circle cx="135" cy="79" r="5"/><circle cx="205" cy="87" r="5"/><circle cx="169" cy="124" r="5"/></g><g fill="#f1bd89"><circle cx="254" cy="85" r="5"/><circle cx="314" cy="117" r="5"/><circle cx="289" cy="149" r="5"/></g><g fill="#c5e69b"><circle cx="119" cy="184" r="5"/><circle cx="206" cy="191" r="5"/><circle cx="294" cy="180" r="5"/></g>
+<circle cx="55" cy="135" r="18" fill="#d4e5fc"/><path d="M46 142 V131 L55 124 L64 131 V142 Z" fill="#233d5e"/><rect x="223" y="174" width="15" height="10" rx="3" fill="#d5edae"/>
+<text x="20" y="220" font-size="10" fill="#8199b8">REGIONS → ROUTES → MOVEMENT</text></g>
+<g transform="translate(412 105)"><rect width="376" height="235" rx="12" fill="#172333"/><rect width="376" height="235" rx="12" fill="url(#dots)"/>
+<text x="20" y="29" font-size="11" letter-spacing="1.5" fill="#ebc29f">02 / MARKETING</text>
+<g fill-opacity=".13" stroke-width="1.5"><rect x="27" y="73" width="65" height="113" rx="12" fill="#9ebbf7" stroke="#9ebbf7"/><rect x="113" y="87" width="65" height="85" rx="12" fill="#c5e69b" stroke="#c5e69b"/><rect x="199" y="98" width="65" height="63" rx="12" fill="#f1bd89" stroke="#f1bd89"/><rect x="285" y="109" width="65" height="42" rx="12" fill="#9ebbf7" stroke="#9ebbf7"/></g>
+<path d="M92 130 H113 M178 130 H199 M264 130 H285" stroke="#8da7cb" stroke-dasharray="3 4"/><g fill="#d8edb9"><circle cx="101" cy="130" r="4"/><circle cx="186" cy="130" r="4"/><circle cx="273" cy="130" r="4"/></g>
+<g font-size="10" fill="#e6edf8" text-anchor="middle"><text x="59" y="135">Reach</text><text x="145" y="135">Engage</text><text x="231" y="135">Convert</text><text x="317" y="135">Return</text></g>
+<path d="M316 156 C316 207 146 207 146 181" fill="none" stroke="#c5e69b" stroke-dasharray="4 5"/><text x="20" y="220" font-size="10" fill="#8199b8">ATTENTION → ACTION → RETENTION</text></g>
+<g transform="translate(800 105)"><rect width="376" height="235" rx="12" fill="#172333"/><rect width="376" height="235" rx="12" fill="url(#dots)"/>
+<text x="20" y="29" font-size="11" letter-spacing="1.5" fill="#c4e3b1">03 / WAREHOUSE</text>
+<path d="M179 58 L338 133 L194 201 L35 126 Z" fill="#21384e" stroke="#6284a2"/>
+<g fill="#466d83" stroke="#91b5c8" stroke-width=".6"><path d="M143 89 L174 104 L152 115 L121 100 Z M183 108 L214 123 L192 134 L161 119 Z M223 127 L254 142 L232 153 L201 138 Z M181 71 L212 86 L190 97 L159 82 Z M221 90 L252 105 L230 116 L199 101 Z M261 109 L292 124 L270 135 L239 120 Z"/></g>
+<g fill="#2b4b60"><path d="M121 100 L152 115 V141 L121 126 Z M161 119 L192 134 V160 L161 145 Z M201 138 L232 153 V179 L201 164 Z M159 82 L190 97 V123 L159 108 Z M199 101 L230 116 V142 L199 127 Z M239 120 L270 135 V161 L239 146 Z"/></g>
+<path d="M65 136 L121 162 L165 142 L244 181 L310 149" fill="none" stroke="#c5e69b" stroke-width="2" stroke-dasharray="4 5"/>
+<path d="M90 140 L101 145 L90 151 L79 146 Z M256 164 L267 169 L256 175 L245 170 Z" fill="#e2d3b2"/>
+<text x="20" y="220" font-size="10" fill="#8199b8">RECEIVE → STORE → PICK → SHIP</text></g>
+<path d="M36 370 H1164" stroke="#34465c"/><g fill="#c7e69f"><rect x="36" y="367" width="235" height="6" rx="3"/></g><text x="36" y="398" font-size="11" fill="#9badc5">PLAY / PAUSE / PHASE JUMPS / TIMELINE SCRUBBING</text><text x="1164" y="398" font-size="10" text-anchor="end" fill="#7187a3">ILLUSTRATED PREVIEW · NOT LIVE DATA</text></g>
+</svg>
