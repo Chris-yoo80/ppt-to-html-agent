@@ -4,7 +4,7 @@ Date: 2026-10-23 (Asia/Seoul). Browser: the user's installed Microsoft Edge, con
 
 ## Delivered scope
 
-The marketing analysis is supporting HTML within a presentation, not a separate hosted AI conversion application. Additional resources contains the analysis and the matching Korean/English HTML guide. A standalone analysis file is also supplied. The published dataset contains 24 independently authored fictional campaign records and a matching sample XLSX; no company workbook or private operating model is included.
+The marketing analysis is supporting HTML within a presentation, not a separate hosted AI conversion application. Additional resources contains the analysis and both Korean and English HTML guides inside each presentation file. A standalone analysis file is also supplied. The published dataset contains 24 independently authored fictional campaign records and a matching sample XLSX; no company workbook or private operating model is included.
 
 ## Observed checks
 

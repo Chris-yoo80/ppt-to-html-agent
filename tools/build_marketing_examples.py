@@ -25,8 +25,9 @@ def outputs():
         ]}
         result[f'examples/marketing-analysis/presentation.{language}.json']=json.dumps(deck,ensure_ascii=False,indent=2)+'\n'
         deck['supplements']=[{'id':'campaign','label':'Marketing analysis' if english else '마케팅 분석','html':supplement}]
-        guide=ROOT/f'docs/guide.{language}.html'
-        if guide.exists():deck['supplements'].append({'id':'guide','label':'User guide' if english else '사용설명서','html':guide.read_text(encoding='utf8')})
+        for guide_language in [language,'ko' if english else 'en']:
+            guide=ROOT/f'docs/guide.{guide_language}.html'
+            if guide.exists():deck['supplements'].append({'id':'guide-'+guide_language,'label':'User guide (EN)' if guide_language=='en' else '사용설명서 (KO)','html':guide.read_text(encoding='utf8')})
         result[f'docs/marketing-presentation{suffix}.html']=presentation(deck)
     return result
 
