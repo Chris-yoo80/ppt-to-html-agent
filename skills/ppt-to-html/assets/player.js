@@ -84,6 +84,34 @@
   }
   function go(index){position=Math.max(0,Math.min(steps.length-1,index));render();}
   function next(){if(position<steps.length-1)go(position+1);else if(settings.end==='loop')go(0);else setPlaying(false);}
+  // Build one complete scene per printed page, independent of the current reveal.
+  function preparePrint(){
+    setPlaying(false);
+    const original=position;
+    let root=document.getElementById('print-pages');
+    if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);}
+    root.replaceChildren();
+    let end=-1;
+    try{
+      for(const scene of deck.scenes){
+        end+=scene.items.length;position=end;render();
+        const page=text('article','print-page','');
+        const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
+        const scale=Math.min(1046/settings.width,699/settings.height);
+        copy.style.transform=`scale(${scale})`;copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
+        page.append(copy);root.append(page);
+      }
+    }finally{position=original;render();}
+  }
+  addEventListener('beforeprint',preparePrint);
+  document.getElementById('print')?.addEventListener('click',()=>{
+    preparePrint();document.body.classList.add('print-preview');
+    document.getElementById('print-confirm').focus();
+  });
+  document.getElementById('print-confirm')?.addEventListener('click',()=>window.print());
+  document.getElementById('print-close')?.addEventListener('click',()=>{
+    document.body.classList.remove('print-preview');document.getElementById('print').focus();fit();
+  });
   document.getElementById('prev').addEventListener('click',()=>go(position-1));
   document.getElementById('next').addEventListener('click',next);
   document.getElementById('play').addEventListener('click',()=>setPlaying(!playing));
@@ -94,6 +122,9 @@
     catch{document.getElementById('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
   });
   addEventListener('keydown',event=>{
+    if(document.body.classList.contains('print-preview')){
+      if(event.key==='Escape')document.getElementById('print-close').click();return;
+    }
     if(document.getElementById('supplements-dialog')?.open)return;
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep

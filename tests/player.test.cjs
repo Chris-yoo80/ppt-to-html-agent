@@ -6,10 +6,12 @@ const path=require('node:path');
 const vm=require('node:vm');
 const root=path.join(__dirname,'..');
 class Node {
-  constructor(tag='div'){this.tagName=tag;this.children=[];this.attributes={};this.style={};this.listeners={};this.textContent='';this.className='';this.classList={toggle(){}};}
+  constructor(tag='div'){this.tagName=tag;this.children=[];this.attributes={};this.style={};this.listeners={};this.textContent='';this.className='';this.classList={toggle(){},contains(){return false;}};}
   append(...children){this.children.push(...children);}
   replaceChildren(...children){this.children=children;}
   setAttribute(k,v){this.attributes[k]=v;}
+  removeAttribute(k){delete this.attributes[k];}
+  cloneNode(deep){const n=new Node(this.tagName);n.attributes={...this.attributes};n.style={...this.style};n.className=this.className;n.textContent=this.textContent;if(deep)n.children=this.children.map(c=>c.cloneNode?c.cloneNode(true):{...c});return n;}
   addEventListener(k,v){this.listeners[k]=v;}
   getBoundingClientRect(){return {width:1600,height:900};}
   closest(selector){return selector.includes(this.tagName)?this:null;}
@@ -22,9 +24,23 @@ function launch(deck){
   const doc={body:new Node(),documentElement:new Node(),hidden:false,getElementById:id=>ids[id],createElement:tag=>new Node(tag),createElementNS:(_,tag)=>new Node(tag),createTextNode:text=>({textContent:text}),addEventListener:(type,fn)=>docEvents[type]=fn};
   const ctx={document:doc,matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener:(type,fn)=>events[type]=fn,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
   vm.runInNewContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
-  return {ids,doc,docEvents,timers,key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
+  return {ids,doc,docEvents,timers,events,key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
 }
 const fixture=()=>JSON.parse(fs.readFileSync(path.join(root,'examples/library/deck.json'),'utf8'));
+test('printing includes every scene and hidden reveal, preserving current step and pausing playback',()=>{
+ const deck=fixture();deck.settings.playback='both';const p=launch(deck);
+ p.ids.next.click();const before=p.ids.position.textContent;p.ids.play.click();p.events.beforeprint();
+ const pages=p.doc.body.children.find(n=>n.id==='print-pages').children;
+ assert.equal(pages.length,deck.scenes.length);
+ function collect(n){return [n,...(n.children||[]).flatMap(collect)];}
+ pages.forEach((page,i)=>{
+  const nodes=collect(page),cards=nodes.filter(n=>n.className?.split(' ').includes('item'));
+  assert.equal(cards.length,deck.scenes[i].items.length);
+  assert.ok(cards.every(n=>n.attributes['aria-hidden']==='false'));
+  for(const item of deck.scenes[i].items)assert.ok(nodes.some(n=>n.textContent===item.label));
+ });
+ assert.equal(p.ids.position.textContent,before);assert.equal(p.timers.size,0);assert.equal(p.ids.play.attributes['aria-pressed'],'false');
+});
 test('every reveal has deterministic forward/back navigation and stops at end',()=>{
   const deck=fixture(),p=launch(deck),steps=deck.scenes.flatMap(s=>s.items.map(i=>`${s.title}. ${i.label}`));
   for(let i=0;i<steps.length;i++){

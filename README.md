@@ -12,6 +12,8 @@ A source-available agent skill for turning slide content into interactive HTML p
 
 Open **Additional resources** to view the fictional marketing analysis or the HTML user guide. The presentation pauses and keeps its current reveal; the analysis keeps its settings when you switch resources or return later in the same session.
 
+The initial brief asks about PDF output and backup-resource placement. **Print / PDF** previews every scene with all reveals visible; save through the browser print dialog. Analysis prints the current filters separately. Backup HTML uses labeled resource tabs; raw workbook attachments are opt-in.
+
 ![Marketing analysis in a real Edge browser, with left-side controls and right-side charts](docs/assets/marketing-dashboard.jpg)
 
 Start with purpose, metrics, screen, font and sharing settings. Use period/channel/market slicers on the left and weighted KPIs, trends, funnel counts and channel charts on the right. Add detail tables and explicitly hypothetical scenarios after the basics. Save HTML retains the current analysis settings. No raw workbook is attached automatically; disabling CSV buttons does not remove the data embedded in HTML.

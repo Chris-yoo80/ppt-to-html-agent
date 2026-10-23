@@ -18,6 +18,8 @@ Propose the basic layout and one representative chart first. Let the user accept
 
 ## Campaign starter
 
+Ask whether PDF output is required for the deck, supporting analysis, or both. The deck prints every scene with all reveals visible, one scene per A4 landscape page. The analysis prints the current filters and selected optional sections as static results. Each resource is printed separately; automatic merging of arbitrary backup HTML is not included. Ask for different page formats or inclusion requirements before adapting them. Backup resources use the existing labeled resource tabs, with up to eight reviewed HTML resources per deck. Ask which files, related topics, tab names and output placement the user wants. Raw PPT/Excel attachments remain opt-in.
+
 `scripts/build_analysis.py` renders reviewed JSON records into an offline supporting HTML. Declare `fictional` as true or false and include a `source` reference. Required dimensions: `week`, `channel`, `region`; slicer values are derived from those records. Required nonnegative numeric metrics: `spend`, `impressions`, `clicks`, `orders`, `revenue`; counts must satisfy orders <= clicks <= impressions. The starter's currency is KRW; other currencies need an explicitly adapted and tested formatter. The host inspects the authorized Excel file and prepares this data model with source references. This tool does not execute arbitrary Excel formulas, macros or external connections.
 
 ```text

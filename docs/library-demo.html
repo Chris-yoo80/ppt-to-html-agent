@@ -103,7 +103,33 @@ plain-language summaries are explanatory and do not add permissions.
 
 -->
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>작은 도서관, 함께 만드는 이야기</title><style>:root{color-scheme:light;font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#20251f;background:#eaece7}*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.35}button:focus-visible{outline:3px solid #355ee8;outline-offset:4px}#viewport{position:fixed;inset:0 0 82px;overflow:hidden}#stage{position:absolute;transform-origin:top left;background:#f6f7ef;overflow:hidden;padding:66px 86px 62px;display:flex;flex-direction:column;gap:24px}#stage.serif{font-family:Georgia,"Batang",serif}.deck-top{display:flex;justify-content:space-between;align-items:center;font-size:16px;letter-spacing:.05em;color:#64705f}.deck-mark{display:flex;gap:7px;align-items:center;font-weight:700}.deck-mark i{width:12px;height:12px;border-radius:50%;background:#3158db}.eyebrow{margin:6px 0 0;color:#355b37;font-size:19px;font-weight:700}.scene-title{font-size:58px;letter-spacing:-.045em;line-height:1.2;max-width:1290px;margin:0;word-break:keep-all}.lead{font-size:23px;color:#66705f;line-height:1.65;max-width:1250px;margin:0;word-break:keep-all}.scene-body{display:grid;grid-template-columns:1fr 1fr;gap:44px;flex:1;min-height:0;align-items:center}.scene-body.no-motion{grid-template-columns:1fr}.item-list{display:grid;gap:14px}.item{display:grid;grid-template-columns:46px 1fr;gap:14px;background:#fff;border:1px solid #dce1d2;padding:24px;border-radius:15px;opacity:.22;transform:translateY(10px);transition:opacity .45s,transform .45s}.item.on{opacity:1;transform:none}.item-index{font-size:16px;font-weight:700;border-radius:50%;border:1px solid #d7decd;width:38px;height:38px;display:grid;place-items:center}.item.on .item-index{background:#d8f09c;border-color:#d8f09c}.item h2{font-size:25px;margin:2px 0 8px;word-break:keep-all}.item p{font-size:18px;margin:0;line-height:1.55;color:#626d5b;word-break:keep-all}.item-value{font-size:30px;display:block;color:#3158db;margin-bottom:5px}.compare .item-list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}.motion-box{position:relative;border-radius:24px;background:#e5eadb;align-self:stretch;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:30px}.motion-box svg{width:100%;height:100%;max-height:340px;overflow:visible}.motion-caption{font-size:17px;text-align:center;color:#64705f;margin:4px 0 0}.motion-point,.motion-plane,.motion-link{opacity:.12;transition:opacity .6s,transform .6s,stroke-dashoffset .9s}.motion-point.on,.motion-plane.on,.motion-link.on{opacity:1}.motion-plane{transform:scale(.85);transform-box:fill-box;transform-origin:center}.motion-plane.on{transform:scale(1)}.motion-link{stroke-dasharray:180;stroke-dashoffset:180}.motion-link.on{stroke-dashoffset:0}.motion-label{font-size:16px;fill:#3e4b38}.scene-bottom{display:flex;gap:24px;align-items:center;border-top:1px solid #d3dbc9;padding-top:20px}.message{font-size:23px;font-weight:600;margin:0;flex:1;word-break:keep-all}.source{font-size:13px;color:#707b66;max-width:360px;margin:0;text-align:right}.controls{position:fixed;bottom:0;left:0;right:0;height:82px;background:#fafbf6;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-top:1px solid #d6ddcf}.controls button{border:1px solid #d6ddcf;background:white;border-radius:8px;padding:10px 16px;font-size:14px}.controls button[aria-pressed=true]{background:#d8f09c;border-color:#afcb7d}#position{min-width:150px;text-align:center;font-variant-numeric:tabular-nums;font-size:14px}.keyhint{font-size:11px;color:#74816b;margin-left:14px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@media(max-width:800px){.keyhint{display:none}.controls{height:100px;gap:6px;flex-wrap:wrap;align-content:center}.controls button{padding:8px 10px;font-size:12px}#position{min-width:130px}#viewport{bottom:100px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.item{transform:none}}body.motion-none .item{transition:none;transform:none}body.motion-none .motion-box{display:none}@media print{body{background:white}#viewport{position:static;overflow:visible}#stage{position:relative;transform:none!important;width:100%!important;height:auto!important;padding:15mm}.controls{display:none}.item{opacity:1;transform:none}.motion-point,.motion-plane,.motion-link{opacity:1;transform:none;stroke-dashoffset:0}.source{color:black}}
+<title>작은 도서관, 함께 만드는 이야기</title><style>:root{color-scheme:light;font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#20251f;background:#eaece7}*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.35}button:focus-visible{outline:3px solid #355ee8;outline-offset:4px}#viewport{position:fixed;inset:0 0 82px;overflow:hidden}#stage,.print-stage{position:absolute;transform-origin:top left;background:#f6f7ef;overflow:hidden;padding:66px 86px 62px;display:flex;flex-direction:column;gap:24px}#stage.serif,.print-stage.serif{font-family:Georgia,"Batang",serif}.deck-top{display:flex;justify-content:space-between;align-items:center;font-size:16px;letter-spacing:.05em;color:#64705f}.deck-mark{display:flex;gap:7px;align-items:center;font-weight:700}.deck-mark i{width:12px;height:12px;border-radius:50%;background:#3158db}.eyebrow{margin:6px 0 0;color:#355b37;font-size:19px;font-weight:700}.scene-title{font-size:58px;letter-spacing:-.045em;line-height:1.2;max-width:1290px;margin:0;word-break:keep-all}.lead{font-size:23px;color:#66705f;line-height:1.65;max-width:1250px;margin:0;word-break:keep-all}.scene-body{display:grid;grid-template-columns:1fr 1fr;gap:44px;flex:1;min-height:0;align-items:center}.scene-body.no-motion{grid-template-columns:1fr}.item-list{display:grid;gap:14px}.item{display:grid;grid-template-columns:46px 1fr;gap:14px;background:#fff;border:1px solid #dce1d2;padding:24px;border-radius:15px;opacity:.22;transform:translateY(10px);transition:opacity .45s,transform .45s}.item.on{opacity:1;transform:none}.item-index{font-size:16px;font-weight:700;border-radius:50%;border:1px solid #d7decd;width:38px;height:38px;display:grid;place-items:center}.item.on .item-index{background:#d8f09c;border-color:#d8f09c}.item h2{font-size:25px;margin:2px 0 8px;word-break:keep-all}.item p{font-size:18px;margin:0;line-height:1.55;color:#626d5b;word-break:keep-all}.item-value{font-size:30px;display:block;color:#3158db;margin-bottom:5px}.compare .item-list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}.motion-box{position:relative;border-radius:24px;background:#e5eadb;align-self:stretch;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:30px}.motion-box svg{width:100%;height:100%;max-height:340px;overflow:visible}.motion-caption{font-size:17px;text-align:center;color:#64705f;margin:4px 0 0}.motion-point,.motion-plane,.motion-link{opacity:.12;transition:opacity .6s,transform .6s,stroke-dashoffset .9s}.motion-point.on,.motion-plane.on,.motion-link.on{opacity:1}.motion-plane{transform:scale(.85);transform-box:fill-box;transform-origin:center}.motion-plane.on{transform:scale(1)}.motion-link{stroke-dasharray:180;stroke-dashoffset:180}.motion-link.on{stroke-dashoffset:0}.motion-label{font-size:16px;fill:#3e4b38}.scene-bottom{display:flex;gap:24px;align-items:center;border-top:1px solid #d3dbc9;padding-top:20px}.message{font-size:23px;font-weight:600;margin:0;flex:1;word-break:keep-all}.source{font-size:13px;color:#707b66;max-width:360px;margin:0;text-align:right}.controls{position:fixed;bottom:0;left:0;right:0;height:82px;background:#fafbf6;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-top:1px solid #d6ddcf}.controls button{border:1px solid #d6ddcf;background:white;border-radius:8px;padding:10px 16px;font-size:14px}.controls button[aria-pressed=true]{background:#d8f09c;border-color:#afcb7d}#position{min-width:150px;text-align:center;font-variant-numeric:tabular-nums;font-size:14px}.keyhint{font-size:11px;color:#74816b;margin-left:14px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@media(max-width:800px){.keyhint{display:none}.controls{height:100px;gap:6px;flex-wrap:wrap;align-content:center}.controls button{padding:8px 10px;font-size:12px}#position{min-width:130px}#viewport{bottom:100px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.item{transform:none}}body.motion-none .item{transition:none;transform:none}body.motion-none .motion-box{display:none}@media print{body{background:white}#viewport{position:static;overflow:visible}#stage{position:relative;transform:none!important;width:100%!important;height:auto!important;padding:15mm}.controls{display:none}.item{opacity:1;transform:none}.motion-point,.motion-plane,.motion-link{opacity:1;transform:none;stroke-dashoffset:0}.source{color:black}}
+
+#print-pages{display:none}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body>*{display:none!important}body>#print-pages{display:block!important}
+ .print-page{position:relative;width:277mm;height:185mm;break-after:page;page-break-after:always;overflow:hidden}
+ .print-page:last-child{break-after:auto;page-break-after:auto}
+ .print-stage{position:absolute;left:0;top:0;transform-origin:top left;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .print-stage .item{opacity:1!important;transform:none!important}
+ .print-stage *{animation:none!important;transition:none!important}
+ .print-stage .motion-point,.print-stage .motion-plane,.print-stage .motion-link{opacity:1!important;stroke-dashoffset:0!important;transform:none!important}
+}
+
+#print-toolbar{display:none}
+body.print-preview{background:#eaece7}
+body.print-preview>#viewport,body.print-preview>.controls,body.print-preview>dialog{display:none}
+body.print-preview>#print-toolbar{display:flex;position:sticky;top:0;z-index:5;gap:12px;align-items:center;padding:12px 24px;background:white;border-bottom:1px solid #ccc}
+#print-toolbar p{flex:1;font-size:13px}#print-toolbar button{padding:10px;border:1px solid #ccc;background:white;border-radius:6px}
+body.print-preview>#print-pages{display:block;padding:24px;overflow:auto}
+.print-page{position:relative;width:277mm;height:185mm;overflow:hidden}
+body.print-preview .print-page{background:white;margin:0 auto 24px;box-shadow:0 2px 12px #0002}
+.print-stage{position:absolute;left:0;top:0;transform-origin:top left}
+.print-stage .item{opacity:1;transform:none}
+.print-stage *{animation:none!important;transition:none!important}
+.print-stage .motion-point,.print-stage .motion-plane,.print-stage .motion-link{opacity:1;stroke-dashoffset:0;transform:none}
+@media print{body.print-preview>#print-toolbar{display:none!important}body.print-preview>#print-pages{padding:0!important}.print-page{margin:0!important;box-shadow:none!important}}
 
 /* Finite entrances: no unattended decorative looping. */
 @keyframes point-in{from{opacity:.12;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
@@ -222,8 +248,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
 <nav class="controls" aria-label="발표 조작"><button id="prev" type="button" aria-label="이전 단계">←</button>
 <span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="다음 단계">→</button>
 <button id="play" type="button" aria-pressed="false">자동 재생</button><button id="replay" type="button">처음부터</button>
-<button id="fullscreen" type="button">전체 화면</button><span class="keyhint">← → 단계 이동 · Home 처음 · A 재생</span></nav>
+<button id="fullscreen" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 이동 · Home 처음 · A 재생</span></nav>
 
+<aside id="print-toolbar" aria-label="인쇄 미리보기"><p>전체 장면 · 모든 설명 단계 · A4 가로. 인쇄 창에서 PDF 저장을 선택하세요. 추가 자료는 별도로 출력합니다.</p><button id="print-confirm" type="button">인쇄 / PDF로 저장</button><button id="print-close" type="button">발표로 돌아가기</button></aside>
 <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
 <script type="application/json" id="deck-data">{"title": "작은 도서관, 함께 만드는 이야기", "settings": {"width": 1600, "height": 900, "font": "story", "motion": "key", "playback": "both", "end": "stop"}, "scenes": [{"id": "people", "eyebrow": "01 · POINTS / 점에서 시작하기", "title": "도서관은 사람들의 만남에서 시작됩니다.", "lead": "서로 다른 질문이 모이면, 배움의 공간이 만들어집니다.", "layout": "cards", "motion": "points", "motion_caption": "점으로 표현한 연결의 시작 · 가상 예제", "items": [{"label": "독자", "body": "사람마다 다른 궁금증을 가지고 찾아옵니다."}, {"label": "책", "body": "책마다 새로운 관점과 이야기를 건넵니다."}, {"label": "대화", "body": "읽은 이야기를 나누며 서로의 생각을 연결합니다."}], "message": "작은 만남이 함께 배우는 공간을 만듭니다.", "source": "가상 예제 · source.md 1번 장면", "duration": 6}, {"id": "journey", "eyebrow": "02 · LINES / 흐름을 설명하기", "title": "한 권의 책이 세 단계를 이어줍니다.", "lead": "복잡한 규칙 대신 누구나 이해할 수 있는 흐름을 보여줍니다.", "layout": "flow", "motion": "lines", "motion_caption": "선으로 연결하는 참여의 순서 · 가상 예제", "items": [{"label": "빌리기", "body": "마음에 드는 책을 골라 집에서 읽습니다."}, {"label": "돌려주기", "body": "다음 독자를 위해 책을 다시 가져옵니다."}, {"label": "나누기", "body": "짧은 추천 글로 다음 사람의 선택을 돕습니다."}], "message": "명확한 순서가 참여를 쉽게 만듭니다.", "source": "가상 예제 · source.md 2번 장면", "duration": 6}, {"id": "spaces", "eyebrow": "03 · PLANES / 공간을 나누기", "title": "서로 다른 속도를 위한 자리를 만듭니다.", "lead": "혼자 읽는 시간과 함께 이야기하는 시간이 한 공간에 공존합니다.", "layout": "cards", "motion": "planes", "motion_caption": "면으로 구분한 활동 영역 · 확정 설계도 아님", "items": [{"label": "읽기", "body": "집중해서 읽을 수 있는 조용한 자리."}, {"label": "만나기", "body": "생각과 이야기를 나누는 공동 테이블."}, {"label": "만들기", "body": "작은 워크숍을 위한 유연한 코너."}], "message": "다른 활동이 하나의 환영하는 공간에 담깁니다.", "source": "가상 예제 · source.md 3번 장면", "duration": 6}]}</script><script>/* Offline player. Deck content is data, never executable markup. */
 (() => {
@@ -311,6 +338,34 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
   }
   function go(index){position=Math.max(0,Math.min(steps.length-1,index));render();}
   function next(){if(position<steps.length-1)go(position+1);else if(settings.end==='loop')go(0);else setPlaying(false);}
+  // Build one complete scene per printed page, independent of the current reveal.
+  function preparePrint(){
+    setPlaying(false);
+    const original=position;
+    let root=document.getElementById('print-pages');
+    if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);}
+    root.replaceChildren();
+    let end=-1;
+    try{
+      for(const scene of deck.scenes){
+        end+=scene.items.length;position=end;render();
+        const page=text('article','print-page','');
+        const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
+        const scale=Math.min(1046/settings.width,699/settings.height);
+        copy.style.transform=`scale(${scale})`;copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
+        page.append(copy);root.append(page);
+      }
+    }finally{position=original;render();}
+  }
+  addEventListener('beforeprint',preparePrint);
+  document.getElementById('print')?.addEventListener('click',()=>{
+    preparePrint();document.body.classList.add('print-preview');
+    document.getElementById('print-confirm').focus();
+  });
+  document.getElementById('print-confirm')?.addEventListener('click',()=>window.print());
+  document.getElementById('print-close')?.addEventListener('click',()=>{
+    document.body.classList.remove('print-preview');document.getElementById('print').focus();fit();
+  });
   document.getElementById('prev').addEventListener('click',()=>go(position-1));
   document.getElementById('next').addEventListener('click',next);
   document.getElementById('play').addEventListener('click',()=>setPlaying(!playing));
@@ -321,6 +376,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
     catch{document.getElementById('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
   });
   addEventListener('keydown',event=>{
+    if(document.body.classList.contains('print-preview')){
+      if(event.key==='Escape')document.getElementById('print-close').click();return;
+    }
     if(document.getElementById('supplements-dialog')?.open)return;
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep

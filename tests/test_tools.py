@@ -51,7 +51,7 @@ class ToolTests(unittest.TestCase):
         self.deck['supplements']=[{'id':'extra','label':'Marketing','html':'<!doctype html><script>globalThis.EXTRA=true</script>'}]
         result=build(self.deck)
         self.assertNotIn('<script>globalThis.EXTRA',result)
-        self.assertIn('sandbox="allow-scripts allow-downloads allow-forms"',result)
+        self.assertIn('sandbox="allow-scripts allow-downloads allow-forms allow-modals"',result)
         self.assertNotIn('allow-same-origin',result)
         payload=json.loads(result.split('id="deck-data">',1)[1].split('</script>',1)[0])
         self.assertEqual(payload['supplements'],self.deck['supplements'])

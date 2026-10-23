@@ -32,6 +32,8 @@ For Excel-based charts, interactive slicers or supporting/backup analysis, read 
 
 ## Verify and deliver
 
+Ask about PDF output and backup resource files, placement and tab labels in the initial brief. The bundled Print / PDF button prints all scenes with every reveal visible, one scene per A4 landscape page. Supporting analysis prints its current filters and optional sections separately; resources are not automatically merged into the deck PDF. Preserve the presentation step and pause autoplay after printing. Verify print layout and page count separately from interactive playback.
+
 Check source fidelity, every scene/substep, forward/backward transitions, direct scene navigation, timers on scene changes, replay and end behavior. Check text clipping, overflow, keyboard access and reduced-motion behavior at the agreed output size. For a requested print/PDF mode, inspect the rendered output separately from presentation screenshots.
 
 Distinguish static checks from browser checks. If the host cannot render or operate the output, name the limitation and list the unverified behaviors; do not describe the presentation as visually verified. Do not bypass tool security restrictions to obtain rendering access.
