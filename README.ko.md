@@ -6,7 +6,7 @@ PPT 내용을 읽고 발표 흐름을 설계해, 직접 조작하는 HTML 발표
 
 **초기 버전입니다.** Claude Code·Codex CLI에서 가상 PPT 입력·변환·수정 과정을 확인했습니다. 실제 Edge에서는 마케팅 보충 HTML의 조작과 발표 복귀를 검증했습니다. 모든 파일·환경의 호환성을 보장하는 것은 아닙니다.
 
-[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.html)
+[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
 ## 발표 안에 추가 HTML 넣기
 

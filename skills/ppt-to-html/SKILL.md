@@ -28,7 +28,7 @@ When motion is requested, read [references/motion.md](references/motion.md). Tre
 
 For video-like delivery, marketing or warehouse process scenes, read [references/motion-stories.md](references/motion-stories.md). The bundled presets provide continuous playback and phase control with editable fictional data; they are not optimization solvers or simulations of a real operation.
 
-For Excel-based charts, interactive slicers or supporting/backup analysis, read [references/supplemental-analysis.md](references/supplemental-analysis.md). Establish the analysis brief before building, start with left-side controls and right-side visual results when requested, and add advanced features after the base is agreed. Deliver the analysis as additional HTML accessible from the presentation; do not silently replace the presentation or attach the raw workbook.
+For Excel-based charts, interactive slicers or supporting/backup analysis, read [references/supplemental-analysis.md](references/supplemental-analysis.md). Ask for the workbook location, sheets/ranges, and where the resulting analysis should appear (Additional resources, standalone HTML, or both), including its related scene and tab label. Reuse answers already given. Establish the analysis brief before building, start with left-side controls and right-side visual results when requested, and add advanced features after the base is agreed. Deliver the analysis as additional HTML accessible from the presentation; do not silently replace the presentation or attach the raw workbook.
 
 ## Verify and deliver
 

@@ -15,6 +15,7 @@ def outputs():
     result={}
     for language in ['ko','en']:
         english=language=='en';localized=copy.deepcopy(config);localized['language']=language
+        if english:localized['title']='Fictional campaign analysis'
         suffix='.en' if english else ''
         supplement=analysis(localized)
         result[f'docs/marketing-analysis{suffix}.html']=supplement
