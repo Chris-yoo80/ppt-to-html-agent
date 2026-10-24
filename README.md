@@ -1,10 +1,10 @@
-# PPT to HTML Presentation Agent
+# Excel & PPT → HTML · Motion Agent
 
 **Finding this useful? [⭐ Star this repository](https://github.com/Chris-yoo80/ppt-to-html-agent)** — your support encourages the next update. Stars are optional; download and use the skill anytime.
 
-**Motion you can pause. A story you can explain.**
+**Excel and PPT to HTML — with charts, slicers and video-like motion.**
 
-A source-available agent skill for turning slide content into interactive HTML presentations, with supporting analysis as additional HTML. Play a process, pause to explain, or open the evidence without losing your place. A fictional PPTX workflow was tested in Claude Code and Codex CLI; broader file/host compatibility still needs validation.
+A source-available agent skill for turning PPT content into interactive HTML presentations and reviewed Excel analysis into supporting HTML, with charts, slicers and video-like motion. Motion plays inside HTML; MP4 export is deferred. Play a process, pause to explain, or open the evidence without losing your place. A fictional PPTX workflow was tested in Claude Code and Codex CLI; broader file/host compatibility still needs validation.
 
 [한국어](README.ko.md) · [Install](docs/install.md) · [Verification](docs/verification.md) · [Release status](docs/release-plan.md)
 
