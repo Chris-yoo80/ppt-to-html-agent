@@ -1,5 +1,7 @@
 # PPT to HTML Presentation Agent
 
+**Finding this useful? [⭐ Star this repository](https://github.com/Chris-yoo80/ppt-to-html-agent)** — your support encourages the next update. Stars are optional; download and use the skill anytime.
+
 **Motion you can pause. A story you can explain.**
 
 A source-available agent skill for turning slide content into interactive HTML presentations, with supporting analysis as additional HTML. Play a process, pause to explain, or open the evidence without losing your place. A fictional PPTX workflow was tested in Claude Code and Codex CLI; broader file/host compatibility still needs validation.
