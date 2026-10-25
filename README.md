@@ -119,6 +119,10 @@ GitHub Pages serves the bilingual introduction, HTML guides and examples from `m
 - One fictional five-slide conversion and revision completed in Claude Code and Codex CLI. Other files, hosts and regular ChatGPT/Claude surfaces are not claimed as universally supported.
 - MP4 export, a hosted AI conversion app and verified multipage PDF output are deferred.
 
+## Numeric review
+
+Numeric review checks **units/conversions, denominators, filters/ranges, rounding and source sheet/range**. The evidence dialog exposes those definitions and the current selection. Final reports mark each item **Passed / Needs review** with evidence; embedded metadata alone is not a source audit. See [numeric verification results](docs/verification.md#feedback-1-numeric-verification).
+
 ## Development checks
 
 ```sh

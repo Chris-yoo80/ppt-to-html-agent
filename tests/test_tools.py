@@ -68,6 +68,48 @@ class ToolTests(unittest.TestCase):
         config['records'][0]['clicks']=config['records'][0]['impressions']+1
         with self.assertRaises(ValueError):build_analysis(config)
 
+    def test_analysis_metadata_defines_actual_units_denominators_scope_and_rounding(self):
+        # Newly authored fictional rows: deliberately different denominators/groups.
+        config={'title':'Fictional review case','fictional':True,'source':'Review!A1:H4','records':[
+            {'week':'2026-01-05','channel':'One','region':'North','spend':14000,'impressions':110,'clicks':11,'orders':2,'revenue':23000},
+            {'week':'2026-01-05','channel':'Two','region':'South','spend':27000,'impressions':220,'clicks':22,'orders':3,'revenue':41000},
+            {'week':'2026-01-12','channel':'One','region':'South','spend':8000,'impressions':50,'clicks':5,'orders':1,'revenue':9000}]}
+        before=copy.deepcopy(config)
+        for language in ['ko','en']:
+            config['language']=language
+            result=build_analysis(config)
+            data=json.loads(result.split('id="analysis-data" type="application/json">',1)[1].split('</script>',1)[0])
+            meta=data['metricMetadata']
+            self.assertEqual(meta['source'],'Review!A1:H4')
+            self.assertEqual(meta['sourceUnits']['spend'],'KRW')
+            self.assertEqual(meta['sourceUnits']['revenue'],'KRW')
+            for key,numerator,denominator,unit,multiplier in [('roas','revenue','spend','x',1),('cvr','orders','clicks','%',100),('ctr','clicks','impressions','%',100),('aov','revenue','orders','KRW',1)]:
+                self.assertEqual(meta['rates'][key],dict(numerator=numerator,denominator=denominator,unit=unit,displayMultiplier=multiplier))
+            self.assertEqual(meta['aggregation'],'ratio_of_sums_within_same_filtered_group')
+            self.assertEqual(meta['zeroDenominator'],'unavailable')
+            self.assertEqual(meta['scope']['values'],{'week':['2026-01-05','2026-01-12'],'channel':['One','Two'],'region':['North','South']})
+            self.assertEqual(meta['display']['ko']['moneyDivisor'],10000)
+            self.assertEqual(meta['display']['en']['moneyDivisor'],1000000)
+            self.assertEqual(meta['display']['en']['trendMaxDecimals'],1)
+            self.assertEqual(meta['display']['rateMaxDecimals'],2)
+            self.assertIn('round for display only',meta['rounding'])
+            self.assertIn('not a passed audit',meta['sourceReview'])
+            self.assertIn('id="verification-evidence"',result)
+            self.assertEqual(data['records'],before['records'])
+        config.pop('language')
+        self.assertEqual(config,before) # Builder must not mutate the caller's source.
+
+    def test_analysis_rejects_conflicting_metadata_and_keeps_source_inert(self):
+        config=json.loads((ROOT/'examples/marketing-analysis/data.json').read_text(encoding='utf8'))
+        config['source']='Review!A1:H25 </script><script>globalThis.UNSAFE=true</script>'
+        output=build_analysis(config)
+        self.assertNotIn('<script>globalThis.UNSAFE',output)
+        payload=json.loads(output.split('id="analysis-data" type="application/json">',1)[1].split('</script>',1)[0])
+        self.assertEqual(payload['metricMetadata']['source'],config['source'])
+        self.assertEqual(build_analysis(payload),output) # Canonical metadata is accepted on rebuild.
+        payload['metricMetadata']['rates']['cvr']['denominator']='impressions'
+        with self.assertRaisesRegex(ValueError,'conflicts'):build_analysis(payload)
+
     def test_campaign_workbook_rows_and_cached_formulas_match_reviewed_json(self):
         config=json.loads((ROOT/'examples/marketing-analysis/data.json').read_text(encoding='utf8'))
         ns={'x':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
@@ -84,6 +126,7 @@ class ToolTests(unittest.TestCase):
                 elif value is not None and cell.get('t') not in ('str','e','d'):value=float(value)
                 cells[cell.get('r')]=value
         keys=['week','channel','region','spend','impressions','clicks','orders','revenue']
+        self.assertEqual([cells[f'{col}1'] for col in 'ABCDEFGH'],['Week','Channel','Region','Spend (KRW)','Impressions','Clicks','Orders','Revenue (KRW)'])
         for number,record in enumerate(config['records'],2):
             self.assertEqual([cells[f'{col}{number}'] for col in 'ABCDEFGH'],[record[k] for k in keys])
         expected=config['expected']

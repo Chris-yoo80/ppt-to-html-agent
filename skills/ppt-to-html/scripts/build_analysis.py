@@ -11,6 +11,33 @@ from pathlib import Path
 
 ASSETS=Path(__file__).resolve().parent.parent/'assets'
 
+def metric_metadata(config):
+    """Describe actual starter calculations, not an automatic workbook audit."""
+    return {
+        'version': 1, 'source': config['source'],
+        'sourceUnits': {'spend': 'KRW', 'revenue': 'KRW', 'impressions': 'count', 'clicks': 'count', 'orders': 'count'},
+        'rates': {
+            'roas': {'numerator': 'revenue', 'denominator': 'spend', 'unit': 'x', 'displayMultiplier': 1},
+            'cvr': {'numerator': 'orders', 'denominator': 'clicks', 'unit': '%', 'displayMultiplier': 100},
+            'ctr': {'numerator': 'clicks', 'denominator': 'impressions', 'unit': '%', 'displayMultiplier': 100},
+            'aov': {'numerator': 'revenue', 'denominator': 'orders', 'unit': 'KRW', 'displayMultiplier': 1},
+        },
+        'aggregation': 'ratio_of_sums_within_same_filtered_group', 'zeroDenominator': 'unavailable',
+        'scope': {'dimensions': ['week', 'channel', 'region'],
+                  'values': {key: sorted({r[key] for r in config['records']}) for key in ['week', 'channel', 'region']},
+                  'filters': 'AND across dimensions; OR within selected channels',
+                  'channelComparison': 'numerator and denominator restricted to each selected channel'},
+        'display': {
+            'ko': {'moneyThreshold': 10000, 'moneyDivisor': 10000, 'moneyUnit': '만원', 'moneyMaxDecimals': 1, 'trendDivisor': 10000, 'trendMaxDecimals': 1},
+            'en': {'moneyThreshold': 1000000, 'moneyDivisor': 1000000, 'moneyUnit': 'KRW millions', 'moneyMaxDecimals': 2, 'trendDivisor': 1000000, 'trendMaxDecimals': 1},
+            'belowThreshold': {'unit': 'KRW', 'divisor': 1, 'maxDecimals': 0},
+            'rateMaxDecimals': 2, 'countsMaxDecimals': 0,
+        },
+        'rounding': 'aggregate unrounded source values; round for display only; displayed parts may not sum to displayed total',
+        'sourceReview': 'requires comparison with the authorized workbook; metadata alone is not a passed audit',
+    }
+
+
 def build(config):
     if not isinstance(config,dict) or not isinstance(config.get('title'),str):raise ValueError('A title is required')
     if type(config.get('fictional')) is not bool:raise ValueError('Declare fictional as true or false')
@@ -30,7 +57,10 @@ def build(config):
             if type(value) not in (int,float) or not math.isfinite(value) or value<0:raise ValueError(f'Invalid metric: {key}')
         if record['orders']>record['clicks'] or record['clicks']>record['impressions']:raise ValueError('Inconsistent funnel counts')
     page=(ASSETS/'analysis-template.html').read_text(encoding='utf8')
-    data=json.dumps(config,ensure_ascii=False,allow_nan=False).replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e')
+    metadata=metric_metadata(config)
+    if 'metricMetadata' in config and config['metricMetadata']!=metadata:
+        raise ValueError('metricMetadata conflicts with the starter calculations; adapt and test the model before changing definitions')
+    data=json.dumps({**config,'metricMetadata':metadata},ensure_ascii=False,allow_nan=False).replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e')
     legal=(ASSETS.parent/'LICENSE').read_text(encoding='utf8').replace('--','- -')
     page=page.replace('<body>','<body><template id="analysis-license"><pre>'+html.escape('Copyright (c) 2026 Chris-yoo80. Embedded runtime. Presentation Output Exception applies.\n'+legal)+'</pre></template>',1)
     return '<!-- Copyright (c) 2026 Chris-yoo80. Presentation Output Exception applies.\n'+legal+'\n-->\n'+page.replace('__TITLE__',html.escape(config['title'])).replace('__CSS__',(ASSETS/'analysis.css').read_text(encoding='utf8')).replace('__DATA__',data).replace('__MODEL__',(ASSETS/'analysis-model.js').read_text(encoding='utf8')).replace('__UI__',(ASSETS/'analysis-ui.js').read_text(encoding='utf8'))

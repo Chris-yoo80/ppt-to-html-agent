@@ -81,6 +81,10 @@ python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --out
 
 결과 파일을 허용된 브라우저에서 열고 화면의 화살표로 진행합니다. 예제는 3개 장면·9개 단계이며 마지막에 정지합니다. 입력은 가상 Markdown에서 직접 만든 장면 JSON으로, 실제 PPT 자동 변환 사례는 아닙니다.
 
+## 수치 검수
+
+수치 검수는 **단위·환산, 분모, 필터·범위, 반올림, 원본 시트·범위**를 대조합니다. 근거 화면에서 정의와 현재 선택 범위를 확인하고, 최종 보고에는 항목별 **통과 / 확인 필요**와 근거를 남깁니다. 메타데이터만으로 원본 일치를 보증하지 않습니다. [수치 검수 결과](docs/verification.ko.md)를 확인하세요.
+
 ## 현재 한계
 
 원본 PPT의 배치를 그대로 복원하거나 OCR·차트 워크북·DRM을 처리하지 않습니다. 기본 템플릿은 장면당 짧은 항목 1~4개를 지원합니다. 복잡한 레이아웃·지정 글꼴은 추가 구현과 화면 검증이 필요합니다.
@@ -88,3 +92,14 @@ python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --out
 구문·데이터 검사는 실제 화면 검증을 대신하지 않습니다. 브라우저 렌더링, 모든 단계 조작, 다른 비율, 인쇄는 별도 확인 대상입니다. 완전한 다중 페이지 PDF와 MP4 출력은 구현하지 않았습니다.
 
 한국어·영어 소개 페이지와 데모는 GitHub Pages의 `main` / `/docs`로 배포합니다. 영문 페이지는 `python tools/localize_site.py`로 재생성합니다.
+
+## 개발 검사 (Development checks)
+
+```text
+python -m unittest discover -s tests -v
+node --check skills/ppt-to-html/assets/player.js
+node --check docs/site.js
+python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --output docs/library-demo.html
+python skills/ppt-to-html/scripts/build_motion_demo.py examples/motion-stories/stories.json --output docs/demo.html
+node --test tests/motion.test.cjs
+```

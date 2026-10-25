@@ -31,6 +31,24 @@ Local checks completed on 2026-10-22. This is an early preview, not an end-to-en
 
 The sample source is independently authored Markdown. The synthetic extractor fixture is not presented as a real PowerPoint or a full conversion example. A new fictional PPTX and permitted browser QA are still required for broader release claims.
 
+## Feedback 1: numeric verification
+
+[한국어 검수 기록](verification.ko.md). This section records the 2026-10-25 review change; the older dated records below/above retain their own scope. Only task 1 is included. Tasks 2–5 await separate review.
+
+Generated HTML carries `metricMetadata` with source units, denominators, scope, display divisors/precision and rounding policy. The evidence dialog exposes these definitions and the current filters. Metadata alone does not certify source agreement. Every final delivery report must use the checklist below, marking **Passed or Needs review**, with evidence for every row. Missing definitions or unperformed checks remain Needs review.
+
+| Item | Fictional marketing fixture result | Evidence / limits |
+|---|---|---|
+| Units and conversion | Passed: source money is KRW; counts are counts; rates are % and ROAS x. | Campaign!D1/H1 say KRW. All 24 rows match the JSON. Korean money ≥10,000 KRW uses /10,000 with max 1 decimal; English money ≥1,000,000 uses /1,000,000 with max 2 decimals. Below thresholds: whole KRW. Trend axes use those divisors with max 1 decimal. Rates: max 2 decimals. These are explicit display conversions, not identical unit labels. |
+| Denominators | Passed for this fixture's implemented definitions. | ROAS = 197,711,000 / 33,661,480 = 5.873508829677126 (display 5.87x). Purchase conversion = 3,383 / 72,906 = 4.640221655282144% (display 4.64%). Each channel uses its own spend/clicks denominator. Zero denominator is unavailable. Workbook cached ROAS and source totals are compared; arbitrary workbook metric definitions still need review. |
+| Filters / ranges | Passed for reviewed rows and model selections. | Campaign!A1:H25: four week-start labels (2026-09-07/14/21/28), three channels, two markets, 24 rows. 2026-09-07 + Search + Domestic selects one row: spend 2,592,000; revenue 7,946,000; clicks 3,600; orders 137; ROAS 3.07x, conversion 3.81%. Empty-selection and channel-group tests also run. Week labels are week starts, not inferred campaign end dates. |
+| Rounding | Passed for source sums and tested display cases. | Aggregate raw values first. Total revenue displays as KRW 197.71M / 19,771.1만원. Channel revenue labels sum to those displayed totals in this fixture (104.37+61.83+31.51=197.71M). A new fictional edge case verifies that separately rounded parts can differ (2.30+4.10+1.40 vs total 7.81 million) without changing source totals. No forced reconciliation. |
+| Source provenance | Passed in generated metadata and evidence output. | Source preserved as campaign-source.xlsx / Campaign!A1:H25. Metadata contains the source reference and cannot silently override the starter's numerator/denominator definitions. Conflicting metadata and hostile source strings are tested. |
+
+Automated scope: Python source-row/cache, metadata/schema and inert-output checks; Node weighted sums, same-group denominators, filters, zero denominators and rounding checks. This is a controlled fictional fixture, not a universal workbook converter. Excel desktop execution and saved-PDF inspection were not performed. The new task-2 motion/print retention checks are not included in this task.
+
+Local Edge observation: the new English evidence dialog showed all 24 records and exact source totals. Filtering to 2026-09-07 + Search + Domestic updated the evidence to one row (spend 2,592,000; revenue 7,946,000; orders 137; clicks 3,600). The Korean view showed the same row with the /10,000 display policy. Clearing all channels showed none / zero rows and zero source sums. The dialog was visually inspected; screenshot: [numeric review](assets/feedback1-numeric-review.jpg). These observations cover the new evidence UI, not a new full-browser regression suite. All six Development checks passed; the full local suite passed 11 Python + 15 Node tests. Static generated-output, local-link and 34-entry package checks passed. No push, merge or deployment was performed.
+
 ## Reproduce
 
 From the repository root:

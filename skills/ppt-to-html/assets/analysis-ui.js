@@ -15,8 +15,9 @@
  const channelName=key=>({Search:'search',Social:'social',Email:'email'}[key]?t({Search:'search',Social:'social',Email:'email'}[key]):key);
  const regionName=key=>key==='Domestic'?t('domestic'):key==='International'?t('international'):key;
  const number=(v,d=0)=>v===null?'—':new Intl.NumberFormat(language==='en'?'en-US':'ko-KR',{maximumFractionDigits:d}).format(v);
- const money=v=>v===null?'—':language==='en'?'₩'+number(v>=1000000?v/1000000:v,v>=1000000?2:0)+(v>=1000000?'M':''):v>=10000?number(v/10000,1)+'만원':number(v)+'원';
- const ratio=v=>v===null?'—':number(v,2)+'×',percent=v=>v===null?'—':number(v*100,2)+'%';
+ const displayPolicy=data.metricMetadata?.display||{ko:{moneyThreshold:10000,moneyDivisor:10000,moneyMaxDecimals:1,trendDivisor:10000,trendMaxDecimals:1},en:{moneyThreshold:1000000,moneyDivisor:1000000,moneyMaxDecimals:2,trendDivisor:1000000,trendMaxDecimals:1},rateMaxDecimals:2};
+ const money=v=>{if(v===null)return '—';const policy=displayPolicy[language],compact=v>=policy.moneyThreshold,amount=number(compact?v/policy.moneyDivisor:v,compact?policy.moneyMaxDecimals:0);return language==='en'?'₩'+amount+(compact?'M':''):amount+(compact?'만원':'원');};
+ const ratio=v=>v===null?'—':number(v,displayPolicy.rateMaxDecimals)+'×',percent=v=>v===null?'—':number(v*100,displayPolicy.rateMaxDecimals)+'%';
  function filters(){return {week:$('week').value,region:$('region').value,channels:[...document.querySelectorAll('input[name=channel]:checked')].map(n=>n.value)};}
  function svg(tag,attrs,parent){const n=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v]of Object.entries(attrs))n.setAttribute(k,v);parent.append(n);return n;}
  function label(parent,x,y,value,attrs={}){const n=svg('text',{x,y,fill:'#8a9b8f','font-size':11,'font-family':'sans-serif',...attrs},parent);n.textContent=value;return n;}
@@ -25,9 +26,9 @@
   const node=$('trend-chart');node.replaceChildren();
   const compact=node.getBoundingClientRect().width<480,width=compact?440:660,start=70,end=width-15,plotWidth=end-start;
   node.setAttribute('viewBox','0 0 '+width+' 265');
-  const weeks=M.group(selected,'week'),max=Math.max(1,...weeks.flatMap(r=>[r.revenue,r.spend])),unit=language==='en'?1000000:10000;
+  const weeks=M.group(selected,'week'),max=Math.max(1,...weeks.flatMap(r=>[r.revenue,r.spend])),unit=displayPolicy[language].trendDivisor;
   label(node,start,16,language==='en'?'KRW millions':'KRW / 10,000',{'font-size':compact?12:10});
-  for(let i=0;i<4;i++){const y=30+i*57;svg('line',{x1:start,y1:y,x2:end,y2:y,stroke:'#eaf0e7'},node);label(node,start-10,y+4,number(max*(1-i/3)/unit,1),{'text-anchor':'end','font-size':compact?14:10});}
+  for(let i=0;i<4;i++){const y=30+i*57;svg('line',{x1:start,y1:y,x2:end,y2:y,stroke:'#eaf0e7'},node);label(node,start-10,y+4,number(max*(1-i/3)/unit,displayPolicy[language].trendMaxDecimals),{'text-anchor':'end','font-size':compact?14:10});}
   if(!weeks.length)return;const coords=[];
   weeks.forEach((r,i)=>{const x=start+(i+.5)*(plotWidth/weeks.length),h=r.revenue/max*171,w=Math.min(76,plotWidth/weeks.length*.55);const bar=svg('rect',{x:x-w/2,y:201-h,width:w,height:h,rx:4,fill:'#407d65'},node);const title=svg('title',{},bar);title.textContent=r.label+' / '+t('revenue')+' '+number(r.revenue)+' KRW';coords.push([x,201-r.spend/max*171]);label(node,x,232,r.label.slice(5),{'text-anchor':'middle','font-size':compact?14:11});});
   svg('path',{d:coords.map((p,i)=>(i?'L':'M')+p.join(' ')).join(' '),fill:'none',stroke:'#dd9c79','stroke-width':3,'stroke-linejoin':'round'},node);for(const [x,y]of coords)svg('circle',{cx:x,cy:y,r:4,fill:'#dd9c79',stroke:'white','stroke-width':2},node);
@@ -36,6 +37,19 @@
  function drawChannels(){const node=$('channel-bars');node.replaceChildren();const groups=M.group(selected,'channel').sort((a,b)=>(b.roas??-1)-(a.roas??-1)),max=Math.max(1,...groups.map(r=>r.roas??0));for(const r of groups){const row=document.createElement('div');row.className='channel-row';const name=document.createElement('span');name.textContent=channelName(r.label);const track=document.createElement('div');track.className='channel-track';const bar=document.createElement('div');bar.className='channel-fill';bar.style.width=((r.roas??0)/max*100)+'%';bar.style.background=colors[r.label]||'#658b78';track.append(bar);const value=document.createElement('strong');value.textContent=ratio(r.roas);const rev=document.createElement('small');rev.textContent=money(r.revenue);row.append(name,track,value,rev);node.append(row);}}
  function drawScenario(){const node=$('scenario-chart');node.replaceChildren();if(!hypothesis)return;const max=Math.max(1,totals.revenue,hypothesis.revenue);for(const [i,name,value,color]of [[0,t('base'),totals.revenue,'#849d82'],[1,t('estimate'),hypothesis.revenue,'#285c45']]){label(node,0,35+i*70,name,{'font-size':12});svg('rect',{x:75,y:15+i*70,width:value/max*240,height:30,rx:4,fill:color},node);label(node,330,35+i*70,money(value),{fill:'#37543c','font-size':13});}}
  function details(){const node=$('detail-rows');node.replaceChildren();for(const r of selected){const tr=document.createElement('tr');for(const value of [r.week,channelName(r.channel),regionName(r.region),number(r.spend),number(r.clicks),number(r.orders),number(r.revenue)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}node.append(tr);}}
+ function renderEvidence(){
+  const node=$('verification-evidence');if(!node)return;node.replaceChildren();
+  const en=language==='en',f=filters(),policy=displayPolicy[language];
+  const rows=[
+   [en?'Units and conversion':'단위와 환산',en?'Source amounts: KRW; quantities: counts. Amounts ≥ '+number(policy.moneyThreshold)+' KRW are divided by '+number(policy.moneyDivisor)+' (max '+policy.moneyMaxDecimals+' decimals); smaller amounts use KRW. Trend axis uses KRW / '+number(policy.trendDivisor)+'. Rates: %; ROAS: ×.':'원본 금액: 원(KRW), 수량: 건·개·회. '+number(policy.moneyThreshold)+'원 이상 금액은 '+number(policy.moneyDivisor)+'으로 나눠 만원 단위 최대 '+policy.moneyMaxDecimals+'자리로 표시하며, 그 미만은 원 단위입니다. 추이 축: 원 ÷ '+number(policy.trendDivisor)+'. 비율: %, ROAS: 배(×).'],
+   [en?'Denominators':'분모 정의',en?'ROAS = SUM(revenue) / SUM(spend); purchase conversion = SUM(orders) / SUM(clicks); CTR = SUM(clicks) / SUM(impressions). Use the same filtered records for both sides; each channel uses its own group. Zero denominator: unavailable.':'ROAS = 매출 합계 / 광고비 합계, 구매 전환율 = 구매 합계 / 클릭 합계, 클릭률 = 클릭 합계 / 노출 합계. 분자·분모에 같은 필터를 적용하며 채널 비교는 해당 채널 안에서 집계합니다. 분모 0은 계산 불가입니다.'],
+   [en?'Current filters and range':'현재 필터와 범위',t('period')+': '+$('week').selectedOptions[0].textContent+' · '+t('region')+': '+$('region').selectedOptions[0].textContent+' · '+t('channels')+': '+(f.channels.map(channelName).join(', ')||(en?'none':'없음'))+' · '+selected.length+' '+t('records')],
+   [en?'Unrounded source totals':'반올림 전 원본 합계',t('spend')+': '+String(totals.spend)+' KRW · '+t('revenue')+': '+String(totals.revenue)+' KRW · '+t('orders')+': '+String(totals.orders)+' · '+t('clicks')+': '+String(totals.clicks)],
+   [en?'Rounding':'반올림',en?'Aggregate unrounded values first. Rates: max '+displayPolicy.rateMaxDecimals+' decimals; trend: max '+policy.trendMaxDecimals+' decimal. Rounded parts may not sum to the rounded total; source totals are not adjusted.':'원본 정밀도로 먼저 집계하고 표시할 때만 반올림합니다. 비율은 최대 '+displayPolicy.rateMaxDecimals+'자리, 추이 축은 최대 '+policy.trendMaxDecimals+'자리입니다. 표시된 부분 합계와 전체 합계는 다를 수 있으며 원본 합계는 보정하지 않습니다.'],
+   [en?'Source and review':'출처와 원본 대조',data.source+' · '+(en?'Definitions describe this starter; verify agreement against the source workbook.':'이 정의는 현재 계산 방식이며, 원본 엑셀과의 일치는 별도로 검수해야 합니다.')]
+  ];
+  for(const [name,value]of rows){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=name;dd.textContent=value;node.append(dt,dd);}
+ }
  function render(){
   selected=M.select(data.records,filters());totals=M.sum(selected);hypothesis=$('scenario-enabled').checked?M.scenario(totals,Number($('budget').value),Number($('conversion').value),Number($('aov').value)):null;
   $('scenario-inputs').disabled=!$('scenario-enabled').checked;$('scenario-panel').hidden=!$('scenario-enabled').checked;
@@ -46,7 +60,7 @@
   for(const [id,key,format]of [['spend','spend',money],['revenue','revenue',money],['roas','roas',ratio],['cvr','cvr',percent]]){$('kpi-'+id).textContent=selected.length?format(totals[key]):'—';$('forecast-'+id).textContent=hypothesis?t('estimate')+' '+format(hypothesis[key]):'';}
   document.querySelectorAll('.kpis article').forEach((n,i)=>n.classList.toggle('highlight',i===(brief.focus==='conversion'?3:2)));document.body.classList.toggle('serif',brief.font==='serif');document.body.classList.toggle('focus-conversion',brief.focus==='conversion');document.body.classList.toggle('presentation',brief.screen==='presentation');
   const allowed=brief.share==='source';$('source-download').disabled=!allowed;$('csv-download').disabled=!allowed;$('source-download').title=allowed?t('sourceOn'):t('sourceOff');$('detail-panel').hidden=!$('detail-enabled').checked;
-  drawTrend();drawFunnel();drawChannels();drawScenario();details();
+  drawTrend();drawFunnel();drawChannels();drawScenario();details();renderEvidence();
  }
  function syncBrief(){for(const key of ['purpose','focus','screen','font','share'])$('brief-'+key).value=brief[key];}
  function save(name,bytes,type){const url=URL.createObjectURL(new Blob([bytes],{type})),link=document.createElement('a');link.href=url;link.download=name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}

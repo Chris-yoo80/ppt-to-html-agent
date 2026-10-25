@@ -7,6 +7,24 @@ test('campaign totals and rates use weighted source sums',()=>{
  assert.equal(a.roas,197711000/33661480);assert.equal(a.cvr,3383/72906);
  const average=data.records.reduce((s,r)=>s+r.revenue/r.spend,0)/data.records.length;assert.notEqual(a.roas,average);
 });
+
+test('display rounding does not replace raw totals or a filtered-group denominator',()=>{
+ const rows=[
+  {week:'2026-01-05',channel:'One',region:'North',spend:1400000,impressions:110,clicks:11,orders:2,revenue:2304000},
+  {week:'2026-01-05',channel:'Two',region:'South',spend:2700000,impressions:220,clicks:22,orders:3,revenue:4104000},
+  {week:'2026-01-12',channel:'One',region:'South',spend:800000,impressions:50,clicks:5,orders:1,revenue:1404000}
+ ];
+ const snapshot=JSON.stringify(rows),total=M.sum(rows);
+ const format=v=>new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(v/1000000);
+ assert.equal(format(total.revenue),'7.81');
+ assert.equal(rows.reduce((s,r)=>s+Math.round(Number(format(r.revenue))*100),0),780);
+ assert.equal(total.revenue,7812000);assert.equal(total.cvr,6/38);
+ const group=M.group(rows,'channel').find(r=>r.label==='One');
+ assert.equal(group.roas,3708000/2200000);assert.notEqual(group.roas,3708000/total.spend);
+ const filtered=M.sum(M.select(rows,{week:'2026-01-05',channels:['One'],region:'North'}));
+ assert.equal(filtered.cvr,2/11);assert.equal(filtered.roas,2304000/1400000);
+ assert.equal(JSON.stringify(rows),snapshot);
+});
 test('period, channel and market slicers select the exact original row',()=>{
  const rows=M.select(data.records,{week:'2026-09-07',region:'Domestic',channels:['Search']});
  assert.equal(rows.length,1);assert.equal(rows[0].spend,2592000);assert.equal(rows[0].revenue,7946000);assert.equal(M.sum(rows).orders,137);
