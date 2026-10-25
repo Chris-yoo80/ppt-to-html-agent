@@ -121,6 +121,9 @@ GitHub Pages serves the bilingual introduction, HTML guides and examples from `m
 
 ## Numeric review
 
+Unit review also covers **length, area, volume, mass, time, speed, energy/power and compound/business units**. The offline unit helper checks supported declared conversions and flags unknown units, incompatible dimensions or missing packing factors as Needs review. It does not automatically interpret arbitrary workbooks or change the KRW campaign charts. See the [fictional unit examples](examples/unit-verification/README.md).
+
+
 Numeric review checks **units/conversions, denominators, filters/ranges, rounding and source sheet/range**. The evidence dialog exposes those definitions and the current selection. Final reports mark each item **Passed / Needs review** with evidence; embedded metadata alone is not a source audit. See [numeric verification results](docs/verification.md#feedback-1-numeric-verification).
 
 ## Development checks

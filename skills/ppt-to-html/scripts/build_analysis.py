@@ -8,6 +8,7 @@ import html
 import json
 import math
 from pathlib import Path
+from unit_audit import audit_checks
 
 ASSETS=Path(__file__).resolve().parent.parent/'assets'
 
@@ -60,7 +61,12 @@ def build(config):
     metadata=metric_metadata(config)
     if 'metricMetadata' in config and config['metricMetadata']!=metadata:
         raise ValueError('metricMetadata conflicts with the starter calculations; adapt and test the model before changing definitions')
-    data=json.dumps({**config,'metricMetadata':metadata},ensure_ascii=False,allow_nan=False).replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e')
+    payload={**config,'metricMetadata':metadata}
+    if 'unitChecks' in config:
+        payload['unitAudit']=audit_checks(config['unitChecks'])
+    else:
+        payload.pop('unitAudit',None) # Do not retain an unsubstantiated caller-supplied pass.
+    data=json.dumps(payload,ensure_ascii=False,allow_nan=False).replace('&','\\u0026').replace('<','\\u003c').replace('>','\\u003e')
     legal=(ASSETS.parent/'LICENSE').read_text(encoding='utf8').replace('--','- -')
     page=page.replace('<body>','<body><template id="analysis-license"><pre>'+html.escape('Copyright (c) 2026 Chris-yoo80. Embedded runtime. Presentation Output Exception applies.\n'+legal)+'</pre></template>',1)
     return '<!-- Copyright (c) 2026 Chris-yoo80. Presentation Output Exception applies.\n'+legal+'\n-->\n'+page.replace('__TITLE__',html.escape(config['title'])).replace('__CSS__',(ASSETS/'analysis.css').read_text(encoding='utf8')).replace('__DATA__',data).replace('__MODEL__',(ASSETS/'analysis-model.js').read_text(encoding='utf8')).replace('__UI__',(ASSETS/'analysis-ui.js').read_text(encoding='utf8'))

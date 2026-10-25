@@ -33,6 +33,8 @@ The supporting page starts with a setup dialog. Its optional CSV control only en
 
 ## Verify in a real browser
 
+Units are not limited to money. For physical/compound units and packing counts, use the generic unit comparison workflow in [numeric-verification.md](numeric-verification.md). The campaign starter remains KRW-based; optional `unitChecks` add declared comparisons to its evidence dialog, not new chart formats.
+
 Apply [numeric-verification.md](numeric-verification.md): units/conversions, denominators, filters/ranges, rounding and provenance. Compare source totals and an exact filtered row, reporting each item as Passed or Needs review with evidence. Embedded `metricMetadata` describes implementation, not automatic workbook certification.
 
 Check setup, filters including an empty selection, weighted totals, charts, assumptions, reset, language, optional detail, save/reopen, narrow-screen layout and reduced motion. In the parent presentation, check pause-on-open, resource selection, Escape/close, focus return and preservation of the current reveal. Avoid parent navigation shortcuts firing while a supporting dialog is open. Keep static/unit checks distinct from these browser observations.

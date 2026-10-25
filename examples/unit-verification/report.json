@@ -1,0 +1,263 @@
+{
+  "status": "needs_review",
+  "scope": "declared_values_only",
+  "checks": [
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/0",
+      "sourceUnit": "m",
+      "displayUnit": "mm",
+      "sourceValue": "1.25",
+      "displayValue": "1250",
+      "sourceDimensions": {
+        "length": 1
+      },
+      "displayDimensions": {
+        "length": 1
+      },
+      "conversionFactor": "1000",
+      "expectedExact": "1250",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/1",
+      "sourceUnit": "m²",
+      "displayUnit": "cm²",
+      "sourceValue": "2",
+      "displayValue": "20000",
+      "sourceDimensions": {
+        "length": 2
+      },
+      "displayDimensions": {
+        "length": 2
+      },
+      "conversionFactor": "10000",
+      "expectedExact": "20000",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/2",
+      "sourceUnit": "L",
+      "displayUnit": "m³",
+      "sourceValue": "2.5",
+      "displayValue": ".0025",
+      "sourceDimensions": {
+        "length": 3
+      },
+      "displayDimensions": {
+        "length": 3
+      },
+      "conversionFactor": "1/1000",
+      "expectedExact": "1/400",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/3",
+      "sourceUnit": "kg",
+      "displayUnit": "t",
+      "sourceValue": "1200",
+      "displayValue": "1.2",
+      "sourceDimensions": {
+        "mass": 1
+      },
+      "displayDimensions": {
+        "mass": 1
+      },
+      "conversionFactor": "1/1000",
+      "expectedExact": "6/5",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/4",
+      "sourceUnit": "min",
+      "displayUnit": "h",
+      "sourceValue": "90",
+      "displayValue": "1.5",
+      "sourceDimensions": {
+        "time": 1
+      },
+      "displayDimensions": {
+        "time": 1
+      },
+      "conversionFactor": "1/60",
+      "expectedExact": "3/2",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/5",
+      "sourceUnit": "km/h",
+      "displayUnit": "m/s",
+      "sourceValue": "36",
+      "displayValue": "10",
+      "sourceDimensions": {
+        "length": 1,
+        "time": -1
+      },
+      "displayDimensions": {
+        "length": 1,
+        "time": -1
+      },
+      "conversionFactor": "5/18",
+      "expectedExact": "10",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/6",
+      "sourceUnit": "item/h",
+      "displayUnit": "item/min",
+      "sourceValue": "720",
+      "displayValue": "12",
+      "sourceDimensions": {
+        "count:item": 1,
+        "time": -1
+      },
+      "displayDimensions": {
+        "count:item": 1,
+        "time": -1
+      },
+      "conversionFactor": "1/60",
+      "expectedExact": "12",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/7",
+      "sourceUnit": "KRW/kg",
+      "displayUnit": "원/g",
+      "sourceValue": "800",
+      "displayValue": ".8",
+      "sourceDimensions": {
+        "currency:KRW": 1,
+        "mass": -1
+      },
+      "displayDimensions": {
+        "currency:KRW": 1,
+        "mass": -1
+      },
+      "conversionFactor": "1/1000",
+      "expectedExact": "4/5",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/8",
+      "sourceUnit": "kWh",
+      "displayUnit": "J",
+      "sourceValue": "1",
+      "displayValue": "3600000",
+      "sourceDimensions": {
+        "mass": 1,
+        "length": 2,
+        "time": -2
+      },
+      "displayDimensions": {
+        "mass": 1,
+        "length": 2,
+        "time": -2
+      },
+      "conversionFactor": "3600000",
+      "expectedExact": "3600000",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "passed",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/9",
+      "sourceUnit": "box",
+      "displayUnit": "item",
+      "sourceValue": "3",
+      "displayValue": "24",
+      "sourceDimensions": {
+        "count:box": 1
+      },
+      "displayDimensions": {
+        "count:item": 1
+      },
+      "definitionSourceRef": "checks.json#/definitions/packing/itemsPerBox",
+      "conversionFactor": "8",
+      "expectedExact": "24",
+      "code": "conversion_matches",
+      "reason": "Declared values, dimensions and conversion agree; workbook extraction/source agreement still requires review."
+    },
+    {
+      "status": "needs_review",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/10",
+      "sourceUnit": "m",
+      "displayUnit": "m²",
+      "sourceValue": "1",
+      "displayValue": "1",
+      "sourceDimensions": {
+        "length": 1
+      },
+      "displayDimensions": {
+        "length": 2
+      },
+      "code": "dimension_mismatch",
+      "reason": "Incompatible dimensions or count meanings; do not relabel or invent a conversion."
+    },
+    {
+      "status": "needs_review",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/11",
+      "sourceUnit": "box",
+      "displayUnit": "item",
+      "sourceValue": "3",
+      "displayValue": "24",
+      "sourceDimensions": {
+        "count:box": 1
+      },
+      "displayDimensions": {
+        "count:item": 1
+      },
+      "code": "missing_business_definition",
+      "reason": "Box/item/pallet conversion needs an explicit per-source-unit factor and definition source."
+    },
+    {
+      "status": "needs_review",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/12",
+      "sourceUnit": "crate",
+      "displayUnit": "crate",
+      "sourceValue": "1",
+      "displayValue": "1",
+      "code": "unsupported_unit",
+      "reason": "Unknown or unsupported unit: crate"
+    },
+    {
+      "status": "needs_review",
+      "scope": "declared_values_only",
+      "sourceRef": "checks.json#/checks/13",
+      "sourceUnit": "°C",
+      "displayUnit": "K",
+      "sourceValue": "1",
+      "displayValue": "274.15",
+      "code": "unsupported_unit",
+      "reason": "Unknown or unsupported unit: °C"
+    }
+  ]
+}

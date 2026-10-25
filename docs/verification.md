@@ -64,3 +64,15 @@ python tools/check_release.py
 ```
 
 User working decks belong outside the public example tree. The release candidate contains newly authored guidance, code and fictional content, not copies of existing business presentations or embedded media.
+
+## Feedback 1 extension: physical, compound and business units
+
+The earlier marketing result table covers its currency/count/rate model only. The checklist now explicitly covers length, area, volume, mass, time, speed, energy/power and compound/business units. [New fictional unit cases](../examples/unit-verification/README.md) and [generated report](../examples/unit-verification/report.json) are paired with Korean documentation.
+
+`unit_audit.py` checks declared source/display values, dimensions, exact conversion factors, optional display rounding and required source references. There are 14 new fictional comparisons: ten supported arithmetic checks pass; four intentionally remain Needs review (m→m², missing box definition, unknown crate unit, temperature offset). The report's overall status is Needs review. These are JSON source values, not a fabricated Excel verification claim.
+
+Tests additionally cover reverse length conversion, squared/cubed factors, energy versus power, person versus item, currency mismatch, months, malformed units, missing provenance, invalid values, explicit business definitions and caller-supplied false passes. Optional `unitChecks` are recomputed by the analysis builder; evidence output and saved HTML retain them. No unit checks supplied means no automated unit-audit claim.
+
+Limits: whitelisted conversions only, not every possible unit. No inferred box size, density, month length, temperature offset or exchange rate. Campaign charts remain KRW-based; generic physical-quantity chart conversion needs a tested adapter. Arithmetic passes do not verify workbook extraction, definitions, filter scope, denominator semantics or final rendering. Each of those still needs its own evidence.
+
+Extension checks passed: all six required Development checks, 19 Python tests and 15 Node tests, analysis UI syntax and generated artifacts/package consistency (35 skill entries). In local Edge, a temporary fictional UI fixture showed supported length/area/defined packing conversions as Passed, and dimension mismatch/missing definition/unknown crate/temperature as Needs review, in both Korean and English. The fixture HTML remains ignored test material. [Observed unit evidence](assets/feedback1-unit-review.jpg). No push, merge or deployment was performed; task 2 has not started.

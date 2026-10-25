@@ -1,0 +1,113 @@
+{
+  "fictional": true,
+  "definitions": {
+    "packing": {
+      "itemsPerBox": "8",
+      "note": "New fictional packing rule, not a universal box size."
+    }
+  },
+  "checks": [
+    {
+      "sourceValue": "1.25",
+      "sourceUnit": "m",
+      "displayValue": "1250",
+      "displayUnit": "mm",
+      "sourceRef": "checks.json#/checks/0"
+    },
+    {
+      "sourceValue": "2",
+      "sourceUnit": "m²",
+      "displayValue": "20000",
+      "displayUnit": "cm²",
+      "sourceRef": "checks.json#/checks/1"
+    },
+    {
+      "sourceValue": "2.5",
+      "sourceUnit": "L",
+      "displayValue": ".0025",
+      "displayUnit": "m³",
+      "sourceRef": "checks.json#/checks/2"
+    },
+    {
+      "sourceValue": "1200",
+      "sourceUnit": "kg",
+      "displayValue": "1.2",
+      "displayUnit": "t",
+      "sourceRef": "checks.json#/checks/3"
+    },
+    {
+      "sourceValue": "90",
+      "sourceUnit": "min",
+      "displayValue": "1.5",
+      "displayUnit": "h",
+      "sourceRef": "checks.json#/checks/4"
+    },
+    {
+      "sourceValue": "36",
+      "sourceUnit": "km/h",
+      "displayValue": "10",
+      "displayUnit": "m/s",
+      "sourceRef": "checks.json#/checks/5"
+    },
+    {
+      "sourceValue": "720",
+      "sourceUnit": "item/h",
+      "displayValue": "12",
+      "displayUnit": "item/min",
+      "sourceRef": "checks.json#/checks/6"
+    },
+    {
+      "sourceValue": "800",
+      "sourceUnit": "KRW/kg",
+      "displayValue": ".8",
+      "displayUnit": "원/g",
+      "sourceRef": "checks.json#/checks/7"
+    },
+    {
+      "sourceValue": "1",
+      "sourceUnit": "kWh",
+      "displayValue": "3600000",
+      "displayUnit": "J",
+      "sourceRef": "checks.json#/checks/8"
+    },
+    {
+      "sourceValue": "3",
+      "sourceUnit": "box",
+      "displayValue": "24",
+      "displayUnit": "item",
+      "sourceRef": "checks.json#/checks/9",
+      "businessConversion": {
+        "factor": "8",
+        "sourceRef": "checks.json#/definitions/packing/itemsPerBox"
+      }
+    },
+    {
+      "sourceValue": "1",
+      "sourceUnit": "m",
+      "displayValue": "1",
+      "displayUnit": "m²",
+      "sourceRef": "checks.json#/checks/10"
+    },
+    {
+      "sourceValue": "3",
+      "sourceUnit": "box",
+      "displayValue": "24",
+      "displayUnit": "item",
+      "sourceRef": "checks.json#/checks/11"
+    },
+    {
+      "sourceValue": "1",
+      "sourceUnit": "crate",
+      "displayValue": "1",
+      "displayUnit": "crate",
+      "sourceRef": "checks.json#/checks/12"
+    },
+    {
+      "sourceValue": "1",
+      "sourceUnit": "°C",
+      "displayValue": "274.15",
+      "displayUnit": "K",
+      "sourceRef": "checks.json#/checks/13"
+    }
+  ]
+}

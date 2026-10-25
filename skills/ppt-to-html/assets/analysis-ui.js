@@ -48,6 +48,11 @@
    [en?'Rounding':'반올림',en?'Aggregate unrounded values first. Rates: max '+displayPolicy.rateMaxDecimals+' decimals; trend: max '+policy.trendMaxDecimals+' decimal. Rounded parts may not sum to the rounded total; source totals are not adjusted.':'원본 정밀도로 먼저 집계하고 표시할 때만 반올림합니다. 비율은 최대 '+displayPolicy.rateMaxDecimals+'자리, 추이 축은 최대 '+policy.trendMaxDecimals+'자리입니다. 표시된 부분 합계와 전체 합계는 다를 수 있으며 원본 합계는 보정하지 않습니다.'],
    [en?'Source and review':'출처와 원본 대조',data.source+' · '+(en?'Definitions describe this starter; verify agreement against the source workbook.':'이 정의는 현재 계산 방식이며, 원본 엑셀과의 일치는 별도로 검수해야 합니다.')]
   ];
+  if(data.unitAudit){
+   const reasons={conversion_matches:'제공된 값·차원·환산이 일치합니다. 원본 추출과 의미 일치는 별도로 확인하세요.',dimension_mismatch:'차원 또는 수량의 의미가 다릅니다. 단위 이름만 바꾸거나 환산을 추정하면 안 됩니다.',missing_business_definition:'원본 단위 하나당 환산 계수와 그 정의의 출처가 필요합니다.',unsupported_unit:'미지원 단위입니다. 별도로 검증한 변환 규칙이 필요합니다.',unsupported_syntax:'미지원 단위 표현입니다. 곱셈과 하나의 나눗셈으로 명확히 표현하세요.',value_mismatch:'표시 값이 지정된 환산 또는 반올림 결과와 다릅니다.',missing_source:'원본의 시트·범위 등 출처가 필요합니다.',invalid_value:'유한한 숫자가 필요합니다. 식이나 천 단위 구분자는 사용할 수 없습니다.',invalid_rounding:'반올림 자릿수는 0~12 정수여야 합니다.',unnecessary_override:'표준 단위 환산을 업무 환산 계수로 덮어쓸 수 없습니다.',invalid_business_definition:'원본 단위 하나당 환산 계수는 양수여야 합니다.',invalid_check:'단위 대조 입력 형식을 확인하세요.',precision_limit:'지원 정밀도 범위를 벗어나 별도 확인이 필요합니다.'};
+   rows.push([(en?'Additional unit comparisons':'추가 단위 대조')+' · '+(data.unitAudit.status==='passed'?(en?'Passed':'통과'):(en?'Needs review':'확인 필요')),en?'Declared-value arithmetic checks only; workbook agreement still needs review.':'제공된 값의 환산 검사이며, 원본 엑셀과의 일치는 별도 확인해야 합니다.']);
+   for(const result of data.unitAudit.checks){rows.push([(result.status==='passed'?(en?'Passed':'통과'):(en?'Needs review':'확인 필요'))+' · '+result.sourceRef,(result.sourceValue??'?')+' '+(result.sourceUnit??'?')+' → '+(result.displayValue??'?')+' '+(result.displayUnit??'?')+' · '+(en?result.reason:(reasons[result.code]||'별도 확인이 필요합니다.'))+(result.definitionSourceRef?' · '+result.definitionSourceRef:'')]);}
+  }
   for(const [name,value]of rows){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=name;dd.textContent=value;node.append(dt,dd);}
  }
  function render(){
