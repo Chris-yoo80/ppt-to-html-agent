@@ -149,6 +149,25 @@ class ToolTests(unittest.TestCase):
         data=result.split('id="stories-data" type="application/json">',1)[1].split('</script>',1)[0]
         self.assertEqual(json.loads(data)['stories'][0]['title'],config['stories'][0]['title'])
 
+    def test_motion_facts_are_static_localized_and_derived_from_fictional_data(self):
+        import re
+        for language in ['ko','en']:
+            filename='stories.en.json' if language=='en' else 'stories.json'
+            config=json.loads((ROOT/'examples/motion-stories'/filename).read_text(encoding='utf8'))
+            config['stories'][1]['counts']=[1470,441,98,21] # New fictional edge fixture.
+            config['stories'][0]['before']=copy.deepcopy(config['stories'][0]['after'])
+            output=build_motion(config)
+            summaries=re.findall(r'<section class="story-summary"([^>]*)>(.*?)</section>',output,re.S)
+            self.assertEqual(len(summaries),3)
+            for attrs,content in summaries:
+                story=next(s for s in config['stories'] if f'data-story="{s["id"]}"' in attrs)
+                for value in [story['title'],story['lead'],story['note'],*story['phases']]:self.assertIn(value,content)
+                if story['id']=='marketing':
+                    for value in ['1,470','441','98','21','6.7%']:self.assertIn(value,content)
+                if story['id']=='delivery':self.assertIn('0%',content)
+            self.assertIn('id="print-stories"',output)
+            self.assertIn('id="motion-mode"',output)
+
     def test_pptx_follows_relationship_order_and_separates_notes(self):
         ns='http://schemas.openxmlformats.org/'
         p=ns+'presentationml/2006/main'; a=ns+'drawingml/2006/main'

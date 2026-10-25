@@ -6,7 +6,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const root=path.join(__dirname,'..');
 class Node {
-  constructor(tag='div'){this.tagName=tag;this.children=[];this.attributes={};this.style={};this.listeners={};this.textContent='';this.className='';this.classList={toggle(){},contains(){return false;}};}
+  constructor(tag='div'){this.tagName=tag;this.children=[];this.attributes={};this.style={};this.listeners={};this.textContent='';this.className='';const classes=new Set();this.classList={add:v=>classes.add(v),remove:v=>classes.delete(v),toggle:(v,on)=>on?classes.add(v):classes.delete(v),contains:v=>classes.has(v)};}
   append(...children){this.children.push(...children);}
   replaceChildren(...children){this.children=children;}
   setAttribute(k,v){this.attributes[k]=v;}
@@ -16,17 +16,52 @@ class Node {
   getBoundingClientRect(){return {width:1600,height:900};}
   closest(selector){return selector.includes(this.tagName)?this:null;}
   click(){if(!this.disabled)this.listeners.click?.({target:this});}
+  focus(){}
 }
-function launch(deck){
-  const ids=Object.fromEntries(['deck-data','stage','viewport','play','prev','next','position','announcement','replay','fullscreen'].map(id=>[id,new Node(['play','prev','next','replay','fullscreen'].includes(id)?'button':'div')]));
+function launch(deck,{reduced=false}={}){
+  const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close'];
+  const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement',...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':'div')]));
   ids['deck-data'].textContent=JSON.stringify(deck);
   const events={},docEvents={},timers=new Map();let seq=0;
-  const doc={body:new Node(),documentElement:new Node(),hidden:false,getElementById:id=>ids[id],createElement:tag=>new Node(tag),createElementNS:(_,tag)=>new Node(tag),createTextNode:text=>({textContent:text}),addEventListener:(type,fn)=>docEvents[type]=fn};
-  const ctx={document:doc,matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener:(type,fn)=>events[type]=fn,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
+  const doc={body:new Node(),documentElement:new Node(),hidden:false,getElementById:id=>ids[id]||doc.body.children.find(n=>n.id===id),createElement:tag=>new Node(tag),createElementNS:(_,tag)=>new Node(tag),createTextNode:text=>({textContent:text}),addEventListener:(type,fn)=>docEvents[type]=fn};
+  const media={matches:reduced,addEventListener(type,fn){this[type]=fn;}};
+  const ctx={document:doc,window:{print(){}},matchMedia:()=>media,addEventListener:(type,fn)=>events[type]=fn,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
   vm.runInNewContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
-  return {ids,doc,docEvents,timers,events,key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
+  return {ids,doc,docEvents,timers,events,setReduced(value){media.matches=value;media.change();},key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
 }
 const fixture=()=>JSON.parse(fs.readFileSync(path.join(root,'examples/library/deck.json'),'utf8'));
+const collect=n=>[n,...(n.children||[]).flatMap(collect)];
+function assertContent(stage,scene){
+ const nodes=collect(stage),texts=nodes.map(n=>n.textContent);
+ for(const value of [scene.title,scene.lead,scene.message,scene.source,...scene.items.flatMap(i=>[i.label,i.body,i.value])].filter(Boolean))assert.ok(texts.includes(value),'missing '+value);
+ const cards=nodes.filter(n=>n.className?.split(' ').includes('item'));
+ assert.equal(cards.length,scene.items.length);assert.ok(cards.every(n=>n.attributes['aria-hidden']==='false'&&n.className.split(' ').includes('on')));
+}
+for(const lang of ['ko','en']){
+ const deck=JSON.parse(fs.readFileSync(path.join(root,`examples/marketing-analysis/presentation.${lang}.json`),'utf8'));
+ test(`marketing ${lang}: reduced motion and explicit motion=none retain every scene's facts`,()=>{
+  for(const options of [{reduced:true},{reduced:false}]){
+   const data=structuredClone(deck);if(!options.reduced)data.settings.motion='none';
+   const p=launch(data,options);
+   for(const scene of data.scenes){assertContent(p.ids.stage,scene);for(let i=0;i<scene.items.length;i++)p.ids.next.click();}
+  }
+ });
+ test(`marketing ${lang}: normal/reduced print preview retains all titles values explanations and sources`,()=>{
+  for(const reduced of [false,true]){
+   const p=launch(deck,{reduced});p.ids.next.click();const before=p.ids.position.textContent;
+   p.ids.print.click();const pages=p.doc.body.children.find(n=>n.id==='print-pages').children;
+   assert.equal(pages.length,deck.scenes.length);pages.forEach((page,i)=>assertContent(page,deck.scenes[i]));
+   p.events.beforeprint();assert.equal(p.doc.body.children.filter(n=>n.id==='print-pages').length,1);
+   p.ids['print-close'].click();assert.equal(p.ids.position.textContent,before);assert.equal(p.timers.size,0);
+  }
+ });
+}
+test('enabling reduced motion mid-reveal exposes remaining facts and pauses without changing position',()=>{
+ const deck=fixture();deck.settings.playback='both';const p=launch(deck);
+ p.ids.play.click();const before=p.ids.position.textContent;assert.equal(p.timers.size,1);
+ p.setReduced(true);assertContent(p.ids.stage,deck.scenes[0]);assert.equal(p.ids.position.textContent,before);assert.equal(p.timers.size,0);
+ assert.equal(p.ids.play.disabled,true);p.setReduced(false);assert.equal(p.ids.play.disabled,false);assert.equal(p.timers.size,0);
+});
 test('printing includes every scene and hidden reveal, preserving current step and pausing playback',()=>{
  const deck=fixture();deck.settings.playback='both';const p=launch(deck);
  p.ids.next.click();const before=p.ids.position.textContent;p.ids.play.click();p.events.beforeprint();

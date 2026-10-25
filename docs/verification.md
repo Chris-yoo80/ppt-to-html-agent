@@ -76,3 +76,21 @@ Tests additionally cover reverse length conversion, squared/cubed factors, energ
 Limits: whitelisted conversions only, not every possible unit. No inferred box size, density, month length, temperature offset or exchange rate. Campaign charts remain KRW-based; generic physical-quantity chart conversion needs a tested adapter. Arithmetic passes do not verify workbook extraction, definitions, filter scope, denominator semantics or final rendering. Each of those still needs its own evidence.
 
 Extension checks passed: all six required Development checks, 19 Python tests and 15 Node tests, analysis UI syntax and generated artifacts/package consistency (35 skill entries). In local Edge, a temporary fictional UI fixture showed supported length/area/defined packing conversions as Passed, and dimension mismatch/missing definition/unknown crate/temperature as Needs review, in both Korean and English. The fixture HTML remains ignored test material. [Observed unit evidence](assets/feedback1-unit-review.jpg). No push, merge or deployment was performed; task 2 has not started.
+
+## Feedback 2: essential content with motion off and in print
+
+| Subject | Result | Evidence |
+|---|---|---|
+| Delivery story | Passed for static summary/runtime contract | 12 stops, 3 vehicles and the computed 34% fictional coordinate-length reduction remain alongside the title, explanation, four phases and qualifications at the start and final frame. |
+| Marketing story | Passed for static summary/runtime contract | All four counts (1,200 / 360 / 72 / 24) and 6.0% reach-to-purchase conversion remain, including after the animated headline changes. A separately authored fixture checks new counts and 6.7% rather than hard-coded defaults. |
+| Warehouse story | Passed for static summary/runtime contract | All four process steps and the title/explanation/fictional qualification remain. The summary does not invent measured throughput or capacity. |
+| Marketing presentation (KO/EN) | Passed for tested scenes | Reduced-motion and motion=none expose all current-scene cards; tests cover every title, number, item explanation, message and source. Print preview contains all three scenes/all nine items in normal and reduced modes. |
+| Playback and navigation | Passed in runtime tests; selected cases observed in Edge | Startup/mid-session reduced-motion stops frames/autoplay; phase jumps and timeline seek still work. Returning from print preserves story/time or step and stays paused. Removing reduced motion does not auto-resume. |
+
+The checklist and final-report instructions now include a sixth item: **motion-off/print retention of essential figures and explanations**. The gallery adds a static Key facts summary, Turn motion off control and Print / PDF preview of all three summaries. These HTML text summaries print independently of SVG opacity and current timeline position. Korean/English guides, README and landing pages were regenerated from their sources.
+
+Local Edge observations: manual motion-off, all marketing funnel counts at phase 1, all three summary blocks visible in print preview without horizontal overflow, preview starting at scroll position 0, and return to Marketing at 6 seconds with playback paused. A temporary ignored motion=none presentation showed all four KPI cards with opacity 1 and aria-hidden=false at step 3/9; its print preview retained every scene. Screenshot: [motion print preview](assets/feedback2-motion-print.jpg).
+
+Limits: operating-system prefers-reduced-motion startup/change is simulated in the Node runtime tests, not a claim that the OS preference was changed in Edge. SVG geometry methods are stubbed in runtime tests; existing pure-geometry tests remain separate. Actual saved-PDF rendering/page count is still unverified. The three-summary/three-scene counts refer to HTML previews. A full cross-browser or physical mobile audit was not performed.
+
+Local validation: all six required Development checks; 20 Python + 28 Node tests; JS syntax, generated-output consistency and 35-entry skill package checks. No push, merge or deployment. Task 3 awaits user review of task 2.

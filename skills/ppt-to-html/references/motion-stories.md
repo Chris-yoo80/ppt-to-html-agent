@@ -31,3 +31,20 @@ To adapt these presets to a new source, map each phase to the source's argument,
 review the storyboard and figures, then change geometry or labels as required.
 Do not silently drop source qualifications to fit the scene. Keep fonts and
 legal notices in the generated output. MP4 export remains outside this version.
+
+## Facts without motion and printed output
+
+Each preset has a generated static summary below the player containing its title,
+lead, all four phases, source qualifications and key figures. Delivery includes
+stops/vehicles and the computed coordinate-distance comparison; marketing keeps
+all four counts and reach-to-purchase rate; warehouse lists four illustrative
+process steps without inventing throughput. Summaries do not depend on SVG opacity,
+timeline position or animation frames.
+
+Turn motion off stops frames while keeping manual phase/timeline controls. System
+reduced motion takes precedence and cannot be overridden by the toggle. Enabling
+it during playback preserves the time and pauses; removing it does not auto-resume.
+Print / PDF previews all three complete summaries, not an arbitrary video frame.
+The browser print dialog can save those summaries; returning preserves story/time
+and stays paused. Verify saved-PDF layout separately. Do not describe DOM-double
+tests as visual or operating-system preference verification.

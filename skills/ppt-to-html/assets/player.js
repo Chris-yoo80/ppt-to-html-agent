@@ -47,8 +47,9 @@
   }
   function setPlaying(value) {
     clearTimeout(timer); timer=null;
-    playing = value && (position < steps.length-1 || settings.end === 'loop');
+    playing = value && !reduced.matches && (position < steps.length-1 || settings.end === 'loop');
     const button = document.getElementById('play');
+    button.disabled=reduced.matches;
     button.textContent=playing?(english?'Pause':'일시 정지'):(english?'Autoplay':'자동 재생'); button.setAttribute('aria-pressed',String(playing));
     if (playing) timer=setTimeout(next,deck.scenes[steps[position].sceneIndex].duration*1000 || 7000);
   }
@@ -65,15 +66,17 @@
     if(scene.lead) stage.append(text('p','lead',scene.lead));
     const body=text('div',`scene-body ${scene.layout || 'cards'}${motionEnabled?'':' no-motion'}`,'');
     const list=text('div','item-list','');
+    const showAll=reduced.matches||settings.motion==='none';
     scene.items.forEach((item,index)=>{
-      const card=text('section','item'+(index<=itemIndex?' on':'')+(index===itemIndex?' active':''),'');
-      card.setAttribute('aria-hidden',String(index>itemIndex));
+      const visible=showAll||index<=itemIndex;
+      const card=text('section','item'+(visible?' on':'')+(index===itemIndex?' active':''),'');
+      card.setAttribute('aria-hidden',String(!visible));
       card.append(text('span','item-index',String(index+1).padStart(2,'0')));
       const content=document.createElement('div');
       if(item.value) content.append(text('strong','item-value',item.value));
       content.append(text('h2','',item.label),text('p','',item.body));card.append(content); list.append(card);
     });
-    body.append(list); if(motionEnabled) body.append(diagram(scene,itemIndex+1)); stage.append(body);
+    body.append(list); if(motionEnabled) body.append(diagram(scene,showAll?scene.items.length:itemIndex+1)); stage.append(body);
     const bottom=text('footer','scene-bottom',''); bottom.append(text('p','message',scene.message),text('p','source',scene.source || ''));
     stage.append(bottom);
     document.getElementById('prev').disabled=position===0;
@@ -139,6 +142,6 @@
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   addEventListener('ppt-open-supplement',()=>setPlaying(false));
-  addEventListener('resize',fit); reduced.addEventListener('change',render);
+  addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
   render(); if(settings.playback==='auto')setPlaying(true);
 })();

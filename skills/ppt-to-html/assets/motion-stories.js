@@ -6,7 +6,8 @@
   const $=s=>document.querySelector(s), NS='http://www.w3.org/2000/svg';
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const colors=['#9ebbf7','#c5e69b','#f1bd89'];
-  let selected=0,time=0,playing=false,raf=null,last=null,draw=()=>{},activePhase=-1,viewed=false;
+  let selected=0,time=0,playing=false,raf=null,last=null,draw=()=>{},activePhase=-1,viewed=false,manualReduced=false,printPreview=false;
+  const motionReduced=()=>reduced.matches||manualReduced;
   function el(tag,attrs={},parent=$('#story-svg')){
     const n=document.createElementNS(NS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,String(v)));if(parent)parent.append(n);return n;
   }
@@ -135,8 +136,9 @@
   }
   function setPlaying(value){
     cancelAnimationFrame(raf);raf=null;last=null;
-    playing=value&&!reduced.matches&&time<config.duration;
-    $('#toggle-play').textContent=reduced.matches?'모션 줄임':playing?'Ⅱ 일시 정지':'▶ 재생';$('#toggle-play').setAttribute('aria-pressed',String(playing));$('#toggle-play').disabled=reduced.matches;
+    playing=value&&!motionReduced()&&!printPreview&&time<config.duration;
+    $('#toggle-play').textContent=motionReduced()?'모션 줄임':playing?'Ⅱ 일시 정지':'▶ 재생';$('#toggle-play').setAttribute('aria-pressed',String(playing));$('#toggle-play').disabled=motionReduced();
+    $('#motion-mode').textContent=reduced.matches?'모션 줄임':manualReduced?'모션 켜기':'모션 끄기';$('#motion-mode').setAttribute('aria-pressed',String(motionReduced()));$('#motion-mode').disabled=reduced.matches;
     if(playing)raf=requestAnimationFrame(tick);
   }
   function tick(now){
@@ -149,23 +151,29 @@
   function select(index,autoplay=true){
     setPlaying(false);selected=index;time=0;activePhase=-1;
     const story=config.stories[index];
+    document.querySelectorAll('.story-summary').forEach(n=>n.hidden=n.dataset.story!==story.id);
     $('#story-eyebrow').textContent=story.eyebrow;$('#story-title').textContent=story.title;$('#story-lead').textContent=story.lead;$('#story-note').textContent=story.note;
     document.querySelectorAll('.story-tabs button').forEach((b,i)=>{b.setAttribute('aria-selected',String(i===index));b.tabIndex=i===index?0:-1;});
     document.querySelectorAll('.phase-nav button').forEach((b,i)=>b.textContent=String(i+1).padStart(2,'0')+' '+story.phases[i]);
     draw=builders[story.id](story);render();
-    if(reduced.matches)seek(config.duration*.99);else if(autoplay)setPlaying(true);
+    if(autoplay&&!motionReduced())setPlaying(true);
   }
   config.stories.forEach((story,i)=>{const b=document.createElement('button');b.type='button';b.role='tab';b.textContent=story.label;b.setAttribute('aria-controls','story-panel');b.addEventListener('click',()=>select(i));$('.story-tabs').insertBefore(b,$('.story-tabs span'));});
   for(let i=0;i<4;i++){const b=document.createElement('button');b.type='button';b.addEventListener('click',()=>{setPlaying(false);seek(i*config.duration/4);});$('.phase-nav').append(b);}
   $('.story-tabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?2:(selected+(event.key==='ArrowRight'?1:2))%3;select(next);$('.story-tabs').querySelectorAll('button')[next].focus();});
   $('#toggle-play').addEventListener('click',()=>{if(time>=config.duration)seek(0);setPlaying(!playing);});
-  $('#restart').addEventListener('click',()=>{seek(0);setPlaying(!reduced.matches);});
+  $('#restart').addEventListener('click',()=>{seek(0);setPlaying(!motionReduced());});
+  $('#motion-mode').addEventListener('click',()=>{manualReduced=!manualReduced;setPlaying(false);render();});
+  $('#print-stories').addEventListener('click',()=>{printPreview=true;setPlaying(false);document.body.classList.add('stories-print-preview');$('#story-print-confirm').focus();window.scrollTo(0,0);});
+  $('#story-print-confirm').addEventListener('click',()=>window.print());
+  $('#story-print-close').addEventListener('click',()=>{printPreview=false;document.body.classList.remove('stories-print-preview');$('#print-stories').focus();});
+  addEventListener('beforeprint',()=>setPlaying(false));
   $('#prev-phase').addEventListener('click',()=>{setPlaying(false);seek(Math.max(0,M.phase(time,config.duration)-1)*config.duration/4);});
   $('#next-phase').addEventListener('click',()=>{setPlaying(false);seek(Math.min(3,M.phase(time,config.duration)+1)*config.duration/4);});
   $('#timeline').max=String(config.duration);$('#timeline').addEventListener('input',event=>{setPlaying(false);seek(Number(event.target.value));});
-  document.addEventListener('keydown',event=>{if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey||event.target.closest('button,input,select,textarea,a,[contenteditable=true]'))return;if(event.key===' '){event.preventDefault();$('#toggle-play').click();}else if(event.key==='ArrowRight')$('#next-phase').click();else if(event.key==='ArrowLeft')$('#prev-phase').click();else if(event.key==='Escape')setPlaying(false);});
+  document.addEventListener('keydown',event=>{if(printPreview){if(event.key==='Escape')$('#story-print-close').click();return;}if(event.defaultPrevented||event.altKey||event.ctrlKey||event.metaKey||event.target.closest('button,input,select,textarea,a,[contenteditable=true]'))return;if(event.key===' '){event.preventDefault();$('#toggle-play').click();}else if(event.key==='ArrowRight')$('#next-phase').click();else if(event.key==='ArrowLeft')$('#prev-phase').click();else if(event.key==='Escape')setPlaying(false);});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   reduced.addEventListener('change',()=>{setPlaying(false);render();});
   select(0,false);
-  const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!viewed){viewed=true;if(!reduced.matches)setPlaying(true);}else if(!entries[0].isIntersecting)setPlaying(false);},{threshold:.3});observer.observe($('#story-panel'));
+  const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting&&!viewed){viewed=true;if(!motionReduced())setPlaying(true);}else if(!entries[0].isIntersecting)setPlaying(false);},{threshold:.3});observer.observe($('#story-panel'));
 })();

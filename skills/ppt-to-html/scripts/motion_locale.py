@@ -2,6 +2,10 @@
 import re
 
 TEXT={
+ '모션 끄기':'Turn motion off','모션 켜기':'Turn motion on',
+ '인쇄 / PDF로 저장':'Print / Save as PDF','인쇄 / PDF':'Print / PDF',
+ '데모로 돌아가기':'Back to demo',
+ '세 예제의 핵심 정보 · A4 가로 · 인쇄 창에서 PDF 저장을 선택하세요.':'Key facts from all three examples · A4 landscape · choose Save as PDF in the print dialog.',
  '모션 예제 선택':'Choose a motion story','가상 업무 흐름 모션 그래픽':'Fictional workflow motion graphic',
  '동영상형 모션 재생 조작':'Motion playback controls','이전 설명 단계':'Previous chapter','다음 설명 단계':'Next chapter',
  '모션 타임라인 탐색':'Seek motion timeline','다시 보기 ↻':'Restart ↻','다시 보기 ↺':'Restart ↺','설명 단계 선택':'Choose a chapter',
