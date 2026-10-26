@@ -131,6 +131,16 @@ body.print-preview .print-page{background:white;margin:0 auto 24px;box-shadow:0 
 .print-stage .motion-point,.print-stage .motion-plane,.print-stage .motion-link{opacity:1;stroke-dashoffset:0;transform:none}
 @media print{body.print-preview>#print-toolbar{display:none!important}body.print-preview>#print-pages{padding:0!important}.print-page{margin:0!important;box-shadow:none!important}}
 
+.jump-dialog{width:min(900px,calc(100vw - 40px));max-height:min(720px,calc(100vh - 40px));padding:0;border:0;border-radius:16px;box-shadow:0 18px 70px #0005;color:#20251f;background:#f8faf4}
+.jump-dialog::backdrop{background:#172019aa;backdrop-filter:blur(3px)}
+.jump-dialog>header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:18px 22px;background:white;border-bottom:1px solid #d7ded1}
+.jump-dialog>header strong{flex:1;font-size:21px}.jump-dialog>header button{width:42px;height:42px;border:1px solid #d6ddcf;border-radius:50%;background:white;font-size:24px}
+#outline-list,#bookmarks-list{padding:20px 22px;overflow:auto;max-height:620px}
+.outline-scene{display:grid;grid-template-columns:250px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid #dce2d8}.outline-scene:last-child{border-bottom:0}.outline-scene h2{font-size:18px;margin:8px 0}.outline-steps{display:flex;flex-wrap:wrap;gap:8px}.outline-step,.bookmark-jump,.bookmark-remove{border:1px solid #ccd6c6;background:white;border-radius:8px;padding:11px 13px;text-align:left}.outline-step:hover,.outline-step:focus-visible,.bookmark-jump:hover,.bookmark-jump:focus-visible{border-color:#3158db;background:#eef1ff}
+.bookmark-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:10px}.bookmark-jump{font-weight:650}.bookmark-remove{color:#8a352e}.empty-bookmarks{color:#687368;text-align:center;padding:35px}
+@media(max-width:800px){.outline-scene{grid-template-columns:1fr}.jump-dialog{width:calc(100vw - 20px)}#outline-list,#bookmarks-list{padding:14px}}
+@media print{.jump-dialog{display:none!important}}
+
 /* Finite entrances: no unattended decorative looping. */
 @keyframes point-in{from{opacity:.12;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
 @keyframes line-in{from{stroke-dashoffset:180;opacity:.12}to{stroke-dashoffset:0;opacity:1}}
@@ -248,7 +258,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
 <nav class="controls" aria-label="발표 조작"><button id="prev" type="button" aria-label="이전 단계">←</button>
 <span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="다음 단계">→</button>
 <button id="play" type="button" aria-pressed="false">자동 재생</button><button id="replay" type="button">처음부터</button>
-<button id="fullscreen" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 이동 · Home 처음 · A 재생</span></nav>
+<button id="open-outline" type="button" aria-haspopup="dialog">목차</button><button id="bookmark-current" type="button">질문 표시</button><button id="open-bookmarks" type="button" aria-haspopup="dialog">질문 목록</button><button id="return-bookmark" type="button" disabled>질문 복귀</button>
+<button id="fullscreen" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 · G 목차 · B 질문 표시 · R 복귀</span></nav>
+<dialog id="outline-dialog" class="jump-dialog" aria-labelledby="outline-title"><header><strong id="outline-title">목차와 단계</strong><button id="outline-close" type="button" aria-label="목차 닫기">×</button></header><div id="outline-list"></div></dialog>
+<dialog id="bookmarks-dialog" class="jump-dialog" aria-labelledby="bookmarks-title"><header><strong id="bookmarks-title">질문 북마크</strong><button id="bookmarks-close" type="button" aria-label="질문 북마크 닫기">×</button></header><div id="bookmarks-list"></div></dialog>
 
 <aside id="print-toolbar" aria-label="인쇄 미리보기"><p>전체 장면 · 모든 설명 단계 · A4 가로. 인쇄 창에서 PDF 저장을 선택하세요. 추가 자료는 별도로 출력합니다.</p><button id="print-confirm" type="button">인쇄 / PDF로 저장</button><button id="print-close" type="button">발표로 돌아가기</button></aside>
 <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
@@ -263,6 +276,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const steps = deck.scenes.flatMap((scene, sceneIndex) => scene.items.map((_, itemIndex) => ({sceneIndex, itemIndex})));
   let position = 0, timer = null, playing = false;
+  const bookmarks=[];
   const text = (tag, className, value) => {
     const node = document.createElement(tag); node.className = className; node.textContent = value || ''; return node;
   };
@@ -341,6 +355,64 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
   }
   function go(index){position=Math.max(0,Math.min(steps.length-1,index));render();}
   function next(){if(position<steps.length-1)go(position+1);else if(settings.end==='loop')go(0);else setPlaying(false);}
+  function openDialog(id){
+    setPlaying(false);
+    const dialog=document.getElementById(id);
+    if(typeof dialog.showModal==='function')dialog.showModal();else dialog.open=true;
+    const first=dialog.children?.[0]?.children?.find?.(node=>node.tagName==='button') || dialog.children?.[0]?.children?.[1];
+    first?.focus?.();
+  }
+  function closeDialog(id,returnId){
+    const dialog=document.getElementById(id);
+    if(typeof dialog.close==='function')dialog.close();else dialog.open=false;
+    document.getElementById(returnId)?.focus();
+  }
+  function bookmarkLabel(index){
+    const step=steps[index],scene=deck.scenes[step.sceneIndex],item=scene.items[step.itemIndex];
+    return `${String(step.sceneIndex+1).padStart(2,'0')} · ${scene.title} · ${step.itemIndex+1}/${scene.items.length} ${item.label}`;
+  }
+  function updateBookmarks(){
+    const root=document.getElementById('bookmarks-list');root.replaceChildren();
+    if(!bookmarks.length)root.append(text('p','empty-bookmarks',english?'No questions marked yet.':'표시한 질문이 없습니다.'));
+    bookmarks.forEach((stepIndex,index)=>{
+      const row=text('div','bookmark-row','');
+      const jump=text('button','bookmark-jump',bookmarkLabel(stepIndex));jump.type='button';
+      jump.setAttribute('aria-label',(english?'Return to ':'질문 위치로 이동: ')+bookmarkLabel(stepIndex));
+      jump.addEventListener('click',()=>{go(stepIndex);closeDialog('bookmarks-dialog','open-bookmarks');});
+      const remove=text('button','bookmark-remove',english?'Remove':'삭제');remove.type='button';
+      remove.setAttribute('aria-label',(english?'Remove ':'질문 표시 삭제: ')+bookmarkLabel(stepIndex));
+      remove.addEventListener('click',()=>{bookmarks.splice(index,1);updateBookmarks();});
+      row.append(jump,remove);root.append(row);
+    });
+    document.getElementById('return-bookmark').disabled=!bookmarks.length;
+    document.getElementById('open-bookmarks').textContent=(english?'Question list':'질문 목록')+(bookmarks.length?` (${bookmarks.length})`:'');
+  }
+  function markQuestion(){
+    setPlaying(false);
+    if(!bookmarks.includes(position))bookmarks.push(position);
+    updateBookmarks();
+    document.getElementById('announcement').textContent=(english?'Question marked: ':'질문 표시: ')+bookmarkLabel(position);
+  }
+  function returnToLatest(){
+    if(!bookmarks.length)return;
+    setPlaying(false);go(bookmarks[bookmarks.length-1]);
+  }
+  function buildOutline(){
+    const root=document.getElementById('outline-list');root.replaceChildren();
+    let stepIndex=0;
+    deck.scenes.forEach((scene,sceneIndex)=>{
+      const group=text('section','outline-scene','');
+      group.append(text('h2','',`${String(sceneIndex+1).padStart(2,'0')} · ${scene.title}`));
+      const list=text('div','outline-steps','');
+      scene.items.forEach((item,itemIndex)=>{
+        const target=stepIndex++;
+        const button=text('button','outline-step',`${itemIndex+1}. ${item.label}`);button.type='button';
+        button.setAttribute('aria-label',(english?'Go to ':'이동: ')+bookmarkLabel(target));
+        button.addEventListener('click',()=>{go(target);closeDialog('outline-dialog','open-outline');});list.append(button);
+      });
+      group.append(list);root.append(group);
+    });
+  }
   // Build one complete scene per printed page, independent of the current reveal.
   function preparePrint(){
     setPlaying(false);
@@ -374,6 +446,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
   document.getElementById('play').addEventListener('click',()=>setPlaying(!playing));
   document.getElementById('play').hidden=settings.playback==='manual';
   document.getElementById('replay').addEventListener('click',()=>{setPlaying(false);go(0);});
+  document.getElementById('open-outline').addEventListener('click',()=>openDialog('outline-dialog'));
+  document.getElementById('outline-close').addEventListener('click',()=>closeDialog('outline-dialog','open-outline'));
+  document.getElementById('bookmark-current').addEventListener('click',markQuestion);
+  document.getElementById('open-bookmarks').addEventListener('click',()=>{updateBookmarks();openDialog('bookmarks-dialog');});
+  document.getElementById('bookmarks-close').addEventListener('click',()=>closeDialog('bookmarks-dialog','open-bookmarks'));
+  document.getElementById('return-bookmark').addEventListener('click',returnToLatest);
   document.getElementById('fullscreen').addEventListener('click',async()=>{
     try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}
     catch{document.getElementById('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
@@ -383,6 +461,13 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
       if(event.key==='Escape')document.getElementById('print-close').click();return;
     }
     if(document.getElementById('supplements-dialog')?.open)return;
+    if(document.getElementById('outline-dialog').open||document.getElementById('bookmarks-dialog').open){
+      if(event.key==='Escape'){
+        if(document.getElementById('outline-dialog').open)closeDialog('outline-dialog','open-outline');
+        if(document.getElementById('bookmarks-dialog').open)closeDialog('bookmarks-dialog','open-bookmarks');
+      }
+      return;
+    }
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep
     // their native button/link activation instead of triggering two actions.
@@ -392,11 +477,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.</pre></template><main id="viewport" aria-la
     else if(event.key==='Home'){event.preventDefault();go(0);}
     else if(event.key==='End'){event.preventDefault();go(steps.length-1);}
     else if(event.key.toLowerCase()==='a'&&settings.playback!=='manual')setPlaying(!playing);
+    else if(event.key.toLowerCase()==='g'){event.preventDefault();openDialog('outline-dialog');}
+    else if(event.key==='B'){event.preventDefault();updateBookmarks();openDialog('bookmarks-dialog');}
+    else if(event.key.toLowerCase()==='b'){event.preventDefault();markQuestion();}
+    else if(event.key.toLowerCase()==='r'){event.preventDefault();returnToLatest();}
     else if(event.key==='Escape')setPlaying(false);
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   addEventListener('ppt-open-supplement',()=>setPlaying(false));
   addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
-  render(); if(settings.playback==='auto')setPlaying(true);
+  buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();
 </script></body></html>

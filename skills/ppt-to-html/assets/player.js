@@ -9,6 +9,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const steps = deck.scenes.flatMap((scene, sceneIndex) => scene.items.map((_, itemIndex) => ({sceneIndex, itemIndex})));
   let position = 0, timer = null, playing = false;
+  const bookmarks=[];
   const text = (tag, className, value) => {
     const node = document.createElement(tag); node.className = className; node.textContent = value || ''; return node;
   };
@@ -87,6 +88,64 @@
   }
   function go(index){position=Math.max(0,Math.min(steps.length-1,index));render();}
   function next(){if(position<steps.length-1)go(position+1);else if(settings.end==='loop')go(0);else setPlaying(false);}
+  function openDialog(id){
+    setPlaying(false);
+    const dialog=document.getElementById(id);
+    if(typeof dialog.showModal==='function')dialog.showModal();else dialog.open=true;
+    const first=dialog.children?.[0]?.children?.find?.(node=>node.tagName==='button') || dialog.children?.[0]?.children?.[1];
+    first?.focus?.();
+  }
+  function closeDialog(id,returnId){
+    const dialog=document.getElementById(id);
+    if(typeof dialog.close==='function')dialog.close();else dialog.open=false;
+    document.getElementById(returnId)?.focus();
+  }
+  function bookmarkLabel(index){
+    const step=steps[index],scene=deck.scenes[step.sceneIndex],item=scene.items[step.itemIndex];
+    return `${String(step.sceneIndex+1).padStart(2,'0')} · ${scene.title} · ${step.itemIndex+1}/${scene.items.length} ${item.label}`;
+  }
+  function updateBookmarks(){
+    const root=document.getElementById('bookmarks-list');root.replaceChildren();
+    if(!bookmarks.length)root.append(text('p','empty-bookmarks',english?'No questions marked yet.':'표시한 질문이 없습니다.'));
+    bookmarks.forEach((stepIndex,index)=>{
+      const row=text('div','bookmark-row','');
+      const jump=text('button','bookmark-jump',bookmarkLabel(stepIndex));jump.type='button';
+      jump.setAttribute('aria-label',(english?'Return to ':'질문 위치로 이동: ')+bookmarkLabel(stepIndex));
+      jump.addEventListener('click',()=>{go(stepIndex);closeDialog('bookmarks-dialog','open-bookmarks');});
+      const remove=text('button','bookmark-remove',english?'Remove':'삭제');remove.type='button';
+      remove.setAttribute('aria-label',(english?'Remove ':'질문 표시 삭제: ')+bookmarkLabel(stepIndex));
+      remove.addEventListener('click',()=>{bookmarks.splice(index,1);updateBookmarks();});
+      row.append(jump,remove);root.append(row);
+    });
+    document.getElementById('return-bookmark').disabled=!bookmarks.length;
+    document.getElementById('open-bookmarks').textContent=(english?'Question list':'질문 목록')+(bookmarks.length?` (${bookmarks.length})`:'');
+  }
+  function markQuestion(){
+    setPlaying(false);
+    if(!bookmarks.includes(position))bookmarks.push(position);
+    updateBookmarks();
+    document.getElementById('announcement').textContent=(english?'Question marked: ':'질문 표시: ')+bookmarkLabel(position);
+  }
+  function returnToLatest(){
+    if(!bookmarks.length)return;
+    setPlaying(false);go(bookmarks[bookmarks.length-1]);
+  }
+  function buildOutline(){
+    const root=document.getElementById('outline-list');root.replaceChildren();
+    let stepIndex=0;
+    deck.scenes.forEach((scene,sceneIndex)=>{
+      const group=text('section','outline-scene','');
+      group.append(text('h2','',`${String(sceneIndex+1).padStart(2,'0')} · ${scene.title}`));
+      const list=text('div','outline-steps','');
+      scene.items.forEach((item,itemIndex)=>{
+        const target=stepIndex++;
+        const button=text('button','outline-step',`${itemIndex+1}. ${item.label}`);button.type='button';
+        button.setAttribute('aria-label',(english?'Go to ':'이동: ')+bookmarkLabel(target));
+        button.addEventListener('click',()=>{go(target);closeDialog('outline-dialog','open-outline');});list.append(button);
+      });
+      group.append(list);root.append(group);
+    });
+  }
   // Build one complete scene per printed page, independent of the current reveal.
   function preparePrint(){
     setPlaying(false);
@@ -120,6 +179,12 @@
   document.getElementById('play').addEventListener('click',()=>setPlaying(!playing));
   document.getElementById('play').hidden=settings.playback==='manual';
   document.getElementById('replay').addEventListener('click',()=>{setPlaying(false);go(0);});
+  document.getElementById('open-outline').addEventListener('click',()=>openDialog('outline-dialog'));
+  document.getElementById('outline-close').addEventListener('click',()=>closeDialog('outline-dialog','open-outline'));
+  document.getElementById('bookmark-current').addEventListener('click',markQuestion);
+  document.getElementById('open-bookmarks').addEventListener('click',()=>{updateBookmarks();openDialog('bookmarks-dialog');});
+  document.getElementById('bookmarks-close').addEventListener('click',()=>closeDialog('bookmarks-dialog','open-bookmarks'));
+  document.getElementById('return-bookmark').addEventListener('click',returnToLatest);
   document.getElementById('fullscreen').addEventListener('click',async()=>{
     try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}
     catch{document.getElementById('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
@@ -129,6 +194,13 @@
       if(event.key==='Escape')document.getElementById('print-close').click();return;
     }
     if(document.getElementById('supplements-dialog')?.open)return;
+    if(document.getElementById('outline-dialog').open||document.getElementById('bookmarks-dialog').open){
+      if(event.key==='Escape'){
+        if(document.getElementById('outline-dialog').open)closeDialog('outline-dialog','open-outline');
+        if(document.getElementById('bookmarks-dialog').open)closeDialog('bookmarks-dialog','open-bookmarks');
+      }
+      return;
+    }
     if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep
     // their native button/link activation instead of triggering two actions.
@@ -138,10 +210,14 @@
     else if(event.key==='Home'){event.preventDefault();go(0);}
     else if(event.key==='End'){event.preventDefault();go(steps.length-1);}
     else if(event.key.toLowerCase()==='a'&&settings.playback!=='manual')setPlaying(!playing);
+    else if(event.key.toLowerCase()==='g'){event.preventDefault();openDialog('outline-dialog');}
+    else if(event.key==='B'){event.preventDefault();updateBookmarks();openDialog('bookmarks-dialog');}
+    else if(event.key.toLowerCase()==='b'){event.preventDefault();markQuestion();}
+    else if(event.key.toLowerCase()==='r'){event.preventDefault();returnToLatest();}
     else if(event.key==='Escape')setPlaying(false);
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   addEventListener('ppt-open-supplement',()=>setPlaying(false));
   addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
-  render(); if(settings.playback==='auto')setPlaying(true);
+  buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();

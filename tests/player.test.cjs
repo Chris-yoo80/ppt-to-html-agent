@@ -13,14 +13,18 @@ class Node {
   removeAttribute(k){delete this.attributes[k];}
   cloneNode(deep){const n=new Node(this.tagName);n.attributes={...this.attributes};n.style={...this.style};n.className=this.className;n.textContent=this.textContent;if(deep)n.children=this.children.map(c=>c.cloneNode?c.cloneNode(true):{...c});return n;}
   addEventListener(k,v){this.listeners[k]=v;}
+  showModal(){this.open=true;}
+  close(){this.open=false;}
   getBoundingClientRect(){return {width:1600,height:900};}
   closest(selector){return selector.includes(this.tagName)?this:null;}
   click(){if(!this.disabled)this.listeners.click?.({target:this});}
   focus(){}
 }
 function launch(deck,{reduced=false}={}){
-  const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close'];
-  const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement',...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':'div')]));
+  const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close','open-outline','outline-close','bookmark-current','open-bookmarks','bookmarks-close','return-bookmark'];
+  const dialogs=['outline-dialog','bookmarks-dialog'];
+  const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement','outline-list','bookmarks-list',...dialogs,...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':dialogs.includes(id)?'dialog':'div')]));
+  for(const [dialog,close] of [['outline-dialog','outline-close'],['bookmarks-dialog','bookmarks-close']]){const header=new Node('header');header.append(new Node('strong'),ids[close]);ids[dialog].append(header,dialog==='outline-dialog'?ids['outline-list']:ids['bookmarks-list']);}
   ids['deck-data'].textContent=JSON.stringify(deck);
   const events={},docEvents={},timers=new Map();let seq=0;
   const doc={body:new Node(),documentElement:new Node(),hidden:false,getElementById:id=>ids[id]||doc.body.children.find(n=>n.id===id),createElement:tag=>new Node(tag),createElementNS:(_,tag)=>new Node(tag),createTextNode:text=>({textContent:text}),addEventListener:(type,fn)=>docEvents[type]=fn};
@@ -90,6 +94,24 @@ test('keyboard arrows still navigate after button focus; native space is not dou
   const p=launch(fixture());p.key('ArrowRight',p.ids.next);assert.match(p.ids.position.textContent,/^2 \/ /);
   assert.equal(p.key(' ',p.ids.next),false);assert.match(p.ids.position.textContent,/^2 \/ /);
   p.key('End');assert.equal(p.ids.next.disabled,true);p.key('Home');assert.equal(p.ids.prev.disabled,true);
+});
+test('contents panel jumps to any scene step and remains keyboard accessible',()=>{
+  const deck=fixture(),p=launch(deck);
+  p.key('g');assert.equal(p.ids['outline-dialog'].open,true);assert.equal(p.ids['outline-list'].children.length,deck.scenes.length);
+  const secondSceneFirst=p.ids['outline-list'].children[1].children[1].children[0];
+  secondSceneFirst.click();assert.equal(p.ids['outline-dialog'].open,false);
+  assert.equal(p.ids.announcement.textContent,`${deck.scenes[1].title}. ${deck.scenes[1].items[0].label}`);
+  p.key('G');assert.equal(p.ids['outline-dialog'].open,true);p.key('Escape');assert.equal(p.ids['outline-dialog'].open,false);
+});
+test('question bookmarks keep multiple exact steps and return after supporting-resource activity',()=>{
+  const deck=fixture(),p=launch(deck);
+  p.ids.next.click();const first=p.ids.announcement.textContent;p.key('b');
+  p.ids.next.click();p.ids.next.click();const latest=p.ids.announcement.textContent;p.ids['bookmark-current'].click();
+  assert.match(p.ids['open-bookmarks'].textContent,/2/);assert.equal(p.ids['return-bookmark'].disabled,false);
+  p.events['ppt-open-supplement']();p.ids.next.click();p.ids['return-bookmark'].click();assert.equal(p.ids.announcement.textContent,latest);
+  p.key('B');assert.equal(p.ids['bookmarks-dialog'].open,true);assert.equal(p.ids['bookmarks-list'].children.length,2);
+  p.ids['bookmarks-list'].children[0].children[0].click();assert.equal(p.ids.announcement.textContent,first);assert.equal(p.ids['bookmarks-dialog'].open,false);
+  p.ids['open-bookmarks'].click();p.ids['bookmarks-list'].children[0].children[1].click();assert.match(p.ids['open-bookmarks'].textContent,/1/);
 });
 test('autoplay replaces one timer per step and clears it at the terminal step',()=>{
   const deck=fixture();deck.settings.playback='both';deck.settings.end='stop';

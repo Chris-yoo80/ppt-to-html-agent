@@ -85,7 +85,7 @@ Python 3.10+; standard library only:
 python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --output output/library.html
 ```
 
-Open `output/library.html` in an authorized browser. It embeds its content, CSS and JavaScript. Use the visible controls or arrow keys to progress; the last step stops.
+Open `output/library.html` in an authorized browser. It embeds its content, CSS and JavaScript. Use the visible controls or arrow keys to progress; the last step stops. **Contents** or `G` opens every scene and reveal step for direct navigation. **Mark question** or `B` saves the current scene and step, `Shift+B` opens all marked questions, and **Return to question** or `R` returns to the latest mark. Marks remain available when you open and close Additional resources in the same presentation session.
 
 Extract an accessible PPTX:
 

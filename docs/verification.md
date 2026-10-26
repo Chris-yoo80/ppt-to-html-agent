@@ -94,3 +94,13 @@ Local Edge observations: manual motion-off, all marketing funnel counts at phase
 Limits: operating-system prefers-reduced-motion startup/change is simulated in the Node runtime tests, not a claim that the OS preference was changed in Edge. SVG geometry methods are stubbed in runtime tests; existing pure-geometry tests remain separate. Actual saved-PDF rendering/page count is still unverified. The three-summary/three-scene counts refer to HTML previews. A full cross-browser or physical mobile audit was not performed.
 
 Local validation: all six required Development checks; 20 Python + 28 Node tests; JS syntax, generated-output consistency and 35-entry skill package checks. No push, merge or deployment. Task 3 awaits user review of task 2.
+
+## Feedback 3: direct scene return and question bookmarks
+
+The generated player now provides a **Contents** dialog with every scene and reveal step, exact-step question bookmarks, a list for multiple marks and one-action return to the latest mark. Keyboard controls are `G` for Contents, `B` to mark the current question, `Shift+B` for the bookmark list and `R` to return to the latest question.
+
+Automated player checks passed direct scene/step jumps, Escape close, two exact-step bookmarks, latest-mark return, selection of an earlier mark, deletion and preservation after the supporting-resource open event. Existing navigation, autoplay, print and reduced-motion checks remain green. The paired guides, marketing presentations, library demo and portable skill ZIP were rebuilt from their sources.
+
+Real-browser visual verification is pending because the connected browser surface became unavailable during this task. DOM runtime tests establish interaction state and keyboard routing; they do not establish final layout or a browser accessibility audit. Review `library-demo.html` and `marketing-presentation.html` with this sequence: mark a question, open and close Additional resources, move elsewhere, return with `R`, then select an earlier mark from the question list.
+
+No push, merge or deployment was performed.
