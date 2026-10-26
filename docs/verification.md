@@ -112,3 +112,20 @@ The top of both READMEs and the Korean/English landing pages now present the sam
 The same locations state the tested limits: regular ChatGPT and Claude web chats do not run this local skill, legacy `.ppt` and password-protected files are unsupported, and the agent redesigns the presentation instead of reproducing the source layout pixel for pixel. Three existing fictional browser-review images provide a compact static walkthrough without adding a network dependency.
 
 Automated checks cover paired quick-start text, local links, generated English landing-page localization and package consistency. Visual browser review remains pending because no browser surface was available. No push, merge or deployment was performed.
+
+## Feedback 5: repeatable monthly report
+
+`examples/monthly-report/` contains two newly authored fictional months in JSON and real `.xlsx` workbooks. Both feed the same five-scene builder: title, executive summary, channel mix, weekly timeline and conclusion. `python tools/build_monthly_report.py --month YYYY-MM` regenerates the selected month's workbook, bilingual presentation JSON and offline HTML; running without `--month` rebuilds every available month.
+
+| Check | 2026-09 | 2026-10 | Evidence |
+|---|---|---|---|
+| Unit | Passed | Passed | Revenue/AOV use KRW; orders use count. Display conversions are documented. |
+| Denominator | Passed | Passed | AOV uses total revenue ÷ total orders; channel share uses monthly revenue. |
+| Filter / range | Passed | Passed | `Sales!A1:D13`, four week labels, three channels and 12 rows. |
+| Rounding | Passed | Passed | Source integers aggregate before one-decimal display rounding. |
+| Provenance | Passed | Passed | Every scene preserves `YYYY-MM.xlsx / Sales!A1:D13`. |
+| Motion off / print | Passed by shared runtime contract | Passed by shared runtime contract | Essential text is retained in final reveal and print copies; saved-PDF visual layout still needs review. |
+
+The test suite compares every workbook row with its JSON, confirms the common scene IDs and checks each saved HTML byte-for-byte against a fresh build. Reviewed totals are September: 1,218 orders / KRW 70,995,000 / AOV KRW 58,288.18; October: 1,471 orders / KRW 91,607,000 / AOV KRW 62,275.32. No real organization or customer data is present.
+
+Visual browser review is pending because no browser surface was available. No push, merge or deployment was performed.

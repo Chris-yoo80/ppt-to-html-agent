@@ -16,6 +16,7 @@ from build_motion_demo import build as build_motion, validate as validate_motion
 from build_analysis import build as build_analysis
 sys.path.insert(0, str(ROOT / 'tools'))
 from build_full_presentation import deck as full_presentation, render as render_full_presentation
+from build_monthly_report import load_month, totals as monthly_totals, deck_for as monthly_deck
 from xml.etree import ElementTree as ET
 
 
@@ -200,6 +201,35 @@ class ToolTests(unittest.TestCase):
             content=(ROOT/filename).read_text(encoding='utf-8')
             with self.subTest(filename=filename):
                 for value in expected:self.assertIn(value,content)
+
+    def test_monthly_reports_reuse_structure_and_match_fictional_workbooks(self):
+        expected={'2026-09':(1218,70995000),'2026-10':(1471,91607000)}
+        scene_ids=None
+        ns={'x':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+        for month,(orders,revenue) in expected.items():
+            data=load_month(month); aggregate=monthly_totals(data['rows'])
+            self.assertEqual((aggregate['orders'],aggregate['revenue']),(orders,revenue))
+            for language in ('ko','en'):
+                deck=monthly_deck(data,language);validate_deck(deck)
+                current=[scene['id'] for scene in deck['scenes']]
+                scene_ids=scene_ids or current;self.assertEqual(current,scene_ids)
+                rendered=build(deck)
+                for value in (f'{orders:,}',f'{revenue:,}','Sales!A1:D13'):self.assertIn(value,rendered)
+                suffix='.en' if language=='en' else ''
+                saved=(ROOT/f'docs/monthly-report-{month}{suffix}.html').read_text(encoding='utf-8')
+                self.assertEqual(saved,rendered)
+            with zipfile.ZipFile(ROOT/f'examples/monthly-report/{month}.xlsx') as archive:
+                root=ET.fromstring(archive.read('xl/worksheets/sheet1.xml'))
+                rows=root.findall('.//x:row',ns);self.assertEqual(len(rows),13)
+                cells=[]
+                for row in rows[1:]:
+                    values=[]
+                    for cell in row.findall('x:c',ns):
+                        if cell.get('t')=='inlineStr':values.append(''.join(cell.find('x:is',ns).itertext()))
+                        else:values.append(int(cell.findtext('x:v',namespaces=ns)))
+                    cells.append(values)
+                self.assertEqual(cells,[[r['week'],r['channel'],r['orders'],r['revenue']] for r in data['rows']])
+        self.assertEqual(scene_ids,['title','summary','channels','timeline','conclusion'])
 
     def test_pptx_follows_relationship_order_and_separates_notes(self):
         ns='http://schemas.openxmlformats.org/'

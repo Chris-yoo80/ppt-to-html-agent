@@ -1,0 +1,18 @@
+{
+  "month": "2026-09",
+  "fictional": true,
+  "rows": [
+    {"week":"2026-09 W1","channel":"Online","orders":128,"revenue":7424000},
+    {"week":"2026-09 W1","channel":"Marketplace","orders":96,"revenue":5088000},
+    {"week":"2026-09 W1","channel":"Partner","orders":54,"revenue":3294000},
+    {"week":"2026-09 W2","channel":"Online","orders":136,"revenue":8024000},
+    {"week":"2026-09 W2","channel":"Marketplace","orders":101,"revenue":5454000},
+    {"week":"2026-09 W2","channel":"Partner","orders":58,"revenue":3538000},
+    {"week":"2026-09 W3","channel":"Online","orders":145,"revenue":8700000},
+    {"week":"2026-09 W3","channel":"Marketplace","orders":108,"revenue":5940000},
+    {"week":"2026-09 W3","channel":"Partner","orders":61,"revenue":3782000},
+    {"week":"2026-09 W4","channel":"Online","orders":152,"revenue":9272000},
+    {"week":"2026-09 W4","channel":"Marketplace","orders":114,"revenue":6384000},
+    {"week":"2026-09 W4","channel":"Partner","orders":65,"revenue":4095000}
+  ]
+}

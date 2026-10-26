@@ -1,0 +1,152 @@
+{
+  "title": "Fictional monthly sales · 2026-10",
+  "language": "en",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "title",
+      "eyebrow": "MONTHLY SALES / FICTIONAL",
+      "title": "Fictional monthly sales · 2026-10",
+      "lead": "The same reviewed structure can be regenerated with next month’s source.",
+      "layout": "cards",
+      "motion": "none",
+      "items": [
+        {
+          "label": "Period",
+          "value": "2026-10",
+          "body": "Four weekly periods."
+        },
+        {
+          "label": "Source range",
+          "value": "Sales!A1:D13",
+          "body": "12 fictional source rows."
+        }
+      ],
+      "message": "Original fictional data; no company or customer information.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 7
+    },
+    {
+      "id": "summary",
+      "eyebrow": "01 / EXECUTIVE SUMMARY",
+      "title": "Monthly result",
+      "lead": "Revenue, orders and average order value use the complete monthly scope.",
+      "layout": "compare",
+      "motion": "none",
+      "items": [
+        {
+          "label": "Revenue",
+          "value": "KRW 91.6M",
+          "body": "91,607,000 KRW"
+        },
+        {
+          "label": "Orders",
+          "value": "1,471",
+          "body": "Count; all channels."
+        },
+        {
+          "label": "Average order value",
+          "value": "KRW 0.1M",
+          "body": "Revenue ÷ orders; ratio of sums."
+        }
+      ],
+      "message": "Aggregate raw values first; round only for display.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "channels",
+      "eyebrow": "02 / CHANNEL MIX",
+      "title": "Revenue by channel",
+      "lead": "Every channel uses the same monthly filter.",
+      "layout": "compare",
+      "motion": "planes",
+      "items": [
+        {
+          "label": "Online",
+          "value": "KRW 42.3M",
+          "body": "666 orders · 46.1% of revenue"
+        },
+        {
+          "label": "Marketplace",
+          "value": "KRW 29.9M",
+          "body": "509 orders · 32.7% of revenue"
+        },
+        {
+          "label": "Partner",
+          "value": "KRW 19.4M",
+          "body": "296 orders · 21.2% of revenue"
+        }
+      ],
+      "message": "Channel shares use total monthly revenue as the denominator.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "timeline",
+      "eyebrow": "03 / WEEKLY TIMELINE",
+      "title": "Weekly revenue flow",
+      "lead": "The timeline keeps the same four-step structure every month.",
+      "layout": "compare",
+      "motion": "lines",
+      "motion_caption": "Weekly sequence",
+      "items": [
+        {
+          "label": "2026-10 W1",
+          "value": "KRW 20.6M",
+          "body": "340 orders"
+        },
+        {
+          "label": "2026-10 W2",
+          "value": "KRW 21.9M",
+          "body": "357 orders"
+        },
+        {
+          "label": "2026-10 W3",
+          "value": "KRW 23.6M",
+          "body": "377 orders"
+        },
+        {
+          "label": "2026-10 W4",
+          "value": "KRW 25.4M",
+          "body": "397 orders"
+        }
+      ],
+      "message": "Week labels come directly from the source file.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "conclusion",
+      "eyebrow": "04 / CONCLUSION",
+      "title": "What to carry into next month",
+      "lead": "Keep definitions and the presentation structure stable; replace only the reviewed source.",
+      "layout": "flow",
+      "motion": "lines",
+      "items": [
+        {
+          "label": "Replace source",
+          "body": "Add the new month JSON and workbook."
+        },
+        {
+          "label": "Rebuild",
+          "body": "Run the same build command."
+        },
+        {
+          "label": "Verify",
+          "body": "Check units, denominator, filters, rounding and provenance."
+        }
+      ],
+      "message": "Do not carry forward stale totals from the prior month.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    }
+  ]
+}

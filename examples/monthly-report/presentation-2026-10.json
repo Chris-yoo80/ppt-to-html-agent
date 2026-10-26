@@ -1,0 +1,152 @@
+{
+  "title": "가상 월간 매출 · 2026-10",
+  "language": "ko",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "title",
+      "eyebrow": "월간 매출 / 가상 데이터",
+      "title": "가상 월간 매출 · 2026-10",
+      "lead": "검토한 발표 구조를 유지하고 다음 달 원본으로 다시 생성합니다.",
+      "layout": "cards",
+      "motion": "none",
+      "items": [
+        {
+          "label": "기간",
+          "value": "2026-10",
+          "body": "4개 주간 기간입니다."
+        },
+        {
+          "label": "원본 범위",
+          "value": "Sales!A1:D13",
+          "body": "가상 원본 12개 행입니다."
+        }
+      ],
+      "message": "새로 만든 가상 데이터이며 회사·고객 정보가 없습니다.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 7
+    },
+    {
+      "id": "summary",
+      "eyebrow": "01 / EXECUTIVE SUMMARY",
+      "title": "월간 결과 요약",
+      "lead": "매출·주문·평균 주문금액은 월 전체 범위를 사용합니다.",
+      "layout": "compare",
+      "motion": "none",
+      "items": [
+        {
+          "label": "매출",
+          "value": "9,160.7만원",
+          "body": "91,607,000 KRW"
+        },
+        {
+          "label": "주문",
+          "value": "1,471",
+          "body": "건수·전체 채널입니다."
+        },
+        {
+          "label": "평균 주문금액",
+          "value": "6.2만원",
+          "body": "매출 ÷ 주문; 합계의 비율입니다."
+        }
+      ],
+      "message": "원본 값을 먼저 합산하고 표시할 때만 반올림합니다.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "channels",
+      "eyebrow": "02 / CHANNEL MIX",
+      "title": "채널별 매출 구성",
+      "lead": "모든 채널에 같은 월간 필터를 적용합니다.",
+      "layout": "compare",
+      "motion": "planes",
+      "items": [
+        {
+          "label": "Online",
+          "value": "4,225.2만원",
+          "body": "주문 666건 · 매출 비중 46.1%"
+        },
+        {
+          "label": "Marketplace",
+          "value": "2,994.5만원",
+          "body": "주문 509건 · 매출 비중 32.7%"
+        },
+        {
+          "label": "Partner",
+          "value": "1,941.0만원",
+          "body": "주문 296건 · 매출 비중 21.2%"
+        }
+      ],
+      "message": "채널 비중의 분모는 월 전체 매출입니다.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "timeline",
+      "eyebrow": "03 / WEEKLY TIMELINE",
+      "title": "주간 매출 흐름",
+      "lead": "매월 같은 4단계 타임라인 구조를 유지합니다.",
+      "layout": "compare",
+      "motion": "lines",
+      "motion_caption": "주간 흐름",
+      "items": [
+        {
+          "label": "2026-10 W1",
+          "value": "2,062.6만원",
+          "body": "주문 340건"
+        },
+        {
+          "label": "2026-10 W2",
+          "value": "2,193.2만원",
+          "body": "주문 357건"
+        },
+        {
+          "label": "2026-10 W3",
+          "value": "2,363.0만원",
+          "body": "주문 377건"
+        },
+        {
+          "label": "2026-10 W4",
+          "value": "2,541.9만원",
+          "body": "주문 397건"
+        }
+      ],
+      "message": "주차 표기는 원본 파일 값을 그대로 사용합니다.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    },
+    {
+      "id": "conclusion",
+      "eyebrow": "04 / CONCLUSION",
+      "title": "다음 달에도 유지할 기준",
+      "lead": "지표 정의와 발표 구조를 유지하고 검토한 원본만 교체합니다.",
+      "layout": "flow",
+      "motion": "lines",
+      "items": [
+        {
+          "label": "원본 교체",
+          "body": "새 월 JSON과 엑셀을 추가합니다."
+        },
+        {
+          "label": "재생성",
+          "body": "같은 생성 명령을 실행합니다."
+        },
+        {
+          "label": "검수",
+          "body": "단위·분모·필터·반올림·출처를 확인합니다."
+        }
+      ],
+      "message": "지난달 합계를 다음 달에 그대로 남기지 않습니다.",
+      "source": "2026-10.xlsx / Sales!A1:D13",
+      "duration": 8
+    }
+  ]
+}

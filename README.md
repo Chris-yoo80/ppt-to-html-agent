@@ -135,6 +135,16 @@ GitHub Pages serves the bilingual introduction, HTML guides and examples from `m
 
 Motion demos retain a static **Key facts** summary with all essential figures and four phases. **Turn motion off** keeps manual navigation; **Print / PDF** previews all three complete summaries. Presentation reduced-motion mode reveals every item in the current scene and pauses autoplay. Returning from print preserves story/time or step, paused. Saved-PDF layout is a separate check.
 
+## Repeat a monthly report
+
+The [fictional monthly sales example](examples/monthly-report/README.md) keeps one reviewed five-scene structure while replacing the source for September and October. Add `YYYY-MM.json`, then run:
+
+```sh
+python tools/build_monthly_report.py --month YYYY-MM
+```
+
+The builder creates the matching workbook, bilingual presentation JSON and offline HTML. The example records unit, denominator, filter/range, rounding, provenance and motion-off/print checks for both months.
+
 ## Numeric review
 
 Unit review also covers **length, area, volume, mass, time, speed, energy/power and compound/business units**. The offline unit helper checks supported declared conversions and flags unknown units, incompatible dimensions or missing packing factors as Needs review. It does not automatically interpret arbitrary workbooks or change the KRW campaign charts. See the [fictional unit examples](examples/unit-verification/README.md).
