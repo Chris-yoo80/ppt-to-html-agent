@@ -1,5 +1,8 @@
 # GitHub 공개 계획 — 협의용 초안
 
+2026-10-25 Threads ??? ???? ??: [???](release-notes-feedback-1025.ko.md) ? [English](release-notes-feedback-1025.md) ? [PR ??? ?? ??](pr-feedback-1025.md)
+
+
 ## 공개 형태
 
 - 저장소 가칭: `ppt-to-html-agent`.
