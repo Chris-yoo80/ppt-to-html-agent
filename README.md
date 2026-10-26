@@ -10,6 +10,18 @@ A source-available agent skill for turning PPT content into interactive HTML pre
 
 [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [한국어 HTML 설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [Presentation + supporting HTML](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
+## Quick start — three steps
+
+1. **Get the skill.** Clone this repository or download the [portable skill ZIP](docs/downloads/ppt-to-html.zip).
+2. **Install it for your coding agent.** Put `ppt-to-html` in `.claude/skills/` for Claude Code or `.agents/skills/` for Codex. Follow the exact paths in [Install](docs/install.md).
+3. **Create the HTML.** Put an accessible `.pptx`, `.xlsx` or supported JSON source in your working folder, request `/ppt-to-html` in Claude Code or `$ppt-to-html` in Codex, answer the brief, review the contents and representative scene, then let the agent build and verify the offline HTML.
+
+Regular ChatGPT and Claude web chats cannot run this local skill. Legacy `.ppt` and password-protected files are unsupported. The agent uses source content to redesign the narrative; it does not reproduce the original slide layout pixel for pixel.
+
+| 1. See the full story | 2. Review interactive evidence | 3. Check motion-off and print |
+|---|---|---|
+| ![A complete fictional presentation title in Edge](docs/assets/motion-agent-title.jpg) | ![Fictional marketing analysis controls and charts in Edge](docs/assets/marketing-dashboard.jpg) | ![Motion summaries retained in print preview](docs/assets/feedback2-motion-print.jpg) |
+
 The [complete presentation example](docs/full-presentation.en.html) contains all seven scenes from contents and overview through the main discussion, timeline and conclusion. It makes the end-to-end conversion scope visible instead of showing only a short highlight.
 
 ## Supporting HTML, inside the presentation

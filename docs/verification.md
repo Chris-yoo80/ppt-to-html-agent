@@ -104,3 +104,11 @@ Automated player checks passed direct scene/step jumps, Escape close, two exact-
 Real-browser visual verification is pending because the connected browser surface became unavailable during this task. DOM runtime tests establish interaction state and keyboard routing; they do not establish final layout or a browser accessibility audit. Review `library-demo.html` and `marketing-presentation.html` with this sequence: mark a question, open and close Additional resources, move elsewhere, return with `R`, then select an earlier mark from the question list.
 
 No push, merge or deployment was performed.
+
+## Feedback 4: first-use quick start
+
+The top of both READMEs and the Korean/English landing pages now present the same three-step path: get the skill, install it in the Claude Code or Codex project folder, then add a source and request the skill before reviewing the contents and representative scene. The instructions link to `docs/install.md` and distinguish the Claude Code `/ppt-to-html` request from the Codex `$ppt-to-html` request.
+
+The same locations state the tested limits: regular ChatGPT and Claude web chats do not run this local skill, legacy `.ppt` and password-protected files are unsupported, and the agent redesigns the presentation instead of reproducing the source layout pixel for pixel. Three existing fictional browser-review images provide a compact static walkthrough without adding a network dependency.
+
+Automated checks cover paired quick-start text, local links, generated English landing-page localization and package consistency. Visual browser review remains pending because no browser surface was available. No push, merge or deployment was performed.

@@ -109,6 +109,19 @@ def main():
     mapping.update({'수치 검수: 단위·환산, 분모, 필터·범위, 반올림, 출처를 대조하고 항목별 통과·확인 필요와 근거를 보고합니다.': 'Numeric review compares units/conversions, denominators, filters/ranges, rounding and provenance, reporting Passed or Needs review with evidence for each item.', '검수 결과 보기 ↗': 'View numeric review ↗', 'verification.ko.md': 'verification.md'})
     mapping.update({'수치 검수: 금액뿐 아니라 길이·면적·부피·질량·시간·복합 단위도 확인합니다. 지원 환산은 제공된 값을 대조하고, 정의가 없는 단위는 확인 필요로 남깁니다. 분모·필터·반올림·출처도 함께 검수합니다.': 'Numeric review includes money, length, area, volume, mass, time and compound units. Supported conversions compare declared values; undefined units remain Needs review. Denominators, filters, rounding and provenance are reviewed too.'})
     mapping.update({'모션을 꺼도 핵심 수치·설명은 요약에 남습니다. 인쇄 / PDF에서 세 예제의 요약을 함께 확인하세요.': 'Key figures and explanations remain in the summary with motion off. Print / PDF previews the summaries of all three examples.'})
+    mapping.update({
+        '세 단계면 시작할 수 있습니다.':'Start in three steps.',
+        '설치부터 첫 HTML 확인까지.':'From installation to your first HTML.',
+        '자세한 경로는 설치 안내에서 확인하세요.':'Use the installation guide for exact paths.',
+        '1. 스킬 받기':'1. Get the skill',
+        'GitHub를 복제하거나 휴대용 스킬 ZIP을 내려받습니다.':'Clone the GitHub repository or download the portable skill ZIP.',
+        '2. 코딩 에이전트에 설치':'2. Install it for your coding agent',
+        'Claude Code는 .claude/skills/, Codex는 .agents/skills/에 넣습니다.':'Use .claude/skills/ for Claude Code or .agents/skills/ for Codex.',
+        '3. 원본을 넣고 호출':'3. Add the source and invoke the skill',
+        '작업 폴더에 PPTX나 엑셀을 넣고 Claude Code에서는 /ppt-to-html, Codex에서는 $ppt-to-html을 요청한 뒤 질문에 답하고 목차와 대표 장면을 확인합니다.':'Put a PPTX or workbook in the working folder, request /ppt-to-html in Claude Code or $ppt-to-html in Codex, answer the brief, then review the contents and representative scene.',
+        '일반 ChatGPT·Claude 웹 채팅, 구버전 .ppt, 암호가 설정된 파일은 지원하지 않습니다. 원본 배치를 그대로 복원하지 않고 발표 흐름과 화면을 새로 구성합니다.':'Regular ChatGPT and Claude web chats, legacy .ppt files and password-protected files are unsupported. The agent redesigns the narrative and screens instead of reproducing the original layout.',
+        '설치 안내 보기 →':'View the installation guide →'
+    })
     page=re.sub('|'.join(re.escape(k) for k in sorted(mapping,key=len,reverse=True)),lambda m:mapping[m[0]],page)
     page=page.replace('lang="ko"','lang="en"').replace('demo.html','demo.en.html').replace('href="index.en.html" lang="en"','href="index.html" lang="ko"').replace('English</a>','한국어</a>')
     page=page.replace('lang="ko" hreflang="en"','lang="ko" hreflang="ko"').replace('href="license.html"','href="license.en.html"')

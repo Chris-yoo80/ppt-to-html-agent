@@ -189,6 +189,18 @@ class ToolTests(unittest.TestCase):
             self.assertIn('id="print-stories"',output)
             self.assertIn('id="motion-mode"',output)
 
+    def test_bilingual_quick_start_has_three_steps_and_honest_limits(self):
+        pairs = [
+            ('README.md', ('## Quick start — three steps', '.claude/skills/', '.agents/skills/', 'Regular ChatGPT and Claude web chats', 'password-protected', 'does not reproduce')),
+            ('README.ko.md', ('## 3단계 빠른 시작', '.claude/skills/', '.agents/skills/', '일반 ChatGPT·Claude 웹 채팅', '암호가 설정된', '복원하지 않습니다')),
+            ('docs/index.en.html', ('Start in three steps.', '1. Get the skill', '2. Install it for your coding agent', '3. Add the source and invoke the skill', 'install.md')),
+            ('docs/index.html', ('세 단계면 시작할 수 있습니다.', '1. 스킬 받기', '2. 코딩 에이전트에 설치', '3. 원본을 넣고 호출', 'install.md')),
+        ]
+        for filename, expected in pairs:
+            content=(ROOT/filename).read_text(encoding='utf-8')
+            with self.subTest(filename=filename):
+                for value in expected:self.assertIn(value,content)
+
     def test_pptx_follows_relationship_order_and_separates_notes(self):
         ns='http://schemas.openxmlformats.org/'
         p=ns+'presentationml/2006/main'; a=ns+'drawingml/2006/main'

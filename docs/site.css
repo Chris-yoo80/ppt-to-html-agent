@@ -5,3 +5,4 @@
 .star-invite .star-button{background:#d8efa7;color:#24351d;border:1px solid #b4cf85;padding:12px 16px;font-size:12px;white-space:nowrap}
 .star-invite .star-button:hover{background:#c9e790}.star-invite small{flex-basis:100%;font-size:10px;line-height:1.8;color:#647354}
 @media(max-width:650px){.star-invite{padding:16px}.star-invite .star-button{width:100%;text-align:center;justify-content:center}}
+.quick-start{padding-top:2rem}.quick-start-grid{list-style:none;margin:1.5rem 0 1rem;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.quick-start-grid li{display:grid;gap:.55rem;padding:1.25rem;border:1px solid var(--line);border-radius:18px;background:#fff}.quick-start-grid strong{font-size:1.05rem}.quick-start-grid span,.quick-start-limit{color:var(--muted);line-height:1.65}.quick-start-limit{margin:0}.quick-start-limit .text-link{margin-left:.35rem}@media(max-width:800px){.quick-start-grid{grid-template-columns:1fr}}

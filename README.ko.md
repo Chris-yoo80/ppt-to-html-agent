@@ -10,6 +10,18 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 
 [국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
+## 3단계 빠른 시작
+
+1. **스킬 받기.** 저장소를 복제하거나 [휴대용 스킬 ZIP](docs/downloads/ppt-to-html.zip)을 내려받습니다.
+2. **코딩 에이전트에 설치하기.** Claude Code는 `.claude/skills/`, Codex는 `.agents/skills/` 아래에 `ppt-to-html` 폴더를 넣습니다. 정확한 경로는 [설치 안내](docs/install.md)를 따르세요.
+3. **HTML 만들기.** 작업 폴더에 접근 가능한 `.pptx`, `.xlsx` 또는 지원 JSON 원본을 넣고 Claude Code에서는 `/ppt-to-html`, Codex에서는 `$ppt-to-html`을 요청합니다. AI 질문에 답한 뒤 목차와 대표 장면을 확인하면 에이전트가 오프라인 HTML을 만들고 검증합니다.
+
+일반 ChatGPT·Claude 웹 채팅에서는 이 로컬 스킬을 실행할 수 없습니다. 구버전 `.ppt`와 암호가 설정된 파일은 지원하지 않습니다. 원본 내용을 바탕으로 발표 흐름과 화면을 새로 구성하며 기존 슬라이드 배치를 픽셀 단위로 복원하지 않습니다.
+
+| 1. 전체 발표 확인 | 2. 인터랙티브 근거 검토 | 3. 모션 끔·인쇄 확인 |
+|---|---|---|
+| ![Edge에서 연 전체 가상 발표의 표지](docs/assets/motion-agent-title.jpg) | ![Edge에서 연 가상 마케팅 분석 조정값과 차트](docs/assets/marketing-dashboard.jpg) | ![인쇄 미리보기에 유지된 모션 요약](docs/assets/feedback2-motion-print.jpg) |
+
 [전체 발표 예제](docs/full-presentation.html)는 목차와 개요부터 본문, 타임라인, 결론까지 총 7장을 모두 담았습니다. 일부 하이라이트가 아니라 발표 전체를 처음부터 끝까지 구성한다는 범위를 보여줍니다.
 
 ## 발표 안에 추가 HTML 넣기
