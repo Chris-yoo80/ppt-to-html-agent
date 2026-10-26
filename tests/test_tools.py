@@ -14,6 +14,8 @@ from deck_model import validate_deck
 from extract_pptx import extract, paragraphs, NS
 from build_motion_demo import build as build_motion, validate as validate_motion
 from build_analysis import build as build_analysis
+sys.path.insert(0, str(ROOT / 'tools'))
+from build_full_presentation import deck as full_presentation, render as render_full_presentation
 from xml.etree import ElementTree as ET
 
 
@@ -30,6 +32,25 @@ class ToolTests(unittest.TestCase):
         data = result.split('id="deck-data">', 1)[1].split('</script>', 1)[0]
         self.assertEqual(json.loads(data)['scenes'][0]['items'][0]['body'], self.deck['scenes'][0]['items'][0]['body'])
         self.assertNotRegex(result, r'<(?:script|link)[^>]+(?:src|href)="https?://')
+
+    def test_complete_presentation_covers_the_full_bilingual_story(self):
+        expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']
+        for language in ('ko','en'):
+            deck=full_presentation(language)
+            validate_deck(deck)
+            self.assertEqual([scene['id'] for scene in deck['scenes']],expected_ids)
+            self.assertEqual(len(deck['scenes']),7)
+            rendered=build(deck)
+            for value in ('1,500','300','45','15.0%','3.0%'):
+                self.assertIn(value,rendered)
+            self.assertNotRegex(rendered,r'<(?:script|link)[^>]+(?:src|href)="https?://')
+            custom=render_full_presentation(language)
+            self.assertEqual(custom.count('class="slide" data-id='),14) # 7 live + 7 print copies.
+            for value in ('1,500','300','45','15.0%','3.0%'):
+                self.assertIn(value,custom)
+            for chart in ('class="funnel"','class="trend"','class="radar"','class="gantt"'):
+                self.assertIn(chart,custom)
+            self.assertNotRegex(custom,r'<(?:script|link)[^>]+(?:src|href)="https?://')
 
     def test_rejects_unusable_scene_models(self):
         mutations = [lambda d: d['scenes'].append(copy.deepcopy(d['scenes'][0])),

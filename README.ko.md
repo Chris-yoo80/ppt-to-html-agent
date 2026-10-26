@@ -10,6 +10,8 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 
 [국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
+[전체 발표 예제](docs/full-presentation.html)는 목차와 개요부터 본문, 타임라인, 결론까지 총 7장을 모두 담았습니다. 일부 하이라이트가 아니라 발표 전체를 처음부터 끝까지 구성한다는 범위를 보여줍니다.
+
 ## 발표 안에 추가 HTML 넣기
 
 **추가 자료**를 누르면 마케팅 분석과 HTML 설명서를 열 수 있습니다. 발표 자동 재생은 멈추고, 닫으면 같은 단계로 돌아옵니다. 분석 설정은 같은 발표 세션에서 자료를 오가거나 다시 열어도 유지됩니다.

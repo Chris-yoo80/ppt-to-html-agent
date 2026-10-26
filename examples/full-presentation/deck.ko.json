@@ -1,0 +1,200 @@
+{
+  "title": "가상 캠페인 검토 · 처음부터 끝까지",
+  "language": "ko",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "agenda",
+      "title": "목차",
+      "eyebrow": "01 / 07 · 전체 발표 예제",
+      "lead": "전체 발표를 처음부터 끝까지",
+      "layout": "flow",
+      "motion": "none",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "01 · 개요",
+          "body": "목적과 검토 범위를 맞춥니다."
+        },
+        {
+          "label": "02 · 본문",
+          "body": "현황, 분석, 실행안을 설명합니다."
+        },
+        {
+          "label": "03 · 타임라인과 결론",
+          "body": "실행 순서를 제시하고 의사결정과 다음 행동을 정리합니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "overview",
+      "title": "개요",
+      "eyebrow": "02 / 07 · 전체 발표 예제",
+      "lead": "가상 마케팅 캠페인의 다음 실험을 결정합니다",
+      "layout": "cards",
+      "motion": "points",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "목적",
+          "body": "전환 흐름을 검토하고 개선 실험을 제안합니다."
+        },
+        {
+          "label": "범위",
+          "body": "가상 단일 캠페인의 집계값만 사용합니다."
+        },
+        {
+          "label": "판단 기준",
+          "body": "추가 예산 승인 전 측정 기준과 검토일을 합의합니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "baseline",
+      "title": "본문 · 현황",
+      "eyebrow": "03 / 07 · 전체 발표 예제",
+      "lead": "도달에서 구매까지 같은 캠페인의 흐름을 확인합니다",
+      "layout": "compare",
+      "motion": "points",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "도달",
+          "body": "1,500명 · 중복 제거한 가상 도달 인원"
+        },
+        {
+          "label": "클릭",
+          "body": "300회 · 캠페인 클릭 이벤트"
+        },
+        {
+          "label": "구매",
+          "body": "45건 · 캠페인 귀속 구매 이벤트"
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "analysis",
+      "title": "본문 · 분석",
+      "eyebrow": "04 / 07 · 전체 발표 예제",
+      "lead": "지표마다 다른 분모를 명확히 표시합니다",
+      "layout": "compare",
+      "motion": "lines",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "구매 / 클릭",
+          "body": "15.0% = 45건 ÷ 300회 × 100"
+        },
+        {
+          "label": "구매 / 도달",
+          "body": "3.0% = 45건 ÷ 1,500명 × 100"
+        },
+        {
+          "label": "해석 한계",
+          "body": "이벤트와 인원의 비율이며 개인별 구매 확률이나 인과 효과가 아닙니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "proposal",
+      "title": "본문 · 실행안",
+      "eyebrow": "05 / 07 · 전체 발표 예제",
+      "lead": "측정 후 실험을 진행하고 결과를 검토합니다",
+      "layout": "flow",
+      "motion": "lines",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "측정 정의",
+          "body": "클릭·구매의 집계 범위와 귀속 기준을 먼저 고정합니다."
+        },
+        {
+          "label": "메시지 실험",
+          "body": "두 메시지를 비교하되 예산과 기간 조건을 맞춥니다."
+        },
+        {
+          "label": "판단 보류",
+          "body": "실험 결과가 나오기 전에는 개선 효과를 확정하지 않습니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "timeline",
+      "title": "타임라인",
+      "eyebrow": "06 / 07 · 전체 발표 예제",
+      "lead": "4주 실행 계획과 확인 시점",
+      "layout": "flow",
+      "motion": "planes",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "1주 · 정의",
+          "body": "지표·필터·데이터 수집 조건을 합의합니다."
+        },
+        {
+          "label": "2주 · 준비",
+          "body": "메시지 두 안과 측정 화면을 점검합니다."
+        },
+        {
+          "label": "3주 · 실행",
+          "body": "합의한 조건으로 가상 실험을 진행합니다."
+        },
+        {
+          "label": "4주 · 검토",
+          "body": "결과와 한계를 검토한 뒤 다음 단계를 결정합니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    },
+    {
+      "id": "conclusion",
+      "title": "결론",
+      "eyebrow": "07 / 07 · 전체 발표 예제",
+      "lead": "오늘 합의할 것과 다음 행동",
+      "layout": "cards",
+      "motion": "none",
+      "motion_caption": "설명용 개념 모션 · 성과 예측 아님",
+      "items": [
+        {
+          "label": "확인한 현황",
+          "body": "클릭 300회, 구매 45건, 구매/클릭 15.0%인 가상 사례입니다."
+        },
+        {
+          "label": "요청하는 결정",
+          "body": "추가 성과를 약속하지 않고 4주 검증 계획을 검토합니다."
+        },
+        {
+          "label": "다음 행동",
+          "body": "담당자와 측정 정의를 정한 뒤 실험 준비를 시작합니다."
+        }
+      ],
+      "message": "목차, 개요, 본문, 타임라인, 결론을 모두 담은 7장 전체 발표입니다.",
+      "source": "새로 작성한 가상 데이터 · examples/full-presentation/README.ko.md",
+      "duration": 10
+    }
+  ]
+}

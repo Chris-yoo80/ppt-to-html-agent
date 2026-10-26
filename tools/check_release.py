@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'skills/ppt-to-html/scripts'))
 from build_deck import build
 from build_motion_demo import build as build_motion
 from build_marketing_examples import outputs as marketing_outputs
+from build_full_presentation import outputs as full_presentation_outputs
 from build_guides import build as build_guide
 
 
@@ -72,6 +73,8 @@ def main():
         problems.append('library-demo.html does not match current source')
     for filename,expected_content in marketing_outputs().items():
         if (ROOT/filename).read_text(encoding='utf8')!=expected_content:problems.append(f'stale marketing artifact: {filename}')
+    for filename,expected_content in full_presentation_outputs().items():
+        if (ROOT/filename).read_text(encoding='utf8')!=expected_content:problems.append(f'stale complete presentation artifact: {filename}')
     for language in ['ko','en']:
         for filename in [f'docs/guide.{language}.html',f'skills/ppt-to-html/assets/guide.{language}.html']:
             if (ROOT/filename).read_text(encoding='utf8')!=build_guide(language):problems.append(f'stale HTML guide: {filename}')

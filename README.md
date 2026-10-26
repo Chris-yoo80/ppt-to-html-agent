@@ -10,6 +10,8 @@ A source-available agent skill for turning PPT content into interactive HTML pre
 
 [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [한국어 HTML 설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [Presentation + supporting HTML](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
+The [complete presentation example](docs/full-presentation.en.html) contains all seven scenes from contents and overview through the main discussion, timeline and conclusion. It makes the end-to-end conversion scope visible instead of showing only a short highlight.
+
 ## Supporting HTML, inside the presentation
 
 Open **Additional resources** to view the fictional marketing analysis or the HTML user guide. The presentation pauses and keeps its current reveal; the analysis keeps its settings when you switch resources or return later in the same session.

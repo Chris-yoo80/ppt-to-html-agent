@@ -1,0 +1,200 @@
+{
+  "title": "Fictional campaign review · from start to finish",
+  "language": "en",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "agenda",
+      "title": "Contents",
+      "eyebrow": "01 / 07 · Complete presentation example",
+      "lead": "A complete presentation, from opening to conclusion",
+      "layout": "flow",
+      "motion": "none",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "01 · Overview",
+          "body": "Align on the objective and scope."
+        },
+        {
+          "label": "02 · Main discussion",
+          "body": "Explain the baseline, analysis and proposed actions."
+        },
+        {
+          "label": "03 · Timeline and conclusion",
+          "body": "Show the implementation sequence, then close with a decision and next steps."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "overview",
+      "title": "Overview",
+      "eyebrow": "02 / 07 · Complete presentation example",
+      "lead": "Decide the next experiment for a fictional campaign",
+      "layout": "cards",
+      "motion": "points",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Objective",
+          "body": "Review the conversion journey and propose an experiment."
+        },
+        {
+          "label": "Scope",
+          "body": "Use aggregate counts from one fictional campaign."
+        },
+        {
+          "label": "Decision rule",
+          "body": "Agree on measurement and review dates before approving extra budget."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "baseline",
+      "title": "Main discussion · Baseline",
+      "eyebrow": "03 / 07 · Complete presentation example",
+      "lead": "Trace one campaign from reach to purchase",
+      "layout": "compare",
+      "motion": "points",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Reach",
+          "body": "1,500 people · fictional deduplicated audience"
+        },
+        {
+          "label": "Clicks",
+          "body": "300 events · campaign click events"
+        },
+        {
+          "label": "Purchases",
+          "body": "45 events · attributed purchase events"
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "analysis",
+      "title": "Main discussion · Analysis",
+      "eyebrow": "04 / 07 · Complete presentation example",
+      "lead": "Make each metric denominator explicit",
+      "layout": "compare",
+      "motion": "lines",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Purchases / clicks",
+          "body": "15.0% = 45 purchases / 300 clicks × 100"
+        },
+        {
+          "label": "Purchases / reach",
+          "body": "3.0% = 45 purchases / 1,500 people × 100"
+        },
+        {
+          "label": "Interpretation limit",
+          "body": "These event-to-audience ratios do not establish individual purchase probability or causal impact."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "proposal",
+      "title": "Main discussion · Proposed actions",
+      "eyebrow": "05 / 07 · Complete presentation example",
+      "lead": "Measure first, run the experiment and review the results",
+      "layout": "flow",
+      "motion": "lines",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Define measurement",
+          "body": "Fix the aggregation scope and attribution rules first."
+        },
+        {
+          "label": "Test messaging",
+          "body": "Compare two messages under matched budget and period conditions."
+        },
+        {
+          "label": "Defer the decision",
+          "body": "Do not claim an improvement before experimental results are available."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline",
+      "eyebrow": "06 / 07 · Complete presentation example",
+      "lead": "A four-week implementation plan with review gates",
+      "layout": "flow",
+      "motion": "planes",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Week 1 · Define",
+          "body": "Agree on metrics, filters and data collection."
+        },
+        {
+          "label": "Week 2 · Prepare",
+          "body": "Check two message variants and measurement views."
+        },
+        {
+          "label": "Week 3 · Run",
+          "body": "Run the illustrative experiment under agreed conditions."
+        },
+        {
+          "label": "Week 4 · Review",
+          "body": "Review results and limitations before choosing the next step."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    },
+    {
+      "id": "conclusion",
+      "title": "Conclusion",
+      "eyebrow": "07 / 07 · Complete presentation example",
+      "lead": "The decision today and the next action",
+      "layout": "cards",
+      "motion": "none",
+      "motion_caption": "Illustrative motion · not a performance forecast",
+      "items": [
+        {
+          "label": "Baseline reviewed",
+          "body": "Fictional baseline: 300 clicks, 45 purchases, purchases/clicks of 15.0%."
+        },
+        {
+          "label": "Decision requested",
+          "body": "Review the four-week validation plan without promising additional performance."
+        },
+        {
+          "label": "Next action",
+          "body": "Assign an owner and agree on measurement before preparing the experiment."
+        }
+      ],
+      "message": "This complete seven-scene presentation includes contents, overview, main discussion, timeline and conclusion.",
+      "source": "New fictional data · examples/full-presentation/README.md",
+      "duration": 10
+    }
+  ]
+}
