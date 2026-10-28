@@ -80,6 +80,18 @@ These are project-specific terms, not independently reviewed standard-license ad
 
 The website and fictional demo use Story Sans, renamed character subsets derived from Pretendard 1.3.9. These font files retain their separate [SIL Open Font License](skills/ppt-to-html/assets/fonts/OFL.txt) and are not relicensed under the Community License. They cover the current demo; other characters fall back to the system font. The `story` preset embeds the font files and notices in the generated HTML.
 
+## Reference Design Mode
+
+Give the agent a website, GitHub repository, local HTML, screenshot, named style, or one of four bundled presets: `slide-story`, `dashboard`, `data-motion`, or `hybrid`. Choose what to apply—mood, color, typography, layout, cards/charts, motion, navigation or selected scenes—and how closely to follow it.
+
+The recommended mode extracts visual rules and rebuilds them with project-owned HTML/CSS/SVG. It does not copy third-party branding, text, icons, images, demo data, DOM or CSS. Copied code or assets require a verified license URL and retained notices. The result remains one offline HTML file without a new runtime CDN dependency.
+
+```sh
+python skills/ppt-to-html/scripts/reference_design.py --preset hybrid --source "https://example.com/reference" --source-kind url --apply "layout,cards,charts,motion" --output work/design-reference.json
+```
+
+The manifest records what was inspected, applied and excluded, plus permission/license status and runtime dependencies. See [Reference Design Mode](skills/ppt-to-html/references/design-references.md).
+
 ## How the agent works
 
 ```text

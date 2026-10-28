@@ -14,6 +14,8 @@ Read [references/intake.md](references/intake.md) before starting a new deck. As
 
 Inspect the source with the tools available in the host. Extract text, tables, figures, slide order and relevant notes; use slide rendering when available to inspect spatial relationships. Report unavailable extraction or rendering capabilities. Do not claim extraction succeeded when only part of the source was read. For unreadable sources, identify the specific limitation and request an accessible export.
 
+Ask whether the user has a design reference: website URL, GitHub repository, local HTML, screenshot/image, named style, or a bundled preset. When supplied, read [references/design-references.md](references/design-references.md). Record what was actually inspected, the elements to apply, similarity level and permission/license status. Default to visual inspiration and newly authored implementation. Do not copy branding, text, icons, images, demo data, DOM or CSS merely because it is publicly viewable. Code or asset reuse requires a verified license source and retained notices.
+
 For accessible PPTX inputs and the bundled HTML starter, read [references/authoring.md](references/authoring.md). It documents the extraction and build commands, supported scene format, and actual tool limitations. The host AI performs interpretation and planning; the builder renders an authored outline.
 
 ## Plan and create
@@ -21,6 +23,8 @@ For accessible PPTX inputs and the bundled HTML starter, read [references/author
 Map source slides to proposed HTML scenes. Identify the key message, evidence, reveal steps and suitable motion for each scene. Keep figures, units and assumptions traceable to the source. Mark sample data explicitly; do not invent results or introduce business assertions as facts.
 
 For a new visual direction, present the scene outline and one representative scene before extending it to the whole deck. Reuse prior approval during later edits. Ask about material changes to scope, claims or narrative; decide routine implementation details independently.
+
+In Reference Design Mode, create a `design-reference.json` manifest before the representative scene. Apply abstract design tokens and interaction patterns with project-owned HTML/CSS/SVG, preserve the offline single-file requirement, and keep all existing navigation, reduced-motion, print and question-bookmark behavior. The final report must state Reference / Inspected / Applied / Excluded / License or permission / Runtime dependency / Needs review.
 
 Use HTML/CSS/SVG and local resources where they meet the brief. Preserve aspect ratio, make Korean wrapping readable, and make scene and substep navigation predictable. Separate editable content from playback logic where practical. Provide visible previous/next controls and usage instructions. Use an explicitly chosen end behavior rather than assuming the deck should loop.
 

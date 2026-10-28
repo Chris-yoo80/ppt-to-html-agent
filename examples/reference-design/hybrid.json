@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "mode": "reference-design",
+  "preset": "hybrid",
+  "presetLabel": "Presentation + dashboard + data motion",
+  "source": {
+    "value": "Bundled hybrid preset",
+    "kind": "preset",
+    "inspected": true
+  },
+  "reuse": "inspiration",
+  "apply": [
+    "layout",
+    "cards",
+    "charts",
+    "motion"
+  ],
+  "presetRules": [
+    "editorial scene hierarchy",
+    "KPI cards",
+    "filter and evidence split",
+    "restrained data motion"
+  ],
+  "exclude": [
+    "logos",
+    "themes",
+    "icons",
+    "framework/library bundles",
+    "example content and data"
+  ],
+  "tokens": {
+    "palette": "warm neutral with blue and green accents",
+    "typeScale": "58/30/20/14",
+    "radius": "14-18px",
+    "spacing": "8px base",
+    "charts": "large takeaway plus evidence",
+    "motion": "finite reveal followed by stable final state"
+  },
+  "references": [
+    {
+      "name": "Reveal.js",
+      "url": "https://github.com/hakimel/reveal.js",
+      "license": "MIT"
+    },
+    {
+      "name": "Slidev",
+      "url": "https://github.com/slidevjs/slidev",
+      "license": "MIT"
+    },
+    {
+      "name": "Tabler",
+      "url": "https://github.com/tabler/tabler",
+      "license": "MIT"
+    },
+    {
+      "name": "Apache ECharts",
+      "url": "https://github.com/apache/echarts",
+      "license": "Apache-2.0"
+    }
+  ],
+  "permission": {
+    "status": "visual inspiration only",
+    "license": null,
+    "licenseUrl": null,
+    "needsReview": false
+  },
+  "runtimeDependencies": [],
+  "offlineSingleFile": true,
+  "note": "Preset rules are newly authored abstractions. No third-party code, assets, branding or example data are bundled."
+}

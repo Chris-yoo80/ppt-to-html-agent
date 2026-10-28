@@ -77,6 +77,18 @@ python skills/ppt-to-html/scripts/build_motion_demo.py examples/motion-stories/s
 
 기존에 답한 항목은 다시 묻지 않고, '추천 설정으로'라는 한 답으로 기본값을 선택할 수 있습니다. 화면 크기, 움직임의 양과 자동 재생 여부는 각각 다른 설정으로 다룹니다.
 
+## 레퍼런스 디자인 모드
+
+웹사이트, GitHub 저장소, 로컬 HTML, 화면 캡처, 이름이 붙은 스타일 또는 네 가지 프리셋(`slide-story`, `dashboard`, `data-motion`, `hybrid`)을 에이전트에 전달할 수 있습니다. 전체 분위기, 색상, 글꼴 계층, 레이아웃, 카드·차트, 모션, 탐색 방식이나 특정 장면 중 무엇을 적용할지 선택합니다.
+
+추천 방식은 시각 규칙만 분석하고 프로젝트가 소유한 HTML/CSS/SVG로 새로 구현하는 것입니다. 타사 브랜드, 문구, 아이콘, 이미지, 예제 데이터, DOM이나 CSS를 복사하지 않습니다. 코드나 자산을 재사용하려면 확인한 라이선스 URL과 고지 보존이 필요합니다. 결과물은 새 CDN 의존성이 없는 오프라인 단일 HTML을 유지합니다.
+
+```sh
+python skills/ppt-to-html/scripts/reference_design.py --preset hybrid --source "https://example.com/reference" --source-kind url --apply "layout,cards,charts,motion" --output work/design-reference.json
+```
+
+매니페스트에는 실제 확인 여부, 적용·제외 요소, 권한/라이선스 상태와 실행 의존성을 기록합니다. [레퍼런스 디자인 모드 설명](skills/ppt-to-html/references/design-references.md)을 참고하세요.
+
 ## 기능
 
 PPTX 추출기는 장표 순서대로 텍스트·표·메모와 미디어 목록을 읽습니다. 내용 해석과 발표 설계는 호스트 AI가 수행하고, 검토한 장면 구성을 JSON으로 작성합니다. 생성기는 이를 외부 글꼴·스크립트 없이 열리는 단일 HTML로 만듭니다.

@@ -14,6 +14,7 @@ from deck_model import validate_deck
 from extract_pptx import extract, paragraphs, NS
 from build_motion_demo import build as build_motion, validate as validate_motion
 from build_analysis import build as build_analysis
+from reference_design import catalog as reference_catalog, manifest as reference_manifest
 sys.path.insert(0, str(ROOT / 'tools'))
 from build_full_presentation import deck as full_presentation, render as render_full_presentation
 from build_monthly_report import load_month, totals as monthly_totals, deck_for as monthly_deck
@@ -33,6 +34,34 @@ class ToolTests(unittest.TestCase):
         data = result.split('id="deck-data">', 1)[1].split('</script>', 1)[0]
         self.assertEqual(json.loads(data)['scenes'][0]['items'][0]['body'], self.deck['scenes'][0]['items'][0]['body'])
         self.assertNotRegex(result, r'<(?:script|link)[^>]+(?:src|href)="https?://')
+
+    def test_reference_design_presets_are_offline_and_license_gated(self):
+        presets=reference_catalog()['presets']
+        self.assertEqual(set(presets),{'slide-story','dashboard','data-motion','hybrid'})
+        result=reference_manifest('hybrid','Bundled hybrid preset','preset','layout,cards,charts,motion','inspiration',inspected=True)
+        self.assertTrue(result['offlineSingleFile'])
+        self.assertEqual(result['runtimeDependencies'],[])
+        self.assertTrue(result['source']['inspected'])
+        self.assertIn('logos',result['exclude'])
+        self.assertEqual(result['permission']['status'],'visual inspiration only')
+        with self.assertRaisesRegex(ValueError,'Code reuse requires'):
+            reference_manifest('dashboard','https://example.invalid','url','layout','code')
+        code=reference_manifest('dashboard','https://example.invalid','url','layout','code','MIT','https://example.invalid/license',True)
+        self.assertTrue(code['permission']['needsReview'])
+        self.assertEqual(code['permission']['license'],'MIT')
+
+    def test_reference_design_intake_is_bilingual_and_updates_the_prompt(self):
+        ko=(ROOT/'docs/index.html').read_text(encoding='utf-8')
+        en=(ROOT/'docs/index.en.html').read_text(encoding='utf-8')
+        script=(ROOT/'docs/site.js').read_text(encoding='utf-8')
+        for value in ('name="reference"','name="reference-use"','slide-story','data-motion','hybrid'):
+            self.assertIn(value,ko)
+            self.assertIn(value,en)
+        self.assertIn('Design reference',en)
+        self.assertIn("data.get('reference')",script)
+        self.assertIn("data.get('reference-use')",script)
+        self.assertIn('design-reference.json',script)
+        self.assertNotRegex(script,r'fetch\(|XMLHttpRequest|https?://')
 
     def test_complete_presentation_covers_the_full_bilingual_story(self):
         expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']

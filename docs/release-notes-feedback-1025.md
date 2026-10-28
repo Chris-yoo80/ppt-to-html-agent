@@ -39,3 +39,8 @@ Status: local commits only; not pushed, merged or deployed.
 - `24c103e` — feedback#5: add repeatable monthly sales reports
 
 [한국어 릴리스 노트](release-notes-feedback-1025.ko.md)
+### Reference Design Mode
+
+- Added website, repository, local HTML/image, named-style, and preset references to the intake flow.
+- Added four offline presets and a `design-reference.json` manifest with explicit applied/excluded rules.
+- Added a license gate for code reuse; visual inspiration remains the default.

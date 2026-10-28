@@ -13,7 +13,7 @@ def main():
     (SKILL / 'LICENSE').write_text(license_text, encoding='utf-8', newline='\n')
     (ROOT / 'docs/license.txt').write_text(license_text, encoding='utf-8', newline='\n')
     files = [SKILL / 'SKILL.md', SKILL / 'LICENSE']
-    for directory, suffixes in [('references', {'.md'}), ('scripts', {'.py'}), ('assets', {'.css', '.js', '.html'})]:
+    for directory, suffixes in [('references', {'.md'}), ('scripts', {'.py'}), ('assets', {'.css', '.js', '.html', '.json'})]:
         files.extend(path for path in (SKILL / directory).iterdir() if path.is_file() and path.suffix in suffixes)
     files.extend(path for path in (SKILL/'assets/fonts').iterdir() if path.is_file() and path.suffix in {'.woff2','.txt','.json'})
     # Stored entries avoid zlib-version differences across Windows/Linux hosts.

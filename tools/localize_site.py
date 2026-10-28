@@ -126,6 +126,12 @@ def main():
     page=page.replace('lang="ko"','lang="en"').replace('demo.html','demo.en.html').replace('href="index.en.html" lang="en"','href="index.html" lang="ko"').replace('English</a>','한국어</a>')
     page=page.replace('lang="ko" hreflang="en"','lang="ko" hreflang="ko"').replace('href="license.html"','href="license.en.html"')
     page=page.replace('marketing-presentation.html','marketing-presentation.en.html').replace('marketing-analysis.html','marketing-analysis.en.html').replace('guide.ko.html','guide.en.html')
+    # These controls are localized by structure so generation remains stable even
+    # when the Korean source copy changes.
+    page=re.sub(r'<label for="reference">.*?</label>', '<label for="reference">08 · Design reference</label>', page)
+    page=re.sub(r'(<input id="reference" name="reference" placeholder=").*?(" maxlength="500">)', r'\1URL, GitHub, HTML/image path or slide-story / dashboard / data-motion / hybrid\2', page)
+    page=re.sub(r'<label for="reference-use">.*?</label>', '<label for="reference-use">09 · Reference use</label>', page)
+    page=re.sub(r'(<select id="reference-use" name="reference-use">).*?(</select>)', r'\1<option>Use the mood as inspiration and redesign</option><option>Follow layout, cards and charts more closely</option><option>Reference only specified scenes and elements</option><option>Do not use a reference</option>\2', page, flags=re.S)
     (ROOT/'docs/index.en.html').write_text(page,encoding='utf-8',newline='\n')
     config=json.loads((ROOT/'examples/motion-stories/stories.json').read_text(encoding='utf-8'))
     config['language']='en'

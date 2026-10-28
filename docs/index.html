@@ -60,6 +60,8 @@
           <div class="field"><label for="motion">05 · 움직임의 빈도</label><select id="motion" name="motion"><option>핵심 설명 화면에만</option><option>움직임 없이 정적으로</option><option>대부분의 화면에</option></select></div>
           <div class="field"><label for="playback">06 · 발표 진행 방식</label><select id="playback" name="playback"><option>수동 기본 + 자동 재생 선택 / 마지막에 정지</option><option>클릭·키보드 수동 진행만 / 마지막에 정지</option><option>자동 재생 / 마지막에 정지</option></select></div>
           <div class="field full"><label for="graphics">07 · 점·선·면 모션</label><select id="graphics" name="graphics"><option>적합한 장면과 표현 방식을 먼저 제안해주세요</option><option>내가 지정하는 장면에만 넣어주세요</option><option>사용하지 않겠습니다</option></select></div>
+          <div class="field full"><label for="reference">08 · 디자인 레퍼런스</label><input id="reference" name="reference" placeholder="URL, GitHub, HTML·이미지 경로 또는 slide-story / dashboard / data-motion / hybrid" maxlength="500"></div>
+          <div class="field full"><label for="reference-use">09 · 레퍼런스 적용 범위</label><select id="reference-use" name="reference-use"><option>분위기만 참고하고 새로 구성</option><option>레이아웃·카드·차트를 적극 참고</option><option>지정한 장면과 요소만 참고</option><option>레퍼런스를 사용하지 않음</option></select></div>
           <p class="form-note full">입력 내용은 저장하거나 서버로 전송하지 않습니다. 글꼴·비율 등 설정은 제작 후 화면 검증이 필요합니다.</p>
         </form>
         <div class="prompt-panel"><div class="panel-heading"><span>YOUR STARTING PROMPT</span><span class="tiny-dot" aria-hidden="true"></span></div><pre id="prompt-preview" tabindex="0" aria-label="생성된 시작 요청문"></pre><button type="button" class="button primary" id="copy-prompt">요청문 복사 <span>↗</span></button><p id="copy-status" role="status" aria-live="polite">현재 브라우저 안에서만 생성됩니다.</p></div>

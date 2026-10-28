@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "presets": {
+    "slide-story": {
+      "label": "Editorial presentation",
+      "references": [
+        {"name": "Reveal.js", "url": "https://github.com/hakimel/reveal.js", "license": "MIT"},
+        {"name": "Slidev", "url": "https://github.com/slidevjs/slidev", "license": "MIT"}
+      ],
+      "apply": ["large-title hierarchy", "chapter rhythm", "progressive reveal", "quiet navigation"],
+      "exclude": ["logos", "bundled themes", "example content", "third-party assets"],
+      "tokens": {"palette": "high-contrast editorial", "typeScale": "60/32/22/16", "radius": "12-18px", "spacing": "8px base", "charts": "one message per scene", "motion": "short staged reveals"}
+    },
+    "dashboard": {
+      "label": "Executive dashboard",
+      "references": [{"name": "Tabler", "url": "https://github.com/tabler/tabler", "license": "MIT"}],
+      "apply": ["KPI hierarchy", "filter rail", "card grid", "dense evidence view"],
+      "exclude": ["logos", "icon files", "demo data", "framework code"],
+      "tokens": {"palette": "neutral canvas with one accent", "typeScale": "40/24/18/14", "radius": "10-16px", "spacing": "8px base", "charts": "aligned axes and direct labels", "motion": "value and series emphasis"}
+    },
+    "data-motion": {
+      "label": "Animated data story",
+      "references": [{"name": "Apache ECharts", "url": "https://github.com/apache/echarts", "license": "Apache-2.0"}],
+      "apply": ["data emphasis", "staged series transition", "direct labels", "focus states"],
+      "exclude": ["library bundle", "copied option objects", "example datasets", "brand assets"],
+      "tokens": {"palette": "categorical with accessible contrast", "typeScale": "48/26/18/14", "radius": "8-14px", "spacing": "8px base", "charts": "direct labels and highlighted comparison", "motion": "600-900ms finite transitions"}
+    },
+    "hybrid": {
+      "label": "Presentation + dashboard + data motion",
+      "references": [
+        {"name": "Reveal.js", "url": "https://github.com/hakimel/reveal.js", "license": "MIT"},
+        {"name": "Slidev", "url": "https://github.com/slidevjs/slidev", "license": "MIT"},
+        {"name": "Tabler", "url": "https://github.com/tabler/tabler", "license": "MIT"},
+        {"name": "Apache ECharts", "url": "https://github.com/apache/echarts", "license": "Apache-2.0"}
+      ],
+      "apply": ["editorial scene hierarchy", "KPI cards", "filter and evidence split", "restrained data motion"],
+      "exclude": ["logos", "themes", "icons", "framework/library bundles", "example content and data"],
+      "tokens": {"palette": "warm neutral with blue and green accents", "typeScale": "58/30/20/14", "radius": "14-18px", "spacing": "8px base", "charts": "large takeaway plus evidence", "motion": "finite reveal followed by stable final state"}
+    }
+  }
+}

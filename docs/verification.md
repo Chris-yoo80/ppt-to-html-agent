@@ -129,3 +129,14 @@ Automated checks cover paired quick-start text, local links, generated English l
 The test suite compares every workbook row with its JSON, confirms the common scene IDs and checks each saved HTML byte-for-byte against a fresh build. Reviewed totals are September: 1,218 orders / KRW 70,995,000 / AOV KRW 58,288.18; October: 1,471 orders / KRW 91,607,000 / AOV KRW 62,275.32. No real organization or customer data is present.
 
 Visual browser review is pending because no browser surface was available. No push, merge or deployment was performed.
+## Reference Design Mode
+
+| Check | Result | Evidence |
+|---|---|---|
+| Four presets | Passed | `slide-story`, `dashboard`, `data-motion`, and `hybrid` are declared in `reference-presets.json`. |
+| Offline output | Passed | Generated manifests require an empty runtime dependency list and offline single-file output. |
+| License gate | Passed | Code reuse is rejected unless both a license identifier and source URL are declared; it remains marked for review. |
+| Safe inspiration | Passed | The workflow excludes third-party logos, themes, icons, bundles, content, and demo data. |
+| Bilingual intake | Passed | Korean and English setup pages collect the reference and its intended use, then include both in the generated prompt. |
+
+The bundled `hybrid` example uses newly authored tokens and fictional data. The helper records declarations and does not fetch, copy, or legally approve an external source.
