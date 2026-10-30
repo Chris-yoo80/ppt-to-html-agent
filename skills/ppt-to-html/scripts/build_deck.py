@@ -20,6 +20,7 @@ def runtime_deck(deck):
             scene['body'] = composed_tree(scene)
             del scene['html']
     runtime.pop('css', None)
+    runtime.pop('review', None)  # review data belongs to a saved copy, not a fresh build
     return runtime
 
 
@@ -30,6 +31,10 @@ def build(deck):
     if deck.get('css'):
         css += '\n/* deck css (validated: no imports or remote URLs) */\n' + deck['css']
     js = (ASSETS / 'player.js').read_text(encoding='utf-8')
+    if deck.get('settings', {}).get('review', True):
+        # In-browser edit and memo modes; set settings.review to false to ship a read-only deck.
+        css += '\n' + (ASSETS / 'editor.css').read_text(encoding='utf-8')
+        js += '\n' + (ASSETS / 'editor.js').read_text(encoding='utf-8')
     english=deck.get('language')=='en'
     supplement_ui=''
     supplement_button=''

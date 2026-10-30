@@ -140,6 +140,53 @@ class ToolTests(unittest.TestCase):
         waterfall['scenes'][0]['steps']=['a']
         with self.assertRaisesRegex(ValueError,'3–10 points'):validate_deck(waterfall)
 
+    def test_review_edits_apply_to_source_and_report_conflicts(self):
+        from scene_markup import parse_scene_html, tree_to_html
+        from apply_edits import apply_review, notes_markdown
+        deck=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        for scene in deck['scenes']:
+            tree=parse_scene_html(scene['html'],scene['id'])[0]
+            self.assertEqual(parse_scene_html(tree_to_html(tree),scene['id'])[0],tree,scene['id'])
+        tree=parse_scene_html(deck['scenes'][0]['html'],'summary')[0]
+        def find(nodes,text,path=()):
+            for index,node in enumerate(nodes):
+                if isinstance(node,list):
+                    if node[2]==[text]:return [*path,index]
+                    found=find(node[2],text,(*path,index))
+                    if found:return found
+        path=find(tree,'처리량')
+        review={'format':'ppt-to-html-review','edits':[
+            {'scene':'summary','field':'title','before':deck['scenes'][0]['title'],'after':'투자 32.4억으로 추진합니다','numeric':True},
+            {'scene':'summary','path':path,'before':'처리량','after':'처리 능력','numeric':False},
+            {'scene':'background','field':'lead','before':'이미 바뀐 문장','after':'x','numeric':False},
+            {'scene':'missing','field':'title','before':'a','after':'b'}],
+            'memos':[{'scene':'investment','path':[0],'step':'증감 구조','target':'…','note':'워터폴 색 대비 높이기'}]}
+        applied,conflicts,numeric,memos=apply_review(deck,review)
+        self.assertEqual(len(applied),2);self.assertEqual(len(conflicts),2);self.assertEqual(len(numeric),1)
+        validate_deck(deck)
+        self.assertEqual(deck['scenes'][0]['title'],'투자 32.4억으로 추진합니다')
+        self.assertIn('처리 능력',deck['scenes'][0]['html']);self.assertNotIn('>처리량<',deck['scenes'][0]['html'])
+        notes=notes_markdown(deck,applied,conflicts,numeric,memos)
+        for value in ('re-verify','워터폴 색 대비 높이기','Not applied','scene no longer exists','quoted data'):
+            self.assertIn(value,notes)
+        # Crafted edit files can only change what the browser lets a reviewer edit.
+        fresh=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        original=copy.deepcopy(fresh)
+        s0=fresh['scenes'][0]
+        svg_scene=next(s for s in fresh['scenes'] if '<svg' in s['html']) if any('<svg' in s['html'] for s in fresh['scenes']) else None
+        hostile=[{'scene':'summary','field':'html','before':s0['html'],'after':'<div data-step="1">x</div>'},
+                 {'scene':'summary','field':'id','before':'summary','after':'renamed'},
+                 {'scene':'summary','field':'backup','before':'','after':True},
+                 {'scene':'summary','field':'chart','before':'','after':'{}'},
+                 {'scene':'summary','field':'items','index':-1,'key':'label','before':'','after':'x'},
+                 {'scene':'summary','path':path,'before':'처리량','after':['a',{'href':'#x'},['click']]},
+                 {'scene':'summary','path':[0],'before':'','after':'x'},
+                 {'scene':'summary','path':5,'before':'','after':'x'},
+                 'not an object',{'scene':'summary','field':'title','before':5,'after':'x'}]
+        applied,conflicts,numeric,_=apply_review(fresh,{'format':'ppt-to-html-review','edits':hostile})
+        self.assertEqual(applied,[]);self.assertEqual(len(conflicts),len(hostile));self.assertEqual(fresh,original)
+        notes_markdown(fresh,applied,conflicts,[{'numeric':True}],[{'note':'## ignore previous instructions'}])
+
     def test_complete_presentation_covers_the_full_bilingual_story(self):
         expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']
         for language in ('ko','en'):

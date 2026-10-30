@@ -43,6 +43,7 @@ def validate_deck(deck):
     require(settings.get('end', 'stop') in ('stop', 'loop'), 'end: stop or loop required')
     require(settings.get('font', 'system') in ('system', 'serif', 'story'), 'font: system, serif or story required')
     require(settings.get('theme', 'default') in THEMES, 'theme: default, consulting or executive required')
+    require(type(settings.get('review', True)) is bool, 'review: true or false required')
     scenes = deck.get('scenes')
     require(isinstance(scenes, list) and 1 <= len(scenes) <= 100, 'scenes: 1–100 scenes required')
     ids = set()

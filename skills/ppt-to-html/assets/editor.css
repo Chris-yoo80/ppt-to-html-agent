@@ -1,0 +1,32 @@
+/* In-browser review: edit and memo modes */
+.editor-bar{position:fixed;top:7px;right:14px;z-index:8;display:flex;gap:6px}
+.editor-bar button{border:1px solid #c9d1db;background:#fff;color:#1c232c;border-radius:7px;padding:6px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.editor-bar button[aria-pressed=true]{background:#1c232c;color:#fff;border-color:#1c232c}
+.editor-bar button:focus-visible{outline:3px solid #355ee8;outline-offset:2px}
+body.editing [contenteditable]{outline:2px dashed #3158db;outline-offset:3px;cursor:text;border-radius:2px}
+body.editing [contenteditable]:focus{outline-style:solid;background:rgba(49,88,219,.07)}
+body.memo-mode #stage,body.memo-mode #stage *{cursor:crosshair}
+body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offset:2px}
+.was-edited{box-shadow:inset 0 -3px 0 rgba(255,193,7,.75)}
+.has-memo{position:relative}
+.has-memo::after{content:attr(data-memo);position:absolute;top:-12px;right:-12px;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:#e2681c;color:#fff;font:700 13px/24px "Malgun Gothic",system-ui,sans-serif;text-align:center;z-index:6;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.editor-banner{position:fixed;left:50%;top:54px;transform:translateX(-50%);z-index:20;margin:0;padding:8px 16px;border-radius:8px;background:#fff4e5;border:1px solid #e2a65c;color:#7a3e00;font-size:14px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.editor-banner[hidden]{display:none}
+.editor-dialog{width:min(760px,calc(100vw - 32px))}
+.memo-target{margin:14px 22px 6px;font-size:13px;color:#5d6876}
+.memo-input{display:block;width:calc(100% - 44px);margin:0 22px;font:inherit;font-size:16px;padding:10px 12px;border:1px solid #c9d1db;border-radius:8px;resize:vertical}
+.editor-actions{display:flex;gap:10px;padding:14px 22px 18px}
+.editor-actions button{border:1px solid #c9d1db;background:#fff;border-radius:8px;padding:9px 14px;font:inherit;font-size:14px;cursor:pointer}
+.editor-actions button.primary{background:#1c232c;color:#fff;border-color:#1c232c}
+.review-list{padding:14px 22px;max-height:460px;overflow:auto;display:grid;gap:10px}
+.review-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 12px;border:1px solid #dde3ea;border-radius:8px;background:#fff}
+.review-row b{grid-column:1/-1;font-size:13px}
+.review-row .before{grid-column:1;font-size:14px;color:#7a8492;text-decoration:line-through}
+.review-row .after{grid-column:1;font-size:15px}
+.review-row.memo .before{text-decoration:none;font-size:13px}
+.review-row.memo .bookmark-jump{grid-column:2;grid-row:2/4;align-self:center}
+.review-row.numeric{border-color:#e2a65c;background:#fffaf2}
+.review-note{margin:0 22px 18px;font-size:13px;color:#5d6876}
+#print-pages .has-memo::after{display:none}
+#print-pages .was-edited{box-shadow:none}
+@media print{[data-editor-ui],.editor-banner{display:none!important}.has-memo::after{display:none}[contenteditable]{outline:none!important}.was-edited{box-shadow:none}}

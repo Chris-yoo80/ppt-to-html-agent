@@ -20,7 +20,7 @@ class Node {
   click(){if(!this.disabled)this.listeners.click?.({target:this});}
   focus(){}
 }
-function launch(deck,{reduced=false}={}){
+function launch(deck,{reduced=false,editor=false}={}){
   const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close','open-outline','outline-close','bookmark-current','open-bookmarks','bookmarks-close','return-bookmark','return-origin'];
   const dialogs=['outline-dialog','bookmarks-dialog'];
   const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement','outline-list','bookmarks-list','chapter-nav',...dialogs,...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':dialogs.includes(id)?'dialog':'div')]));
@@ -29,9 +29,13 @@ function launch(deck,{reduced=false}={}){
   const events={},docEvents={},timers=new Map();let seq=0;
   const doc={body:new Node(),documentElement:new Node(),hidden:false,getElementById:id=>ids[id]||doc.body.children.find(n=>n.id===id),createElement:tag=>new Node(tag),createElementNS:(_,tag)=>new Node(tag),createTextNode:text=>({textContent:text}),addEventListener:(type,fn)=>docEvents[type]=fn};
   const media={matches:reduced,addEventListener(type,fn){this[type]=fn;}};
-  const ctx={document:doc,window:{print(){}},matchMedia:()=>media,addEventListener:(type,fn)=>events[type]=fn,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
-  vm.runInNewContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
-  return {ids,doc,docEvents,timers,events,setReduced(value){media.matches=value;media.change();},key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
+  // Several scripts may listen to the same event (player + editor); dispatch to all of them.
+  const lists={};const listen=(type,fn)=>{(lists[type]||(lists[type]=[])).push(fn);events[type]=(...args)=>lists[type].forEach(f=>f(...args));};
+  const ctx={document:doc,window:{print(){}},matchMedia:()=>media,addEventListener:listen,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
+  if(editor)vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/editor.js'),'utf8'),ctx);
+  return {ctx,ids,doc,docEvents,timers,events,setReduced(value){media.matches=value;media.change();},key(key,target=new Node()){let prevented=false;events.keydown({key,target,preventDefault(){prevented=true;}});return prevented;},tick(){const [id,fn]=timers.entries().next().value||[];if(fn){timers.delete(id);fn();}}};
 }
 const fixture=()=>JSON.parse(fs.readFileSync(path.join(root,'examples/library/deck.json'),'utf8'));
 const collect=n=>[n,...(n.children||[]).flatMap(collect)];
@@ -232,4 +236,48 @@ test('review regressions: scene ids cannot shadow controls; Back clears; autopla
 test('each rendered scene exposes its id for per-scene deck css',()=>{
   const deck=composedFixture(),p=launch(deck);
   assert.equal(p.ids.stage.attributes['data-scene'],'summary');p.key('End');assert.equal(p.ids.stage.attributes['data-scene'],'roadmap');
+});
+
+// In-browser review: edit text in place and leave memos; exports go to the author (AI).
+const textOf=n=>collect(n).map(c=>c.textContent).join('');
+test('edit mode reveals every step, edits plain text into the deck and flags changed numbers',()=>{
+  const deck=composedFixture(),p=launch(deck,{editor:true}),E=p.ctx.__pptEditor;
+  p.key('e');assert.equal(p.ctx.__pptPlayer.view.editing,true);
+  assert.deepEqual(stepped(p.ids.stage).map(([,s])=>s.includes('dim')),[false,false,false]);
+  const title=collect(p.ids.stage).find(n=>n.className==='scene-title');
+  assert.equal(title.attributes.contenteditable,'plaintext-only');
+  title.textContent='투자 32.4억, 회수 3.6년으로 바로 추진합니다';title.listeners.input();
+  assert.equal(p.ctx.__pptPlayer.deck.scenes[0].title,'투자 32.4억, 회수 3.6년으로 바로 추진합니다','edits update the live deck data');
+  const value=collect(p.ids.stage).find(n=>n.attributes?.contenteditable&&textOf(n)==='처리량');
+  value.textContent='처리 능력';value.listeners.input();
+  const lead=collect(p.ids.stage).find(n=>n.className==='lead summary');
+  lead.textContent=lead.textContent.replace('9.0억','9.5억');lead.listeners.input();
+  const out=E.exportReview();
+  assert.equal(out.format,'ppt-to-html-review');assert.equal(out.edits.length,3);
+  assert.deepEqual(Array.from(out.edits,e=>e.numeric),[false,false,true]);
+  assert.ok(out.edits[1].path,'composed text edits carry a tree path');
+  title.textContent=out.edits[0].before;title.listeners.input();assert.equal(E.exportReview().edits.length,2,'reverting removes the edit');
+  p.key('e');assert.equal(p.ctx.__pptPlayer.view.editing,false);assert.equal(collect(p.ids.stage).some(n=>n.attributes?.contenteditable),false);
+});
+test('memo mode records a note on the clicked element and badges it after re-render',()=>{
+  const deck=composedFixture(),p=launch(deck,{editor:true}),E=p.ctx.__pptEditor;
+  p.key('m');
+  const head=collect(p.ids.stage).find(n=>n.attributes?.class==='k-panel-head');
+  let stopped=false;p.ids.stage.listeners.click({target:head,preventDefault(){},stopPropagation(){stopped=true;}});
+  assert.ok(stopped,'memo click does not activate the element');
+  const dialog=p.doc.body.children.find(n=>n.id==='memo-dialog');assert.equal(dialog.open,true);
+  const input=collect(dialog).find(n=>n.tagName==='textarea');input.value='차트를 막대로 바꿔 주세요';
+  collect(dialog).find(n=>n.textContent==='메모 저장').click();
+  const memos=E.exportReview().memos;assert.equal(memos.length,1);assert.equal(memos[0].note,'차트를 막대로 바꿔 주세요');assert.equal(memos[0].scene,'summary');
+  const badged=collect(p.ids.stage).find(n=>n.attributes?.['data-memo']==='1');assert.ok(badged);
+});
+test('review regressions: printing while editing stays clean; unit changes count as number changes',()=>{
+  const deck=composedFixture(),p=launch(deck,{editor:true});
+  p.key('e');p.ids.print.click();
+  const pages=p.doc.body.children.find(n=>n.id==='print-pages').children;
+  assert.ok(pages.every(page=>!collect(page).some(n=>n.attributes?.contenteditable)),'print pages are never editable');
+  assert.ok(collect(p.ids.stage).some(n=>n.attributes?.contenteditable),'edit mode resumes after print preparation');
+  const lead=collect(p.ids.stage).find(n=>n.className==='lead summary');
+  lead.textContent=lead.textContent.replace('연 절감 9.0억','연 절감 9.0조');lead.listeners.input();
+  assert.equal(p.ctx.__pptEditor.exportReview().edits[0].numeric,true);
 });

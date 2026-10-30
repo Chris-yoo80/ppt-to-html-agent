@@ -148,6 +148,25 @@ Draw custom diagrams (buildings, layouts, flows) directly in inline SVG. Keep te
 - Use steps for the order of explanation: what happened → why → what we propose. Do not split a screen into steps that carry no new point.
 - Check every step at 1600×900 in a browser: no clipped tables, no overlapping chart labels, no empty half-panels.
 
+## Review in the browser: edit and memo modes
+
+Every built deck includes a review toolbar (set `settings.review` to `false` for a read-only deck):
+
+- **Edit (E)**: shows every step and turns text into plain-text fields. Reviewers can change titles, summary bars, panel text, card labels and the key message in place. Structure, styles and chart data stay locked.
+- **Memo (M)**: click any element to leave a change request ("shorten this", "check the source", "use a bar chart"). A numbered badge marks it.
+- **Review**: lists edits and memos, flags edits that changed numbers, and offers **Save edited HTML** (a new offline file that reopens with the edits and memos) and **Export changes (JSON)** (`deck-edits.json`).
+
+When the user returns a `deck-edits.json`:
+
+```text
+python <skill-directory>/scripts/apply_edits.py work/deck.json deck-edits.json --notes work/review-notes.md
+```
+
+- Text edits are applied only where the source still holds the text the reviewer saw; others are reported as conflicts. Resolve conflicts by asking the user.
+- Address each memo in `review-notes.md`, then rebuild.
+- An edit that changed digits does not update charts, bar widths or totals. Re-run numeric verification, update the related chart data yourself, and report it as Needs review until checked.
+- Tell the user which edits were applied, which memos were addressed, and what still needs their decision.
+
 ## Build and check
 
 ```text

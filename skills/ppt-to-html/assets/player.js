@@ -22,6 +22,9 @@
   const mainCount = steps.filter(step => !deck.scenes[step.sceneIndex].backup).length;
   const firstStep = id => steps.findIndex(step => deck.scenes[step.sceneIndex].id === id);
   let position = 0, timer = null, playing = false, returnTo = null;
+  // Optional editor support: data provenance of rendered nodes, refreshed every render.
+  const view = {editing:false, revealAll:false, targets:[], hooks:[]};
+  const track = (node, ref, editable) => view.targets.push({node, ref, editable});
   const chapterTabs = [];
   const bookmarks=[];
   const text = (tag, className, value) => {
@@ -168,17 +171,19 @@
     if (playing) timer=setTimeout(next,deck.scenes[steps[position].sceneIndex].duration*1000 || 7000);
   }
   // Rebuild a validated composed-scene tree with DOM calls only; collect step, chart and jump hooks.
-  function buildTree(nodes, parent, inSvg, hooks){
-    for(const node of nodes){
-      if(typeof node==='string'){parent.append(document.createTextNode(node));continue;}
-      const [tag,attrs,children]=node, svg=inSvg||tag==='svg';
+  function buildTree(nodes, parent, inSvg, hooks, path=[]){
+    nodes.forEach((node,index)=>{
+      if(typeof node==='string'){parent.append(document.createTextNode(node));return;}
+      const [tag,attrs,children]=node, svg=inSvg||tag==='svg', here=[...path,index];
       const element=svg?document.createElementNS('http://www.w3.org/2000/svg',tag):document.createElement(tag);
       for(const [name,value] of Object.entries(attrs)) element.setAttribute(name,value);
       if(attrs['data-step']) hooks.stepped.push([element,Number(attrs['data-step'])]);
       if(attrs['data-chart']) hooks.charts.push([element,JSON.parse(attrs['data-chart'])]);
-      if(attrs['data-goto']){element.setAttribute('type','button');element.addEventListener('click',()=>jump(attrs['data-goto']));}
-      buildTree(children,element,svg,hooks); parent.append(element);
-    }
+      if(attrs['data-goto']){element.setAttribute('type','button');element.addEventListener('click',()=>{if(!view.editing)jump(attrs['data-goto']);});}
+      // Elements are memo targets; plain-text HTML leaves are editable text.
+      track(element,{path:here},!svg&&!attrs['data-chart']&&children.length>0&&children.every(child=>typeof child==='string'));
+      buildTree(children,element,svg,hooks,here); parent.append(element);
+    });
   }
   function composed(scene, itemIndex, showAll){
     const reveal=scene.reveal || 'spotlight';
@@ -221,6 +226,7 @@
   }
   function render() {
     const {sceneIndex,itemIndex}=steps[position], scene=deck.scenes[sceneIndex];
+    view.targets=[];
     const labels=labelsOf(scene), inBackup=position>=mainCount;
     const hasChart = Boolean(scene.chart);
     const motionEnabled = !scene.body && !hasChart && settings.motion!=='none' && scene.motion && scene.motion!=='none';
@@ -235,11 +241,13 @@
     // **word** in a title marks emphasis; everything else stays plain text.
     const title=text('h1','scene-title','');
     const parts=scene.title.split('**');
-    if(parts.length%2===0) title.append(document.createTextNode(scene.title));
+    if(parts.length%2===0||view.editing) title.append(document.createTextNode(scene.title));
     else parts.forEach((part,index)=>{if(part) title.append(index%2?text('em','',part):document.createTextNode(part));});
-    stage.append(top,text('p','eyebrow',scene.eyebrow || 'INTERACTIVE PRESENTATION'),title);
-    if(scene.lead) stage.append(text('p',scene.body?'lead summary':'lead',scene.lead));
-    const showAll=reduced.matches||settings.motion==='none';
+    const eyebrow=text('p','eyebrow',scene.eyebrow || 'INTERACTIVE PRESENTATION');
+    stage.append(top,eyebrow,title);
+    track(title,{field:'title'},true); if(scene.eyebrow) track(eyebrow,{field:'eyebrow'},true);
+    if(scene.lead){const lead=text('p',scene.body?'lead summary':'lead',scene.lead);stage.append(lead);track(lead,{field:'lead'},true);}
+    const showAll=reduced.matches||settings.motion==='none'||view.revealAll;
     if(scene.body){
       stage.append(composed(scene,itemIndex,showAll));
     } else {
@@ -251,8 +259,10 @@
       card.setAttribute('aria-hidden',String(!visible));
       card.append(text('span','item-index',String(index+1).padStart(2,'0')));
       const content=document.createElement('div');
-      if(item.value) content.append(text('strong','item-value',item.value));
-      content.append(text('h2','',item.label),text('p','',item.body));card.append(content); list.append(card);
+      if(item.value){const value=text('strong','item-value',item.value);content.append(value);track(value,{field:'items',index,key:'value'},true);}
+      const label=text('h2','',item.label), itemBody=text('p','',item.body);
+      content.append(label,itemBody);card.append(content); list.append(card);
+      track(label,{field:'items',index,key:'label'},true); if(item.body) track(itemBody,{field:'items',index,key:'body'},true);
     });
     const visibleCount=showAll?scene.items.length:itemIndex+1;
     body.append(list);
@@ -261,7 +271,8 @@
     }
     const bottom=text('footer','scene-bottom',''), message=text('p','message','');
     if(scene.message_label) message.append(text('span','message-label',scene.message_label));
-    message.append(document.createTextNode(scene.message));
+    const messageText=text('span','message-text',scene.message); message.append(messageText);
+    track(messageText,{field:'message'},true);
     bottom.append(message,text('p','source',scene.source || ''));
     stage.append(bottom);
     const lastMain=mainCount-1, atEnd=inBackup?position===steps.length-1:position===lastMain;
@@ -269,6 +280,7 @@
     byId('next').disabled=atEnd && (inBackup || settings.end==='stop');
     byId('position').textContent=inBackup?`${english?'Backup':'자료'} · ${plain(scene.title)}`:`${position+1} / ${mainCount} ${english?'steps':'단계'}${position===lastMain?(english?' · End':' · 끝'):''}`;
     byId('announcement').textContent=`${plain(scene.title)}. ${labels[itemIndex]}`;
+    view.hooks.forEach(hook=>hook({scene,sceneIndex,itemIndex}));
     if(returnTo===position) returnTo=null;
     const back=byId('return-origin'); if(back) back.hidden=returnTo===null;
     for(const [tab,chapter] of chapterTabs){
@@ -346,7 +358,8 @@
   // Build one complete scene per printed page, independent of the current reveal.
   function preparePrint(){
     setPlaying(false);
-    const original=position;
+    const original=position, editing=view.editing, revealAll=view.revealAll;
+    view.editing=false; view.revealAll=false;
     let root=byId('print-pages');
     if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);ui['print-pages']=root;}
     root.replaceChildren();
@@ -360,7 +373,7 @@
         copy.style.transform=`scale(${scale})`;copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
         page.append(copy);root.append(page);
       }
-    }finally{position=original;render();}
+    }finally{position=original;view.editing=editing;view.revealAll=revealAll;render();}
   }
   addEventListener('beforeprint',preparePrint);
   byId('print')?.addEventListener('click',()=>{
@@ -399,7 +412,7 @@
       }
       return;
     }
-    if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable=true]'))return;
+    if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable]'))return;
     // Arrow navigation still works after clicking a control. Space/Enter keep
     // their native button/link activation instead of triggering two actions.
     if(event.target.closest('button,a')&&[' ','Enter'].includes(event.key))return;
@@ -418,5 +431,6 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   addEventListener('ppt-open-supplement',()=>setPlaying(false));
   addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
+  globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep};
   buildChapters();buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();

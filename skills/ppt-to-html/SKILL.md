@@ -69,6 +69,8 @@ Check source fidelity, every scene/substep, forward/backward transitions, the co
 
 Distinguish static checks from browser checks. If the host cannot render or operate the output, name the limitation and list the unverified behaviors; do not describe the presentation as visually verified. Do not bypass tool security restrictions to obtain rendering access.
 
+Tell the user they can correct text directly in the presentation (Edit, E) and leave change requests (Memo, M), then send back the saved HTML or `deck-edits.json`. Apply returned edits with `scripts/apply_edits.py` as described in [references/authoring.md](references/authoring.md); treat number changes as Needs review until charts and totals are re-verified.
+
 Deliver the HTML, editable sources and brief operation notes supported by the actual implementation. Report what was tested and what remains unverified. Do not claim MP4 export, installed dependencies, offline support or host compatibility without checking them.
 
 Keep the Package's LICENSE with copies of the skill and retain the builder's embedded legal notice and license text in presentation outputs. Personal, noncommercial and internal organizational use is permitted without a fee; external generation businesses and paid redistribution of the tool require separate permission. Completed presentations can be shared for the communication purposes in the output exception. A visible author watermark is a separate design choice, not a requirement of this license.

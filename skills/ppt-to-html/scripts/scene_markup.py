@@ -186,3 +186,20 @@ def parse_scene_html(markup, where):
     builder.feed(markup)
     builder.close()
     return builder.root[2], builder.steps, builder.gotos, builder.charts
+
+
+def tree_to_html(nodes):
+    """Serialize a validated tree back to HTML; parse_scene_html(tree_to_html(tree)) returns the same tree."""
+    import html as _html
+    out = []
+    for node in nodes:
+        if isinstance(node, str):
+            out.append(_html.escape(node, quote=False))
+            continue
+        tag, attrs, children = node
+        rendered = ''.join(f' {name}="{_html.escape(value, quote=True)}"' for name, value in attrs.items())
+        if tag in VOID and not children:
+            out.append(f'<{tag}{rendered}>')
+        else:
+            out.append(f'<{tag}{rendered}>{tree_to_html(children)}</{tag}>')
+    return ''.join(out)
