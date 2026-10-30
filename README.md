@@ -12,8 +12,8 @@ A source-available agent skill for turning PPT content into interactive HTML pre
 
 ## Quick start — three steps
 
-1. **Get the skill.** Clone this repository or download the [portable skill ZIP](docs/downloads/ppt-to-html.zip).
-2. **Install it for your coding agent.** Put `ppt-to-html` in `.claude/skills/` for Claude Code or `.agents/skills/` for Codex. Follow the exact paths in [Install](docs/install.md).
+1. **Get the skill.** Clone this repository or download the [portable skill ZIP](https://chris-yoo80.github.io/ppt-to-html-agent/downloads/ppt-to-html.zip).
+2. **Install it for your coding agent.** Easiest: unpack the ZIP, open your project in Claude Code or Codex and ask *"Install the ppt-to-html folder from my Downloads folder as a skill for this project and check the path."* Or copy `ppt-to-html` into `.claude/skills/` for Claude Code or `.agents/skills/` for Codex yourself. Requires Python 3.10+ (`python3` on macOS/Linux). Follow the exact paths, the Windows ZIP warning and the "check that it worked" step in [Install](docs/install.md).
 3. **Create the HTML.** Put an accessible `.pptx`, `.xlsx` or supported JSON source in your working folder, request `/ppt-to-html` in Claude Code or `$ppt-to-html` in Codex, answer the brief, review the contents and representative scene, then let the agent build and verify the offline HTML.
 
 Regular ChatGPT and Claude web chats cannot run this local skill. Legacy `.ppt` and password-protected files are unsupported. The agent uses source content to redesign the narrative; it does not reproduce the original slide layout pixel for pixel.
@@ -22,7 +22,7 @@ Regular ChatGPT and Claude web chats cannot run this local skill. Legacy `.ppt` 
 |---|---|---|
 | ![A complete fictional presentation title in Edge](docs/assets/motion-agent-title.jpg) | ![Fictional marketing analysis controls and charts in Edge](docs/assets/marketing-dashboard.jpg) | ![Motion summaries retained in print preview](docs/assets/feedback2-motion-print.jpg) |
 
-The [complete presentation example](docs/full-presentation.en.html) contains all seven scenes from contents and overview through the main discussion, timeline and conclusion. It makes the end-to-end conversion scope visible instead of showing only a short highlight.
+The [complete presentation example](https://chris-yoo80.github.io/ppt-to-html-agent/full-presentation.en.html) contains all seven scenes from contents and overview through the main discussion, timeline and conclusion. It makes the end-to-end conversion scope visible instead of showing only a short highlight.
 
 ## Supporting HTML, inside the presentation
 
@@ -101,9 +101,9 @@ PPTX → extract source → ask the brief → propose scenes
 
 The host AI interprets the source and designs the narrative. The scripts do not call an AI model or automatically invent a scene plan. Preserve source figures and meaning, mark illustrative material, and ask only for missing preferences.
 
-## Try the builder
+## Try the builder without AI
 
-Python 3.10+; standard library only:
+Python 3.10+; standard library only. Run from a clone of this repository; on macOS/Linux type `python3` instead of `python`:
 
 ```sh
 python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --output output/library.html
@@ -128,7 +128,7 @@ playback and point-line-plane graphics before building.
 Show me the outline and one representative scene first.
 ```
 
-The [intake reference](skills/ppt-to-html/references/intake.md) defines the starting questions. The generated HTML uses finite SVG/CSS animation rather than an exported video. A [portable skill ZIP](docs/downloads/ppt-to-html.zip) contains the license, skill instructions, references, scripts and assets; see the installation guide for where to unpack it.
+The [intake reference](skills/ppt-to-html/references/intake.md) defines the starting questions. The generated HTML uses finite SVG/CSS animation rather than an exported video. A [portable skill ZIP](https://chris-yoo80.github.io/ppt-to-html-agent/downloads/ppt-to-html.zip) contains the license, skill instructions, references, scripts and assets; see the installation guide for where to unpack it.
 
 ## Website and demo
 

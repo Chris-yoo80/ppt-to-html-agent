@@ -116,7 +116,7 @@ def main():
         '1. 스킬 받기':'1. Get the skill',
         'GitHub를 복제하거나 휴대용 스킬 ZIP을 내려받습니다.':'Clone the GitHub repository or download the portable skill ZIP.',
         '2. 코딩 에이전트에 설치':'2. Install it for your coding agent',
-        'Claude Code는 .claude/skills/, Codex는 .agents/skills/에 넣습니다.':'Use .claude/skills/ for Claude Code or .agents/skills/ for Codex.',
+        'ZIP을 푼 뒤 AI에게 “이 프로젝트의 스킬로 설치해줘”라고 요청하거나, 직접 Claude Code는 .claude/skills/, Codex는 .agents/skills/에 넣습니다. Python 3.10 이상이 필요합니다.':'Unpack the ZIP and ask the agent to “install this as a skill for this project”, or copy it yourself to .claude/skills/ for Claude Code or .agents/skills/ for Codex. Python 3.10+ is required.',
         '3. 원본을 넣고 호출':'3. Add the source and invoke the skill',
         '작업 폴더에 PPTX나 엑셀을 넣고 Claude Code에서는 /ppt-to-html, Codex에서는 $ppt-to-html을 요청한 뒤 질문에 답하고 목차와 대표 장면을 확인합니다.':'Put a PPTX or workbook in the working folder, request /ppt-to-html in Claude Code or $ppt-to-html in Codex, answer the brief, then review the contents and representative scene.',
         '일반 ChatGPT·Claude 웹 채팅, 구버전 .ppt, 암호가 설정된 파일은 지원하지 않습니다. 원본 배치를 그대로 복원하지 않고 발표 흐름과 화면을 새로 구성합니다.':'Regular ChatGPT and Claude web chats, legacy .ppt files and password-protected files are unsupported. The agent redesigns the narrative and screens instead of reproducing the original layout.',

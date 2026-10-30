@@ -40,7 +40,7 @@ Create a design-reference manifest before authoring the representative scene. It
 Use the bundled helper for a consistent manifest:
 
 ```text
-python skills/ppt-to-html/scripts/reference_design.py --preset hybrid --source "https://example.com/reference" --apply "layout,cards,charts,motion" --output work/design-reference.json
+python <skill-directory>/scripts/reference_design.py --preset hybrid --source "https://example.com/reference" --apply "layout,cards,charts,motion" --output work/design-reference.json
 ```
 
 For visual inspiration, omit `--license` and keep the default `--reuse inspiration`. For copied code or assets, use `--reuse code`, provide `--license` and `--license-url`, preserve all required notices, and verify compatibility separately. The helper records declarations; it does not fetch a page or perform legal review.

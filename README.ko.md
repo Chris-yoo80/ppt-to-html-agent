@@ -8,12 +8,12 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 
 **초기 버전입니다.** Claude Code·Codex CLI에서 가상 PPT 입력·변환·수정 과정을 확인했습니다. 실제 Edge에서는 마케팅 보충 HTML의 조작과 발표 복귀를 검증했습니다. 모든 파일·환경의 호환성을 보장하는 것은 아닙니다.
 
-[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
+[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.html)
 
 ## 3단계 빠른 시작
 
-1. **스킬 받기.** 저장소를 복제하거나 [휴대용 스킬 ZIP](docs/downloads/ppt-to-html.zip)을 내려받습니다.
-2. **코딩 에이전트에 설치하기.** Claude Code는 `.claude/skills/`, Codex는 `.agents/skills/` 아래에 `ppt-to-html` 폴더를 넣습니다. 정확한 경로는 [설치 안내](docs/install.md)를 따르세요.
+1. **스킬 받기.** 저장소를 복제하거나 [휴대용 스킬 ZIP](https://chris-yoo80.github.io/ppt-to-html-agent/downloads/ppt-to-html.zip)을 내려받습니다.
+2. **코딩 에이전트에 설치하기.** 가장 쉬운 방법은 ZIP을 푼 뒤 Claude Code나 Codex에서 프로젝트를 열고 *"다운로드 폴더의 ppt-to-html 폴더를 이 프로젝트의 스킬로 설치하고 경로를 확인해줘"*라고 요청하는 것입니다. 직접 넣으려면 Claude Code는 `.claude/skills/`, Codex는 `.agents/skills/` 아래에 `ppt-to-html` 폴더를 넣습니다. Python 3.10 이상이 필요합니다(macOS·리눅스는 `python3`). 정확한 경로, Windows 압축 풀기 주의, 설치 확인 방법은 [설치 안내](docs/install.ko.md)를 따르세요.
 3. **HTML 만들기.** 작업 폴더에 접근 가능한 `.pptx`, `.xlsx` 또는 지원 JSON 원본을 넣고 Claude Code에서는 `/ppt-to-html`, Codex에서는 `$ppt-to-html`을 요청합니다. AI 질문에 답한 뒤 목차와 대표 장면을 확인하면 에이전트가 오프라인 HTML을 만들고 검증합니다.
 
 일반 ChatGPT·Claude 웹 채팅에서는 이 로컬 스킬을 실행할 수 없습니다. 구버전 `.ppt`와 암호가 설정된 파일은 지원하지 않습니다. 원본 내용을 바탕으로 발표 흐름과 화면을 새로 구성하며 기존 슬라이드 배치를 픽셀 단위로 복원하지 않습니다.
@@ -22,7 +22,7 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 |---|---|---|
 | ![Edge에서 연 전체 가상 발표의 표지](docs/assets/motion-agent-title.jpg) | ![Edge에서 연 가상 마케팅 분석 조정값과 차트](docs/assets/marketing-dashboard.jpg) | ![인쇄 미리보기에 유지된 모션 요약](docs/assets/feedback2-motion-print.jpg) |
 
-[전체 발표 예제](docs/full-presentation.html)는 목차와 개요부터 본문, 타임라인, 결론까지 총 7장을 모두 담았습니다. 일부 하이라이트가 아니라 발표 전체를 처음부터 끝까지 구성한다는 범위를 보여줍니다.
+[전체 발표 예제](https://chris-yoo80.github.io/ppt-to-html-agent/full-presentation.html)는 목차와 개요부터 본문, 타임라인, 결론까지 총 7장을 모두 담았습니다. 일부 하이라이트가 아니라 발표 전체를 처음부터 끝까지 구성한다는 범위를 보여줍니다.
 
 ## 발표 안에 추가 HTML 넣기
 
@@ -48,7 +48,7 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 
 각 24초로 재생되며 일시정지·단계 선택·타임라인 탐색을 지원합니다. 위 이미지는 정적인 개념도이며, 실제 조작은 `docs/index.html`의 갤러리에서 할 수 있습니다. [한국어 데모](https://chris-yoo80.github.io/ppt-to-html-agent/) · [English](https://chris-yoo80.github.io/ppt-to-html-agent/index.en.html)
 
-```text
+```sh
 python skills/ppt-to-html/scripts/build_motion_demo.py examples/motion-stories/stories.json --output output/motion-stories.html
 ```
 
@@ -77,6 +77,14 @@ python skills/ppt-to-html/scripts/build_motion_demo.py examples/motion-stories/s
 
 기존에 답한 항목은 다시 묻지 않고, '추천 설정으로'라는 한 답으로 기본값을 선택할 수 있습니다. 화면 크기, 움직임의 양과 자동 재생 여부는 각각 다른 설정으로 다룹니다.
 
+스킬을 설치한 뒤 다음처럼 요청해 시작할 수 있습니다.
+
+```text
+ppt-to-html 스킬로 내 PPT를 HTML 발표로 만들어줘.
+제작 전에 청중·시간·화면 크기·글꼴·모션 빈도·재생 방식·점선면 그래픽을 물어봐줘.
+목차와 대표 장면 하나를 먼저 보여줘.
+```
+
 ## 레퍼런스 디자인 모드
 
 웹사이트, GitHub 저장소, 로컬 HTML, 화면 캡처, 이름이 붙은 스타일 또는 네 가지 프리셋(`slide-story`, `dashboard`, `data-motion`, `hybrid`)을 에이전트에 전달할 수 있습니다. 전체 분위기, 색상, 글꼴 계층, 레이아웃, 카드·차트, 모션, 탐색 방식이나 특정 장면 중 무엇을 적용할지 선택합니다.
@@ -97,11 +105,11 @@ HTML 내부의 모션은 점 등장, 선 연결, 면의 전개를 지원합니�
 
 대표 모션 갤러리는 각 24초짜리 배송·마케팅·창고 예제를 제공합니다. 재생·정지, 네 단계 선택, 타임라인 탐색을 지원합니다. 경로와 수치는 가상 데이터이며 실제 최적화 엔진이나 물리 시뮬레이터가 아닙니다.
 
-## 빠른 실행
+## AI 없이 생성기만 실행해 보기
 
-[환경별 설치 안내](docs/install.md)를 참고하세요. Python 3.10 이상으로 예제 생성기를 단독 실행할 수도 있습니다.
+스킬 설치는 [환경별 설치 안내](docs/install.ko.md)를 참고하세요. 저장소를 복제한 폴더에서 Python 3.10 이상으로 예제 생성기를 단독 실행할 수도 있습니다. macOS·리눅스에서는 `python` 대신 `python3`을 입력하세요.
 
-```text
+```sh
 python skills/ppt-to-html/scripts/build_deck.py examples/library/deck.json --output output/library.html
 ```
 
@@ -136,7 +144,7 @@ python tools/build_monthly_report.py --month YYYY-MM
 
 ## 개발 검사 (Development checks)
 
-```text
+```sh
 python -m unittest discover -s tests -v
 node --check skills/ppt-to-html/assets/player.js
 node --check docs/site.js

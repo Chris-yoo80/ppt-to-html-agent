@@ -223,9 +223,19 @@ class ToolTests(unittest.TestCase):
         pairs = [
             ('README.md', ('## Quick start — three steps', '.claude/skills/', '.agents/skills/', 'Regular ChatGPT and Claude web chats', 'password-protected', 'does not reproduce')),
             ('README.ko.md', ('## 3단계 빠른 시작', '.claude/skills/', '.agents/skills/', '일반 ChatGPT·Claude 웹 채팅', '암호가 설정된', '복원하지 않습니다')),
-            ('docs/index.en.html', ('Start in three steps.', '1. Get the skill', '2. Install it for your coding agent', '3. Add the source and invoke the skill', 'install.md')),
-            ('docs/index.html', ('세 단계면 시작할 수 있습니다.', '1. 스킬 받기', '2. 코딩 에이전트에 설치', '3. 원본을 넣고 호출', 'install.md')),
+            ('docs/index.en.html', ('Start in three steps.', '1. Get the skill', '2. Install it for your coding agent', '3. Add the source and invoke the skill', 'href="guide.en.html#install"')),
+            ('docs/index.html', ('세 단계면 시작할 수 있습니다.', '1. 스킬 받기', '2. 코딩 에이전트에 설치', '3. 원본을 넣고 호출', 'href="guide.ko.html#install"')),
+            ('docs/install.md', ('Easiest: ask the agent to install it', 'install.ko.md', '~/.claude/skills/', '~/.agents/skills/', 'python3', 'Extract All', 'SKILL.md')),
+            ('docs/install.ko.md', ('가장 쉬운 방법: AI에게 설치 맡기기', 'install.md', '~/.claude/skills/', '~/.agents/skills/', 'python3', '압축 풀기', 'SKILL.md')),
         ]
+        for filename in ('docs/index.html','docs/index.en.html'):
+            with self.subTest(raw_markdown_link=filename):
+                self.assertNotIn('href="install.md"',(ROOT/filename).read_text(encoding='utf-8'))
+        for language in ('ko','en'):
+            with self.subTest(bundled_guide=language):
+                guide=(ROOT/f'skills/ppt-to-html/assets/guide.{language}.html').read_text(encoding='utf-8')
+                self.assertIn('id="install"',guide)
+                self.assertNotIn('href="downloads/',guide)
         for filename, expected in pairs:
             content=(ROOT/filename).read_text(encoding='utf-8')
             with self.subTest(filename=filename):
