@@ -23,6 +23,7 @@ For accessible PPTX inputs and the bundled HTML starter, read [references/author
 The bundled charts, component kit and `consulting`/`executive` presets are a starting vocabulary, not a template. Decide the visual direction from the content, audience and brand first, then pick or invent the components that express it.
 
 - If the host offers design skills (for example a frontend-design, UI/UX or data-visualization skill), load them before the representative scene and apply their guidance on typography, color, layout rhythm and chart choice. Name the skills used in the final report. The deck must still build without them.
+- For more references, read [references/design-sources.md](references/design-sources.md). It separates look-only galleries from sources whose icons, chart patterns, palettes or code may be reused under license.
 - Let each scene's job choose its composition, and vary it across the deck:
 
   | What the scene must show | Composition to consider |
