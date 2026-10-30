@@ -225,6 +225,7 @@
     const hasChart = Boolean(scene.chart);
     const motionEnabled = !scene.body && !hasChart && settings.motion!=='none' && scene.motion && scene.motion!=='none';
     stage.replaceChildren(); stage.className=(settings.font==='serif'?'serif':'')+(scene.body?' composed-scene':'');
+    stage.setAttribute('data-scene',scene.id); // lets deck css style one scene: [data-scene="id"]
     document.body.classList.toggle('motion-none',settings.motion==='none');
     document.body.classList.toggle('motion-rich',settings.motion==='rich');
     const top=text('div','deck-top',''); const mark=text('span','deck-mark','');

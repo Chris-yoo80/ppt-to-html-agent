@@ -113,6 +113,12 @@ The builder converts `html` into a validated element tree, so only these are acc
 - Not allowed: `script style iframe object embed link meta form input video audio a`. Interaction comes from the player.
 - A scene may hold up to 4,000 elements and 400 KiB. Move detail into a backup scene.
 
+### Your own design (preferred) and the optional kit
+
+Design the deck for its content first (see "Design each deck for its content" in SKILL.md). Write your own classes in the deck `css` and use them in scene HTML; target one scene with `[data-scene="scene-id"] …`. Use host design skills when available. The kit below is a shortcut for common parts, not a required look.
+
+Deck and inline CSS run offline and are validated: no `@import`, `@font-face`, remote `url()`, `image-set()`, backslash escapes or comments. Write characters literally (`content:"—"`, not `"\2014"`), embed images as `data:image/…`, and keep `@keyframes` finite with a `@media (prefers-reduced-motion: reduce)` fallback.
+
 ### Component kit
 
 All classes use CSS variables (`--k-accent --k-accent-dark --k-accent-2 --k-soft --k-ink --k-muted --k-line --k-panel --k-bg --k-warn --k-good --k-bad --k-radius`, charts `--chart-1…6`).
@@ -137,6 +143,7 @@ Draw custom diagrams (buildings, layouts, flows) directly in inline SVG. Keep te
 ### Quality bar for composed scenes
 
 - One conclusion per screen; every panel supports it with different evidence (trend, table, breakdown, status).
+- The deck should not look like one template repeated: vary composition, scale and density by what each scene has to prove.
 - Numbers in the title, summary bar, panels and charts must match each other and the source. Report them in numeric verification.
 - Use steps for the order of explanation: what happened → why → what we propose. Do not split a screen into steps that carry no new point.
 - Check every step at 1600×900 in a browser: no clipped tables, no overlapping chart labels, no empty half-panels.

@@ -229,3 +229,7 @@ test('review regressions: scene ids cannot shadow controls; Back clears; autopla
   const odd=composedFixture();odd.scenes[0].title='a**b';const s=launch(odd);
   assert.ok(!collect(s.ids.stage).some(n=>n.tagName==='em'));assert.match(s.ids.announcement.textContent,/^a\*\*b\./);
 });
+test('each rendered scene exposes its id for per-scene deck css',()=>{
+  const deck=composedFixture(),p=launch(deck);
+  assert.equal(p.ids.stage.attributes['data-scene'],'summary');p.key('End');assert.equal(p.ids.stage.attributes['data-scene'],'roadmap');
+});

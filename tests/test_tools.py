@@ -133,6 +133,8 @@ class ToolTests(unittest.TestCase):
         for change,message in deck_cases:
             broken=copy.deepcopy(deck);change(broken)
             with self.subTest(message=message),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        styled=copy.deepcopy(deck);styled['css']='[data-scene="summary"] .hero{background:linear-gradient(120deg,#123,#456)}@keyframes rise{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion: reduce){.hero{animation:none}}'
+        validate_deck(styled)  # bespoke per-scene css with finite animation is allowed
         waterfall=copy.deepcopy(deck)
         waterfall['scenes'][0]['html']='<div data-step="1" data-chart=\'{"type":"waterfall","data":[{"label":"A","value":5,"kind":"total"},{"label":"B","value":-9}]}\'>x</div>'
         waterfall['scenes'][0]['steps']=['a']
