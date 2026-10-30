@@ -1,0 +1,32 @@
+/* Theme presets. Newly authored tokens; brand colors belong in a deck's own css. */
+
+/* consulting: dense multi-panel report, index tabs on top, solid key-message bar */
+body.theme-consulting{--k-accent:#5b2a92;--k-accent-dark:#3e1870;--k-accent-2:#9d4f9a;--k-soft:#f3edf8;--k-ink:#211a2e;--k-muted:#6c6480;--k-line:#e3dbea;--k-bg:#fbf9fc;--k-warn:#e2852f;--k-good:#2f8a6b;--k-bad:#c2416b;--k-radius:12px;
+  --chart-1:#5b2a92;--chart-2:#9d4f9a;--chart-3:#e2852f;--chart-4:#c4a6dc;--chart-5:#c2416b;--chart-6:#8a83a0;--chart-ink:#211a2e;--chart-muted:#6c6480;--chart-grid:#ece6f1;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.theme-consulting #stage{background:var(--k-bg)}
+.theme-consulting .deck-mark i{background:var(--k-accent)}
+.theme-consulting .composed-scene .eyebrow::before{content:"";display:inline-block;width:10px;height:10px;margin-right:8px;border-radius:3px;background:var(--k-accent)}
+.theme-consulting .composed-scene .scene-bottom{border-top:0;background:var(--k-accent);color:#fff;border-radius:10px;padding:10px 18px}
+.theme-consulting .composed-scene .message{font-size:19px}
+.theme-consulting .composed-scene .message-label{background:#fff;color:var(--k-accent)}
+.theme-consulting .composed-scene .source{color:#ffffffcc}
+.theme-consulting .item.on .item-index{background:var(--k-accent);border-color:var(--k-accent);color:#fff}
+.theme-consulting .item-value{color:var(--k-accent)}
+
+/* executive: storytelling with spotlight, chapter tabs at the bottom, insight bar */
+body.theme-executive{--k-accent:#e2681c;--k-accent-dark:#a94c12;--k-accent-2:#8a6a52;--k-soft:#fdf0e5;--k-ink:#1e2730;--k-muted:#66727d;--k-line:#dce0e4;--k-bg:#f5f4f1;--k-warn:#e2681c;--k-good:#2a7f79;--k-bad:#c8412b;--k-radius:10px;
+  --chart-1:#e2681c;--chart-2:#2a7f79;--chart-3:#8a6a52;--chart-4:#2f5fa8;--chart-5:#c8412b;--chart-6:#9aa3ab;--chart-ink:#1e2730;--chart-muted:#66727d;--chart-grid:#e6e8ea;
+  font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.theme-executive #stage{background:var(--k-bg)}
+body.theme-executive.has-chapters #chapter-nav{top:auto;bottom:82px;border-bottom:0;border-top:1px solid var(--k-line)}
+body.theme-executive.has-chapters #viewport{top:0;bottom:128px}
+.theme-executive .chapter-tab.active{background:transparent;color:var(--k-ink);box-shadow:inset 0 -3px 0 var(--k-accent);border-radius:0}
+.theme-executive .deck-mark i{background:var(--k-accent)}
+.theme-executive .composed-scene .scene-title{font-weight:800}
+.theme-executive .composed-scene .scene-title em{font-style:normal;color:var(--k-accent)}
+.theme-executive .reveal-spotlight [data-step].focus{box-shadow:0 0 0 3px var(--k-accent),0 12px 28px rgba(226,104,28,.14)}
+.theme-executive .composed-scene .scene-bottom{border-top:0;background:#fff;border:1px solid var(--k-line);border-left:5px solid var(--k-accent);border-radius:8px;padding:10px 16px}
+.theme-executive .composed-scene .message{font-size:18px}
+.theme-executive .item.on .item-index{background:var(--k-accent);border-color:var(--k-accent);color:#fff}
+.theme-executive .item-value{color:var(--k-accent)}

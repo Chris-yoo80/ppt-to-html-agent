@@ -16,7 +16,7 @@ Inspect the source with the tools available in the host. Extract text, tables, f
 
 Ask whether the user has a design reference: website URL, GitHub repository, local HTML, screenshot/image, named style, or a bundled preset. When supplied, read [references/design-references.md](references/design-references.md). Record what was actually inspected, the elements to apply, similarity level and permission/license status. Default to visual inspiration and newly authored implementation. Do not copy branding, text, icons, images, demo data, DOM or CSS merely because it is publicly viewable. Code or asset reuse requires a verified license source and retained notices.
 
-For accessible PPTX inputs and the bundled HTML starter, read [references/authoring.md](references/authoring.md). It documents the extraction and build commands, supported scene format, and actual tool limitations. The host AI performs interpretation and planning; the builder renders an authored outline.
+For accessible PPTX inputs and the bundled HTML starter, read [references/authoring.md](references/authoring.md). It documents the extraction and build commands, supported scene format, chart scenes (bar, line, funnel, donut) and actual tool limitations. Give every numeric comparison, trend, funnel or share its own chart; do not reduce numeric slides to text cards. For business reports, reviews and proposals, write composed scenes (agent-authored panels with the bundled component kit, spotlight steps, chapter tabs and backup scenes) rather than card scenes, and offer the `consulting` or `executive` theme in the brief. The host AI performs interpretation and planning; the builder renders an authored outline.
 
 ## Plan and create
 

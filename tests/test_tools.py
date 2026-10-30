@@ -63,6 +63,81 @@ class ToolTests(unittest.TestCase):
         self.assertIn('design-reference.json',script)
         self.assertNotRegex(script,r'fetch\(|XMLHttpRequest|https?://')
 
+    def test_chart_scenes_validate_and_reject_unscalable_data(self):
+        deck=json.loads((ROOT/'examples/chart-scenes/deck.json').read_text(encoding='utf-8'))
+        validate_deck(deck)
+        self.assertEqual({scene['chart']['type'] for scene in deck['scenes']},{'bar','line','funnel','donut'})
+        rendered=build(deck)
+        self.assertIn('"chart"',rendered)
+        self.assertNotRegex(rendered,r'<(?:script|link)[^>]+(?:src|href)="https?://')
+        bad_cases=[
+            ({'type':'pie'},'bar, line, funnel, donut or waterfall'),
+            ({'type':'bar','data':[{'label':'A','value':1}]},'2–8 points'),
+            ({'type':'bar','data':[{'label':'A','value':-1},{'label':'B','value':2}]},'≥ 0'),
+            ({'type':'line','data':[{'label':'A','value':float('nan')},{'label':'B','value':2}]},'finite number required'),
+            ({'type':'bar','data':[{'label':'A','value':0},{'label':'B','value':0}]},'greater than 0'),
+            ({'type':'donut','data':[{'label':'A','value':0},{'label':'B','value':2}]},'greater than 0'),
+            ({'type':'funnel','data':[{'label':str(i),'value':i+1} for i in range(7)]},'2–6 points'),
+            ({'type':'bar','data':[{'label':'A','value':1},{'label':'B','value':2,'display':3}]},'display'),
+            ({'type':['bar']},'bar, line, funnel, donut or waterfall'),
+            ({'type':'funnel','data':[{'label':'A','value':1},{'label':'B','value':2}]},'must not increase'),
+            ({'type':'bar','data':[{'label':'아주 긴 채널 이름입니다만','value':1},{'label':'B','value':2}]},'at most 12'),
+        ]
+        for chart,message in bad_cases:
+            broken=copy.deepcopy(deck);broken['scenes'][0]['chart']=chart
+            with self.subTest(chart=chart),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+
+    def test_composed_scenes_ship_as_trees_and_reject_unsafe_or_inconsistent_markup(self):
+        from build_deck import runtime_deck
+        deck=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        validate_deck(deck)
+        runtime=runtime_deck(deck)
+        self.assertTrue(all('body' in scene and 'html' not in scene for scene in runtime['scenes']))
+        rendered=build(deck)
+        self.assertIn('theme-consulting',rendered)
+        self.assertNotRegex(rendered,r'<(?:script|link)[^>]+(?:src|href)="https?://')
+        for value in ('32.4','18.0','−41.7%','2027년 4월'):
+            self.assertIn(value,rendered)
+        scene_cases=[
+            ('<div data-step="1">a</div><script>alert(1)</script>','<script>'),
+            ('<div data-step="1" onclick="x()">a</div>','event handler'),
+            ('<div data-step="1"><img src="https://example.com/a.png"></div>','data:image/'),
+            ('<div data-step="1" style="background:url(https://example.com/a.png)">a</div>','remote'),
+            ('<div data-step="1"><a href="https://example.com">a</a></div>','<a>'),
+            ('<div data-step="1"><button>go</button></div>','data-goto'),
+            ('<div data-step="1"><button data-goto="missing">go</button></div>','does not match any scene id'),
+            ('<div data-step="1">a</div><div data-step="3">c</div>','must cover exactly'),
+            ('<div data-step="1" data-chart=\'{"type":"pie","data":[]}\'>a</div>','bar, line, funnel, donut or waterfall'),
+            ('<div data-step="1"><svg><foreignObject></foreignObject></svg></div>','<foreignobject>'),
+            (r'<div data-step="1" style="background:\75 rl(\68ttp:\2f\2f evil.example/x.png)">x</div>','backslash'),
+            ('<div data-step="1" style="background:image-set(&quot;x&quot; 1x)">x</div>','image-set'),
+            ('<div data-step="1"><img srcset="x 2x" src="data:image/png;base64,AA"></div>','srcset'),
+            ('<div data-step="1"><table><tr><td background="x.png">x</td></tr></table></div>','background'),
+            ('<div data-step="1" id="next">x</div>','player controls'),
+            ('<div data-step="١">x</div>','whole number'),
+            ('<div data-step="1"><svg><rect fill="url(https://evil/x)"/></svg></div>','remote'),
+        ]
+        for markup,message in scene_cases:
+            broken=copy.deepcopy(deck);broken['scenes'][0]['html']=markup;broken['scenes'][0]['steps']=['a','b']
+            if 'must cover' not in message:broken['scenes'][0]['steps']=['a']
+            with self.subTest(markup=markup),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        deck_cases=[
+            (lambda d:d.update(css='@import "x.css";'),'@import'),
+            (lambda d:d.update(css='.a{background:url(http://x/y.png)}'),'remote'),
+            (lambda d:d['settings'].update(theme='neon'),'theme'),
+            (lambda d:d.update(css='@font-face{font-family:x;src:url(data:font/woff2;base64,AA)}'),'@font-face'),
+            (lambda d:d.update(css='a{x:1}/*</style>*/'),'comments'),
+            (lambda d:d['scenes'][0].update(items=[{'label':'x'}]),'html \\+ steps'),
+            (lambda d:[s.update(backup=True) for s in d['scenes']],'non-backup'),
+        ]
+        for change,message in deck_cases:
+            broken=copy.deepcopy(deck);change(broken)
+            with self.subTest(message=message),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        waterfall=copy.deepcopy(deck)
+        waterfall['scenes'][0]['html']='<div data-step="1" data-chart=\'{"type":"waterfall","data":[{"label":"A","value":5,"kind":"total"},{"label":"B","value":-9}]}\'>x</div>'
+        waterfall['scenes'][0]['steps']=['a']
+        with self.assertRaisesRegex(ValueError,'3–10 points'):validate_deck(waterfall)
+
     def test_complete_presentation_covers_the_full_bilingual_story(self):
         expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']
         for language in ('ko','en'):
