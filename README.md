@@ -8,7 +8,7 @@ A source-available agent skill for turning PPT content into interactive HTML pre
 
 [한국어](README.ko.md) · [Install](docs/install.md) · [Verification](docs/verification.md) · [Release status](docs/release-plan.md)
 
-[English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [한국어 HTML 설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [Presentation + supporting HTML](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
+[Sample gallery](https://chris-yoo80.github.io/ppt-to-html-agent/samples/index.en.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [한국어 HTML 설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [Presentation + supporting HTML](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.en.html)
 
 ## Quick start — three steps
 

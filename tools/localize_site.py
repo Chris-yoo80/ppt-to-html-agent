@@ -125,7 +125,7 @@ def main():
     page=re.sub('|'.join(re.escape(k) for k in sorted(mapping,key=len,reverse=True)),lambda m:mapping[m[0]],page)
     page=page.replace('lang="ko"','lang="en"').replace('demo.html','demo.en.html').replace('href="index.en.html" lang="en"','href="index.html" lang="ko"').replace('English</a>','한국어</a>')
     page=page.replace('lang="ko" hreflang="en"','lang="ko" hreflang="ko"').replace('href="license.html"','href="license.en.html"')
-    page=page.replace('marketing-presentation.html','marketing-presentation.en.html').replace('marketing-analysis.html','marketing-analysis.en.html').replace('guide.ko.html','guide.en.html')
+    page=page.replace('marketing-presentation.html','marketing-presentation.en.html').replace('marketing-analysis.html','marketing-analysis.en.html').replace('guide.ko.html','guide.en.html').replace('href="samples/index.html"','href="samples/index.en.html"')
     # These controls are localized by structure so generation remains stable even
     # when the Korean source copy changes.
     page=re.sub(r'<label for="reference">.*?</label>', '<label for="reference">08 · Design reference</label>', page)

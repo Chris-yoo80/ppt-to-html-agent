@@ -1,0 +1,220 @@
+{
+  "title": "가상 카페 브랜드 분기 리뷰 · 차트 장면 예제",
+  "language": "ko",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop"
+  },
+  "scenes": [
+    {
+      "id": "channel-sales",
+      "eyebrow": "01 / 막대 차트",
+      "title": "매장 판매가 가장 크고, 앱 주문이 뒤따릅니다",
+      "lead": "채널별 분기 매출 · 단위 만 원 · 가상 자료",
+      "layout": "flow",
+      "chart": {
+        "type": "bar",
+        "title": "채널별 매출 (만 원)",
+        "data": [
+          {
+            "label": "매장",
+            "value": 5200,
+            "display": "5,200"
+          },
+          {
+            "label": "앱 주문",
+            "value": 3100,
+            "display": "3,100"
+          },
+          {
+            "label": "배달",
+            "value": 1900,
+            "display": "1,900"
+          },
+          {
+            "label": "기프트카드",
+            "value": 800,
+            "display": "800"
+          }
+        ],
+        "note": "합계 11,000만 원. 막대 높이는 0부터 시작하는 실제 비율입니다."
+      },
+      "items": [
+        {
+          "label": "매장",
+          "value": "5,200만 원",
+          "body": "전체의 47.3%"
+        },
+        {
+          "label": "앱 주문",
+          "value": "3,100만 원",
+          "body": "전체의 28.2%"
+        },
+        {
+          "label": "배달",
+          "value": "1,900만 원",
+          "body": "전체의 17.3%"
+        },
+        {
+          "label": "기프트카드",
+          "value": "800만 원",
+          "body": "전체의 7.3%"
+        }
+      ],
+      "message": "매장과 앱이 매출의 4분의 3을 차지합니다.",
+      "source": "가상 예제 데이터",
+      "duration": 6
+    },
+    {
+      "id": "monthly-visits",
+      "eyebrow": "02 / 선 차트",
+      "title": "방문 고객이 석 달 연속 늘었습니다",
+      "layout": "flow",
+      "chart": {
+        "type": "line",
+        "title": "월별 방문 고객 (명)",
+        "unit": "명",
+        "data": [
+          {
+            "label": "7월",
+            "value": 18400
+          },
+          {
+            "label": "8월",
+            "value": 21300
+          },
+          {
+            "label": "9월",
+            "value": 24600
+          }
+        ]
+      },
+      "items": [
+        {
+          "label": "7월",
+          "value": "18,400명",
+          "body": "분기 시작"
+        },
+        {
+          "label": "8월",
+          "value": "21,300명",
+          "body": "전월 대비 +15.8%"
+        },
+        {
+          "label": "9월",
+          "value": "24,600명",
+          "body": "전월 대비 +15.5%"
+        }
+      ],
+      "message": "신메뉴 출시 이후 방문이 꾸준히 증가했습니다.",
+      "source": "가상 예제 데이터",
+      "duration": 6
+    },
+    {
+      "id": "app-funnel",
+      "eyebrow": "03 / 퍼널 차트",
+      "title": "앱 방문 6만 명 중 2,700명이 주문",
+      "layout": "flow",
+      "chart": {
+        "type": "funnel",
+        "title": "앱 주문 퍼널",
+        "unit": "명",
+        "data": [
+          {
+            "label": "앱 방문",
+            "value": 60000
+          },
+          {
+            "label": "메뉴 조회",
+            "value": 27000
+          },
+          {
+            "label": "장바구니",
+            "value": 6300
+          },
+          {
+            "label": "주문 완료",
+            "value": 2700
+          }
+        ]
+      },
+      "items": [
+        {
+          "label": "앱 방문",
+          "value": "60,000명",
+          "body": "분기 순방문"
+        },
+        {
+          "label": "메뉴 조회",
+          "value": "27,000명",
+          "body": "방문 대비 45.0%"
+        },
+        {
+          "label": "장바구니",
+          "value": "6,300명",
+          "body": "조회 대비 23.3%"
+        },
+        {
+          "label": "주문 완료",
+          "value": "2,700명",
+          "body": "장바구니 대비 42.9%"
+        }
+      ],
+      "message": "메뉴 조회에서 장바구니로 넘어가는 단계가 가장 약합니다.",
+      "source": "가상 예제 데이터",
+      "duration": 6
+    },
+    {
+      "id": "budget-mix",
+      "eyebrow": "04 / 도넛 차트",
+      "title": "마케팅 예산의 절반은 SNS에",
+      "layout": "compare",
+      "chart": {
+        "type": "donut",
+        "title": "분기 마케팅 예산 구성",
+        "center": "2,000만 원",
+        "data": [
+          {
+            "label": "SNS",
+            "value": 1000,
+            "display": "1,000만"
+          },
+          {
+            "label": "검색",
+            "value": 600,
+            "display": "600만"
+          },
+          {
+            "label": "매장 행사",
+            "value": 400,
+            "display": "400만"
+          }
+        ]
+      },
+      "items": [
+        {
+          "label": "SNS",
+          "value": "50.0%",
+          "body": "1,000만 원"
+        },
+        {
+          "label": "검색",
+          "value": "30.0%",
+          "body": "600만 원"
+        },
+        {
+          "label": "매장 행사",
+          "value": "20.0%",
+          "body": "400만 원"
+        }
+      ],
+      "message": "다음 분기에는 앱 퍼널 개선에 예산 일부를 옮깁니다.",
+      "source": "가상 예제 데이터",
+      "duration": 6
+    }
+  ]
+}
