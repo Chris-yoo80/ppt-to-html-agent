@@ -651,9 +651,9 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
     const parts=scene.title.split('**');
     if(parts.length%2===0||view.editing) title.append(document.createTextNode(scene.title));
     else parts.forEach((part,index)=>{if(part) title.append(index%2?text('em','',part):document.createTextNode(part));});
-    const eyebrow=text('p','eyebrow',scene.eyebrow || 'INTERACTIVE PRESENTATION');
-    stage.append(top,eyebrow,title);
-    track(title,{field:'title'},true); if(scene.eyebrow) track(eyebrow,{field:'eyebrow'},true);
+    stage.append(top);
+    if(scene.eyebrow){const eyebrow=text('p','eyebrow',scene.eyebrow);stage.append(eyebrow);track(eyebrow,{field:'eyebrow'},true);}
+    stage.append(title); track(title,{field:'title'},true);
     if(scene.lead){const lead=text('p',scene.body?'lead summary':'lead',scene.lead);stage.append(lead);track(lead,{field:'lead'},true);}
     const showAll=reduced.matches||settings.motion==='none'||view.revealAll;
     if(scene.body){
@@ -778,7 +778,10 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
         const page=text('article','print-page','');
         const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
         const scale=Math.min(1046/settings.width,699/settings.height);
-        copy.style.transform=`scale(${scale})`;copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
+        copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
+        // zoom shrinks the layout box too; transform alone leaves a 1600×900 box that print pagination clips.
+        if(globalThis.CSS?.supports?.('zoom','0.5')){copy.style.zoom=String(scale);copy.style.transform='none';}
+        else copy.style.transform=`scale(${scale})`;
         page.append(copy);root.append(page);
       }
     }finally{position=original;view.editing=editing;view.revealAll=revealAll;render();}

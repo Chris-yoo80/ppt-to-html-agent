@@ -38,7 +38,7 @@ The bundled charts, component kit and `consulting`/`executive` presets are a sta
   | Voices or qualitative findings | quote cards, icon grid |
 
 - Do not repeat the same grid on consecutive scenes unless the content repeats. Alternate dense evidence scenes with sparse statement scenes.
-- Style the deck through its `css` field: own classes, color variables, gradients, finite `@keyframes` with a reduced-motion fallback, per-scene rules via `[data-scene="scene-id"]`. Draw illustrations in inline SVG. Override or replace the presets freely.
+- Style the deck through its `css` field (validated offline CSS: no comments, backslash escapes, `@import`, `@font-face` or remote `url()`): own classes, color variables, gradients, finite `@keyframes` with a reduced-motion fallback, per-scene rules via `[data-scene="scene-id"]`. Draw illustrations in inline SVG. Override or replace the presets freely.
 - What stays fixed: one offline file, no scripts, no remote URLs, numbers traceable to the source, and the shared navigation, steps, print and bookmark behavior.
 
 ## Plan and create

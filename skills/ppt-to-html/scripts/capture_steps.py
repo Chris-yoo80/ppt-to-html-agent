@@ -189,22 +189,32 @@ def main():
         steps = browser.evaluate('__pptPlayer.steps()') or []
         if not steps:
             raise SystemExit('This file has no ppt-to-html player (built with an older skill?).')
+        started = time.time()
+        print(f'{len(steps)} steps; about {max(1, round(len(steps) * (args.wait + 1.5) / 60))} min. Run it with a long command timeout.')
         for index, step in enumerate(steps, 1):
             target = f"#scene={urllib.parse.quote(step['scene'])}&step={step['step']}"
-            browser.evaluate(f'location.hash = {json.dumps(target)}')
-            time.sleep(args.wait)
-            issues = browser.evaluate(OVERFLOW_JS) or []
             name = f"{index:02d}-{step['scene']}-{step['step']}.png"
-            shot = browser.call('Page.captureScreenshot', format='png')['data']
+            for attempt in (1, 2):
+                try:
+                    browser.evaluate(f'location.hash = {json.dumps(target)}')
+                    time.sleep(args.wait * attempt)
+                    issues = browser.evaluate(OVERFLOW_JS) or []
+                    shot = browser.call('Page.captureScreenshot', format='png')['data']
+                    break
+                except (TimeoutError, socket.timeout, RuntimeError) as error:
+                    if attempt == 2:
+                        raise SystemExit(f'Step {index} ({step["scene"]} {step["step"]}) failed twice: {error}. Partial results are in report.json.')
             (args.out / name).write_bytes(base64.b64decode(shot))
             report['steps'].append({**step, 'file': name, 'issues': issues})
+            # Keep a usable report even if a later step fails.
+            (args.out / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
             flag = f"  ⚠ {len(issues)} layout issue(s)" if issues else ''
-            print(f"{index:02d} {step['scene']} step {step['step']}{' (backup)' if step['backup'] else ''}{flag}")
+            print(f"{index:02d} {step['scene']} step {step['step']}{' (backup)' if step['backup'] else ''}{flag}  [{time.time() - started:.0f}s]")
         if args.pdf:
             pdf = browser.call('Page.printToPDF', printBackground=True, preferCSSPageSize=True)['data']
             args.pdf.parent.mkdir(parents=True, exist_ok=True)
             args.pdf.write_bytes(base64.b64decode(pdf))
-            print(f'PDF: {args.pdf}')
+            print(f'PDF: {args.pdf} (open it and look at every page; this tool cannot see printed pages)')
     finally:
         browser.close()
     (args.out / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')

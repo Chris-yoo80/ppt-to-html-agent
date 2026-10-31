@@ -29,13 +29,16 @@ UNITS = {
     'KRW': ({'currency:KRW': 1}, '1'), 'kKRW': ({'currency:KRW': 1}, '1000'),
     'tenThousandKRW': ({'currency:KRW': 1}, '10000'),
     'millionKRW': ({'currency:KRW': 1}, '1000000'),
+    'tenMillionKRW': ({'currency:KRW': 1}, '10000000'),
+    'hundredMillionKRW': ({'currency:KRW': 1}, '100000000'),
+    'trillionKRW': ({'currency:KRW': 1}, '1000000000000'),
     'USD': ({'currency:USD': 1}, '1'), 'EUR': ({'currency:EUR': 1}, '1'),
     '%': ({}, '.01'), 'x': ({}, '1'),
     **{u: ({'count:'+u: 1}, '1') for u in ['item', 'box', 'pallet', 'person', 'event', 'order', 'click', 'count']},
 }
 ALIASES = {'미터':'m', '밀리미터':'mm', '센티미터':'cm', '킬로미터':'km',
            'μm':'um', 'µm':'um', '리터':'L', 'ml':'mL', '톤':'t', '초':'s', '분':'min', '시간':'h',
-           '원':'KRW', '천원':'kKRW', '만원':'tenThousandKRW', '백만원':'millionKRW',
+           '원':'KRW', '천원':'kKRW', '만원':'tenThousandKRW', '백만원':'millionKRW', '천만원':'tenMillionKRW', '억원':'hundredMillionKRW', '조원':'trillionKRW',
            'thousand KRW':'kKRW', 'million KRW':'millionKRW',
            '배':'x', 'ratio':'x', '개':'item', '박스':'box', '팔레트':'pallet', '명':'person', '건':'event'}
 BUSINESS = {'item', 'box', 'pallet'}
