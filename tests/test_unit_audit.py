@@ -30,6 +30,12 @@ class UnitAuditTests(unittest.TestCase):
             with self.subTest(case=case):
                 self.assertEqual(audit(comparison(*case))['status'],'passed')
 
+    def test_korean_money_scales_convert(self):
+        for case in [(1.6,'억원',16000,'만원'),(1.2,'조원',12000,'억원'),(3,'천만원',3000,'만원')]:
+            with self.subTest(case=case):
+                self.assertEqual(audit(comparison(*case))['status'],'passed')
+        self.assertEqual(audit(comparison(1.6,'억원',1600,'만원'))['status'],'needs_review')
+
     def test_dimension_and_semantic_mismatches_cannot_pass(self):
         for source,target in [('m','m2'),('m2','m3'),('kg','L'),('kW','kWh'),('person','item'),('USD','KRW')]:
             with self.subTest(source=source,target=target):

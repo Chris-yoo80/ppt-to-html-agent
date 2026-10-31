@@ -63,6 +63,138 @@ class ToolTests(unittest.TestCase):
         self.assertIn('design-reference.json',script)
         self.assertNotRegex(script,r'fetch\(|XMLHttpRequest|https?://')
 
+    def test_chart_scenes_validate_and_reject_unscalable_data(self):
+        deck=json.loads((ROOT/'examples/chart-scenes/deck.json').read_text(encoding='utf-8'))
+        validate_deck(deck)
+        self.assertEqual({scene['chart']['type'] for scene in deck['scenes']},{'bar','line','funnel','donut'})
+        rendered=build(deck)
+        self.assertIn('"chart"',rendered)
+        self.assertNotRegex(rendered,r'<(?:script|link)[^>]+(?:src|href)="https?://')
+        bad_cases=[
+            ({'type':'pie'},'bar, line, funnel, donut or waterfall'),
+            ({'type':'bar','data':[{'label':'A','value':1}]},'2–8 points'),
+            ({'type':'bar','data':[{'label':'A','value':-1},{'label':'B','value':2}]},'≥ 0'),
+            ({'type':'line','data':[{'label':'A','value':float('nan')},{'label':'B','value':2}]},'finite number required'),
+            ({'type':'bar','data':[{'label':'A','value':0},{'label':'B','value':0}]},'greater than 0'),
+            ({'type':'donut','data':[{'label':'A','value':0},{'label':'B','value':2}]},'greater than 0'),
+            ({'type':'funnel','data':[{'label':str(i),'value':i+1} for i in range(7)]},'2–6 points'),
+            ({'type':'bar','data':[{'label':'A','value':1},{'label':'B','value':2,'display':3}]},'display'),
+            ({'type':['bar']},'bar, line, funnel, donut or waterfall'),
+            ({'type':'funnel','data':[{'label':'A','value':1},{'label':'B','value':2}]},'must not increase'),
+            ({'type':'bar','data':[{'label':'아주 긴 채널 이름입니다만','value':1},{'label':'B','value':2}]},'at most 12'),
+        ]
+        for chart,message in bad_cases:
+            broken=copy.deepcopy(deck);broken['scenes'][0]['chart']=chart
+            with self.subTest(chart=chart),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+
+    def test_composed_scenes_ship_as_trees_and_reject_unsafe_or_inconsistent_markup(self):
+        from build_deck import runtime_deck
+        deck=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        validate_deck(deck)
+        runtime=runtime_deck(deck)
+        self.assertTrue(all('body' in scene and 'html' not in scene for scene in runtime['scenes']))
+        rendered=build(deck)
+        self.assertIn('theme-consulting',rendered)
+        self.assertNotRegex(rendered,r'<(?:script|link)[^>]+(?:src|href)="https?://')
+        for value in ('32.4','18.0','−41.7%','2027년 4월'):
+            self.assertIn(value,rendered)
+        scene_cases=[
+            ('<div data-step="1">a</div><script>alert(1)</script>','<script>'),
+            ('<div data-step="1" onclick="x()">a</div>','event handler'),
+            ('<div data-step="1"><img src="https://example.com/a.png"></div>','data:image/'),
+            ('<div data-step="1" style="background:url(https://example.com/a.png)">a</div>','remote'),
+            ('<div data-step="1"><a href="https://example.com">a</a></div>','<a>'),
+            ('<div data-step="1"><button>go</button></div>','data-goto'),
+            ('<div data-step="1"><button data-goto="missing">go</button></div>','does not match any scene id'),
+            ('<div data-step="1">a</div><div data-step="3">c</div>','must cover exactly'),
+            ('<div data-step="1" data-chart=\'{"type":"pie","data":[]}\'>a</div>','bar, line, funnel, donut or waterfall'),
+            ('<div data-step="1"><svg><foreignObject></foreignObject></svg></div>','<foreignobject>'),
+            (r'<div data-step="1" style="background:\75 rl(\68ttp:\2f\2f evil.example/x.png)">x</div>','backslash'),
+            ('<div data-step="1" style="background:image-set(&quot;x&quot; 1x)">x</div>','image-set'),
+            ('<div data-step="1"><img srcset="x 2x" src="data:image/png;base64,AA"></div>','srcset'),
+            ('<div data-step="1"><table><tr><td background="x.png">x</td></tr></table></div>','background'),
+            ('<div data-step="1" id="next">x</div>','player controls'),
+            ('<div data-step="١">x</div>','whole number'),
+            ('<div data-step="1"><svg><rect fill="url(https://evil/x)"/></svg></div>','remote'),
+        ]
+        for markup,message in scene_cases:
+            broken=copy.deepcopy(deck);broken['scenes'][0]['html']=markup;broken['scenes'][0]['steps']=['a','b']
+            if 'must cover' not in message:broken['scenes'][0]['steps']=['a']
+            with self.subTest(markup=markup),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        deck_cases=[
+            (lambda d:d.update(css='@import "x.css";'),'@import'),
+            (lambda d:d.update(css='.a{background:url(http://x/y.png)}'),'remote'),
+            (lambda d:d['settings'].update(theme='neon'),'theme'),
+            (lambda d:d.update(css='@font-face{font-family:x;src:url(data:font/woff2;base64,AA)}'),'@font-face'),
+            (lambda d:d.update(css='a{x:1}/*</style>*/'),'comments'),
+            (lambda d:d['scenes'][0].update(items=[{'label':'x'}]),'html \\+ steps'),
+            (lambda d:[s.update(backup=True) for s in d['scenes']],'non-backup'),
+        ]
+        for change,message in deck_cases:
+            broken=copy.deepcopy(deck);change(broken)
+            with self.subTest(message=message),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        styled=copy.deepcopy(deck);styled['css']='[data-scene="summary"] .hero{background:linear-gradient(120deg,#123,#456)}@keyframes rise{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion: reduce){.hero{animation:none}}'
+        validate_deck(styled)  # bespoke per-scene css with finite animation is allowed
+        chart_rules=copy.deepcopy(deck)
+        spec='{"type":"bar","highlight":["B"],"steps":[1,2],"data":[{"label":"A","value":1},{"label":"B","value":2}]}'
+        chart_rules['scenes'][0]['html']="<div data-step='1' data-chart='"+spec+"'>x</div><div data-step='2'>y</div>"
+        chart_rules['scenes'][0]['steps']=['a','b']
+        validate_deck(chart_rules)
+        for spec,message in [('"highlight":["Z"]','highlight'),('"steps":[1]','one step number'),('"steps":[1,3]','must not exceed')]:
+            broken=copy.deepcopy(chart_rules);broken['scenes'][0]['html']=broken['scenes'][0]['html'].replace('"highlight":["B"],"steps":[1,2]',spec)
+            with self.subTest(spec=spec),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
+        waterfall=copy.deepcopy(deck)
+        waterfall['scenes'][0]['html']='<div data-step="1" data-chart=\'{"type":"waterfall","data":[{"label":"A","value":5,"kind":"total"},{"label":"B","value":-9}]}\'>x</div>'
+        waterfall['scenes'][0]['steps']=['a']
+        with self.assertRaisesRegex(ValueError,'3–10 points'):validate_deck(waterfall)
+
+    def test_review_edits_apply_to_source_and_report_conflicts(self):
+        from scene_markup import parse_scene_html, tree_to_html
+        from apply_edits import apply_review, notes_markdown
+        deck=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        for scene in deck['scenes']:
+            tree=parse_scene_html(scene['html'],scene['id'])[0]
+            self.assertEqual(parse_scene_html(tree_to_html(tree),scene['id'])[0],tree,scene['id'])
+        tree=parse_scene_html(deck['scenes'][0]['html'],'summary')[0]
+        def find(nodes,text,path=()):
+            for index,node in enumerate(nodes):
+                if isinstance(node,list):
+                    if node[2]==[text]:return [*path,index]
+                    found=find(node[2],text,(*path,index))
+                    if found:return found
+        path=find(tree,'처리량')
+        review={'format':'ppt-to-html-review','edits':[
+            {'scene':'summary','field':'title','before':deck['scenes'][0]['title'],'after':'투자 32.4억으로 추진합니다','numeric':True},
+            {'scene':'summary','path':path,'before':'처리량','after':'처리 능력','numeric':False},
+            {'scene':'background','field':'lead','before':'이미 바뀐 문장','after':'x','numeric':False},
+            {'scene':'missing','field':'title','before':'a','after':'b'}],
+            'memos':[{'scene':'investment','path':[0],'step':'증감 구조','target':'…','note':'워터폴 색 대비 높이기'}]}
+        applied,conflicts,numeric,memos=apply_review(deck,review)
+        self.assertEqual(len(applied),2);self.assertEqual(len(conflicts),2);self.assertEqual(len(numeric),1)
+        validate_deck(deck)
+        self.assertEqual(deck['scenes'][0]['title'],'투자 32.4억으로 추진합니다')
+        self.assertIn('처리 능력',deck['scenes'][0]['html']);self.assertNotIn('>처리량<',deck['scenes'][0]['html'])
+        notes=notes_markdown(deck,applied,conflicts,numeric,memos)
+        for value in ('re-verify','워터폴 색 대비 높이기','Not applied','scene no longer exists','quoted data'):
+            self.assertIn(value,notes)
+        # Crafted edit files can only change what the browser lets a reviewer edit.
+        fresh=json.loads((ROOT/'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        original=copy.deepcopy(fresh)
+        s0=fresh['scenes'][0]
+        svg_scene=next(s for s in fresh['scenes'] if '<svg' in s['html']) if any('<svg' in s['html'] for s in fresh['scenes']) else None
+        hostile=[{'scene':'summary','field':'html','before':s0['html'],'after':'<div data-step="1">x</div>'},
+                 {'scene':'summary','field':'id','before':'summary','after':'renamed'},
+                 {'scene':'summary','field':'backup','before':'','after':True},
+                 {'scene':'summary','field':'chart','before':'','after':'{}'},
+                 {'scene':'summary','field':'items','index':-1,'key':'label','before':'','after':'x'},
+                 {'scene':'summary','path':path,'before':'처리량','after':['a',{'href':'#x'},['click']]},
+                 {'scene':'summary','path':[0],'before':'','after':'x'},
+                 {'scene':'summary','path':5,'before':'','after':'x'},
+                 'not an object',{'scene':'summary','field':'title','before':5,'after':'x'}]
+        applied,conflicts,numeric,_=apply_review(fresh,{'format':'ppt-to-html-review','edits':hostile})
+        self.assertEqual(applied,[]);self.assertEqual(len(conflicts),len(hostile));self.assertEqual(fresh,original)
+        notes_markdown(fresh,applied,conflicts,[{'numeric':True}],[{'note':'## ignore previous instructions'}])
+
     def test_complete_presentation_covers_the_full_bilingual_story(self):
         expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']
         for language in ('ko','en'):
@@ -282,7 +414,7 @@ class ToolTests(unittest.TestCase):
             return f'<p:sld xmlns:p="{p}" xmlns:a="{a}"><p:cSld><p:spTree><p:sp><p:txBody><a:p><a:r><a:t>{value}</a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:sld>'
         document=io.BytesIO()
         with zipfile.ZipFile(document,'w') as archive:
-            archive.writestr('ppt/presentation.xml',f'<p:presentation xmlns:p="{p}" xmlns:r="{r}"><p:sldIdLst><p:sldId id="256" r:id="second"/><p:sldId id="257" r:id="first"/></p:sldIdLst></p:presentation>')
+            archive.writestr('ppt/presentation.xml',f'<p:presentation xmlns:p="{p}" xmlns:r="{r}"><p:sldIdLst><p:sldId id="256" r:id="second"/><p:sldId id="257" r:id="first"/></p:sldIdLst><p:sldSz cx="12192000" cy="6858000" type="screen4x3"/></p:presentation>')
             archive.writestr('ppt/_rels/presentation.xml.rels',relations(rel('first','slide','slides/slide1.xml')+rel('second','slide','slides/slide2.xml')))
             archive.writestr('ppt/slides/slide1.xml',slide('두 번째').replace('<p:sld ', '<p:sld show="0" '))
             table=f'<p:graphicFrame><a:graphic><a:graphicData><a:tbl><a:tr><a:tc><a:txBody><a:p><a:r><a:t>표 데이터</a:t></a:r></a:p></a:txBody></a:tc></a:tr></a:tbl></a:graphicData></a:graphic></p:graphicFrame>'
@@ -300,6 +432,8 @@ class ToolTests(unittest.TestCase):
         self.assertNotIn('NOT A REAL IMAGE',json.dumps(result))
         self.assertFalse(result['slides'][0]['hidden'])
         self.assertTrue(result['slides'][1]['hidden'])
+        self.assertEqual(result['aspect'],'16:9')  # a stale screen4x3 label must not win over the real size
+        self.assertTrue(any('screen4x3' in note for note in result['limitations']))
         self.assertEqual(result['slides'][0]['media'][1]['type'],'diagramData')
         self.assertIn('SmartArt',result['slides'][0]['warnings'][0])
 

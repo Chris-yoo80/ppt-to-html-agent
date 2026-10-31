@@ -69,6 +69,8 @@ Open `output/motion-stories.html`; no runtime server, framework, AI key or netwo
 - A brief before building: audience, duration, dimensions, fonts, motion frequency and playback.
 - PPTX extraction: text, tables, speaker notes and media inventory, in presentation order.
 - A portable starter: the agent writes scene JSON; the builder renders an offline HTML file.
+- Report-style composed scenes with charts drawn to scale, spotlight steps, chapter tabs and backup scenes.
+- In-browser review: edit text in place, leave memos and send the changes back to the agent.
 - Simple motion graphics: point entrances, connecting lines and plane reveals, with reduced-motion handling.
 - A motion gallery: fictional delivery routes, a marketing funnel and an isometric warehouse, with continuous playback, four phase jumps and timeline scrubbing. These are hand-authored presets, not automatic PPT conversion or an optimization solver.
 - A smaller library example remains as a starter for the scene-JSON builder.
@@ -79,6 +81,29 @@ The Package is source-available under the project-specific [Community License 1.
 These are project-specific terms, not independently reviewed standard-license advice. AI subscriptions and API usage follow your provider's terms.
 
 The website and fictional demo use Story Sans, renamed character subsets derived from Pretendard 1.3.9. These font files retain their separate [SIL Open Font License](skills/ppt-to-html/assets/fonts/OFL.txt) and are not relicensed under the Community License. They cover the current demo; other characters fall back to the system font. The `story` preset embeds the font files and notices in the generated HTML.
+
+## Report-style scenes and charts
+
+For reports, reviews and proposals the agent writes **composed scenes**: two or three panels per screen, each with the visual its evidence needs, under a title that states the conclusion and above a Key Message bar.
+
+| Part | What it does |
+|---|---|
+| Charts | Bar, line, funnel, donut and waterfall, drawn to scale from zero; funnel rates and donut shares are computed from the data |
+| Spotlight steps | Each click outlines the panel being explained and dims the rest |
+| Components | KPI tiles, tables with highlighted rows, Gantt, process flow, status timeline, progress bars, custom SVG illustrations |
+| Navigation | Chapter tabs, breadcrumb, backup scenes (자료실) and jump buttons that return to the exact step |
+
+The design follows the content, not a template: the agent picks a visual direction from the content, audience and brand, uses design skills installed in your AI tool when available (for example frontend-design, UI/UX or data-visualization skills) and varies the composition per scene. The `consulting` and `executive` presets are starting points. [Design sources](skills/ppt-to-html/references/design-sources.md) separates look-only galleries from icons, chart patterns and code that can be reused under license. Composed scene HTML is converted into a validated tree, so scripts, event handlers and remote URLs cannot reach the output. See [`examples/composed-report`](examples/composed-report/deck.json) and [`examples/chart-scenes`](examples/chart-scenes/deck.json).
+
+## Fix text and leave memos in the browser
+
+Every presentation has review tools in the top-right corner:
+
+- **Edit (E)** shows every step; click titles, summary bars, panel text, card labels or key messages to change them. Layout, styles and chart data stay locked.
+- **Memo (M)** lets you click any element and leave a change request; a numbered badge marks it.
+- **Review** lists edits and memos, then **Save edited HTML** (reopens with your edits and memos) or **Export changes** (`deck-edits.json`).
+
+Give `deck-edits.json` back to the agent to update the source. It applies only text that still matches what you saw, answers each memo and reports anything it could not apply. A number or unit change raises a warning: charts, bar widths and totals are re-checked by the agent, not changed by text edits.
 
 ## Reference Design Mode
 
@@ -139,7 +164,8 @@ GitHub Pages serves the bilingual introduction, HTML guides and examples from `m
 ## Current limits
 
 - No pixel-perfect PPT rendering, image OCR, chart workbook interpretation, legacy `.ppt`, or encrypted/DRM document reader.
-- The starter supports 1–4 short items per scene, cards/flow/compare layouts and three diagram styles. Richer layouts and custom fonts require additional implementation.
+- Card scenes hold 1–4 short items; richer screens use composed scenes. Fonts are system fonts or the bundled `story` subset; embedding other font files is not supported yet.
+- In-browser editing changes plain text only. Mixed-format text and text inside drawings need a memo; changed numbers are re-verified by the agent.
 - Extraction has synthetic fixture tests. The library example demonstrates JSON-to-HTML generation, not a complete PPT-to-HTML conversion.
 - Static and syntax checks do not prove visual quality. Browser layout, interaction, accessibility and alternative ratios still require verification.
 - One fictional five-slide conversion and revision completed in Claude Code and Codex CLI. Other files, hosts and regular ChatGPT/Claude surfaces are not claimed as universally supported.

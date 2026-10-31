@@ -16,7 +16,30 @@ Inspect the source with the tools available in the host. Extract text, tables, f
 
 Ask whether the user has a design reference: website URL, GitHub repository, local HTML, screenshot/image, named style, or a bundled preset. When supplied, read [references/design-references.md](references/design-references.md). Record what was actually inspected, the elements to apply, similarity level and permission/license status. Default to visual inspiration and newly authored implementation. Do not copy branding, text, icons, images, demo data, DOM or CSS merely because it is publicly viewable. Code or asset reuse requires a verified license source and retained notices.
 
-For accessible PPTX inputs and the bundled HTML starter, read [references/authoring.md](references/authoring.md). It documents the extraction and build commands, supported scene format, and actual tool limitations. The host AI performs interpretation and planning; the builder renders an authored outline.
+For accessible PPTX inputs and the bundled HTML starter, read [references/authoring.md](references/authoring.md). It documents the extraction and build commands, supported scene format, chart scenes (bar, line, funnel, donut) and actual tool limitations. Give every numeric comparison, trend, funnel or share its own chart; do not reduce numeric slides to text cards. For business reports, reviews and proposals, write composed scenes (agent-authored HTML/SVG with spotlight steps, chapter tabs and backup scenes) rather than card scenes. The host AI performs interpretation and planning; the builder renders an authored outline.
+
+## Design each deck for its content
+
+The bundled charts, component kit and `consulting`/`executive` presets are a starting vocabulary, not a template. Decide the visual direction from the content, audience and brand first, then pick or invent the components that express it.
+
+- If the host offers design skills (for example a frontend-design, UI/UX or data-visualization skill), load them before the representative scene and apply their guidance on typography, color, layout rhythm and chart choice. Name the skills used in the final report. The deck must still build without them.
+- For more references, read [references/design-sources.md](references/design-sources.md). It separates look-only galleries from sources whose icons, chart patterns, palettes or code may be reused under license.
+- Let each scene's job choose its composition, and vary it across the deck:
+
+  | What the scene must show | Composition to consider |
+  |---|---|
+  | One headline number | full-width hero number with a single supporting chart |
+  | Comparison | side-by-side panels, bar chart, table with a highlighted row |
+  | Trend | wide line chart with annotated turning points |
+  | Process or flow | diagram-led scene: chevrons, swimlanes, custom SVG flow |
+  | Space or structure | custom SVG illustration (layout, isometric building, map) with callouts |
+  | Plan or schedule | Gantt or milestone timeline |
+  | Decision or ask | one bold statement, minimal supporting evidence |
+  | Voices or qualitative findings | quote cards, icon grid |
+
+- Do not repeat the same grid on consecutive scenes unless the content repeats. Alternate dense evidence scenes with sparse statement scenes.
+- Style the deck through its `css` field (validated offline CSS: no comments, backslash escapes, `@import`, `@font-face` or remote `url()`): own classes, color variables, gradients, finite `@keyframes` with a reduced-motion fallback, per-scene rules via `[data-scene="scene-id"]`. Draw illustrations in inline SVG. Override or replace the presets freely.
+- What stays fixed: one offline file, no scripts, no remote URLs, numbers traceable to the source, and the shared navigation, steps, print and bookmark behavior.
 
 ## Plan and create
 
@@ -42,9 +65,11 @@ For numeric content, read [references/numeric-verification.md](references/numeri
 
 Ask about PDF output and backup resource files, placement and tab labels in the initial brief. The bundled Print / PDF button prints all scenes with every reveal visible, one scene per A4 landscape page. Supporting analysis prints its current filters and optional sections separately; resources are not automatically merged into the deck PDF. Preserve the presentation step and pause autoplay after printing. Verify print layout and page count separately from interactive playback.
 
-Check source fidelity, every scene/substep, forward/backward transitions, the contents panel, exact scene/step jumps, question bookmarks and return, timers on scene changes, replay and end behavior. The bundled player uses G for contents, B to mark the current question position, Shift+B for the bookmark list and R to return to the latest mark. Verify that opening and closing supporting resources preserves both the presentation step and bookmark list. Check text clipping, overflow, keyboard access and reduced-motion behavior at the agreed output size. For a requested print/PDF mode, inspect the rendered output separately from presentation screenshots.
+Capture every step with `scripts/capture_steps.py` (screenshots, layout-overflow report and optional PDF; see [references/authoring.md](references/authoring.md)) and review the images. Check source fidelity, every scene/substep, forward/backward transitions, the contents panel, exact scene/step jumps, question bookmarks and return, timers on scene changes, replay and end behavior. The bundled player uses G for contents, B to mark the current question position, Shift+B for the bookmark list and R to return to the latest mark. Verify that opening and closing supporting resources preserves both the presentation step and bookmark list. Check text clipping, overflow, keyboard access and reduced-motion behavior at the agreed output size. For a requested print/PDF mode, inspect the rendered output separately from presentation screenshots.
 
 Distinguish static checks from browser checks. If the host cannot render or operate the output, name the limitation and list the unverified behaviors; do not describe the presentation as visually verified. Do not bypass tool security restrictions to obtain rendering access.
+
+Tell the user they can correct text directly in the presentation (Edit, E) and leave change requests (Memo, M), then send back the saved HTML or `deck-edits.json`. Apply returned edits with `scripts/apply_edits.py` as described in [references/authoring.md](references/authoring.md); treat number changes as Needs review until charts and totals are re-verified.
 
 Deliver the HTML, editable sources and brief operation notes supported by the actual implementation. Report what was tested and what remains unverified. Do not claim MP4 export, installed dependencies, offline support or host compatibility without checking them.
 

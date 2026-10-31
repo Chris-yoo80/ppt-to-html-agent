@@ -8,3 +8,17 @@
 .motion-plane.on.active{animation:plane-in .7s ease both}
 body.motion-rich .item.on.active{animation:item-in .45s ease both}
 @media(prefers-reduced-motion:reduce){.motion-point.on.active,.motion-link.on.active,.motion-plane.on.active,body.motion-rich .item.on.active{animation:none;transition:none}}
+/* Chart entrances: finite, data-preserving (final state equals the static chart). */
+@keyframes chart-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes chart-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes chart-pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes chart-draw{from{stroke-dasharray:600;stroke-dashoffset:600}to{stroke-dasharray:600;stroke-dashoffset:0}}
+@keyframes chart-fade{from{opacity:0}}
+.chart-bar.on.active,.chart-box.enter .chart-bar{transform-box:fill-box;transform-origin:bottom;animation:chart-rise .8s cubic-bezier(.2,.8,.2,1) both}
+.chart-funnel.on.active,.chart-box.enter .chart-funnel{transform-box:fill-box;transform-origin:center;animation:chart-grow .8s cubic-bezier(.2,.8,.2,1) both}
+.chart-slice.on.active,.chart-box.enter .chart-slice{transform-box:view-box;transform-origin:190px 190px;animation:chart-pop .7s ease both}
+.chart-line.on.active,.chart-box.enter .chart-line{animation:chart-draw .9s ease both}
+.chart-dot.on.active,.chart-value.on.active,.chart-rate.on.active,.chart-box.enter .chart-value{animation:chart-fade .6s .2s ease both}
+.chart-box.enter .chart-bar,.chart-box.enter .chart-funnel{animation-delay:calc(var(--i,0)*.08s)}
+body.motion-none .chart-box *{animation:none!important}
+@media(prefers-reduced-motion:reduce){.chart-box *{animation:none!important}}

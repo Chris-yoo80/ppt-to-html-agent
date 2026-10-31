@@ -5,16 +5,36 @@ import html
 import json
 from pathlib import Path
 
-from deck_model import validate_deck
+import copy
+
+from deck_model import composed_tree, validate_deck
 
 ASSETS = Path(__file__).resolve().parent.parent / 'assets'
 
 
+def runtime_deck(deck):
+    """Deck data as the player receives it: composed scenes become validated element trees, never raw markup."""
+    runtime = copy.deepcopy(deck)
+    for scene in runtime['scenes']:
+        if 'html' in scene:
+            scene['body'] = composed_tree(scene)
+            del scene['html']
+    runtime.pop('css', None)
+    runtime.pop('review', None)  # review data belongs to a saved copy, not a fresh build
+    return runtime
+
+
 def build(deck):
     validate_deck(deck)
-    data = json.dumps(deck, ensure_ascii=False, allow_nan=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
-    css = '\n'.join((ASSETS / name).read_text(encoding='utf-8') for name in ('player.css', 'motion.css'))
+    data = json.dumps(runtime_deck(deck), ensure_ascii=False, allow_nan=False).replace('&', '\\u0026').replace('<', '\\u003c').replace('>', '\\u003e')
+    css = '\n'.join((ASSETS / name).read_text(encoding='utf-8') for name in ('player.css', 'motion.css', 'components.css', 'themes.css'))
+    if deck.get('css'):
+        css += '\n/* deck css (validated: no imports or remote URLs) */\n' + deck['css']
     js = (ASSETS / 'player.js').read_text(encoding='utf-8')
+    if deck.get('settings', {}).get('review', True):
+        # In-browser edit and memo modes; set settings.review to false to ship a read-only deck.
+        css += '\n' + (ASSETS / 'editor.css').read_text(encoding='utf-8')
+        js += '\n' + (ASSETS / 'editor.js').read_text(encoding='utf-8')
     english=deck.get('language')=='en'
     supplement_ui=''
     supplement_button=''
@@ -43,11 +63,11 @@ def build(deck):
 -->
 <html lang="{'en' if english else 'ko'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(deck['title'])}</title><style>{css}</style></head>
-<body>{font_legal}<main id="viewport" aria-label="{'Presentation' if english else '발표 화면'}"><section id="stage" aria-label="{'Current scene' if english else '현재 발표 장면'}"></section></main>
+<body class="theme-{html.escape(deck.get('settings', {}).get('theme', 'default'))}">{font_legal}<nav id="chapter-nav" aria-label="{'Chapters' if english else '장 바로가기'}"></nav><main id="viewport" aria-label="{'Presentation' if english else '발표 화면'}"><section id="stage" aria-label="{'Current scene' if english else '현재 발표 장면'}"></section></main>
 <nav class="controls" aria-label="{'Presentation controls' if english else '발표 조작'}"><button id="prev" type="button" aria-label="{'Previous step' if english else '이전 단계'}">←</button>
 <span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="{'Next step' if english else '다음 단계'}">→</button>
 <button id="play" type="button" aria-pressed="false">{'Autoplay' if english else '자동 재생'}</button><button id="replay" type="button">{'Restart' if english else '처음부터'}</button>
-<button id="open-outline" type="button" aria-haspopup="dialog">{'Contents' if english else '목차'}</button><button id="bookmark-current" type="button">{'Mark question' if english else '질문 표시'}</button><button id="open-bookmarks" type="button" aria-haspopup="dialog">{'Question list' if english else '질문 목록'}</button><button id="return-bookmark" type="button" disabled>{'Return to question' if english else '질문 복귀'}</button>
+<button id="open-outline" type="button" aria-haspopup="dialog">{'Contents' if english else '목차'}</button><button id="bookmark-current" type="button">{'Mark question' if english else '질문 표시'}</button><button id="open-bookmarks" type="button" aria-haspopup="dialog">{'Question list' if english else '질문 목록'}</button><button id="return-bookmark" type="button" disabled>{'Return to question' if english else '질문 복귀'}</button><button id="return-origin" type="button" hidden>{'↩ Back' if english else '↩ 돌아가기'}</button>
 <button id="fullscreen" type="button">{'Fullscreen' if english else '전체 화면'}</button><button id="print" type="button">{'Print / PDF' if english else '인쇄 / PDF'}</button>{supplement_button}<span class="keyhint">{'← → Steps · G Contents · B Mark · R Return' if english else '← → 단계 · G 목차 · B 질문 표시 · R 복귀'}</span></nav>
 <dialog id="outline-dialog" class="jump-dialog" aria-labelledby="outline-title"><header><strong id="outline-title">{'Contents and steps' if english else '목차와 단계'}</strong><button id="outline-close" type="button" aria-label="{'Close contents' if english else '목차 닫기'}">×</button></header><div id="outline-list"></div></dialog>
 <dialog id="bookmarks-dialog" class="jump-dialog" aria-labelledby="bookmarks-title"><header><strong id="bookmarks-title">{'Question bookmarks' if english else '질문 북마크'}</strong><button id="bookmarks-close" type="button" aria-label="{'Close question bookmarks' if english else '질문 북마크 닫기'}">×</button></header><div id="bookmarks-list"></div></dialog>
