@@ -8,7 +8,7 @@ PPT 발표와 검토한 엑셀 분석을 인터랙티브 HTML로 구성하고, �
 
 **초기 버전입니다.** Claude Code·Codex CLI에서 가상 PPT 입력·변환·수정 과정을 확인했습니다. 실제 Edge에서는 마케팅 보충 HTML의 조작과 발표 복귀를 검증했습니다. 모든 파일·환경의 호환성을 보장하는 것은 아닙니다.
 
-[국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.html)
+[샘플 갤러리](https://chris-yoo80.github.io/ppt-to-html-agent/samples/index.html) · [국문 HTML 사용설명서](https://chris-yoo80.github.io/ppt-to-html-agent/guide.ko.html) · [English HTML guide](https://chris-yoo80.github.io/ppt-to-html-agent/guide.en.html) · [발표 + 추가 자료 체험](https://chris-yoo80.github.io/ppt-to-html-agent/marketing-presentation.html)
 
 ## 3단계 빠른 시작
 

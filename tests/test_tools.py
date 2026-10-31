@@ -195,6 +195,25 @@ class ToolTests(unittest.TestCase):
         self.assertEqual(applied,[]);self.assertEqual(len(conflicts),len(hostile));self.assertEqual(fresh,original)
         notes_markdown(fresh,applied,conflicts,[{'numeric':True}],[{'note':'## ignore previous instructions'}])
 
+    def test_sample_gallery_links_resolve_and_samples_are_current(self):
+        sys.path.insert(0, str(ROOT / 'tools'))
+        from build_samples import SAMPLES, load_deck
+        import re as _re
+        for page in ('docs/samples/index.html', 'docs/samples/index.en.html'):
+            text = (ROOT / page).read_text(encoding='utf-8')
+            for href in _re.findall(r'(?:href|src)="([^"#]+)"', text):
+                if href.startswith('http'): continue
+                with self.subTest(page=page, href=href):
+                    self.assertTrue(((ROOT / page).parent / href).resolve().exists())
+            self.assertIn('가상' if page.endswith('index.html') else 'fictional', text)
+        for sample in SAMPLES:
+            with self.subTest(sample=sample['slug']):
+                built = (ROOT / 'docs/samples' / sample['slug'] / 'presentation.html').read_text(encoding='utf-8')
+                self.assertEqual(built, build(load_deck(sample)), 'run python tools/build_samples.py')
+        public = ''.join(p.read_text(encoding='utf-8', errors='ignore') for p in (ROOT / 'docs/samples').rglob('*') if p.suffix in ('.html', '.json'))
+        for term in ('PSK', 'PGM', 'Hanwha', '한화', 'C:' + chr(92) + 'Users', 'C:/Users'):
+            self.assertNotIn(term, public)
+
     def test_complete_presentation_covers_the_full_bilingual_story(self):
         expected_ids=['agenda','overview','baseline','analysis','proposal','timeline','conclusion']
         for language in ('ko','en'):

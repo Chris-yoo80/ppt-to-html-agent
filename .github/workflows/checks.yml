@@ -26,5 +26,6 @@ jobs:
       - run: python tools/build_marketing_examples.py
       - run: python tools/package_skill.py
       - run: python tools/localize_site.py
+      - run: python tools/build_samples.py
       - run: python tools/check_release.py
-      - run: git diff --exit-code -- docs/*.html examples/marketing-analysis/*.json skills/ppt-to-html/assets/guide.*.html docs/downloads/ppt-to-html.zip
+      - run: git diff --exit-code -- docs/*.html docs/samples examples/marketing-analysis/*.json skills/ppt-to-html/assets/guide.*.html docs/downloads/ppt-to-html.zip

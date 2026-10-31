@@ -125,7 +125,7 @@ class Browser:
         self.profile = tempfile.mkdtemp(prefix='ppt-capture-')
         self.process = subprocess.Popen([executable, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--remote-debugging-port=0',
                                          f'--user-data-dir={self.profile}', f'--window-size={width},{height}', 'about:blank'],
-                                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                                        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, cwd=self.profile)  # browser logs stay out of the user's folder
         port_file = Path(self.profile) / 'DevToolsActivePort'
         for _ in range(100):
             if port_file.exists() and port_file.read_text().strip():
@@ -169,6 +169,7 @@ def main():
     parser.add_argument('--reduced', action='store_true', help='emulate reduced motion (every step fully revealed)')
     parser.add_argument('--wait', type=float, default=0.9, help='seconds to wait after each step for transitions')
     parser.add_argument('--pdf', type=Path, help='also print the deck to this PDF')
+    parser.add_argument('--stage-only', action='store_true', help='crop screenshots to the slide (no controls or margins)')
     parser.add_argument('--browser', help='path to Edge/Chrome/Chromium')
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding='utf-8')
@@ -187,6 +188,8 @@ def main():
                 break
             time.sleep(0.2)
         steps = browser.evaluate('__pptPlayer.steps()') or []
+        if args.stage_only:  # slide-only images: hide controls, chapter tabs and the review toolbar
+            browser.evaluate("document.querySelectorAll('[data-editor-ui], .controls, #chapter-nav').forEach(node => node.style.visibility = 'hidden')")
         if not steps:
             raise SystemExit('This file has no ppt-to-html player (built with an older skill?).')
         started = time.time()
@@ -199,7 +202,11 @@ def main():
                     browser.evaluate(f'location.hash = {json.dumps(target)}')
                     time.sleep(args.wait * attempt)
                     issues = browser.evaluate(OVERFLOW_JS) or []
-                    shot = browser.call('Page.captureScreenshot', format='png')['data']
+                    clip = {}
+                    if args.stage_only:
+                        box = browser.evaluate("(() => { const r = document.getElementById('stage').getBoundingClientRect(); return {x: r.x, y: r.y, width: r.width, height: r.height}; })()")
+                        clip = {'clip': {**box, 'scale': 1}}
+                    shot = browser.call('Page.captureScreenshot', format='png', **clip)['data']
                     break
                 except (TimeoutError, socket.timeout, RuntimeError) as error:
                     if attempt == 2:

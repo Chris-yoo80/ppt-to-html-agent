@@ -3,3 +3,6 @@
 *.xlsx binary
 *.jpg binary
 *.woff2 binary
+*.pptx binary
+*.pdf binary
+*.png binary

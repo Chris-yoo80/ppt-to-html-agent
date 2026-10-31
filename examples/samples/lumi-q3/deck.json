@@ -1,0 +1,133 @@
+{
+  "title": "루미 텀블러 3분기 온라인 마케팅 결과 보고",
+  "language": "ko",
+  "version": "가상 자료",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop",
+    "theme": "default"
+  },
+  "css": "body.theme-default{--k-accent:#1f5eff;--k-accent-dark:#1c232c;--k-soft:#dfe6f2;--k-ink:#1c232c;--k-muted:#5d6876;--k-line:#b5bec9;--k-bg:#e7ebf0;--k-warn:#ff6a3d;\n --chart-1:#1f5eff;--chart-2:#1c232c;--chart-3:#ff6a3d;--chart-4:#7f9cf5;--chart-5:#ff6a3d;--chart-6:#9aa5b3;--chart-ink:#1c232c;--chart-muted:#5d6876;--chart-grid:#cfd6df;\n font-family:\"Malgun Gothic\",\"Apple SD Gothic Neo\",\"Noto Sans KR\",sans-serif}\n.num,.claim-big,.vs-num,.seg-amt,.roas,.pair-nums,.targets span{font-family:\"Bahnschrift\",\"DIN Alternate\",\"Avenir Next Condensed\",\"Malgun Gothic\",sans-serif;font-variant-numeric:tabular-nums;letter-spacing:0}\n#stage.composed-scene{background:#e7ebf0}\n.composed-scene .deck-top{color:#5d6876}\n.composed-scene .deck-mark i{background:#ff6a3d;border-radius:2px}\n.composed-scene .eyebrow{color:#5d6876;font-weight:600;font-size:17px;letter-spacing:0}\n.composed-scene .scene-title{font-size:46px;font-weight:700;letter-spacing:-.025em;color:#1c232c;max-width:1240px}\n.composed-scene .scene-bottom{border-top:2px solid #1c232c;padding-top:12px}\n.composed-scene .message{font-size:19px;font-weight:600}\n.composed-scene .message-label{background:transparent;color:#ff6a3d;padding:0;margin-right:14px;font-size:17px}\n.reveal-spotlight [data-step].focus{box-shadow:none;outline:none}\n.reveal-spotlight [data-step].dim{opacity:.28;filter:grayscale(1)}\n.note{font-size:14px;color:#5d6876;margin:6px 0 0}\n.verdict{font-weight:700;color:#1c232c;border-left:4px solid #ff6a3d;padding-left:12px}\n.heat-ink{color:#ff6a3d}\n.open-hero{display:grid;grid-template-columns:330px 1fr;gap:56px;flex:1;min-height:0;align-items:stretch}\n.gauge{margin:0;display:flex;flex-direction:column;min-height:0}\n.gauge svg{flex:1;min-height:0;width:100%}\n.gauge figcaption{font-size:13px;color:#5d6876}\n.gauge-label{font-size:19px;font-weight:700;fill:#1c232c;font-family:\"Bahnschrift\",\"Malgun Gothic\",sans-serif}\n.gauge-label.heat{fill:#ff6a3d}\n.tumbler{overflow:visible}\n.claims{display:flex;flex-direction:column;justify-content:center;gap:26px;max-width:820px}\n.claim{border-left:3px solid #b5bec9;padding:2px 0 2px 22px}\n.claim.focus{border-left-color:#1f5eff}\n.claim-kicker{margin:0 0 4px;font-size:15px;font-weight:700;color:#1f5eff}\n.claim p{margin:0;font-size:20px;line-height:1.55;color:#1c232c}\n.claim-big{font-size:96px!important;font-weight:600;line-height:1!important;color:#1c232c!important;margin:2px 0 8px!important}\n.claim-big span{font-size:44px;color:#5d6876}\n.claim.ask p{font-weight:600}\n.claim button[data-goto]{margin-top:12px}\nbutton[data-goto]{border-color:#1c232c;color:#1c232c;border-radius:4px}\nbutton[data-goto]::before{content:none}\nbutton[data-goto]:hover{background:#1c232c;color:#fff}\n.stack-gap{display:flex;flex-direction:column;gap:30px;flex:1;min-height:0}\n.versus{display:grid;gap:14px}\n.vs-row{display:grid;grid-template-columns:70px 1fr 120px;align-items:center;gap:18px}\n.vs-name{font-size:19px;font-weight:700}\n.vs-track{height:38px;background:#d5dce6}\n.vs-bar{display:block;height:100%;background:#1c232c;position:relative}\n.vs-bar.cold{background:#1f5eff}\n.vs-over{position:absolute;right:0;top:0;height:100%;background:#ff6a3d}\n.vs-num{font-size:34px;font-weight:600;text-align:right}\n.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px}\n.two-col h3{font-size:23px;margin:0 0 10px}\n.two-col p{font-size:18px;line-height:1.6;margin:0 0 10px;max-width:640px}\n.big-line{font-size:40px!important;font-weight:600;margin:0 0 8px!important}\n.journey{display:flex;flex-direction:column;gap:12px;flex:1;justify-content:center}\n.journey-bar{display:flex;height:120px;gap:4px}\n.seg{position:relative;background:#1f5eff;display:flex;align-items:flex-end;padding:12px 14px}\n.seg:nth-child(2){background:#4d80ff}.seg:nth-child(3){background:#1c232c}.seg:nth-child(4){background:#ff6a3d}\n.seg-amt{color:#fff;font-size:30px;font-weight:600}\n.journey-roles{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:22px}\n.role{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:6px solid #1f5eff;min-width:0}\n.role-1{border-top-color:#4d80ff}.role-2{border-top-color:#1c232c}.role-3{border-top-color:#ff6a3d}\n.role em{font-style:normal;color:#5d6876;font-weight:600;margin-left:6px}\n.role b{font-size:28px}\n.role span{font-size:18px;font-weight:700;color:#1f5eff}\n.role small{font-size:15px;color:#5d6876;line-height:1.45}\n.pairs-wrap{display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}\n.legend{display:flex;gap:22px;align-items:center;font-size:15px}\n.legend i{display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-2px}\ni.spend{background:#9aa5b3}i.rev{background:#1f5eff}\n.pairs{display:grid;gap:34px;margin-top:18px}\n.pair{display:grid;grid-template-columns:150px 1fr 230px 170px;align-items:center;gap:20px}\n.pair-name{font-size:21px;font-weight:700}\n.bars{display:grid;gap:5px}\n.bars i{display:block;height:30px}\n.pair-nums{font-size:21px;color:#5d6876;text-align:right}\n.roas{font-size:30px;font-weight:600;text-align:right}\n.pair.best .rev{background:#ff6a3d}.pair.best .roas{color:#ff6a3d}\n.pair.low .roas{color:#5d6876}\n.aside-row{display:flex;gap:28px;align-items:center;margin-top:auto;font-size:17px;max-width:1300px}\n.aside-row p{margin:0}\n.funnel-scene{display:flex;flex-direction:column;gap:18px;flex:1;min-height:0}\n.stages{display:grid;grid-template-columns:repeat(5,1fr);margin:0;padding:0;list-style:none;counter-reset:s;border-top:2px solid #1c232c}\n.stages li{padding:12px 16px 0 0;display:flex;flex-direction:column}\n.stages b{font-size:34px;font-weight:600}\n.stages span{font-size:15px;color:#5d6876}\n.stages li.hot b{color:#ff6a3d}\n.funnel-split{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;flex:1;min-height:0}\n.funnel-chart{min-height:0}\n.next-task{align-self:center}\n.next-task h3{font-size:26px;margin:0 0 12px}\n.next-task p{font-size:18px;line-height:1.6;margin:0 0 12px}\n.trend-scene{display:grid;grid-template-columns:1fr 360px;gap:48px;flex:1;min-height:0}\n.trend-chart{min-height:0}\n.margin-notes{display:flex;flex-direction:column;justify-content:center;gap:28px}\n.margin-notes p{margin:0;font-size:18px;line-height:1.55;border-left:3px solid #ff6a3d;padding-left:16px}\n.margin-notes b{display:block;font-size:30px;font-weight:600;margin-bottom:4px}\n.decision{display:grid;grid-template-columns:420px 1fr;grid-template-rows:1fr auto;gap:28px 64px;flex:1;min-height:0}\n.targets{display:flex;flex-direction:column;justify-content:center;gap:18px;grid-row:span 2}\n.targets p{margin:0;font-size:30px;font-weight:600;color:#5d6876}\n.targets span{font-size:120px;line-height:.95;color:#1f5eff;margin-right:6px}\n.targets small{display:block;font-size:16px;font-weight:600;color:#1c232c;margin-top:2px}\n.actions{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;justify-content:center;gap:20px;counter-reset:a}\n.actions li{counter-increment:a;display:grid;grid-template-columns:44px 1fr;column-gap:16px;align-items:baseline}\n.actions li::before{content:counter(a);grid-row:span 2;font-family:\"Bahnschrift\",\"Malgun Gothic\",sans-serif;font-size:34px;color:#ff6a3d}\n.actions b{font-size:25px}\n.actions span{font-size:18px;color:#5d6876}\n.ask-line{margin:0;font-size:26px;font-weight:700;background:#1c232c;color:#fff;padding:18px 24px}\n.check{width:100%;border-collapse:collapse;font-size:18px}\n.check th{text-align:left;border-bottom:2px solid #1c232c;padding:10px 12px}\n.check td{border-bottom:1px solid #b5bec9;padding:12px}\n.check tr.flag td{color:#ff6a3d;font-weight:600}\n@media (prefers-reduced-motion: reduce){.tumbler .fill{transition:none}}",
+  "scenes": [
+    {
+      "id": "conclusion",
+      "chapter": "결론",
+      "eyebrow": "3분기 결과 보고",
+      "title": "목표를 넘겼습니다. 매출 4억 5,000만 원, 목표 대비 112.5%",
+      "steps": [
+        "결과",
+        "이유",
+        "요청"
+      ],
+      "html": "<div class='open-hero'>\n<figure class='gauge' data-step='1'><svg class='tumbler' viewBox='0 0 300 600' role='img' aria-label='목표 대비 112.5% 달성 게이지'>\n<defs><linearGradient id='steel' x1='0' x2='1'><stop offset='0' stop-color='#9aa5b3'/><stop offset='.45' stop-color='#eef2f6'/><stop offset='1' stop-color='#8d98a6'/></linearGradient>\n<linearGradient id='liquid' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#4d80ff'/><stop offset='1' stop-color='#1338b0'/></linearGradient>\n<clipPath id='cup'><path d='M62 92 L238 92 L224 548 Q150 562 76 548 Z'/></clipPath></defs>\n<rect x='48' y='40' width='204' height='40' rx='12' fill='#1c232c'/>\n<rect x='70' y='28' width='88' height='18' rx='6' fill='#1c232c'/>\n<path d='M52 84 L248 84 L232 556 Q150 574 68 556 Z' fill='url(#steel)'/>\n<g clip-path='url(#cup)'><rect class='fill' x='40' y='137.6' width='220' height='430.4' fill='url(#liquid)'/>\n<rect x='40' y='137.6' width='220' height='45.6' fill='#ff6a3d' opacity='.92'/></g>\n<line x1='34' y1='183.2' x2='266' y2='183.2' stroke='#1c232c' stroke-width='3' stroke-dasharray='8 6'/>\n<text x='270' y='189.2' class='gauge-label'>목표 4억</text>\n<text x='270' y='143.6' class='gauge-label heat'>실적 4.5억</text>\n</svg><figcaption>텀블러 눈금은 목표를 100%로 놓은 실제 비율입니다.</figcaption></figure>\n<div class='claims'>\n<section class='claim' data-step='1'><p class='claim-kicker'>결과</p><p class='claim-big num'>112.5<span>%</span></p><p>목표 4억 원에 매출 4억 5,000만 원. ROAS도 목표 350%를 넘어 375%였습니다.</p></section>\n<section class='claim' data-step='2'><p class='claim-kicker'>이유</p><p>네 채널에 역할을 나눠 1억 2,000만 원을 썼고, 캠핑 시즌이 겹친 8–9월에 매출이 계속 올랐습니다. 효율은 이메일이 600%로 가장 높고 SNS가 300%로 가장 낮았습니다.</p></section>\n<section class='claim ask' data-step='3'><p class='claim-kicker'>요청</p><p>4분기에는 효율이 검증된 이메일·재구매에 500만 원을 더 싣고, SNS는 소재부터 바꾸겠습니다. 예산 재배분 승인을 부탁드립니다.</p><button data-goto='plan'>4분기 계획 보기</button></section>\n</div></div>",
+      "message": "목표는 넘겼고, 다음 분기의 핵심은 채널 간 효율 차이입니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 1·3장"
+    },
+    {
+      "id": "goal-market",
+      "chapter": "현황",
+      "eyebrow": "목표와 시장",
+      "title": "수요가 커지는 동안 저가 수입품도 늘었습니다",
+      "steps": [
+        "목표 대비 실적",
+        "시장",
+        "고객"
+      ],
+      "html": "<div class='stack-gap'>\n<div class='versus' data-step='1'>\n<div class='vs-row'><span class='vs-name'>목표</span><div class='vs-track'><i class='vs-bar cold' style='width:88.89%'></i></div><span class='vs-num num'>40,000</span></div>\n<div class='vs-row'><span class='vs-name'>실적</span><div class='vs-track'><i class='vs-bar' style='width:100%'><i class='vs-over' style='width:11.11%'></i></i></div><span class='vs-num num heat-ink'>45,000</span></div>\n<p class='note'>분기 매출, 만 원. 주황 구간이 목표를 넘은 5,000만 원입니다. 캠페인 기간은 2026년 7월 1일부터 9월 30일까지입니다.</p></div>\n<div class='two-col'>\n<section data-step='2'><h3>시장</h3><p>재사용 텀블러 온라인 수요가 캠핑과 출근 수요를 타고 늘고 있습니다. 같은 시기에 값싼 수입 제품도 많아졌습니다.</p><p class='verdict'>그래서 가격이 아니라 디자인과 보온 성능으로 경쟁합니다.</p></section>\n<section data-step='3'><h3>고객</h3><p class='big-line num'>25–34세 직장인</p><p>환경을 생각하고 캠핑과 사무실 데스크 꾸미기에 관심이 많습니다. 보온 12시간, 로고 없는 미니멀 디자인을 보고 삽니다. 인스타그램, 검색, 구독 이메일에서 만납니다.</p><p class='note'>가상 패널 설문 기준</p></section>\n</div></div>",
+      "message": "가격 경쟁을 피하고 디자인과 보온 성능을 내세웁니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 4·5장"
+    },
+    {
+      "id": "channel-plan",
+      "chapter": "채널",
+      "eyebrow": "채널 전략",
+      "title": "고객 여정의 단계마다 채널 하나씩, 1억 2,000만 원",
+      "steps": [
+        "예산 비율",
+        "채널 역할"
+      ],
+      "html": "<div class='journey'>\n<div class='journey-bar' data-step='1'><div class='seg' style='width:37.5%'><span class='seg-amt num'>4,500</span></div><div class='seg' style='width:20.83%'><span class='seg-amt num'>2,500</span></div><div class='seg' style='width:33.33%'><span class='seg-amt num'>4,000</span></div><div class='seg' style='width:8.333%'><span class='seg-amt num'>1,000</span></div></div>\n<p class='note' data-step='1'>막대 너비는 광고비 비율입니다(합계 12,000만 원). 왼쪽부터 고객이 거치는 순서입니다.</p>\n<div class='journey-roles' data-step='2'><div class='role role-0'><b>인지</b><span>SNS 광고 <em class='num'>37.5%</em></span><small>신제품 인지도 확산</small></div><div class='role role-1'><b>신뢰</b><span>인플루언서 <em class='num'>20.8%</em></span><small>캠핑·데스크 콘텐츠로 신뢰 형성</small></div><div class='role role-2'><b>구매</b><span>검색광고 <em class='num'>33.3%</em></span><small>구매 의도가 높은 고객 확보</small></div><div class='role role-3'><b>재구매</b><span>이메일 <em class='num'>8.3%</em></span><small>기존 고객 재구매 유도</small></div></div>\n</div>",
+      "message": "인지는 SNS, 신뢰는 인플루언서, 구매는 검색, 재구매는 이메일이 맡았습니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 6장"
+    },
+    {
+      "id": "channel-results",
+      "chapter": "채널",
+      "eyebrow": "채널 성과",
+      "title": "가장 적게 쓴 이메일이 가장 많이 돌려받았습니다",
+      "steps": [
+        "가장 효율적인 채널",
+        "나머지 채널"
+      ],
+      "html": "<div class='pairs-wrap'>\n<div class='legend'><span><i class='spend'></i>광고비</span><span><i class='rev'></i>매출</span><span class='note'>만 원, 같은 눈금. ROAS는 매출을 광고비로 나눈 값입니다.</span></div>\n<div class='pairs'><div class='pair best' data-step='1'>\n<span class='pair-name'>이메일</span>\n<div class='bars'><i class='spend' style='width:6.25%'></i><i class='rev' style='width:37.5%'></i></div>\n<span class='pair-nums num'>1,000 → 6,000</span><span class='roas num'>ROAS 600%</span></div><div class='pair' data-step='2'>\n<span class='pair-name'>검색광고</span>\n<div class='bars'><i class='spend' style='width:25%'></i><i class='rev' style='width:100%'></i></div>\n<span class='pair-nums num'>4,000 → 16,000</span><span class='roas num'>ROAS 400%</span></div><div class='pair' data-step='2'>\n<span class='pair-name'>인플루언서</span>\n<div class='bars'><i class='spend' style='width:15.62%'></i><i class='rev' style='width:59.38%'></i></div>\n<span class='pair-nums num'>2,500 → 9,500</span><span class='roas num'>ROAS 380%</span></div><div class='pair low' data-step='2'>\n<span class='pair-name'>SNS 광고</span>\n<div class='bars'><i class='spend' style='width:28.12%'></i><i class='rev' style='width:84.38%'></i></div>\n<span class='pair-nums num'>4,500 → 13,500</span><span class='roas num'>ROAS 300%</span></div></div>\n<div class='aside-row' data-step='2'><p>전체 ROAS는 375%입니다(매출 45,000 ÷ 광고비 12,000). 이메일은 기존 고객이 대상이라 효율이 높게 나오는 점을 감안해야 합니다.</p><button data-goto='b1-check'>수치 검수 근거</button></div>\n</div>",
+      "message": "SNS는 300%로 가장 낮아 소재부터 다시 봐야 합니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 7장"
+    },
+    {
+      "id": "funnel",
+      "chapter": "고객 여정",
+      "eyebrow": "구매 퍼널",
+      "title": "노출 320만 회가 구매 4,800건이 되기까지",
+      "steps": [
+        "단계별 숫자",
+        "좁아지는 구간",
+        "다음 과제"
+      ],
+      "html": "<div class='funnel-scene'>\n<ol class='stages' data-step='1'>\n<li><b class='num'>3,200,000</b><span>노출</span></li><li><b class='num'>96,000</b><span>클릭 3.0%</span></li><li><b class='num'>14,400</b><span>장바구니 15.0%</span></li><li class='hot'><b class='num'>4,800</b><span>구매 33.3%</span></li><li><b class='num'>960</b><span>재구매 20.0%</span></li></ol>\n<div class='funnel-split'>\n<div class='funnel-chart' data-step='2' data-chart='{\"type\": \"funnel\", \"data\": [{\"label\": \"클릭\", \"value\": 96000, \"display\": \"96,000\"}, {\"label\": \"장바구니\", \"value\": 14400, \"display\": \"14,400\"}, {\"label\": \"구매\", \"value\": 4800, \"display\": \"4,800\"}, {\"label\": \"재구매\", \"value\": 960, \"display\": \"960\"}], \"note\": \"클릭 이후 구간, 실제 비율. 클릭 대비 구매는 5.0%입니다.\"}'></div>\n<section class='next-task' data-step='3'><h3>다음 과제는 재구매</h3><p>장바구니까지는 잘 옵니다. 구매한 다섯 명 중 한 명만 다시 사는 지금의 20%를 높이는 것이 4분기의 일입니다.</p><p class='verdict'>이메일 예산 확대가 여기에 연결됩니다.</p></section>\n</div></div>",
+      "message": "장바구니까지는 잘 오고, 재구매를 키우는 것이 다음 과제입니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 8장"
+    },
+    {
+      "id": "monthly",
+      "chapter": "추이",
+      "eyebrow": "월별 매출",
+      "title": "석 달 연속 올라 9월에 1억 8,000만 원",
+      "steps": [
+        "추이",
+        "오른 이유"
+      ],
+      "html": "<div class='trend-scene'>\n<div class='trend-chart' data-step='1' data-chart='{\"type\": \"line\", \"data\": [{\"label\": \"7월\", \"value\": 12000, \"display\": \"12,000\"}, {\"label\": \"8월\", \"value\": 15000, \"display\": \"15,000\"}, {\"label\": \"9월\", \"value\": 18000, \"display\": \"18,000\"}], \"note\": \"만 원. 세 달 합계 45,000\"}'></div>\n<aside class='margin-notes' data-step='2'>\n<p><b class='num'>8월 +25.0%</b>캠핑 시즌이 시작되고 인플루언서 콘텐츠가 공개됐습니다.</p>\n<p><b class='num'>9월 +20.0%</b>시즌이 이어지며 상승세가 유지됐습니다.</p></aside>\n</div>",
+      "message": "캠핑 시즌과 인플루언서 콘텐츠가 겹친 8–9월에 꾸준히 올랐습니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 9장"
+    },
+    {
+      "id": "plan",
+      "chapter": "4분기",
+      "eyebrow": "4분기 계획과 요청",
+      "title": "예산 재배분을 승인해 주세요",
+      "steps": [
+        "목표",
+        "할 일",
+        "요청"
+      ],
+      "html": "<div class='decision'>\n<div class='targets' data-step='1'><p><span class='num'>5</span>억 원<small>4분기 매출 목표</small></p><p><span class='num'>380</span>%<small>ROAS 목표</small></p></div>\n<ol class='actions' data-step='2'>\n<li><b>이메일·재구매에 더 싣기</b><span>예산 1,000만 원에서 1,500만 원으로</span></li>\n<li><b>SNS 소재 바꾸기</b><span>캠핑과 데스크에서 쓰는 장면 중심으로</span></li>\n<li><b>연말 인플루언서 협업 2건</b><span>선물 시즌에 맞춰</span></li></ol>\n<p class='ask-line' data-step='3'>다음 회의에서 이 재배분안의 승인을 요청드립니다.</p>\n</div>",
+      "message": "이메일 확대와 SNS 소재 교체를 함께 승인받아야 4분기 목표에 닿습니다.",
+      "message_label": "시사점",
+      "source": "가상 자료, 원본 10장"
+    },
+    {
+      "id": "b1-check",
+      "chapter": "B1",
+      "backup": true,
+      "eyebrow": "참고: 수치 검수",
+      "title": "모든 수치는 원본 표에서 다시 계산했습니다",
+      "steps": [
+        "검수 항목"
+      ],
+      "html": "<table class='check'><thead><tr><th>항목</th><th>결과</th><th>근거</th></tr></thead><tbody>\n<tr><td>채널 매출 합계</td><td>통과</td><td>16,000 + 13,500 + 9,500 + 6,000 = 45,000, 원본 7장 합계와 일치</td></tr>\n<tr><td>전체 ROAS</td><td>통과</td><td>45,000 ÷ 12,000 = 375%</td></tr>\n<tr><td>퍼널 전환율</td><td>통과</td><td>3.0%, 15.0%, 33.3%, 5.0%, 20.0% 재계산 일치</td></tr>\n<tr><td>평균 주문 금액</td><td>통과</td><td>4억 5,000만 원 ÷ 4,800건 = 93,750원</td></tr>\n<tr><td>월별 합계</td><td>통과</td><td>12,000 + 15,000 + 18,000 = 45,000</td></tr>\n<tr class='flag'><td>원본 수정 이력</td><td>확인</td><td>초안의 인플루언서 매출 10,000은 합계와 맞지 않아 9,500으로 고쳤습니다</td></tr></tbody></table>",
+      "message": "그래프의 길이와 높이도 모두 같은 수치에서 계산했습니다.",
+      "message_label": "참고",
+      "source": "수치 검수 기록"
+    }
+  ]
+}

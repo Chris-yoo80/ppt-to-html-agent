@@ -1,0 +1,107 @@
+{
+  "title": "부품센터 자동화 검토 · 구성형 장면 예제",
+  "language": "ko",
+  "version": "v0.1",
+  "settings": {
+    "width": 1600,
+    "height": 900,
+    "font": "system",
+    "motion": "key",
+    "playback": "both",
+    "end": "stop",
+    "theme": "consulting"
+  },
+  "scenes": [
+    {
+      "id": "summary",
+      "chapter": "Summary",
+      "eyebrow": "EXECUTIVE SUMMARY · 가상 예제",
+      "title": "부품센터 자동화는 **투자 32.4억, 회수 3.6년**으로 추진 가능",
+      "lead": "처리량 1.8배 · 피킹 시간 −41.7% · 연 절감 9.0억 · 2027년 4월 가동 목표",
+      "steps": [
+        "투자 규모",
+        "기대 효과",
+        "투자 구성"
+      ],
+      "html": "<div class='k-grid cols-3'>\n<section class='k-hero' data-step='1'><span class='k-kpi-label'>총투자</span><span class='k-kpi-value'>32.4<span class='k-kpi-unit'>억 원</span></span>\n<p>설비 18.0 · 시스템 8.2 · 인프라 3.6 · 예비비 2.6</p><div class='k-chips'><span class='k-chip'>회수 3.6년</span><span class='k-chip'>연 절감 9.0억</span></div></section>\n<section class='k-panel' data-step='2'><h3 class='k-panel-head'><span class='k-icon'>↗</span>기대 효과<small>가상 산정</small></h3>\n<div class='k-kpis'><div class='k-kpi'><span class='k-kpi-label'>처리량</span><span class='k-kpi-value'>1.8<span class='k-kpi-unit'>배</span></span></div>\n<div class='k-kpi'><span class='k-kpi-label'>주문당 피킹</span><span class='k-kpi-value'>7.0<span class='k-kpi-unit'>분</span></span><span class='k-delta up'>12.0분 대비 −41.7%</span></div></div>\n<ul class='k-list'><li>입고·보관·피킹을 한 동선으로 통합</li><li>재고 위치 정확도를 시스템으로 관리</li></ul></section>\n<section class='k-panel' data-step='3'><h3 class='k-panel-head'><span class='k-icon'>%</span>투자 구성</h3>\n<div class='k-fill' data-chart='{\"type\": \"donut\", \"center\": \"32.4억\", \"data\": [{\"label\": \"설비\", \"value\": 18.0, \"display\": \"18.0억\"}, {\"label\": \"시스템\", \"value\": 8.2, \"display\": \"8.2억\"}, {\"label\": \"인프라\", \"value\": 3.6, \"display\": \"3.6억\"}, {\"label\": \"예비비\", \"value\": 2.6, \"display\": \"2.6억\"}]}'></div></section>\n</div>",
+      "message": "설비·시스템을 한 번에 구축하고 사전 검토로 대수와 배치를 확정합니다.",
+      "message_label": "Key Message",
+      "source": "가상 예제 데이터"
+    },
+    {
+      "id": "background",
+      "chapter": "1 현황",
+      "eyebrow": "1 · 현황",
+      "title": "물동량 증가로 **기존 창고 Capa가 한계**에 도달",
+      "lead": "물동량 지수 2024=100 → 2027 182 · 창고 이용률 112% · 검토 3단계 완료",
+      "steps": [
+        "물동량 추이",
+        "창고 Capa",
+        "검토 경과"
+      ],
+      "html": "<div class='k-grid cols-3'>\n<section class='k-panel' data-step='1'><h3 class='k-panel-head'><span class='k-icon'>↗</span>물동량 지수</h3>\n<div class='k-fill' data-chart='{\"type\": \"line\", \"data\": [{\"label\": \"2024\", \"value\": 100}, {\"label\": \"2025\", \"value\": 128}, {\"label\": \"2026\", \"value\": 156}, {\"label\": \"2027\", \"value\": 182}]}'></div>\n<p class='k-note'>2024=100 기준 · 2026·2027은 가상 전망치</p></section>\n<section class='k-panel' data-step='2'><h3 class='k-panel-head'><span class='k-icon'>▦</span>창고 Capa</h3>\n<table class='k-table'><thead><tr><th>구역</th><th class='num'>면적(평)</th><th class='num'>Capa(P/T)</th></tr></thead><tbody>\n<tr><td>A동 보관</td><td class='num'>320</td><td class='num'>1,150</td></tr><tr><td>B동 출고</td><td class='num'>210</td><td class='num'>540</td></tr>\n<tr class='hl'><td>신규 자동화 구역</td><td class='num'>400</td><td class='num'>1,620</td></tr>\n<tr class='total'><td>합계</td><td class='num'>930</td><td class='num'>3,310</td></tr></tbody></table>\n<div class='k-row'><span class='k-kpi-label'>현재 이용률</span><div class='k-progress k-fill'><i style='--v:100%'></i></div><b>112%</b></div></section>\n<section class='k-panel' data-step='3'><h3 class='k-panel-head'><span class='k-icon'>✓</span>검토 경과</h3>\n<div class='k-timeline'><div class='k-tl-item'><span class='k-tl-date'>5월</span><div class='k-tl-body'><b>1차 내부 검토</b><br><span class='k-note'>보관 방식·설비 후보 선정</span></div></div>\n<div class='k-tl-item'><span class='k-tl-date'>7월</span><div class='k-tl-body'><b>개략 견적</b><br><span class='k-note'>설비·시스템 범위 산정</span></div></div>\n<div class='k-tl-item now'><span class='k-tl-date'>현재</span><div class='k-tl-body'><b>추진 방향 협의</b><br><span class='k-note'>사전 검토 범위 확정</span></div></div>\n<div class='k-tl-item next'><span class='k-tl-date'>다음</span><div class='k-tl-body'><b>업체 선정</b></div></div></div></section>\n</div>",
+      "message": "증설 없이 처리량을 늘리려면 보관 밀도와 피킹 동선을 함께 바꿔야 합니다.",
+      "message_label": "Key Message",
+      "source": "가상 예제 데이터"
+    },
+    {
+      "id": "investment",
+      "chapter": "2 투자",
+      "eyebrow": "2 · 투자 규모",
+      "title": "총투자 32.4억 — **기존 견적 대비 +6.4억**은 설비 대수 증가가 주요인",
+      "lead": "기존 견적 26.0억 + 설비 4.2 + 시스템 연계 1.6 + 인프라 1.2 − 예비비 조정 0.6 = 32.4억",
+      "steps": [
+        "증감 구조",
+        "상세 내역"
+      ],
+      "html": "<div class='k-grid cols-2'>\n<section class='k-panel' data-step='1'><h3 class='k-panel-head'><span class='k-icon'>≋</span>기존 견적 → 최종 계획 (억 원)</h3>\n<div class='k-fill' data-chart='{\"type\": \"waterfall\", \"data\": [{\"label\": \"기존 견적\", \"value\": 26.0, \"kind\": \"total\", \"display\": \"26.0\"}, {\"label\": \"설비 대수\", \"value\": 4.2}, {\"label\": \"시스템 연계\", \"value\": 1.6}, {\"label\": \"인프라\", \"value\": 1.2}, {\"label\": \"예비비 조정\", \"value\": -0.6}, {\"label\": \"최종 계획\", \"value\": 32.4, \"kind\": \"total\", \"display\": \"32.4\"}]}'></div></section>\n<section class='k-panel' data-step='2'><h3 class='k-panel-head'><span class='k-icon'>▦</span>항목별 금액<small>억 원</small></h3>\n<table class='k-table'><thead><tr><th>항목</th><th>내용</th><th class='num'>금액</th></tr></thead><tbody>\n<tr><td>설비</td><td>수직 보관기 6대 · 이송 로봇 4대 · 이동랙</td><td class='num'>18.0</td></tr>\n<tr><td>시스템</td><td>창고관리 시스템 · 설비 연계 · ERP 인터페이스</td><td class='num'>8.2</td></tr>\n<tr><td>인프라</td><td>전기·통신·바닥 보강</td><td class='num'>3.6</td></tr>\n<tr><td>예비비</td><td>설비·인프라의 10%</td><td class='num'>2.6</td></tr>\n<tr class='total'><td>합계</td><td></td><td class='num'>32.4</td></tr></tbody></table>\n<div class='k-row'><button data-goto='b1-cost'>단가·수량 상세 (B1)</button></div></section>\n</div>",
+      "message": "견적 기준은 동일하게 적용했고, 증가분은 설비 대수에 연동됩니다.",
+      "message_label": "Key Message",
+      "source": "가상 예제 데이터"
+    },
+    {
+      "id": "operation",
+      "chapter": "3 운영",
+      "eyebrow": "3 · 운영 변화",
+      "title": "입고부터 출고까지 **한 동선으로** 통합",
+      "lead": "현재 5개 구역 분산 → 자동화 구역 중심 3단계 흐름 · 피킹 12.0분 → 7.0분",
+      "steps": [
+        "프로세스",
+        "현재 문제",
+        "개선 후"
+      ],
+      "html": "<div class='k-stack k-fill'>\n<div class='k-flow' data-step='1'><div class='k-flow-step'><b>입고</b><small>검수·라벨</small></div><div class='k-flow-step active'><b>자동 보관</b><small>수직 보관기</small></div><div class='k-flow-step active'><b>피킹</b><small>이송 로봇</small></div><div class='k-flow-step'><b>포장</b><small>검증</small></div><div class='k-flow-step'><b>출고</b><small>배송 연계</small></div></div>\n<div class='k-grid cols-2'>\n<section class='k-panel' data-step='2'><h3 class='k-panel-head'><span class='k-icon'>!</span>현재 문제</h3>\n<ul class='k-list'><li>보관 구역이 5곳으로 나뉘어 이동 거리가 김</li><li>위치 정보가 수기라 재고 찾기에 시간이 걸림</li><li>성수기 피킹 지연이 출고 지연으로 이어짐</li></ul></section>\n<section class='k-panel' data-step='3'><h3 class='k-panel-head'><span class='k-icon'>↘</span>주문당 피킹 시간 (분)</h3>\n<div class='k-fill' data-chart='{\"type\": \"bar\", \"data\": [{\"label\": \"현재\", \"value\": 12.0, \"display\": \"12.0분\"}, {\"label\": \"개선 후\", \"value\": 7.0, \"display\": \"7.0분\"}], \"note\": \"−41.7% · 가상 시뮬레이션 기준\"}'></div></section>\n</div></div>",
+      "message": "동선을 줄이는 것이 자동화 효과의 대부분을 만듭니다.",
+      "message_label": "Key Message",
+      "source": "가상 예제 데이터"
+    },
+    {
+      "id": "roadmap",
+      "chapter": "4 일정",
+      "eyebrow": "4 · 추진 일정",
+      "title": "사전 검토 2개월 → 구축 8개월 → **2027년 4월 가동**",
+      "steps": [
+        "전체 일정",
+        "다음 단계"
+      ],
+      "html": "<div class='k-grid cols-2-1'>\n<section class='k-panel' data-step='1'><h3 class='k-panel-head'><span class='k-icon'>▤</span>월별 일정 (2026.8 – 2027.5)</h3>\n<div class='k-gantt' style='--cols:10'>\n<span></span><span class='k-gantt-h'>8</span><span class='k-gantt-h'>9</span><span class='k-gantt-h'>10</span><span class='k-gantt-h'>11</span><span class='k-gantt-h'>12</span><span class='k-gantt-h'>1</span><span class='k-gantt-h'>2</span><span class='k-gantt-h'>3</span><span class='k-gantt-h'>4</span><span class='k-gantt-h'>5</span>\n<span class='k-gantt-label'>사전 검토</span><span class='k-gantt-bar' style='grid-column:2/4'>대수·배치 확정</span>\n<span class='k-gantt-label'>시스템 구축</span><span class='k-gantt-bar alt' style='grid-column:4/9'>설계 · 개발 · 연계 테스트</span>\n<span class='k-gantt-label'>설비 제작·설치</span><span class='k-gantt-bar' style='grid-column:5/10'>제작 · 설치 · 시운전</span>\n<span class='k-gantt-label'>안정화</span><span class='k-gantt-bar soft' style='grid-column:10/12'>운영 안정화</span>\n<span class='k-gantt-label'>주요 일정</span><span class='k-gantt-bar milestone' style='grid-column:10/12'>4월 가동</span>\n</div></section>\n<section class='k-panel soft' data-step='2'><h3 class='k-panel-head'><span class='k-icon'>→</span>다음 단계</h3>\n<ul class='k-list'><li>사전 검토 범위 승인</li><li>업체 제안 요청 (9월)</li><li>예산 확정 (10월)</li></ul></section>\n</div>",
+      "message": "사전 검토에서 대수와 배치를 확정해야 구축 일정이 흔들리지 않습니다.",
+      "message_label": "Key Message",
+      "source": "가상 예제 데이터"
+    },
+    {
+      "id": "b1-cost",
+      "chapter": "B1",
+      "backup": true,
+      "eyebrow": "Backup · 단가와 수량",
+      "title": "설비 단가·수량 상세",
+      "steps": [
+        "상세 표"
+      ],
+      "html": "<section class='k-panel k-fill'><table class='k-table'><thead><tr><th>설비</th><th class='num'>수량</th><th class='num'>단가(억)</th><th class='num'>금액(억)</th><th>비고</th></tr></thead><tbody>\n<tr><td>수직 보관기</td><td class='num'>6</td><td class='num'>1.80</td><td class='num'>10.8</td><td>2층 설치</td></tr>\n<tr><td>이송 로봇</td><td class='num'>4</td><td class='num'>0.90</td><td class='num'>3.6</td><td>충전 스테이션 포함</td></tr>\n<tr><td>이동랙</td><td class='num'>1식</td><td class='num'>3.60</td><td class='num'>3.6</td><td>A동 일부 교체</td></tr>\n<tr class='total'><td>설비 합계</td><td></td><td></td><td class='num'>18.0</td><td></td></tr></tbody></table>\n<p class='k-note'>가상 예제 · 실제 견적 아님</p></section>",
+      "message": "설비 금액 18.0억은 수량 × 단가 합계와 일치합니다.",
+      "message_label": "Backup",
+      "source": "가상 예제 데이터"
+    }
+  ]
+}
