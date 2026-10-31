@@ -20,7 +20,7 @@ class Node {
   click(){if(!this.disabled)this.listeners.click?.({target:this});}
   focus(){}
 }
-function launch(deck,{reduced=false,editor=false}={}){
+function launch(deck,{reduced=false,editor=false,hash=''}={}){
   const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close','open-outline','outline-close','bookmark-current','open-bookmarks','bookmarks-close','return-bookmark','return-origin'];
   const dialogs=['outline-dialog','bookmarks-dialog'];
   const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement','outline-list','bookmarks-list','chapter-nav',...dialogs,...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':dialogs.includes(id)?'dialog':'div')]));
@@ -31,7 +31,8 @@ function launch(deck,{reduced=false,editor=false}={}){
   const media={matches:reduced,addEventListener(type,fn){this[type]=fn;}};
   // Several scripts may listen to the same event (player + editor); dispatch to all of them.
   const lists={};const listen=(type,fn)=>{(lists[type]||(lists[type]=[])).push(fn);events[type]=(...args)=>lists[type].forEach(f=>f(...args));};
-  const ctx={document:doc,window:{print(){}},matchMedia:()=>media,addEventListener:listen,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
+  const location={hash},history={replaceState(_,__,value){location.hash=value;}};
+  const ctx={document:doc,window:{print(){}},location,history,matchMedia:()=>media,addEventListener:listen,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
   if(editor)vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/editor.js'),'utf8'),ctx);
@@ -280,4 +281,21 @@ test('review regressions: printing while editing stays clean; unit changes count
   const lead=collect(p.ids.stage).find(n=>n.className==='lead summary');
   lead.textContent=lead.textContent.replace('연 절감 9.0억','연 절감 9.0조');lead.listeners.input();
   assert.equal(p.ctx.__pptEditor.exportReview().edits[0].numeric,true);
+});
+
+test('deep links open a step, follow navigation and answer hash changes',()=>{
+  const deck=composedFixture(),p=launch(deck,{hash:'#scene=investment&step=2'});
+  assert.equal(p.ids.position.textContent,'8 / 13 단계');assert.equal(p.ctx.location.hash,'#scene=investment&step=2');
+  p.ids.next.click();assert.equal(p.ctx.location.hash,'#scene=operation&step=1');
+  p.ctx.location.hash='#scene=b1-cost&step=1';p.events.hashchange();assert.match(p.ids.position.textContent,/^자료 · /);
+  const bad=launch(composedFixture(),{hash:'#scene=nope&step=9'});assert.equal(bad.ids.position.textContent,'1 / 13 단계');
+  assert.equal(Array.from(p.ctx.__pptPlayer.steps()).length,14);
+});
+test('composed charts follow their step mapping and bars share one colour with optional highlights',()=>{
+  const deck=composedFixture();
+  deck.scenes[0].body=[['div',{'data-step':'1','data-chart':JSON.stringify({type:'bar',highlight:['B'],steps:[1,2,3],data:[{label:'A',value:1},{label:'B',value:2},{label:'C',value:3}]})},[]]];
+  const p=launch(deck),bars=()=>chartMarks(p.ids.stage,'chart-bar');
+  assert.deepEqual(bars().map(isOn),[true,false,false]);p.ids.next.click();assert.deepEqual(bars().map(isOn),[true,true,false]);
+  assert.ok(bars().every(n=>n.attributes.class.includes('series-0')));
+  assert.deepEqual(bars().map(n=>n.attributes.class.includes('is-highlight')),[false,true,false]);
 });

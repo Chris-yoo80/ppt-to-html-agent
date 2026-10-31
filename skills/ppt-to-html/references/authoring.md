@@ -8,7 +8,7 @@ Use these helpers when a portable starter presentation meets the brief. Resolve 
 python <skill-directory>/scripts/extract_pptx.py <input.pptx> --output <work/source.json>
 ```
 
-The extractor follows presentation relationship order, not slide filenames. It reads shape text, preserves paragraph-internal line breaks, reads tables and speaker notes, flags hidden slides and inventories linked media. It does not copy media into the output. SmartArt relationships are listed with a warning; their text is not extracted. Treat notes as private input and do not automatically put hidden slides into the audience's presentation. Confirm their intended use if relevant. It cannot render slides, perform OCR, interpret chart workbooks, read legacy PPT, or open encrypted/DRM sources. Obtain an owner-exported accessible source when required; do not claim that raw extraction preserves visual hierarchy.
+The extractor follows presentation relationship order, not slide filenames. It reads shape text, preserves paragraph-internal line breaks, reads tables and speaker notes, flags hidden slides and inventories linked media. It does not copy media into the output. SmartArt relationships are listed with a warning; their text is not extracted. Treat notes as private input: use them as evidence (definitions, qualifications, intended message) and cite them as "speaker notes, slide N", but do not copy note text onto audience-facing scenes unless the user agrees. Do not automatically put hidden slides into the audience's presentation. Confirm their intended use if relevant. It cannot render slides, perform OCR, interpret chart workbooks, read legacy PPT, or open encrypted/DRM sources. Obtain an owner-exported accessible source when required; do not claim that raw extraction preserves visual hierarchy.
 
 ## Author scene JSON
 
@@ -37,7 +37,7 @@ On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text thro
 ```
 
 - `font`: `system` (system Korean sans-serif), `serif` (system serif), or `story` (bundled Story Sans review subset derived from Pretendard). The subset covers the current public example; other characters fall back to system fonts. Use a suitably licensed complete font for arbitrary documents needing consistent typography. Custom font packaging requires adapting the source and checking redistribution permission; the dropdown request alone does not install a font.
-- `motion`: `none`, `key` (diagram motion), `rich` (also animate cards). Scene motion is `none`, `points`, `lines`, or `planes`. Other custom motion requires additional implementation.
+- `motion`: `none`, `key` (diagram motion), `rich` (also animate cards). These settings drive card scenes. Composed scenes animate through classes the player sets on every `[data-step]` element — `on` (revealed), `focus` (current step), `dim` (later, spotlight) and `pending` (later, build) — so write finite transitions or `@keyframes` on those classes in the deck `css`, with a `prefers-reduced-motion` fallback. Scene motion is `none`, `points`, `lines`, or `planes`. Other custom motion requires additional implementation.
 - `playback`: `manual`, `both`, `auto`. All support visible previous/next controls. `end` is `stop` or explicitly requested `loop`.
 - The bundled player builds its Contents panel from scene titles and item labels. Each item is a directly addressable reveal step. Question bookmarks store the exact flat step index in memory for the current page session; opening a sandboxed supporting resource does not rebuild the player or clear those marks.
 - Each scene contains 1–4 concise items. Each item is one reveal step. Split dense material into scenes without omitting source qualifications. Title and message are required. Optional textual fields must be plain strings, not HTML.
@@ -69,6 +69,8 @@ Add an optional `chart` to a scene. It replaces the motion diagram on the right;
 
 - `value` is the source number (finite, ≥ 0). `display` is the exact label to show; copy the source's formatting. Without `display`, the player formats `value` and appends `unit`.
 - Charts are drawn to scale from zero. Do not rescale, truncate axes or invent data to make a chart look better. If a value is too small to see in a funnel, the player keeps a minimum width and states it under the chart.
+- Bars and funnel stages share one colour (one measure, one hue). Mark the data the audience should look at with `"highlight": [index or label, …]`; do not colour every bar differently. Donut slices and waterfall totals/increases/decreases keep distinct colours because they encode categories or direction.
+- In a composed scene, link a chart to the steps with `"steps": [1, 1, 2, 3]` (one step number per data point): data appear and are emphasised on their step and stay visible afterwards.
 - When `data` has the same length as `items`, each reveal step highlights the matching datum. Otherwise the whole chart appears when the scene opens.
 - Charts are content, not motion: they stay fully visible with motion off, reduced motion and print. Entrance animation is finite and ends in the same static chart.
 - The palette uses the CSS variables `--chart-1` … `--chart-6`, so a design reference can restyle charts without changing the data.
@@ -169,10 +171,20 @@ python <skill-directory>/scripts/apply_edits.py work/deck.json deck-edits.json -
 
 ## Build and check
 
+Every step has a link: `presentation.html#scene=<scene-id>&step=<n>` opens that step directly (also useful for sharing "look at this" links).
+
 ```text
 python <skill-directory>/scripts/build_deck.py <work/deck.json> --output <output/presentation.html>
 ```
 
 The builder validates data and embeds CSS, player JavaScript and JSON into one UTF-8 HTML file. It treats content as text rather than executable HTML and does not import source images or notes automatically. The delivered source and media still require appropriate review for the intended audience.
 
-Check syntax and model validity first, then open the HTML through an authorized browser workflow. Inspect every step at the actual target size; check for clipping and errors. Exercise direct jumps from Contents, multiple question bookmarks, latest-mark return, bookmark-list selection and keyboard-only operation. Open and close each supporting resource after marking a question, then confirm the exact reveal and marks remain. Browser verification is not provided by these scripts. Print / PDF previews all scenes with every item visible, one scene per A4 landscape page. Reduced-motion and explicit motion=none show all items in the current scene while preserving its navigation step. A saved PDF still needs separate rendering/page-count inspection. MP4 export is deferred.
+Check syntax and model validity first, then capture every step:
+
+```text
+python <skill-directory>/scripts/capture_steps.py <output/presentation.html> --out <output/shots> [--reduced] [--pdf <output/presentation.pdf>]
+```
+
+It opens each step in a local Edge/Chrome/Chromium (standard library only), saves PNGs, prints the deck to PDF on request and lists elements that leave the slide or are clipped inside a panel in `report.json`. Look at every PNG yourself; an empty issue list does not prove the layout is right.
+
+Then open the HTML through an authorized browser workflow. Inspect every step at the actual target size; check for clipping and errors. Exercise direct jumps from Contents, multiple question bookmarks, latest-mark return, bookmark-list selection and keyboard-only operation. Open and close each supporting resource after marking a question, then confirm the exact reveal and marks remain. Browser verification is not provided by these scripts. Print / PDF previews all scenes with every item visible, one scene per A4 landscape page. Reduced-motion and explicit motion=none show all items in the current scene while preserving its navigation step. A saved PDF still needs separate rendering/page-count inspection. MP4 export is deferred.

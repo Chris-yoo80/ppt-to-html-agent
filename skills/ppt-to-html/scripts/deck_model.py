@@ -101,6 +101,7 @@ def validate_composed(scene, prefix, require, string, gotos):
         require(used == expected, f'{prefix}: data-step values {sorted(used)} must cover exactly 1–{len(labels)} (one per step label)')
     for k, chart in enumerate(charts):
         validate_chart(chart, f'{prefix}.html data-chart[{k}]', require, string)
+        require(max(chart.get('steps') or [1]) <= len(labels), f'{prefix}.html data-chart[{k}].steps: step numbers must not exceed the {len(labels)} scene steps')
     gotos.extend((prefix + '.html', target) for target in targets)
 
 
@@ -147,3 +148,12 @@ def validate_chart(chart, prefix, require, string):
     require(kind != 'funnel' or all(a >= b for a, b in zip(values, values[1:])), f'{prefix}.data: funnel stages must not increase; use a bar chart instead')
     for optional in ('title', 'unit', 'note', 'center'):
         require(optional not in chart or isinstance(chart[optional], str), f'{prefix}.{optional}: text required')
+    labels = [point['label'] for point in data]
+    if 'highlight' in chart:
+        marks = chart['highlight']
+        require(isinstance(marks, list) and all((type(mark) is int and 0 <= mark < len(data)) or mark in labels for mark in marks),
+                f'{prefix}.highlight: list of data indexes or labels required')
+    if 'steps' in chart:
+        steps = chart['steps']
+        require(isinstance(steps, list) and len(steps) == len(data) and all(type(step) is int and 1 <= step <= 12 for step in steps),
+                f'{prefix}.steps: one step number (1–12) per data point required')

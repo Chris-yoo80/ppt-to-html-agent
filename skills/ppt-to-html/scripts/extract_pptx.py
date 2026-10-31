@@ -16,6 +16,16 @@ NS = {'p': 'http://schemas.openxmlformats.org/presentationml/2006/main',
 REL = '{http://schemas.openxmlformats.org/package/2006/relationships}'
 
 
+def aspect_label(cx, cy):
+    """Name the slide ratio from its EMU size: 16:9, 4:3, 16:10 or W:H rounded."""
+    from math import gcd
+    for label, (w, h) in {'16:9': (16, 9), '4:3': (4, 3), '16:10': (16, 10)}.items():
+        if abs(cx / cy - w / h) < 0.01:
+            return label
+    divisor = gcd(cx, cy) or 1
+    return f'{cx // divisor}:{cy // divisor}'
+
+
 def relationships(archive, part):
     folder, filename = posixpath.split(part)
     name = posixpath.join(folder, '_rels', filename + '.rels')
@@ -68,6 +78,12 @@ def extract(path):
                                   'SmartArt text is not extracted; diagram relationships are inventoried for further review.',
                                   'Notes may contain private material; do not publish extracted inputs by default.'],
                   'size_emu': dict(size.attrib) if size is not None else {}, 'slides': []}
+        if size is not None and size.get('cx', '').isdigit() and size.get('cy', '').isdigit():
+            # The declared type is often stale (e.g. screen4x3 on a 16:9 deck); the real ratio comes from cx/cy.
+            result['aspect'] = aspect_label(int(size.get('cx')), int(size.get('cy')))
+            declared = size.get('type', '')
+            if declared in ('screen4x3', 'screen16x9', 'screen16x10') and declared[6:].replace('x', ':') != result['aspect']:
+                result['limitations'].append(f"Declared slide type {declared} does not match the actual size {result['aspect']}; use aspect.")
         order = presentation.findall('p:sldIdLst/p:sldId', NS)
         for number, slide_id in enumerate(order, 1):
             relation = rels[slide_id.get('{' + NS['r'] + '}id')]

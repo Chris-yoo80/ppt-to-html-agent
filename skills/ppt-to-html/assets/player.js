@@ -77,10 +77,15 @@
   function svgText(svg, x, y, value, className, anchor='middle'){
     const node=svgNode('text',{x,y,'text-anchor':anchor,class:className}); node.textContent=value; svg.append(node); return node;
   }
-  function chart(scene, visibleCount, entering) {
+  function chart(scene, visibleCount, entering, currentStep=Infinity) {
     const spec=scene.chart, data=spec.data, linked=Boolean(scene.items)&&data.length===scene.items.length;
-    const shown=index=>!linked || index<visibleCount;
-    const state=index=>(shown(index)?' on':'')+(linked&&index===visibleCount-1?' active':'');
+    // spec.steps maps each datum to a composed-scene step; otherwise data follow card items when counts match.
+    const stepOf=Array.isArray(spec.steps)?index=>spec.steps[index]:null;
+    const shown=index=>stepOf?stepOf(index)<=currentStep:!linked || index<visibleCount;
+    const active=index=>stepOf?stepOf(index)===currentStep:linked&&index===visibleCount-1;
+    const state=index=>(shown(index)?' on':'')+(active(index)?' active':'');
+    const highlight=new Set((spec.highlight||[]).map(value=>typeof value==='number'?value:data.findIndex(item=>item.label===value)));
+    const tone=index=>highlight.has(index)?' is-highlight':'';
     const display=item=>item.display || numberFormat(item.value)+(spec.unit||'');
     // Linked charts animate the newly revealed datum; unlinked charts animate once on scene entry.
     const box=text('figure',`chart-box chart-type-${spec.type}${!linked&&entering?' enter':''}`,'');
@@ -121,7 +126,7 @@
         const width=Math.min(84,step*.62);
         data.forEach((item,index)=>{
           const x=left+step*(index+.5), height=bottom-y(item.value);
-          svg.append(svgNode('rect',{x:x-width/2,y:y(item.value),width,height:Math.max(height,0),rx:6,style:`--i:${index}`,class:`chart-bar series-${index%6}`+state(index)}));
+          svg.append(svgNode('rect',{x:x-width/2,y:y(item.value),width,height:Math.max(height,0),rx:6,style:`--i:${index}`,class:'chart-bar series-0'+tone(index)+state(index)}));
           svgText(svg,x,y(item.value)-12,display(item),'chart-value'+state(index));
         });
       }
@@ -134,7 +139,7 @@
         const top=20+index*rowHeight, exact=max?item.value/max:0, ratio=Math.max(exact,.015);
         if(ratio>exact) clamped=true;
         const width=barWidth*ratio, x=barLeft+(barWidth-width)/2;
-        svg.append(svgNode('rect',{x,y:top,width,height:rowHeight*.62,rx:5,style:`--i:${index}`,class:`chart-funnel series-${index%6}`+state(index)}));
+        svg.append(svgNode('rect',{x,y:top,width,height:rowHeight*.62,rx:5,style:`--i:${index}`,class:'chart-funnel series-0'+tone(index)+state(index)}));
         svgText(svg,barLeft-14,top+rowHeight*.42,item.label,'chart-label'+state(index),'end');
         svgText(svg,barLeft+barWidth+14,top+rowHeight*.42,display(item),'chart-value'+state(index),'start');
         if(index>0 && data[index-1].value>0) svgText(svg,barLeft+barWidth+14,top-rowHeight*.12,'↓ '+percent(item.value/data[index-1].value*100),'chart-rate'+state(index),'start');
@@ -189,8 +194,8 @@
     const reveal=scene.reveal || 'spotlight';
     const body=text('div',`scene-body composed reveal-${reveal}`,''), hooks={stepped:[],charts:[]};
     buildTree(scene.body,body,false,hooks);
-    hooks.charts.forEach(([element,spec])=>element.append(chart({chart:spec,title:scene.title},Infinity,false)));
     const current=showAll||reveal==='none'?Infinity:itemIndex+1;
+    hooks.charts.forEach(([element,spec])=>element.append(chart({chart:spec,title:scene.title},Infinity,false,current)));
     // Spotlight keeps later panels readable but dimmed; build hides them until their step.
     hooks.stepped.forEach(([element,step])=>{
       if(step<current) element.classList.add('on');
@@ -431,6 +436,20 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
   addEventListener('ppt-open-supplement',()=>setPlaying(false));
   addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
-  globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep};
+  function stepFromHash(){
+    const params={};
+    for(const pair of String(globalThis.location?.hash||'').replace(/^#/,'').split('&')){const [key,value='']=pair.split('=');try{params[key]=decodeURIComponent(value);}catch{}}
+    const first=firstStep(params.scene||''); if(first<0) return null;
+    const scene=deck.scenes[steps[first].sceneIndex], step=Math.min(Math.max(1,Number(params.step)||1),labelsOf(scene).length);
+    return first+step-1;
+  }
+  view.hooks.push(({scene,itemIndex})=>{
+    const hash=`#scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
+    try{if(globalThis.location&&globalThis.location.hash!==hash)globalThis.history?.replaceState?.(null,'',hash);}catch{}
+  });
+  addEventListener('hashchange',()=>{const target=stepFromHash();if(target!==null&&target!==position){setPlaying(false);go(target);}});
+  globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep,
+    steps:()=>steps.map(({sceneIndex,itemIndex})=>({scene:deck.scenes[sceneIndex].id,step:itemIndex+1,backup:Boolean(deck.scenes[sceneIndex].backup)}))};
+  const linked=stepFromHash(); if(linked!==null) position=linked;
   buildChapters();buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();

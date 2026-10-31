@@ -135,6 +135,14 @@ class ToolTests(unittest.TestCase):
             with self.subTest(message=message),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
         styled=copy.deepcopy(deck);styled['css']='[data-scene="summary"] .hero{background:linear-gradient(120deg,#123,#456)}@keyframes rise{from{opacity:0}to{opacity:1}}@media (prefers-reduced-motion: reduce){.hero{animation:none}}'
         validate_deck(styled)  # bespoke per-scene css with finite animation is allowed
+        chart_rules=copy.deepcopy(deck)
+        spec='{"type":"bar","highlight":["B"],"steps":[1,2],"data":[{"label":"A","value":1},{"label":"B","value":2}]}'
+        chart_rules['scenes'][0]['html']="<div data-step='1' data-chart='"+spec+"'>x</div><div data-step='2'>y</div>"
+        chart_rules['scenes'][0]['steps']=['a','b']
+        validate_deck(chart_rules)
+        for spec,message in [('"highlight":["Z"]','highlight'),('"steps":[1]','one step number'),('"steps":[1,3]','must not exceed')]:
+            broken=copy.deepcopy(chart_rules);broken['scenes'][0]['html']=broken['scenes'][0]['html'].replace('"highlight":["B"],"steps":[1,2]',spec)
+            with self.subTest(spec=spec),self.assertRaisesRegex(ValueError,message):validate_deck(broken)
         waterfall=copy.deepcopy(deck)
         waterfall['scenes'][0]['html']='<div data-step="1" data-chart=\'{"type":"waterfall","data":[{"label":"A","value":5,"kind":"total"},{"label":"B","value":-9}]}\'>x</div>'
         waterfall['scenes'][0]['steps']=['a']
@@ -406,7 +414,7 @@ class ToolTests(unittest.TestCase):
             return f'<p:sld xmlns:p="{p}" xmlns:a="{a}"><p:cSld><p:spTree><p:sp><p:txBody><a:p><a:r><a:t>{value}</a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:sld>'
         document=io.BytesIO()
         with zipfile.ZipFile(document,'w') as archive:
-            archive.writestr('ppt/presentation.xml',f'<p:presentation xmlns:p="{p}" xmlns:r="{r}"><p:sldIdLst><p:sldId id="256" r:id="second"/><p:sldId id="257" r:id="first"/></p:sldIdLst></p:presentation>')
+            archive.writestr('ppt/presentation.xml',f'<p:presentation xmlns:p="{p}" xmlns:r="{r}"><p:sldIdLst><p:sldId id="256" r:id="second"/><p:sldId id="257" r:id="first"/></p:sldIdLst><p:sldSz cx="12192000" cy="6858000" type="screen4x3"/></p:presentation>')
             archive.writestr('ppt/_rels/presentation.xml.rels',relations(rel('first','slide','slides/slide1.xml')+rel('second','slide','slides/slide2.xml')))
             archive.writestr('ppt/slides/slide1.xml',slide('두 번째').replace('<p:sld ', '<p:sld show="0" '))
             table=f'<p:graphicFrame><a:graphic><a:graphicData><a:tbl><a:tr><a:tc><a:txBody><a:p><a:r><a:t>표 데이터</a:t></a:r></a:p></a:txBody></a:tc></a:tr></a:tbl></a:graphicData></a:graphic></p:graphicFrame>'
@@ -424,6 +432,8 @@ class ToolTests(unittest.TestCase):
         self.assertNotIn('NOT A REAL IMAGE',json.dumps(result))
         self.assertFalse(result['slides'][0]['hidden'])
         self.assertTrue(result['slides'][1]['hidden'])
+        self.assertEqual(result['aspect'],'16:9')  # a stale screen4x3 label must not win over the real size
+        self.assertTrue(any('screen4x3' in note for note in result['limitations']))
         self.assertEqual(result['slides'][0]['media'][1]['type'],'diagramData')
         self.assertIn('SmartArt',result['slides'][0]['warnings'][0])
 
