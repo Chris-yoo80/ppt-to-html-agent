@@ -93,6 +93,11 @@ Codex는 같은 명령에서 `.claude/skills`를 `.agents/skills`로 바꿉니�
 
 업데이트할 때는 기존 `ppt-to-html` 스킬 폴더를 지우고 새 폴더를 설치합니다. 기존 폴더 위에 덮어쓰면 새 버전에서 삭제된 파일이 남습니다. 삭제하려면 `skills/` 안의 `ppt-to-html` 폴더를 지우면 됩니다.
 
+**새 버전 알림 받기.** 다운로드는 익명이라 자동으로 알림을 보낼 수 없습니다. 방법은 두 가지입니다.
+
+- 새 발표를 시작할 때 에이전트가 설치된 버전과 최신 버전 번호를 비교해, 새 버전이 있으면 한 줄로 알려 줍니다. 요청하지 않으면 아무것도 설치하지 않습니다. 이때 GitHub Pages로 일반 웹 요청을 한 번 보내며, 발표 내용이나 파일 이름은 보내지 않습니다. 끄려면 에이전트에게 확인하지 말라고 하거나 환경 변수 `PPT_TO_HTML_NO_UPDATE_CHECK=1`을 설정합니다. 1.0.0 이전에 내려받은 스킬에는 이 기능이 없습니다.
+- GitHub 계정이 있으면 [저장소](https://github.com/Chris-yoo80/ppt-to-html-agent)에서 **Watch → Custom → Releases**를 선택합니다. 변경 내용은 [Releases 페이지](https://github.com/Chris-yoo80/ppt-to-html-agent/releases)에 있습니다.
+
 ## 첫 요청
 
 내 프로젝트 폴더에 접근 가능한 `.pptx`나 `.xlsx`를 넣고 다음과 같이 요청합니다.

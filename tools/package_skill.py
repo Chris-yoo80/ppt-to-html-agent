@@ -1,4 +1,5 @@
-"""Create a portable skill ZIP from an explicit public-source allowlist."""
+"""Create a portable skill ZIP from an explicit public-source allowlist and publish its version number."""
+import json
 from pathlib import Path
 import zipfile
 
@@ -27,7 +28,9 @@ def main():
             info.external_attr = 0o100644 << 16
             content = path.read_bytes() if path.suffix == '.woff2' else path.read_text(encoding='utf-8').encode('utf-8')
             archive.writestr(info, content)
-    print(f'Packaged {len(files)} public skill files into {OUTPUT.relative_to(ROOT)}')
+    version = json.loads((SKILL / 'assets/version.json').read_text(encoding='utf-8'))['version']
+    (ROOT / 'docs/latest.json').write_text(json.dumps({'version': version}) + '\n', encoding='utf-8', newline='\n')
+    print(f'Packaged {len(files)} public skill files into {OUTPUT.relative_to(ROOT)} (version {version})')
 
 
 if __name__ == '__main__':

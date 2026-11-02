@@ -91,6 +91,9 @@ def main():
             content = path.read_bytes() if path.suffix == '.woff2' else path.read_text(encoding='utf-8').encode('utf-8')
             if entry in members and archive.read(entry)!=content:
                 problems.append(f'stale ZIP entry: {name}')
+    installed=json.loads((skill/'assets/version.json').read_text(encoding='utf8'))
+    if not __import__('re').fullmatch(r'\d{1,4}\.\d{1,4}\.\d{1,4}',str(installed.get('version'))):problems.append('skill version is not MAJOR.MINOR.PATCH')
+    if json.loads((ROOT/'docs/latest.json').read_text(encoding='utf8'))!=installed:problems.append('docs/latest.json does not match the skill version')
     if problems:
         for problem in problems:
             print('FAIL:',problem)

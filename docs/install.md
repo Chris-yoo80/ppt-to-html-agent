@@ -93,6 +93,11 @@ For every project, replace `.claude/skills` with `~/.claude/skills` (Claude Code
 
 To update, delete the existing `ppt-to-html` skill folder and install the new one. Copying over the old folder keeps files that a newer version removed. To remove, delete the `ppt-to-html` folder from `skills/`.
 
+**Getting told about new versions.** Downloads are anonymous, so nobody can notify you automatically. Two options:
+
+- When you start a new deck, the agent compares your version with the latest published number and mentions an update in one line. Nothing is installed unless you ask. This makes one ordinary web request to GitHub Pages and sends no presentation content or file names. To turn it off, tell the agent not to check, or set the environment variable `PPT_TO_HTML_NO_UPDATE_CHECK=1`. Copies downloaded before version 1.0.0 do not have this check.
+- With a GitHub account, open the [repository](https://github.com/Chris-yoo80/ppt-to-html-agent) and choose **Watch → Custom → Releases**. Changes are listed on the [Releases page](https://github.com/Chris-yoo80/ppt-to-html-agent/releases).
+
 ## First request
 
 Put an accessible `.pptx` or `.xlsx` in your project folder, then send:
