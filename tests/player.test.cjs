@@ -238,6 +238,13 @@ test('each rendered scene exposes its id for per-scene deck css',()=>{
   const deck=composedFixture(),p=launch(deck);
   assert.equal(p.ids.stage.attributes['data-scene'],'summary');p.key('End');assert.equal(p.ids.stage.attributes['data-scene'],'roadmap');
 });
+test('is-entering marks only the first render of a scene so entrance motion does not replay on every step',()=>{
+  const deck=composedFixture(),p=launch(deck),entering=()=>/\bis-entering\b/.test(p.ids.stage.className);
+  assert.ok(entering(),'first scene opens with entrance motion');
+  p.key('ArrowRight');assert.equal(p.ids.stage.attributes['data-scene'],'summary');assert.ok(!entering(),'a step inside the scene keeps entrance motion off');
+  while(p.ids.stage.attributes['data-scene']==='summary')p.key('ArrowRight');assert.ok(entering(),'the next scene enters again');
+  p.key('ArrowLeft');assert.ok(entering(),'going back into a scene is an entrance too');
+});
 
 // In-browser review: edit text in place and leave memos; exports go to the author (AI).
 const textOf=n=>collect(n).map(c=>c.textContent).join('');

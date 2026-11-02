@@ -8,7 +8,7 @@ Use these helpers when a portable starter presentation meets the brief. Resolve 
 python <skill-directory>/scripts/extract_pptx.py <input.pptx> --output <work/source.json>
 ```
 
-The extractor follows presentation relationship order, not slide filenames. It reads shape text, preserves paragraph-internal line breaks, reads tables and speaker notes, flags hidden slides and inventories linked media. It does not copy media into the output. SmartArt relationships are listed with a warning; their text is not extracted. Treat notes as private input: use them as evidence (definitions, qualifications, intended message) and cite them as "speaker notes, slide N", but do not copy note text onto audience-facing scenes unless the user agrees. When a figure is only correct with a qualification found in the notes (period, base, sample size, unit cost), state that qualification on the slide or in its source line in your own words: that is required context, not copying the notes. Do not automatically put hidden slides into the audience's presentation. Confirm their intended use if relevant. It cannot render slides, perform OCR, interpret chart workbooks, read legacy PPT, or open encrypted/DRM sources. Obtain an owner-exported accessible source when required; do not claim that raw extraction preserves visual hierarchy.
+The extractor follows presentation relationship order, not slide filenames. It reads shape text, preserves paragraph-internal line breaks, reads tables and speaker notes, flags hidden slides and inventories linked media. It does not copy media into the output. SmartArt relationships are listed with a warning; their text is not extracted. Treat notes as private input: use them as evidence (definitions, qualifications, intended message) and cite them as "speaker notes, slide N", but do not copy note text onto audience-facing scenes unless the user agrees. When a figure is only correct with a qualification found in the notes (period, base, sample size, unit cost), state that qualification on the slide or in its source line in your own words: that is required context, not copying the notes. Definitions that live only in the notes (what a metric includes, the before/after periods, a unit cost) can also go to a short backup scene such as "지표 정의" that lists each definition with its source slide. Do not automatically put hidden slides into the audience's presentation. Confirm their intended use if relevant. It cannot render slides, perform OCR, interpret chart workbooks, read legacy PPT, or open encrypted/DRM sources. Obtain an owner-exported accessible source when required; do not claim that raw extraction preserves visual hierarchy.
 
 ## Author scene JSON
 
@@ -19,6 +19,7 @@ On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text thro
 ```json
 {
   "title": "Presentation title",
+  "language": "ko",
   "settings": {"width":1600,"height":900,"font":"system","motion":"key","playback":"both","end":"stop"},
   "scenes": [{
     "id":"overview",
@@ -36,8 +37,9 @@ On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text thro
 }
 ```
 
+- `language` (top level, not in `settings`): `ko` or `en`; it sets the player's interface language and the page `lang`.
 - `font`: `system` (system Korean sans-serif), `serif` (system serif), or `story` (bundled Story Sans review subset derived from Pretendard). The subset covers the current public example; other characters fall back to system fonts. Use a suitably licensed complete font for arbitrary documents needing consistent typography. Custom font packaging requires adapting the source and checking redistribution permission; the dropdown request alone does not install a font.
-- `motion`: `none`, `key` (diagram motion), `rich` (also animate cards). These settings drive card scenes. Composed scenes animate through classes the player sets on every `[data-step]` element — `on` (revealed), `focus` (current step), `dim` (later, spotlight) and `pending` (later, build) — so write finite transitions or `@keyframes` on those classes in the deck `css`, with a `prefers-reduced-motion` fallback. Scene motion is `none`, `points`, `lines`, or `planes`. Other custom motion requires additional implementation.
+- `motion`: `none`, `key` (diagram motion), `rich` (also animate cards). These settings drive card scenes. Composed scenes animate through classes the player sets on every `[data-step]` element — `on` (revealed), `focus` (current step), `dim` (later, spotlight) and `pending` (later, build) — and mark the first render of a scene with `is-entering` on the stage. Use the kit motion classes below, or write transitions and `@keyframes` on those classes in the deck `css` with a `prefers-reduced-motion` fallback. Scene motion is `none`, `points`, `lines`, or `planes`. Other custom motion requires additional implementation.
 - `playback`: `manual`, `both`, `auto`. All support visible previous/next controls. `end` is `stop` or explicitly requested `loop`.
 - The bundled player builds its Contents panel from scene titles and item labels. Each item is a directly addressable reveal step. Question bookmarks store the exact flat step index in memory for the current page session; opening a sandboxed supporting resource does not rebuild the player or clear those marks.
 - Each scene contains 1–4 concise items. Each item is one reveal step. Split dense material into scenes without omitting source qualifications. Title and message are required. Optional textual fields must be plain strings, not HTML.
@@ -119,7 +121,7 @@ The builder converts `html` into a validated element tree, so only these are acc
 
 Design the deck for its content first (see "Design each deck for its content" in SKILL.md). Write your own classes in the deck `css` and use them in scene HTML; target one scene with `[data-scene="scene-id"] …`. Use host design skills when available. The kit below is a shortcut for common parts, not a required look.
 
-Deck and inline CSS run offline and are validated: no `@import`, `@font-face`, remote `url()`, `image-set()`, backslash escapes or comments. Write characters literally (`content:"—"`, not `"\2014"`), embed images as `data:image/…`, and keep `@keyframes` finite with a `@media (prefers-reduced-motion: reduce)` fallback.
+Deck and inline CSS run offline and are validated: no `@import`, `@font-face`, remote `url()`, `image-set()`, backslash escapes or comments. Write characters literally (`content:"—"`, not `"\2014"`), embed images as `data:image/…`, and give every `@keyframes` a `@media (prefers-reduced-motion: reduce)` fallback. Entrance animations must be finite; loop only ambient diagram motion.
 
 ### Component kit
 
@@ -137,6 +139,25 @@ All classes use CSS variables (`--k-accent --k-accent-dark --k-accent-2 --k-soft
 | Process | `k-flow` > `k-flow-step` (`active`) with `<b>` and `<small>` |
 | Progress | `<div class="k-progress"><i style="--v:62%"></i></div>` |
 | Chart | `<div class="k-fill" data-chart='{"type":"bar","data":[…]}'></div>` — any chart type above, plus `waterfall` |
+| Matrix (dense report grid) | `<div class="k-matrix" style="--cols:4;--head:120px">` then an empty corner `<div></div>`, column headers `k-mx-col` (`<small>` kicker), and per row a `k-mx-row` label plus `k-mx-cell`s (`hl`, `good`). Rows share the height; put `data-step` on a row's label and cells to reveal row by row |
+| Band-headed panel | `<section class="k-panel"><div class="k-band">Header — the point</div>…</section>` |
+| Filled rows | `<ul class="k-rows"><li>label<b>value</b></li>…</ul>`: rows stretch to fill the panel with dashed separators; the `<b>` sits on the right |
+| Stat strip | `<div class="k-stats"><div class="k-stat"><b>+5,000만</b><span>what it means<br/>how it was computed</span></div>…</div>` |
+
+### Motion classes
+
+The player marks the first render of each scene with `is-entering` on the stage, and the current step with `focus`. Kit motion classes play at both moments and end in the normal layout, so screenshots, print and reduced motion show the finished slide.
+
+| Class | Motion |
+|---|---|
+| `k-in-up`, `k-in-left`, `k-in-scale` | fade in while rising, sliding or scaling |
+| `k-stagger` (on a parent) | children rise one after another |
+| `k-grow-x`, `k-grow-y` | bars grow from their start (left or bottom); works on HTML bars and SVG `rect` |
+| `k-draw` | an SVG line draws itself; add `pathLength="1"` to the path |
+| `k-pop` | a short emphasis pulse when its step becomes current |
+| `k-march`, `k-beat` | ambient loops for diagrams: dashes moving along a line, a pulsing marker |
+
+For your own motion, key scene entrances on `.is-entering …` and step motion on `[data-step].focus …` in the deck `css`. Rules on `.on` replay at every step because the player rebuilds the scene.
 
 Waterfall data starts with a total and continues with signed deltas: `{"label":"기존","value":26.0,"kind":"total"}, {"label":"설비","value":4.2}, {"label":"예비비","value":-0.6}, {"label":"최종","value":32.4,"kind":"total"}`. The running total may not go below zero. Recompute the closing total yourself; the validator does not know which total is intended.
 
@@ -185,6 +206,6 @@ Check syntax and model validity first, then capture every step:
 python <skill-directory>/scripts/capture_steps.py <output/presentation.html> --out <output/shots> [--reduced] [--pdf <output/presentation.pdf>]
 ```
 
-It takes about 2–3 seconds per step, so give the command a long timeout (or run it in the background). It opens each step in a local Edge/Chrome/Chromium (standard library only), saves PNGs, keeps a partial `report.json` if interrupted, prints the deck to PDF on request and lists elements that leave the slide or are clipped inside a panel in `report.json`. Look at every PNG yourself; an empty issue list does not prove the layout is right. The overflow check sees the screen, not paper: open the PDF and look at every page too (it should show the whole slide, including charts and the bottom message bar).
+It takes about 2–3 seconds per step, so give the command a long timeout (or run it in the background). It opens each step in a local Edge/Chrome/Chromium (standard library only), saves PNGs, keeps a partial `report.json` if interrupted, prints the deck to PDF on request and lists elements that leave the slide or are clipped inside a panel in `report.json`, and records `empty_pct` for every step: the share of the slide with no text, graphic or strong fill. The last step of a scene at 45% or more is flagged `sparse`; fill it with source evidence or merge it with a neighbouring scene (dense report slides measure about 25–40%). The measure counts text, SVG shapes, images and fills darker than about 80% luminance on a 32 × 18 grid; pale fills, table rules and the empty interior of a correct line chart count as empty, so text-only tables and line charts read higher. Treat a flag as a prompt to look at the screenshot, not a target: never distort a correct chart or pad with decoration to lower the number. The window is sized so the slide is captured at its deck size (for example 1600×900) even with chapter tabs. Look at every PNG yourself; an empty issue list does not prove the layout is right. The overflow check sees the screen, not paper: open the PDF and look at every page too (it should show the whole slide, including charts and the bottom message bar).
 
 Then open the HTML through an authorized browser workflow. Inspect every step at the actual target size; check for clipping and errors. Exercise direct jumps from Contents, multiple question bookmarks, latest-mark return, bookmark-list selection and keyboard-only operation. Open and close each supporting resource after marking a question, then confirm the exact reveal and marks remain. Browser verification is not provided by these scripts. Print / PDF previews all scenes with every item visible, one scene per A4 landscape page. Reduced-motion and explicit motion=none show all items in the current scene while preserving its navigation step. A saved PDF still needs separate rendering/page-count inspection. MP4 export is deferred.

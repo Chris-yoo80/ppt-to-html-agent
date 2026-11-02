@@ -1,0 +1,1156 @@
+<!doctype html>
+<!--
+Copyright (c) 2026 Chris-yoo80. Embedded runtime from PPT to HTML Agent.
+This completed presentation may be shared under the Presentation Output Exception.
+Retain this notice and the license below. Standalone tool redistribution follows the Package terms.
+
+PPT to HTML Agent Community License 1.0
+Internal Use and Presentation Output Exception
+
+Copyright (c) 2026 Chris-yoo80
+
+This is a project-specific, source-available license. It is not the MIT
+License, an OSI-approved open source license, or n8n's license.
+
+1. Scope and ownership
+
+These terms cover the original skill instructions, helper programs, player
+code, templates, examples, and documentation distributed with this license
+(the Package). The copyright holder identified above is the Licensor.
+Third-party materials retain their own terms. Your input documents, data,
+original presentation content, and independently created assets are not
+claimed by the Licensor through this license.
+
+2. No-charge permitted use
+
+You may obtain, run, study, and adapt the Package without paying the
+Licensor for personal purposes, noncommercial activities, and work within
+your own organization. This includes internal use by a for-profit company
+to prepare its reports, proposals, training materials, and presentations.
+AI providers, hosting providers, and other third parties may charge their
+own fees; those fees are not covered by this permission.
+
+You may give another person an unmodified or modified copy of the Package
+without charging for it when the distribution itself has a noncommercial
+purpose. The recipient receives these same permissions and restrictions.
+Identify material modifications and retain the notices described below.
+
+3. Uses requiring separate written permission
+
+The permissions above do not include any of the following:
+
+(a) Selling, renting, sublicensing, or charging for access to the Package,
+    its modifications, or a product that includes its generator, reusable
+    player, templates, or skill instructions as a tool for others.
+(b) Operating an external presentation-generation or conversion service
+    based on the Package as a business, whether provided through an API,
+    website, application, subscription, or other automated interface.
+    Keeping the Package on your own server does not avoid this restriction.
+(c) Bundling the Package into a paid tool or a paid skill collection, or
+    relabeling it as a different commercial generation product.
+
+Contact the Licensor through the source repository for a separate grant
+covering such a use. No commercial permission is implied by silence,
+public access to the repository, or possession of a copy.
+
+4. Presentation Output Exception
+
+A Presentation Output is a completed presentation generated for particular
+content. It may include the runtime player code, styles, and supporting
+assets embedded by this Package for viewing that presentation.
+
+You may view, host, copy, share, and deliver Presentation Outputs as part
+of your personal or organizational communications, including reports,
+proposals, training, and presentations delivered to customers. You may
+edit the output to revise its content or presentation behavior. The
+presence of the embedded player does not by itself prohibit this sharing.
+Recipients may view and redistribute that completed presentation with its
+embedded runtime and retained notices for the same presentation purposes.
+
+This exception does not authorize extracting the embedded runtime or
+templates to redistribute them as a tool, offering the generation service
+described in section 3, or distributing the Package under the label of a
+presentation output. Those activities remain governed by sections 2 and 3.
+Rights in input content and third-party assets must be obtained separately.
+
+5. Notices and attribution
+
+Copies of the Package, including modifications, must carry this complete
+license and the Licensor's copyright and license notices. Presentation
+Outputs must retain a copy of this license and the embedded legal notice;
+these may be included in the HTML source or an accompanying file that
+travels with the output. A visible watermark is not required by this
+version of the license. There is no requirement to star the repository,
+publish your private source documents, or disclose your internal changes.
+
+6. Reserved rights and termination
+
+Rights not expressly given here remain with their respective holders.
+No right to use the Licensor's name or marks to imply endorsement is
+granted. Permissions under these terms cease for a use that violates
+them. The Licensor may give separate permissions in writing.
+
+7. Warranty and liability
+
+The Package is supplied without a promise of fitness, correctness,
+availability, or continued support. To the extent applicable law permits,
+the Licensor gives no warranties and accepts no liability for loss or
+damage arising from its use. Nothing here removes a right or liability
+that applicable law does not allow the parties to exclude.
+
+The English text above is the controlling license. Translations and
+plain-language summaries are explanatory and do not add permissions.
+
+-->
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>새봄병원 외래 대기시간 단축 프로젝트 결과 보고</title><style>:root{color-scheme:light;font-family:"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#20251f;background:#eaece7}*{box-sizing:border-box}body{margin:0}button{font:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.35}button:focus-visible{outline:3px solid #355ee8;outline-offset:4px}#viewport{position:fixed;inset:0 0 82px;overflow:hidden}#stage,.print-stage{position:absolute;transform-origin:top left;background:#f6f7ef;overflow:hidden;padding:66px 86px 62px;display:flex;flex-direction:column;gap:24px}#stage.serif,.print-stage.serif{font-family:Georgia,"Batang",serif}.deck-top{display:flex;justify-content:space-between;align-items:center;font-size:16px;letter-spacing:.05em;color:#64705f}.deck-mark{display:flex;gap:7px;align-items:center;font-weight:700}.deck-mark i{width:12px;height:12px;border-radius:50%;background:#3158db}.eyebrow{margin:6px 0 0;color:#355b37;font-size:19px;font-weight:700}.scene-title{font-size:58px;letter-spacing:-.045em;line-height:1.2;max-width:1290px;margin:0;word-break:keep-all}.lead{font-size:23px;color:#66705f;line-height:1.65;max-width:1250px;margin:0;word-break:keep-all}.scene-body{display:grid;grid-template-columns:1fr 1fr;gap:44px;flex:1;min-height:0;align-items:center}.scene-body.no-motion{grid-template-columns:1fr}.item-list{display:grid;gap:14px}.item{display:grid;grid-template-columns:46px 1fr;gap:14px;background:#fff;border:1px solid #dce1d2;padding:24px;border-radius:15px;opacity:.22;transform:translateY(10px);transition:opacity .45s,transform .45s}.item.on{opacity:1;transform:none}.item-index{font-size:16px;font-weight:700;border-radius:50%;border:1px solid #d7decd;width:38px;height:38px;display:grid;place-items:center}.item.on .item-index{background:#d8f09c;border-color:#d8f09c}.item h2{font-size:25px;margin:2px 0 8px;word-break:keep-all}.item p{font-size:18px;margin:0;line-height:1.55;color:#626d5b;word-break:keep-all}.item-value{font-size:30px;display:block;color:#3158db;margin-bottom:5px}.compare .item-list{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}.motion-box{position:relative;border-radius:24px;background:#e5eadb;align-self:stretch;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:30px}.motion-box svg{width:100%;height:100%;max-height:340px;overflow:visible}.motion-caption{font-size:17px;text-align:center;color:#64705f;margin:4px 0 0}.motion-point,.motion-plane,.motion-link{opacity:.12;transition:opacity .6s,transform .6s,stroke-dashoffset .9s}.motion-point.on,.motion-plane.on,.motion-link.on{opacity:1}.motion-plane{transform:scale(.85);transform-box:fill-box;transform-origin:center}.motion-plane.on{transform:scale(1)}.motion-link{stroke-dasharray:180;stroke-dashoffset:180}.motion-link.on{stroke-dashoffset:0}.motion-label{font-size:16px;fill:#3e4b38}.scene-bottom{display:flex;gap:24px;align-items:center;border-top:1px solid #d3dbc9;padding-top:20px}.message{font-size:23px;font-weight:600;margin:0;flex:1;word-break:keep-all}.source{font-size:13px;color:#707b66;max-width:360px;margin:0;text-align:right}.controls{position:fixed;bottom:0;left:0;right:0;height:82px;background:#fafbf6;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-top:1px solid #d6ddcf}.controls button{border:1px solid #d6ddcf;background:white;border-radius:8px;padding:10px 16px;font-size:14px}.controls button[aria-pressed=true]{background:#d8f09c;border-color:#afcb7d}#position{min-width:150px;text-align:center;font-variant-numeric:tabular-nums;font-size:14px}.keyhint{font-size:11px;color:#74816b;margin-left:14px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}@media(max-width:800px){.keyhint{display:none}.controls{height:100px;gap:6px;flex-wrap:wrap;align-content:center}.controls button{padding:8px 10px;font-size:12px}#position{min-width:130px}#viewport{bottom:100px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.item{transform:none}}body.motion-none .item{transition:none;transform:none}body.motion-none .motion-box{display:none}@media print{body{background:white}#viewport{position:static;overflow:visible}#stage{position:relative;transform:none!important;width:100%!important;height:auto!important;padding:15mm}.controls{display:none}.item{opacity:1;transform:none}.motion-point,.motion-plane,.motion-link{opacity:1;transform:none;stroke-dashoffset:0}.source{color:black}}
+
+#print-pages{display:none}
+@media print{
+ @page{size:A4 landscape;margin:10mm}
+ body>*{display:none!important}body>#print-pages{display:block!important}
+ .print-page{position:relative;width:277mm;height:185mm;break-after:page;page-break-after:always;overflow:hidden}
+ .print-page:last-child{break-after:auto;page-break-after:auto}
+ .print-stage{position:absolute;left:0;top:0;transform-origin:top left;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .print-stage .item{opacity:1!important;transform:none!important}
+ .print-stage *{animation:none!important;transition:none!important}
+ .print-stage .motion-point,.print-stage .motion-plane,.print-stage .motion-link{opacity:1!important;stroke-dashoffset:0!important;transform:none!important}
+}
+
+#print-toolbar{display:none}
+body.print-preview{background:#eaece7}
+body.print-preview>#viewport,body.print-preview>.controls,body.print-preview>dialog,body.print-preview>#chapter-nav,body.print-preview>.editor-bar,body.print-preview>.editor-banner{display:none!important}
+body.print-preview>#print-toolbar{display:flex;position:sticky;top:0;z-index:5;gap:12px;align-items:center;padding:12px 24px;background:white;border-bottom:1px solid #ccc}
+#print-toolbar p{flex:1;font-size:13px}#print-toolbar button{padding:10px;border:1px solid #ccc;background:white;border-radius:6px}
+body.print-preview>#print-pages{display:block;padding:24px;overflow:auto}
+.print-page{position:relative;width:277mm;height:185mm;overflow:hidden}
+body.print-preview .print-page{background:white;margin:0 auto 24px;box-shadow:0 2px 12px #0002}
+.print-stage{position:absolute;left:0;top:0;transform-origin:top left}
+.print-stage .item{opacity:1;transform:none}
+.print-stage *{animation:none!important;transition:none!important}
+.print-stage .motion-point,.print-stage .motion-plane,.print-stage .motion-link{opacity:1;stroke-dashoffset:0;transform:none}
+@media print{body.print-preview>#print-toolbar{display:none!important}body.print-preview>#print-pages{padding:0!important}.print-page{margin:0!important;box-shadow:none!important}}
+
+.jump-dialog{width:min(900px,calc(100vw - 40px));max-height:min(720px,calc(100vh - 40px));padding:0;border:0;border-radius:16px;box-shadow:0 18px 70px #0005;color:#20251f;background:#f8faf4}
+.jump-dialog::backdrop{background:#172019aa;backdrop-filter:blur(3px)}
+.jump-dialog>header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:16px;padding:18px 22px;background:white;border-bottom:1px solid #d7ded1}
+.jump-dialog>header strong{flex:1;font-size:21px}.jump-dialog>header button{width:42px;height:42px;border:1px solid #d6ddcf;border-radius:50%;background:white;font-size:24px}
+#outline-list,#bookmarks-list{padding:20px 22px;overflow:auto;max-height:620px}
+.outline-scene{display:grid;grid-template-columns:250px 1fr;gap:18px;padding:18px 0;border-bottom:1px solid #dce2d8}.outline-scene:last-child{border-bottom:0}.outline-scene h2{font-size:18px;margin:8px 0}.outline-steps{display:flex;flex-wrap:wrap;gap:8px}.outline-step,.bookmark-jump,.bookmark-remove{border:1px solid #ccd6c6;background:white;border-radius:8px;padding:11px 13px;text-align:left}.outline-step:hover,.outline-step:focus-visible,.bookmark-jump:hover,.bookmark-jump:focus-visible{border-color:#3158db;background:#eef1ff}
+.bookmark-row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:10px}.bookmark-jump{font-weight:650}.bookmark-remove{color:#8a352e}.empty-bookmarks{color:#687368;text-align:center;padding:35px}
+@media(max-width:800px){.outline-scene{grid-template-columns:1fr}.jump-dialog{width:calc(100vw - 20px)}#outline-list,#bookmarks-list{padding:14px}}
+@media print{.jump-dialog{display:none!important}}
+/* Data charts: drawn to scale; palette is overridable through these variables. */
+:root{--chart-1:#3158db;--chart-2:#2f7d5b;--chart-3:#e07a2f;--chart-4:#7a5bd6;--chart-5:#c2416b;--chart-6:#5f8f2f;--chart-ink:#20251f;--chart-muted:#6a7564;--chart-grid:#e3e7dc}
+.scene-body.has-chart{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:36px;align-items:stretch}
+.has-chart .item-list{align-content:center;gap:10px}
+.has-chart .item{padding:14px 20px;grid-template-columns:40px 1fr;align-items:center}
+/* Label and value share one row so four cards fit beside a chart. */
+.has-chart .item>div{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:baseline}
+.has-chart .item h2{grid-row:1;grid-column:1;font-size:21px;margin:0}.has-chart .item-value{grid-row:1;grid-column:2;font-size:24px;margin:0;text-align:right}
+.has-chart .item p{grid-row:2;grid-column:1/3;font-size:15px;margin-top:3px}
+.has-chart.compare .item-list{grid-template-columns:1fr}
+.chart-box{margin:0;background:#fff;border:1px solid #dce1d2;border-radius:20px;padding:22px 26px 16px;display:flex;flex-direction:column;min-height:0;box-shadow:0 14px 34px #20251f0d}
+.chart-title{font-size:19px;font-weight:700;color:var(--chart-ink);margin:0 0 6px}
+.chart-box svg{width:100%;flex:1;min-height:0;overflow:visible}
+.chart-note{font-size:14px;color:var(--chart-muted);margin:6px 0 0;line-height:1.45}
+.chart-grid{stroke:var(--chart-grid);stroke-width:1}.chart-baseline{stroke:#9aa392;stroke-width:1.5}
+.chart-axis{font-size:13px;fill:var(--chart-muted)}
+.chart-label{font-size:16px;fill:var(--chart-ink);font-weight:600}
+.chart-value{font-size:18px;fill:var(--chart-ink);font-weight:800}
+.chart-rate{font-size:15px;fill:var(--chart-muted);font-weight:600}
+.chart-center{font-size:22px;font-weight:800;fill:var(--chart-ink)}
+.series-0{fill:var(--chart-1)}.chart-bar.is-highlight,.chart-funnel.is-highlight{fill:var(--chart-3)}.series-1{fill:var(--chart-2)}.series-2{fill:var(--chart-3)}.series-3{fill:var(--chart-4)}.series-4{fill:var(--chart-5)}.series-5{fill:var(--chart-6)}
+.chart-line{stroke:var(--chart-1);stroke-width:4;fill:none;stroke-linecap:round}
+.chart-area{fill:var(--chart-1);opacity:.06}.chart-area.on{opacity:.12}
+.chart-dot{fill:#fff;stroke:var(--chart-1);stroke-width:4}
+.chart-bar,.chart-funnel,.chart-slice,.chart-key,.chart-line,.chart-dot,.chart-value,.chart-label,.chart-rate{opacity:.16}
+.chart-bar.on,.chart-funnel.on,.chart-slice.on,.chart-key.on,.chart-line.on,.chart-dot.on,.chart-value.on,.chart-label.on,.chart-rate.on{opacity:1}
+.chart-bar.active,.chart-funnel.active,.chart-slice.active{filter:drop-shadow(0 6px 10px #20251f30)}
+@media print{.chart-bar,.chart-funnel,.chart-slice,.chart-key,.chart-line,.chart-dot,.chart-value,.chart-label,.chart-rate{opacity:1}.chart-box{box-shadow:none}}
+
+/* Finite entrances: no unattended decorative looping. */
+@keyframes point-in{from{opacity:.12;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
+@keyframes line-in{from{stroke-dashoffset:180;opacity:.12}to{stroke-dashoffset:0;opacity:1}}
+@keyframes plane-in{from{opacity:.12;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+@keyframes item-in{from{opacity:.22;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.motion-point.on.active{transform-box:fill-box;transform-origin:center;animation:point-in .6s ease both}
+.motion-link.on.active{animation:line-in .9s ease both}
+.motion-plane.on.active{animation:plane-in .7s ease both}
+body.motion-rich .item.on.active{animation:item-in .45s ease both}
+@media(prefers-reduced-motion:reduce){.motion-point.on.active,.motion-link.on.active,.motion-plane.on.active,body.motion-rich .item.on.active{animation:none;transition:none}}
+/* Chart entrances: finite, data-preserving (final state equals the static chart). */
+@keyframes chart-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes chart-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes chart-pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
+@keyframes chart-draw{from{stroke-dasharray:600;stroke-dashoffset:600}to{stroke-dasharray:600;stroke-dashoffset:0}}
+@keyframes chart-fade{from{opacity:0}}
+.chart-bar.on.active,.chart-box.enter .chart-bar{transform-box:fill-box;transform-origin:bottom;animation:chart-rise .8s cubic-bezier(.2,.8,.2,1) both}
+.chart-funnel.on.active,.chart-box.enter .chart-funnel{transform-box:fill-box;transform-origin:center;animation:chart-grow .8s cubic-bezier(.2,.8,.2,1) both}
+.chart-slice.on.active,.chart-box.enter .chart-slice{transform-box:view-box;transform-origin:190px 190px;animation:chart-pop .7s ease both}
+.chart-line.on.active,.chart-box.enter .chart-line{animation:chart-draw .9s ease both}
+.chart-dot.on.active,.chart-value.on.active,.chart-rate.on.active,.chart-box.enter .chart-value{animation:chart-fade .6s .2s ease both}
+.chart-box.enter .chart-bar,.chart-box.enter .chart-funnel{animation-delay:calc(var(--i,0)*.08s)}
+body.motion-none .chart-box *{animation:none!important}
+@media(prefers-reduced-motion:reduce){.chart-box *{animation:none!important}}
+
+/* Component kit for composed scenes. All tokens are CSS variables so themes and deck css can restyle. */
+:root{--k-accent:#3158db;--k-accent-dark:#1f3c9c;--k-accent-2:#2f7d5b;--k-soft:#eef1fb;--k-ink:#20251f;--k-muted:#66705f;--k-line:#dce1d2;--k-panel:#fff;--k-bg:#f6f7ef;--k-warn:#e07a2f;--k-good:#2f7d5b;--k-bad:#c2416b;--k-radius:14px;--k-shadow:0 10px 26px rgba(20,25,40,.06)}
+
+/* Chrome: chapter tabs, breadcrumb, return control */
+#chapter-nav{display:none}
+body.has-chapters #chapter-nav{position:fixed;left:0;right:0;top:0;height:46px;z-index:5;display:flex;align-items:center;gap:4px;padding:0 18px;background:#fff;border-bottom:1px solid var(--k-line);overflow-x:auto;scrollbar-width:none}
+body.has-chapters #viewport{top:46px}
+.chapter-tab{border:0;background:transparent;color:var(--k-muted);font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;white-space:nowrap}
+.chapter-tab:hover{color:var(--k-ink);background:var(--k-soft)}
+.chapter-tab.active{background:var(--k-accent);color:#fff}
+.chapter-tab.backup{font-size:12px;padding:6px 8px}
+.chapter-divider{margin:0 6px 0 10px;padding-left:12px;border-left:1px solid var(--k-line);font-size:11px;letter-spacing:.08em;color:var(--k-muted)}
+.deck-top .breadcrumb{flex:1;text-align:center;font-size:14px;letter-spacing:0;color:var(--k-muted)}
+.deck-top .page-count{font-variant-numeric:tabular-nums}
+.deck-top .version-tag{margin-right:14px;padding:2px 9px;border:1px solid var(--k-line);border-radius:999px;font-size:12px;letter-spacing:0}
+#return-origin{background:var(--k-accent);color:#fff;border-color:var(--k-accent)}
+.outline-divider{margin:22px 0 4px;font-size:15px;color:var(--k-muted)}
+.message-label{display:inline-block;margin-right:12px;padding:3px 10px;border-radius:6px;background:var(--k-accent);color:#fff;font-size:15px;vertical-align:2px}
+
+/* Composed scene frame */
+#stage.composed-scene,.print-stage.composed-scene{background:var(--k-bg);color:var(--k-ink);gap:16px;padding:40px 60px 34px}
+.scene-title em{font-style:normal;color:var(--k-accent)}
+.composed-scene .scene-title{font-size:44px;letter-spacing:-.03em}
+.composed-scene .eyebrow{color:var(--k-accent);font-size:17px}
+.lead.summary{font-size:19px;color:var(--k-ink);background:var(--k-soft);border-left:5px solid var(--k-accent);padding:9px 18px;border-radius:6px;max-width:none}
+.scene-body.composed{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch;font-size:16px;line-height:1.45}
+.scene-body.composed>*{min-height:0}
+.composed-scene .scene-bottom{padding-top:12px}
+
+/* Step reveal */
+.reveal-spotlight [data-step],.reveal-build [data-step]{transition:opacity .45s,filter .45s,box-shadow .45s,transform .45s}
+.reveal-spotlight [data-step].dim{opacity:.36;filter:grayscale(.7)}
+.reveal-spotlight [data-step].focus{box-shadow:0 0 0 3px var(--k-accent);position:relative;z-index:1}
+.reveal-build [data-step].pending{opacity:0;transform:translateY(12px)}
+svg [data-step].focus{filter:drop-shadow(0 0 6px var(--k-accent))}
+@media print{[data-step].dim,[data-step].pending{opacity:1!important;filter:none!important;transform:none!important}[data-step].focus{box-shadow:none!important}}
+
+/* Layout */
+.k-grid{display:grid;gap:18px;flex:1;min-height:0}
+.k-grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.k-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.k-grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.k-grid.cols-2-1{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.k-grid.cols-1-2{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.k-grid.rows-2{grid-template-rows:repeat(2,minmax(0,1fr))}
+.span-2{grid-column:span 2}.span-3{grid-column:span 3}.row-span-2{grid-row:span 2}
+.k-stack{display:flex;flex-direction:column;gap:12px;min-height:0}
+.k-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.k-fill{flex:1;min-height:0}
+
+/* Panels */
+.k-panel{background:var(--k-panel);border:1px solid var(--k-line);border-radius:var(--k-radius);padding:18px 20px;box-shadow:var(--k-shadow);display:flex;flex-direction:column;gap:10px;min-height:0;overflow:hidden}
+.k-panel.soft{background:var(--k-soft);box-shadow:none}
+.k-panel.dark{background:var(--k-ink);color:#fff;border-color:var(--k-ink)}
+.k-panel.accent{background:var(--k-accent);color:#fff;border-color:var(--k-accent)}
+.k-panel-head{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;margin:0}
+.k-panel-head small{margin-left:auto;font-size:12px;font-weight:600;color:var(--k-muted)}
+.k-icon{flex:none;width:30px;height:30px;border-radius:9px;background:var(--k-soft);color:var(--k-accent);display:grid;place-items:center;font-size:15px;font-weight:800}
+.k-panel h3,.k-panel h4{margin:0}
+.k-panel p{margin:0}
+
+/* Numbers */
+.k-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.k-kpi{display:flex;flex-direction:column;gap:2px;min-width:0}
+.k-kpi-label{font-size:14px;color:var(--k-muted);font-weight:600}
+.k-kpi-value{font-size:42px;font-weight:800;color:var(--k-accent);line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.k-kpi-unit{font-size:18px;font-weight:700;margin-left:3px;color:var(--k-muted)}
+.k-delta{font-size:14px;font-weight:800}.k-delta.up{color:var(--k-good)}.k-delta.down{color:var(--k-bad)}
+.k-hero{background:linear-gradient(150deg,var(--k-accent),var(--k-accent-dark));color:#fff;border-radius:var(--k-radius);padding:24px 26px;display:flex;flex-direction:column;gap:8px}
+.k-hero .k-kpi-value{color:#fff;font-size:68px}.k-hero .k-kpi-label,.k-hero .k-kpi-unit{color:#ffffffcc}
+.k-panel.dark .k-kpi-value,.k-panel.accent .k-kpi-value{color:#fff}
+
+/* Tables */
+.k-table{width:100%;border-collapse:collapse;font-size:15px}
+.k-table th{background:var(--k-soft);color:var(--k-accent-dark);font-weight:700;text-align:left;padding:8px 10px;border-bottom:2px solid var(--k-accent)}
+.k-table td{padding:8px 10px;border-bottom:1px solid var(--k-line)}
+.k-table .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.k-table tr.hl td{background:var(--k-soft);font-weight:700}
+.k-table tr.total td{border-top:2px solid var(--k-ink);font-weight:800}
+
+/* Labels */
+.k-chips{display:flex;flex-wrap:wrap;gap:6px}
+.k-chip{display:inline-flex;align-items:center;padding:4px 11px;border-radius:999px;background:var(--k-soft);color:var(--k-accent-dark);font-size:13px;font-weight:700}
+.k-tag{display:inline-flex;padding:2px 8px;border:1px solid var(--k-line);border-radius:6px;font-size:12px;color:var(--k-muted)}
+.k-badge{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 8px;border-radius:13px;background:var(--k-accent);color:#fff;font-size:13px;font-weight:800}
+.k-note{font-size:13px;color:var(--k-muted)}
+.k-list{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.k-list li{position:relative;padding-left:16px}
+.k-list li::before{content:"";position:absolute;left:2px;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--k-accent)}
+.k-insight{display:flex;gap:14px;align-items:center;background:var(--k-panel);border:1px solid var(--k-line);border-left:5px solid var(--k-warn);border-radius:8px;padding:10px 16px;font-size:16px;font-weight:600}
+.k-insight>b:first-child{flex:none;padding:3px 10px;border-radius:6px;background:var(--k-warn);color:#fff;font-size:13px}
+
+/* Jumps to backup scenes */
+button[data-goto]{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--k-accent);color:var(--k-accent);background:#fff;border-radius:7px;padding:5px 11px;cursor:pointer}
+button[data-goto]::before{content:"▸ "}
+button[data-goto]:hover{background:var(--k-accent);color:#fff}
+
+/* Timeline (status list) */
+.k-timeline{display:grid;gap:8px}
+.k-tl-item{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:stretch}
+.k-tl-date{display:grid;place-items:center;text-align:center;font-weight:800;color:var(--k-accent);background:var(--k-soft);border-radius:10px;padding:6px;font-size:14px}
+.k-tl-item.now .k-tl-date{background:var(--k-accent);color:#fff}
+.k-tl-body{border:1px solid var(--k-line);border-radius:10px;padding:8px 12px;background:var(--k-panel)}
+.k-tl-item.now .k-tl-body{border-color:var(--k-accent)}
+.k-tl-item.next .k-tl-body,.k-tl-item.next .k-tl-date{border-style:dashed;background:transparent}
+
+/* Gantt: label column + N period columns; place bars with style="grid-column:3/6" */
+.k-gantt{display:grid;grid-template-columns:var(--label,170px) repeat(var(--cols,12),minmax(0,1fr));row-gap:8px;column-gap:2px;align-items:center;font-size:13px}
+.k-gantt-h{text-align:center;font-weight:700;color:var(--k-muted);border-bottom:1px solid var(--k-line);padding-bottom:4px}
+.k-gantt-label{grid-column:1;font-weight:700;color:var(--k-ink)}
+.k-gantt-bar{height:26px;border-radius:13px;background:var(--k-accent);color:#fff;font-weight:700;padding:0 10px;display:flex;align-items:center;white-space:nowrap;overflow:hidden}
+.k-gantt-bar.alt{background:var(--k-accent-2)}.k-gantt-bar.soft{background:var(--k-soft);color:var(--k-accent-dark)}
+.k-gantt-bar.milestone{background:transparent;color:var(--k-warn);padding:0}
+.k-gantt-bar.milestone::before{content:"◆";margin-right:4px}
+
+/* Process flow (chevrons) */
+.k-flow{display:flex;gap:4px;align-items:stretch}
+.k-flow-step{flex:1;min-width:0;background:var(--k-soft);padding:12px 18px 12px 26px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%,14px 50%);display:flex;flex-direction:column;gap:2px}
+.k-flow-step:first-child{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,0 100%);padding-left:16px}
+.k-flow-step.active{background:var(--k-accent);color:#fff}
+.k-flow-step b{font-size:15px}.k-flow-step small{font-size:12px;opacity:.85}
+
+/* Progress */
+.k-progress{height:9px;background:var(--k-soft);border-radius:5px;overflow:hidden}
+.k-progress>i{display:block;height:100%;width:var(--v,0%);background:var(--k-accent);border-radius:5px}
+
+/* Charts inside composed panels */
+/* A chart container shrinks to its panel; the SVG scales down (never clips) to fit. */
+[data-chart]{display:flex;flex-direction:column;min-height:0;min-width:0}
+.scene-body.composed .chart-box{flex:1;min-height:0;box-shadow:none;border:0;padding:0;background:transparent}
+.chart-connector{stroke:#9aa392;stroke-width:1.5;stroke-dasharray:4 3}
+.wf-total{fill:var(--chart-1)}.wf-up{fill:var(--chart-2)}.wf-down{fill:var(--chart-5)}
+
+/* Dense report parts: matrix (column bands x row labels), band-headed panels, filled row lists, stat strips */
+.k-matrix{display:grid;grid-template-columns:var(--head,128px) repeat(var(--cols,4),minmax(0,1fr));grid-template-rows:auto;grid-auto-rows:minmax(0,1fr);gap:8px;flex:1;min-height:0;font-size:15px;line-height:1.45}
+.k-mx-col{background:var(--k-ink);color:#fff;border-radius:10px 10px 4px 4px;padding:10px 16px;font-size:17px;font-weight:800}
+.k-mx-col small{display:block;font-size:12px;font-weight:700;color:var(--k-warn)}
+.k-mx-row{display:grid;place-items:center;text-align:center;background:var(--k-accent-dark);color:#fff;border-radius:10px;padding:8px;font-weight:800}
+.k-mx-cell{display:flex;align-items:center;background:var(--k-panel);border:1px solid var(--k-line);border-radius:10px;padding:10px 16px;min-width:0;word-break:keep-all}
+.k-mx-cell.hl{background:var(--k-soft);font-weight:800;font-size:16px}
+.k-mx-cell.good{color:var(--k-good);font-weight:700;background:color-mix(in srgb,var(--k-good) 9%,#fff)}
+.k-band{margin:-18px -20px 2px;padding:10px 20px;background:var(--k-accent-dark);color:#fff;font-size:17px;font-weight:800;text-align:center}
+.k-rows{display:flex;flex-direction:column;flex:1;min-height:0;margin:0;padding:0;list-style:none}
+.k-rows>*{flex:1;display:flex;align-items:center;gap:10px;border-bottom:1px dashed var(--k-line);padding:6px 2px;word-break:keep-all}
+.k-rows>*:last-child{border-bottom:0}
+.k-rows b{margin-left:auto;font-variant-numeric:tabular-nums;white-space:nowrap}
+.k-stats{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:12px}
+.k-stat{display:flex;align-items:center;gap:16px;background:var(--k-soft);border-radius:var(--k-radius);padding:14px 20px;min-width:0}
+.k-stat>b{flex:none;font-size:38px;font-weight:800;letter-spacing:-.02em;color:var(--k-accent-dark);font-variant-numeric:tabular-nums}
+.k-stat>span{font-size:15px;line-height:1.45;word-break:keep-all}
+
+/* Motion. Entrance classes play when a scene opens (.is-entering) and again when their step becomes current (.focus). */
+@keyframes k-in-up{from{opacity:0;transform:translateY(18px)}}
+@keyframes k-in-left{from{opacity:0;transform:translateX(-28px)}}
+@keyframes k-in-scale{from{opacity:0;transform:scale(.9)}}
+@keyframes k-grow-x{from{transform:scaleX(0)}}
+@keyframes k-grow-y{from{transform:scaleY(0)}}
+@keyframes k-draw{from{stroke-dashoffset:1}}
+@keyframes k-pop{0%{transform:scale(1)}40%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes k-march{to{stroke-dashoffset:-24}}
+@keyframes k-beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.35)}}
+.k-in-up{--k-anim:k-in-up}.k-in-left{--k-anim:k-in-left}.k-in-scale{--k-anim:k-in-scale}.k-pop{--k-anim:k-pop}
+.k-grow-x{--k-anim:k-grow-x;transform-origin:left center;transform-box:fill-box}
+.k-grow-y{--k-anim:k-grow-y;transform-origin:center bottom;transform-box:fill-box}
+.k-draw{--k-anim:k-draw;stroke-dasharray:1;stroke-dashoffset:0}
+.k-stagger>*{--k-anim:k-in-up}
+.k-stagger>:nth-child(2){--k-delay:.08s}.k-stagger>:nth-child(3){--k-delay:.16s}.k-stagger>:nth-child(4){--k-delay:.24s}.k-stagger>:nth-child(5){--k-delay:.32s}.k-stagger>:nth-child(6){--k-delay:.4s}.k-stagger>:nth-child(7){--k-delay:.48s}.k-stagger>:nth-child(n+8){--k-delay:.56s}
+.is-entering :is(.k-in-up,.k-in-left,.k-in-scale,.k-grow-x,.k-grow-y,.k-draw,.k-stagger>*),
+.reveal-spotlight [data-step].focus :is(.k-in-up,.k-in-left,.k-in-scale,.k-grow-x,.k-grow-y,.k-draw,.k-pop,.k-stagger>*),
+.reveal-build [data-step].focus :is(.k-in-up,.k-in-left,.k-in-scale,.k-grow-x,.k-grow-y,.k-draw,.k-pop,.k-stagger>*),
+[data-step].focus:is(.k-in-up,.k-in-left,.k-in-scale,.k-pop){animation:var(--k-anim) .7s cubic-bezier(.2,.7,.2,1) var(--k-delay,0s) both}
+.k-march{stroke-dasharray:8 4;animation:k-march 1.4s linear infinite}
+.k-beat{transform-box:fill-box;transform-origin:center;animation:k-beat 1.8s ease-in-out infinite}
+body.motion-none #stage *{animation:none!important}
+
+/* Theme presets. Newly authored tokens; brand colors belong in a deck's own css. */
+
+/* consulting: dense multi-panel report, index tabs on top, solid key-message bar */
+body.theme-consulting{--k-accent:#5b2a92;--k-accent-dark:#3e1870;--k-accent-2:#9d4f9a;--k-soft:#f3edf8;--k-ink:#211a2e;--k-muted:#6c6480;--k-line:#e3dbea;--k-bg:#fbf9fc;--k-warn:#e2852f;--k-good:#2f8a6b;--k-bad:#c2416b;--k-radius:12px;
+  --chart-1:#5b2a92;--chart-2:#9d4f9a;--chart-3:#e2852f;--chart-4:#c4a6dc;--chart-5:#c2416b;--chart-6:#8a83a0;--chart-ink:#211a2e;--chart-muted:#6c6480;--chart-grid:#ece6f1;
+  font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.theme-consulting #stage{background:var(--k-bg)}
+.theme-consulting .deck-mark i{background:var(--k-accent)}
+.theme-consulting .composed-scene .eyebrow::before{content:"";display:inline-block;width:10px;height:10px;margin-right:8px;border-radius:3px;background:var(--k-accent)}
+.theme-consulting .composed-scene .scene-bottom{border-top:0;background:var(--k-accent);color:#fff;border-radius:10px;padding:10px 18px}
+.theme-consulting .composed-scene .message{font-size:19px}
+.theme-consulting .composed-scene .message-label{background:#fff;color:var(--k-accent)}
+.theme-consulting .composed-scene .source{color:#ffffffcc}
+.theme-consulting .item.on .item-index{background:var(--k-accent);border-color:var(--k-accent);color:#fff}
+.theme-consulting .item-value{color:var(--k-accent)}
+
+/* executive: storytelling with spotlight, chapter tabs at the bottom, insight bar */
+body.theme-executive{--k-accent:#e2681c;--k-accent-dark:#a94c12;--k-accent-2:#8a6a52;--k-soft:#fdf0e5;--k-ink:#1e2730;--k-muted:#66727d;--k-line:#dce0e4;--k-bg:#f5f4f1;--k-warn:#e2681c;--k-good:#2a7f79;--k-bad:#c8412b;--k-radius:10px;
+  --chart-1:#e2681c;--chart-2:#2a7f79;--chart-3:#8a6a52;--chart-4:#2f5fa8;--chart-5:#c8412b;--chart-6:#9aa3ab;--chart-ink:#1e2730;--chart-muted:#66727d;--chart-grid:#e6e8ea;
+  font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.theme-executive #stage{background:var(--k-bg)}
+body.theme-executive.has-chapters #chapter-nav{top:auto;bottom:82px;border-bottom:0;border-top:1px solid var(--k-line)}
+body.theme-executive.has-chapters #viewport{top:0;bottom:128px}
+.theme-executive .chapter-tab.active{background:transparent;color:var(--k-ink);box-shadow:inset 0 -3px 0 var(--k-accent);border-radius:0}
+.theme-executive .deck-mark i{background:var(--k-accent)}
+.theme-executive .composed-scene .scene-title{font-weight:800}
+.theme-executive .composed-scene .scene-title em{font-style:normal;color:var(--k-accent)}
+.theme-executive .reveal-spotlight [data-step].focus{box-shadow:0 0 0 3px var(--k-accent),0 12px 28px rgba(226,104,28,.14)}
+.theme-executive .composed-scene .scene-bottom{border-top:0;background:#fff;border:1px solid var(--k-line);border-left:5px solid var(--k-accent);border-radius:8px;padding:10px 16px}
+.theme-executive .composed-scene .message{font-size:18px}
+.theme-executive .item.on .item-index{background:var(--k-accent);border-color:var(--k-accent);color:#fff}
+.theme-executive .item-value{color:var(--k-accent)}
+
+/* deck css (validated: no imports or remote URLs) */
+body{--k-accent:#0A6C8F;--k-accent-dark:#0B4A63;--k-accent-2:#17907A;--k-soft:#E3EDF1;--k-ink:#13293D;--k-muted:#56666F;--k-line:#D3DCE0;--k-panel:#FFFFFF;--k-bg:#EDF1F2;--k-warn:#C76A12;--k-good:#17907A;--k-bad:#B93A32;--k-radius:8px;--k-shadow:0 0 0 0 transparent;--s-rcp:#3B7DD8;--s-doc:#17907A;--s-pay:#E2A417;--s-before:#AFBCC1;--chart-1:#0A6C8F;--chart-2:#AFBCC1;font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif} .composed-scene{padding:36px 58px 30px!important;gap:14px!important} .composed-scene .deck-top{font-size:14px;letter-spacing:0;color:var(--k-muted)} .composed-scene .deck-mark{gap:10px;color:var(--k-ink)} .composed-scene .deck-mark i{width:30px;height:12px;border-radius:2px;background:linear-gradient(var(--s-rcp) 0 33%,var(--s-doc) 33% 67%,var(--s-pay) 67%)} .composed-scene .eyebrow{margin:0;font-size:16px;color:var(--k-muted);font-weight:700} .composed-scene .scene-title{font-size:42px;line-height:1.2;letter-spacing:-.035em;max-width:none;color:var(--k-ink)} .composed-scene .scene-title em{font-style:normal;color:var(--k-accent);box-shadow:inset 0 -9px 0 #D6E8EF} .composed-scene .lead.summary{font-size:17px;padding:8px 16px;background:#fff;border:1px solid var(--k-line);border-left:6px solid var(--k-accent);border-radius:4px;color:var(--k-ink)} .composed-scene .scene-bottom{border-top:2px solid var(--k-ink);padding-top:10px;gap:20px} .composed-scene .message{font-size:20px;font-weight:700;color:var(--k-ink)} .composed-scene .message-label{background:var(--k-ink);border-radius:3px;font-size:14px} .composed-scene .source{font-size:12px;max-width:440px;color:var(--k-muted)} .sb{flex:1;min-height:0;display:grid;gap:14px} .sb-p{background:var(--k-panel);border:1px solid var(--k-line);border-radius:8px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0;overflow:hidden} .sb-h{margin:0;font-size:17px;font-weight:700;color:var(--k-ink);display:flex;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--k-line)} .sb-h small{margin-left:auto;font-size:13px;font-weight:400;color:var(--k-muted)} .sb-h i{flex:none;width:22px;height:6px;border-radius:2px;align-self:center;background:var(--k-accent)} .sb-read{margin:0;font-size:15px;line-height:1.5;color:var(--k-ink);word-break:keep-all} .sb-read b{color:var(--k-accent-dark)} .sb-note{margin:0;font-size:12.5px;line-height:1.45;color:var(--k-muted);word-break:keep-all} .sb-calc{display:inline-block;margin-left:4px;padding:0 5px;border:1px solid var(--k-line);border-radius:3px;font-size:11px;font-weight:700;color:var(--k-muted);vertical-align:2px} .sb-svg{flex:1;min-height:0;width:100%} .sb-svg text{font-family:inherit} .t-axis{font-size:13px;fill:#6B7A82} .t-lab{font-size:16px;font-weight:700;fill:#13293D} .t-sub{font-size:13px;fill:#56666F} .t-in{font-size:17px;font-weight:700;fill:#fff} .t-in.dark{fill:#13293D} .t-big{font-size:34px;font-weight:800;fill:#13293D;font-variant-numeric:tabular-nums} .t-big.acc{fill:#0A6C8F} .t-delta{font-size:16px;font-weight:800;fill:#13293D} .g-grid{stroke:#DDE4E7;stroke-width:1} .g-target{stroke:#C76A12;stroke-width:2.5;stroke-dasharray:7 6} .t-target{font-size:14px;font-weight:700;fill:#C76A12} .num{font-variant-numeric:tabular-nums} .sb-kpi{display:grid;grid-template-columns:1fr auto;align-items:end;gap:4px 12px} .sb-kpi .lab{font-size:14px;color:var(--k-muted);grid-column:1/-1} .sb-kpi .val{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--k-ink);line-height:1.05} .sb-kpi .val small{font-size:18px;font-weight:700;color:var(--k-muted);margin:0 6px} .sb-chip{font-size:15px;font-weight:800;padding:3px 9px;border-radius:4px;background:#E3EDF1;color:var(--k-accent-dark);white-space:nowrap} .sb-chip.warn{background:#F7E8D8;color:#9A4E0B} .sb-bars{display:grid;gap:5px} .sb-bar{display:grid;grid-template-columns:44px 1fr 56px;align-items:center;gap:8px;font-size:13px;color:var(--k-muted)} .sb-bar>span:last-child{text-align:right;font-weight:700;color:var(--k-ink);font-variant-numeric:tabular-nums} .sb-track{height:12px;background:#EEF2F3;border-radius:2px;overflow:hidden} .sb-track>i{display:block;height:100%;background:var(--k-accent);border-radius:2px;transform-origin:left center} .sb-track>i.pre{background:var(--s-before)} .sb-track>i.warn{background:var(--k-warn)} .sb-ask{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;background:var(--k-ink);color:#fff;border-radius:8px;padding:16px 24px} .sb-ask .tag{font-size:15px;font-weight:800;background:#E2A417;color:#13293D;padding:5px 12px;border-radius:3px} .sb-ask .what{font-size:24px;font-weight:800;letter-spacing:-.02em;word-break:keep-all} .sb-ask .what small{display:block;font-size:15px;font-weight:400;color:#C9D6DC;letter-spacing:0;margin-top:2px} .sb-ask .why{display:flex;gap:22px;font-size:13px;color:#C9D6DC} .sb-ask .why b{display:block;font-size:26px;color:#fff;font-variant-numeric:tabular-nums} .sb-stack{display:flex;flex-direction:column;gap:14px;min-height:0} .sb-stack>.sb-p{flex:1} .sb-tbl{width:100%;height:100%;border-collapse:separate;border-spacing:0;font-size:16px} .sb-tbl th{font-size:13px;font-weight:700;color:var(--k-muted);text-align:left;padding:6px 10px;border-bottom:2px solid var(--k-ink)} .sb-tbl td{padding:6px 10px;border-bottom:1px solid var(--k-line);vertical-align:middle;font-variant-numeric:tabular-nums} .sb-tbl td.r,.sb-tbl th.r{text-align:right} .sb-tbl tr.tot td{font-weight:800;border-bottom:0;background:#F3F7F8} .sb-tbl tr.hl td{background:#FBF1E6} .sb-stage{display:flex;align-items:center;gap:10px;font-weight:700} .sb-stage i{width:8px;height:30px;border-radius:2px} .sb-pair{display:grid;gap:4px;min-width:200px} .sb-pair .sb-track{height:11px} .sb-btn{align-self:flex-start;border:1px solid var(--k-accent);background:#fff;color:var(--k-accent-dark);border-radius:4px;padding:5px 12px;font-size:14px;font-weight:700} .sb-btn:hover{background:var(--k-soft)} .sb-flow{display:flex;flex-direction:column;gap:0;flex:1;justify-content:center} .sb-node{border:1px solid var(--k-line);border-left:6px solid var(--k-ink);border-radius:4px;padding:10px 14px;background:#fff;font-size:16px;font-weight:700;word-break:keep-all} .sb-node small{display:block;font-size:13px;font-weight:400;color:var(--k-muted);margin-top:2px} .sb-node.warn{border-left-color:var(--k-warn)} .sb-arrow{height:26px;margin-left:26px;border-left:2px dashed var(--k-muted);position:relative} .sb-arrow::after{content:"";position:absolute;left:-6px;bottom:-2px;border:5px solid transparent;border-top:7px solid var(--k-muted)} .sb-act{display:flex;flex-direction:column;gap:12px;padding:0;overflow:hidden} .sb-act .band{padding:12px 18px 10px;color:#fff;font-size:14px;font-weight:700;display:flex;justify-content:space-between} .sb-act .band.rcp{background:var(--s-rcp)} .sb-act .band.doc{background:var(--s-doc)} .sb-act .band.pay{background:var(--s-pay);color:#13293D} .sb-act .body{padding:0 18px 14px;display:flex;flex-direction:column;gap:12px;flex:1} .sb-act h4{margin:0;font-size:22px;letter-spacing:-.02em;word-break:keep-all} .sb-act .money{font-size:40px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1} .sb-act .money small{font-size:17px;font-weight:700;color:var(--k-muted);margin-left:4px} .sb-act .share{font-size:14px;color:var(--k-muted)} .sb-act .res{margin-top:auto;border-top:1px dashed var(--k-line);padding-top:10px;font-size:14px;color:var(--k-muted)} .sb-act .res b{display:block;font-size:22px;color:var(--k-ink);font-variant-numeric:tabular-nums} .sb-strip{display:flex;height:34px;border-radius:3px;overflow:hidden;gap:2px} .sb-strip>span{display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;transform-origin:left center} .sb-tl{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;font-size:14px} .sb-tl>div{background:#EEF2F3;padding:8px 10px;border-radius:3px;color:var(--k-muted);min-height:58px} .sb-tl>div b{display:block;color:var(--k-ink);font-size:15px} .sb-tl>div.go{background:#13293D;color:#C9D6DC} .sb-tl>div.go b{color:#fff} .sb-tl>div.st{background:#D6E8EF;color:var(--k-accent-dark)} .sb-tl>div.ms{background:#fff;border:2px solid var(--k-accent);color:var(--k-accent-dark)} .sb-stat{display:flex;flex-direction:column;gap:3px;padding:12px 10px;border-bottom:1px dashed var(--k-line)} .sb-stat:last-child{border-bottom:0} .sb-stat b{font-size:34px;font-weight:800;letter-spacing:-.02em;color:var(--k-ink);font-variant-numeric:tabular-nums;line-height:1.1} .sb-stat b.acc{color:var(--k-accent)} .sb-stat b.warn{color:var(--k-warn)} .sb-stat span{font-size:14px;color:var(--k-ink);line-height:1.45;word-break:keep-all} .sb-waffle{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;width:300px;align-self:center} .sb-waffle i{aspect-ratio:1;border-radius:50%;background:#D7B48E} .sb-waffle i.on{background:var(--k-accent)} .sb-legend{display:flex;gap:16px;font-size:13px;color:var(--k-muted);flex-wrap:wrap} .sb-legend span{display:inline-flex;align-items:center;gap:6px} .sb-legend i{width:14px;height:10px;border-radius:2px;display:inline-block} .sb-person{display:flex;gap:10px} .sb-person svg{width:44px;height:56px} .sb-def{width:100%;border-collapse:collapse;font-size:14.5px;height:100%} .sb-def th{text-align:left;font-size:13px;color:var(--k-muted);padding:6px 10px;border-bottom:2px solid var(--k-ink)} .sb-def td{padding:6px 10px;border-bottom:1px solid var(--k-line);vertical-align:middle;word-break:keep-all;line-height:1.4} .sb-def td:first-child{font-weight:700;white-space:nowrap} .sb-def td.open{color:#9A4E0B;font-weight:700} .sb-quiet{color:var(--k-muted)} .sb-flow.big{gap:0} .sb-flow.big .sb-node{flex:1;display:flex;flex-direction:column;justify-content:center;font-size:20px;padding:12px 18px} .sb-flow.big .sb-node small{font-size:14px} .sb-harrow{align-self:center;height:2px;border-top:2px dashed var(--k-muted);position:relative} .sb-harrow::after{content:"";position:absolute;right:-3px;top:-7px;border:5px solid transparent;border-left:7px solid var(--k-muted)} .sb-node{display:flex;flex-direction:column;justify-content:center} .sb-person{gap:18px;justify-content:center}.sb-person svg{width:64px;height:82px} .sb-stage small{display:block;font-size:13px;font-weight:400;color:var(--k-muted);margin-top:2px}.sb-tbl{font-size:17px}.sb-wf .t-delta{font-size:19px}.sb-wf .t-sub{font-size:15px;font-weight:700;fill:#13293D}.sb-wf .t-axis{font-size:14px} .sb-base{display:grid;grid-template-columns:auto repeat(4,1fr);gap:2px;background:var(--k-line);border-radius:6px;overflow:hidden;font-size:13.5px;color:var(--k-muted)}.sb-base>span{background:#fff;padding:9px 14px;line-height:1.35}.sb-base>span b{display:block;font-size:17px;color:var(--k-ink)}.sb-base>.h{background:var(--k-ink);color:#fff;font-weight:700;display:flex;align-items:center;font-size:15px}.sb-harrow+.sb-node,.sb-node{font-size:18px} @keyframes sb-dash{to{stroke-dashoffset:-26}} .sb-flowline{animation:sb-dash 1.6s linear infinite} @media (prefers-reduced-motion:reduce){.sb-flowline{animation:none}} @media print{.sb-flowline{animation:none}}
+/* In-browser review: edit and memo modes */
+.editor-bar{position:fixed;top:7px;right:14px;z-index:8;display:flex;gap:6px}
+.editor-bar button{border:1px solid #c9d1db;background:#fff;color:#1c232c;border-radius:7px;padding:6px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.editor-bar button[aria-pressed=true]{background:#1c232c;color:#fff;border-color:#1c232c}
+.editor-bar button:focus-visible{outline:3px solid #355ee8;outline-offset:2px}
+body.editing [contenteditable]{outline:2px dashed #3158db;outline-offset:3px;cursor:text;border-radius:2px}
+body.editing [contenteditable]:focus{outline-style:solid;background:rgba(49,88,219,.07)}
+body.memo-mode #stage,body.memo-mode #stage *{cursor:crosshair}
+body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offset:2px}
+.was-edited{box-shadow:inset 0 -3px 0 rgba(255,193,7,.75)}
+.has-memo{position:relative}
+.has-memo::after{content:attr(data-memo);position:absolute;top:-12px;right:-12px;min-width:24px;height:24px;padding:0 6px;border-radius:12px;background:#e2681c;color:#fff;font:700 13px/24px "Malgun Gothic",system-ui,sans-serif;text-align:center;z-index:6;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.editor-banner{position:fixed;left:50%;top:54px;transform:translateX(-50%);z-index:20;margin:0;padding:8px 16px;border-radius:8px;background:#fff4e5;border:1px solid #e2a65c;color:#7a3e00;font-size:14px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.editor-banner[hidden]{display:none}
+.editor-dialog{width:min(760px,calc(100vw - 32px))}
+.memo-target{margin:14px 22px 6px;font-size:13px;color:#5d6876}
+.memo-input{display:block;width:calc(100% - 44px);margin:0 22px;font:inherit;font-size:16px;padding:10px 12px;border:1px solid #c9d1db;border-radius:8px;resize:vertical}
+.editor-actions{display:flex;gap:10px;padding:14px 22px 18px}
+.editor-actions button{border:1px solid #c9d1db;background:#fff;border-radius:8px;padding:9px 14px;font:inherit;font-size:14px;cursor:pointer}
+.editor-actions button.primary{background:#1c232c;color:#fff;border-color:#1c232c}
+.review-list{padding:14px 22px;max-height:460px;overflow:auto;display:grid;gap:10px}
+.review-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 12px;border:1px solid #dde3ea;border-radius:8px;background:#fff}
+.review-row b{grid-column:1/-1;font-size:13px}
+.review-row .before{grid-column:1;font-size:14px;color:#7a8492;text-decoration:line-through}
+.review-row .after{grid-column:1;font-size:15px}
+.review-row.memo .before{text-decoration:none;font-size:13px}
+.review-row.memo .bookmark-jump{grid-column:2;grid-row:2/4;align-self:center}
+.review-row.numeric{border-color:#e2a65c;background:#fffaf2}
+.review-note{margin:0 22px 18px;font-size:13px;color:#5d6876}
+#print-pages .has-memo::after{display:none}
+#print-pages .was-edited{box-shadow:none}
+@media print{[data-editor-ui],.editor-banner{display:none!important}.has-memo::after{display:none}[contenteditable]{outline:none!important}.was-edited{box-shadow:none}}
+</style></head>
+<body class="theme-default"><nav id="chapter-nav" aria-label="장 바로가기"></nav><main id="viewport" aria-label="발표 화면"><section id="stage" aria-label="현재 발표 장면"></section></main>
+<nav class="controls" aria-label="발표 조작"><button id="prev" type="button" aria-label="이전 단계">←</button>
+<span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="다음 단계">→</button>
+<button id="play" type="button" aria-pressed="false">자동 재생</button><button id="replay" type="button">처음부터</button>
+<button id="open-outline" type="button" aria-haspopup="dialog">목차</button><button id="bookmark-current" type="button">질문 표시</button><button id="open-bookmarks" type="button" aria-haspopup="dialog">질문 목록</button><button id="return-bookmark" type="button" disabled>질문 복귀</button><button id="return-origin" type="button" hidden>↩ 돌아가기</button>
+<button id="fullscreen" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 · G 목차 · B 질문 표시 · R 복귀</span></nav>
+<dialog id="outline-dialog" class="jump-dialog" aria-labelledby="outline-title"><header><strong id="outline-title">목차와 단계</strong><button id="outline-close" type="button" aria-label="목차 닫기">×</button></header><div id="outline-list"></div></dialog>
+<dialog id="bookmarks-dialog" class="jump-dialog" aria-labelledby="bookmarks-title"><header><strong id="bookmarks-title">질문 북마크</strong><button id="bookmarks-close" type="button" aria-label="질문 북마크 닫기">×</button></header><div id="bookmarks-list"></div></dialog>
+
+<aside id="print-toolbar" aria-label="인쇄 미리보기"><p>전체 장면 · 모든 설명 단계 · A4 가로. 인쇄 창에서 PDF 저장을 선택하세요. 추가 자료는 별도로 출력합니다.</p><button id="print-confirm" type="button">인쇄 / PDF로 저장</button><button id="print-close" type="button">발표로 돌아가기</button></aside>
+<p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
+<script type="application/json" id="deck-data">{"title": "새봄병원 외래 대기시간 단축 프로젝트 결과 보고", "version": "2026 상반기", "settings": {"width": 1600, "height": 900, "font": "system", "motion": "key", "playback": "both", "end": "stop", "theme": "default"}, "language": "ko", "scenes": [{"id": "summary", "chapter": "결론", "eyebrow": "2026년 상반기 결과 보고, 운영혁신팀", "title": "외래 평균 대기 **42분 → 26분**, 목표 30분 이하를 달성했습니다", "lead": "대기시간 16분(38.1%) 단축, 전반 만족도 3.4 → 4.2점, 노쇼율 9.0% → 6.5%, 상반기 투자 1억 8,000만 원", "steps": ["대기시간 결과", "만족도·노쇼·투자", "오늘의 요청"], "message": "대기 단축 목표는 달성했고, 남은 과제는 모바일을 쓰지 않는 고령 환자입니다.", "message_label": "결론", "source": "원본 1·2·10번 슬라이드. ※ 가상 자료: 실제 병원·환자·성과가 아닙니다.", "duration": 40, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.5fr 1fr;grid-template-rows:1fr auto"}, [["section", {"class": "sb-p k-in-up", "data-step": "1"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "환자 1인 평균 대기, 단계별 구성", ["small", {}, ["접수 + 진료 + 수납 대기, 진료 시간 제외"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 850 330", "preserveAspectRatio": "xMidYMid meet", "role": "img", "aria-label": "단계별 평균 대기 이전 42분, 이후 26분"}, [["line", {"class": "g-grid", "x1": "100", "y1": "36", "x2": "100", "y2": "290"}, []], ["text", {"class": "t-axis", "x": "100", "y": "312", "text-anchor": "middle"}, ["0분"]], ["line", {"class": "g-grid", "x1": "260", "y1": "36", "x2": "260", "y2": "290"}, []], ["text", {"class": "t-axis", "x": "260", "y": "312", "text-anchor": "middle"}, ["10분"]], ["line", {"class": "g-grid", "x1": "420", "y1": "36", "x2": "420", "y2": "290"}, []], ["text", {"class": "t-axis", "x": "420", "y": "312", "text-anchor": "middle"}, ["20분"]], ["line", {"class": "g-grid", "x1": "580", "y1": "36", "x2": "580", "y2": "290"}, []], ["text", {"class": "t-axis", "x": "580", "y": "312", "text-anchor": "middle"}, ["30분"]], ["line", {"class": "g-grid", "x1": "740", "y1": "36", "x2": "740", "y2": "290"}, []], ["text", {"class": "t-axis", "x": "740", "y": "312", "text-anchor": "middle"}, ["40분"]], ["polygon", {"points": "101,118 259,118 163,206 101,206", "fill": "#3B7DD8", "opacity": ".16"}, []], ["text", {"class": "t-delta", "x": "156.0", "y": "168.0", "text-anchor": "middle"}, ["−6분"]], ["polygon", {"points": "261,118 659,118 451,206 165,206", "fill": "#17907A", "opacity": ".16"}, []], ["text", {"class": "t-delta", "x": "384.0", "y": "168.0", "text-anchor": "middle"}, ["−7분"]], ["polygon", {"points": "661,118 771,118 515,206 453,206", "fill": "#E2A417", "opacity": ".16"}, []], ["text", {"class": "t-delta", "x": "590", "y": "168.0", "text-anchor": "start"}, ["−3분"]], ["rect", {"class": "k-grow-x", "x": "101", "y": "52", "width": "158", "height": "66", "rx": "3", "fill": "#3B7DD8", "opacity": ".55"}, []], ["text", {"class": "t-in dark", "x": "180.0", "y": "91.0", "text-anchor": "middle"}, ["접수 10분"]], ["rect", {"class": "k-grow-x", "x": "101", "y": "206", "width": "62", "height": "66", "rx": "3", "fill": "#3B7DD8"}, []], ["text", {"class": "t-in", "x": "132.0", "y": "245.0", "text-anchor": "middle"}, ["4분"]], ["rect", {"class": "k-grow-x", "x": "261", "y": "52", "width": "398", "height": "66", "rx": "3", "fill": "#17907A", "opacity": ".55"}, []], ["text", {"class": "t-in dark", "x": "460.0", "y": "91.0", "text-anchor": "middle"}, ["진료 25분"]], ["rect", {"class": "k-grow-x", "x": "165", "y": "206", "width": "286", "height": "66", "rx": "3", "fill": "#17907A"}, []], ["text", {"class": "t-in", "x": "308.0", "y": "245.0", "text-anchor": "middle"}, ["18분"]], ["rect", {"class": "k-grow-x", "x": "661", "y": "52", "width": "110", "height": "66", "rx": "3", "fill": "#E2A417", "opacity": ".55"}, []], ["text", {"class": "t-in dark", "x": "716.0", "y": "91.0", "text-anchor": "middle"}, ["수납 7분"]], ["rect", {"class": "k-grow-x", "x": "453", "y": "206", "width": "62", "height": "66", "rx": "3", "fill": "#E2A417"}, []], ["text", {"class": "t-in dark", "x": "484.0", "y": "245.0", "text-anchor": "middle"}, ["4분"]], ["text", {"class": "t-lab", "x": "0", "y": "80"}, ["이전"]], ["text", {"class": "t-sub", "x": "0", "y": "100"}, ["2025 하반기"]], ["text", {"class": "t-lab", "x": "0", "y": "234"}, ["이후"]], ["text", {"class": "t-sub", "x": "0", "y": "254"}, ["2026년 6월"]], ["text", {"class": "t-big", "x": "784", "y": "97.0"}, ["42분"]], ["text", {"class": "t-big acc", "x": "594", "y": "251.0"}, ["26분"]], ["line", {"class": "g-target", "x1": "580", "y1": "30", "x2": "580", "y2": "290"}, []], ["text", {"class": "t-target", "x": "588", "y": "26"}, ["목표 30분 이하"]]]], ["p", {"class": "sb-read"}, ["세 단계 모두 줄었고, 6월 평균 ", ["b", {}, ["26분"]], "은 목표선 30분보다 ", ["b", {}, ["4분"]], " 짧습니다.", ["span", {"class": "sb-calc"}, ["계산 30 − 26"]]]]]], ["div", {"class": "sb-stack k-stagger", "data-step": "2"}, [["section", {"class": "sb-p"}, [["div", {"class": "sb-kpi"}, [["span", {"class": "lab"}, ["전반 만족도 (5점 만점)"]], ["span", {"class": "val"}, ["3.4", ["small", {}, ["→"]], "4.2", ["small", {}, ["점"]]]], ["span", {"class": "sb-chip"}, ["+0.8점"]]]], ["div", {"class": "sb-bars"}, [["div", {"class": "sb-bar"}, [["span", {}, ["이전"]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x pre", "style": "width:68%"}, []]]], ["span", {}, ["3.4"]]]], ["div", {"class": "sb-bar"}, [["span", {}, ["이후"]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x ", "style": "width:84%"}, []]]], ["span", {}, ["4.2"]]]]]]]], ["section", {"class": "sb-p"}, [["div", {"class": "sb-kpi"}, [["span", {"class": "lab"}, ["예약 부도(노쇼)율"]], ["span", {"class": "val"}, ["9.0", ["small", {}, ["→"]], "6.5", ["small", {}, ["%"]]]], ["span", {"class": "sb-chip"}, ["−2.5%p"]]]], ["div", {"class": "sb-bars"}, [["div", {"class": "sb-bar"}, [["span", {}, ["이전"]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x pre", "style": "width:75.0%"}, []]]], ["span", {}, ["9.0%"]]]], ["div", {"class": "sb-bar"}, [["span", {}, ["이후"]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x ", "style": "width:54.166666666666664%"}, []]]], ["span", {}, ["6.5%"]]]]]]]], ["section", {"class": "sb-p"}, [["div", {"class": "sb-kpi"}, [["span", {"class": "lab"}, ["상반기 투자 (모바일 앱, 키오스크, 예약 시스템)"]], ["span", {"class": "val"}, ["1억 8,000", ["small", {}, ["만 원"]]]], ["span", {"class": "sb-chip"}, ["3개 조치"]]]], ["div", {"class": "sb-strip"}, [["span", {"class": "k-grow-x", "style": "flex:9000;background:#3B7DD8"}, ["앱 9,000"]], ["span", {"class": "k-grow-x", "style": "flex:6000;background:#E2A417;color:#13293D"}, ["키오스크 6,000"]], ["span", {"class": "k-grow-x", "style": "flex:3000;background:#17907A"}, ["예약 3,000"]]]]]]]], ["div", {"class": "sb-ask k-in-up", "data-step": "3", "style": "grid-column:1/-1"}, [["span", {"class": "tag"}, ["오늘의 요청"]], ["span", {"class": "what"}, ["고령 환자 디지털 안내 인력 4명, 연 1억 6,000만 원 예산 승인", ["small", {}, ["하반기 목표 평균 대기 22분, 창구에 남는 고령 환자를 현장에서 안내합니다."]]]], ["span", {"class": "why"}, [["span", {}, [["b", {}, ["12%"]], "65세 이상", ["br", {}, []], "모바일 접수 이용률"]], ["span", {}, [["b", {}, ["22분"]], "하반기", ["br", {}, []], "평균 대기 목표"]]]]]]]]]}, {"id": "background", "chapter": "배경", "title": "대기는 민원 1위였습니다: 하반기 민원 412건 중 **186건(45.1%)**", "lead": "하루 외래 환자 약 1,850명, 2025년 하반기 평균 대기 42분, 목표는 평균 대기 30분 이하", "steps": ["민원 구성", "대기의 영향", "목표"], "message": "하루 1,850명이 겪는 대기를 30분 이하로 줄이는 것이 프로젝트의 목표였습니다.", "message_label": "배경", "source": "원본 3번 슬라이드 (민원: 2025년 하반기 6개월), 재방문 의향 8번", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb k-stagger", "style": "grid-template-columns:1.15fr 1fr 1fr"}, [["section", {"class": "sb-p", "data-step": "1"}, [["h3", {"class": "sb-h"}, [["i", {"style": "background:#C76A12"}, []], "민원 412건의 구성", ["small", {}, ["2025년 하반기 6개월"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 340 340", "role": "img", "aria-label": "민원 412건 중 대기 관련 186건"}, [["path", {"d": "M 218.05 322.62 A 160 160 0 1 1 169.98 10.00 L 169.99 68.00 A 102 102 0 1 0 200.63 267.29 Z", "fill": "#AFBCC1", "stroke": "#fff", "stroke-width": "3"}, []], ["path", {"class": "k-in-scale", "d": "M 170.00 10.00 A 160 160 0 0 1 218.05 322.62 L 200.63 267.29 A 102 102 0 0 0 170.00 68.00 Z", "fill": "#C76A12", "stroke": "#fff", "stroke-width": "3"}, []], ["text", {"x": "170", "y": "174", "text-anchor": "middle", "class": "t-big"}, ["412건"]], ["text", {"x": "170", "y": "200", "text-anchor": "middle", "class": "t-sub"}, ["2025년 하반기 민원"]], ["text", {"x": "299.5", "y": "157.1", "text-anchor": "middle", "style": "font-size:16px;font-weight:800;fill:#fff"}, ["45.1%"]]]], ["div", {"style": "display:grid;grid-template-columns:1fr 1fr;gap:12px"}, [["div", {"class": "sb-stat", "style": "border:0"}, [["b", {"class": "warn"}, ["186건"]], ["span", {}, ["대기 관련 민원, 전체의 45.1%로 유형 1위"]]]], ["div", {"class": "sb-stat", "style": "border:0"}, [["b", {"style": "color:#7D8D94"}, ["226건"]], ["span", {}, ["그 밖의 민원 ", ["span", {"class": "sb-calc"}, ["계산 412 − 186"]]]]]]]], ["p", {"class": "sb-read"}, ["민원 열 건 중 네 건 이상이 ", ["b", {}, ["기다림"]], "에 관한 것이었습니다."]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "대기가 남기는 영향", ["small", {}, ["원본 3번 슬라이드"]]]], ["div", {"class": "sb-flow big"}, [["div", {"class": "sb-node"}, ["긴 외래 대기", ["small", {}, ["접수, 진료, 수납 대기를 합쳐 평균 42분 (2025년 하반기)"]]]], ["div", {"class": "sb-arrow"}, []], ["div", {"class": "sb-node warn"}, ["대기 중 이탈과 불만", ["small", {}, ["대기 관련 민원 186건, 민원 1위"]]]], ["div", {"class": "sb-arrow"}, []], ["div", {"class": "sb-node warn"}, ["재방문 의향 하락", ["small", {}, ["2025년 12월 조사 재방문 의향 71%"]]]]]], ["p", {"class": "sb-note"}, ["재방문 의향 71%는 원본 8번 슬라이드의 이전 조사 값입니다."]]]], ["section", {"class": "sb-p", "data-step": "3"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "목표", ["small", {}, ["평균 대기 30분 이하"]]]], ["div", {"class": "sb-stat"}, [["b", {}, ["약 1,850명"]], ["span", {}, ["하루 외래 환자, 매일 이만큼의 환자가 기다립니다"]]]], ["div", {"class": "sb-stat"}, [["b", {"class": "warn"}, ["12분 이상 단축"]], ["span", {}, ["42분에서 30분 이하로, 출발점의 28.6% ", ["span", {"class": "sb-calc"}, ["계산 (42 − 30) ÷ 42"]]]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 400 150", "role": "img", "aria-label": "42분 중 30분까지는 허용, 12분 이상 단축 필요"}, [["rect", {"x": "10", "y": "40", "width": "270", "height": "44", "rx": "3", "fill": "#0A6C8F", "opacity": ".25"}, []], ["rect", {"class": "k-grow-x", "x": "282", "y": "40", "width": "106", "height": "44", "rx": "3", "fill": "#C76A12"}, []], ["text", {"x": "145", "y": "68", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#0B4A63"}, ["목표 이내 30분"]], ["text", {"x": "334", "y": "68", "text-anchor": "middle", "style": "font-size:16px;font-weight:800;fill:#fff"}, ["12분"]], ["line", {"class": "g-target", "x1": "280", "y1": "22", "x2": "280", "y2": "100"}, []], ["text", {"class": "t-target", "x": "280", "y": "16", "text-anchor": "middle"}, ["목표선 30분"]], ["text", {"class": "t-axis", "x": "10", "y": "122", "text-anchor": "middle"}, ["0"]], ["text", {"class": "t-axis", "x": "100", "y": "122", "text-anchor": "middle"}, ["10"]], ["text", {"class": "t-axis", "x": "190", "y": "122", "text-anchor": "middle"}, ["20"]], ["text", {"class": "t-axis", "x": "280", "y": "122", "text-anchor": "middle"}, ["30"]], ["text", {"class": "t-axis", "x": "388", "y": "122", "text-anchor": "middle"}, ["42"]], ["text", {"class": "t-sub", "x": "10", "y": "145"}, ["2025년 하반기 평균 대기 42분 (분)"]]]]]]]]]}, {"id": "actions", "chapter": "조치", "title": "세 단계마다 한 가지씩, 세 조치에 **1억 8,000만 원**을 투자했습니다", "lead": "접수 앱 9,000만 원, 진료 예약 슬롯 3,000만 원, 키오스크·모바일 수납 6,000만 원, 3월 1차 도입", "steps": ["접수: 모바일 사전 접수", "진료: 15분 예약 슬롯", "수납: 키오스크·모바일", "일정과 측정 기준"], "message": "환자 동선의 세 지점마다 대기를 줄이는 조치를 하나씩 넣었습니다.", "message_label": "조치", "source": "원본 5번 슬라이드, 단계 변화 4번", "duration": 25, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:repeat(3,1fr);grid-template-rows:1fr auto"}, [["section", {"class": "sb-p sb-act", "data-step": "1"}, [["div", {"class": "band rcp"}, [["span", {}, ["대상: 접수 대기"]], ["span", {}, ["3월 1차 도입"]]]], ["div", {"class": "body"}, [["h4", {}, ["모바일 사전 접수 앱"]], ["div", {"style": "display:flex;align-items:baseline;justify-content:space-between"}, [["div", {"class": "money"}, ["9,000", ["small", {}, ["만 원"]]]], ["span", {"class": "share"}, ["투자의 50.0%"]]]], ["div", {"class": "sb-track", "style": "height:10px"}, [["i", {"class": "k-grow-x", "style": "width:50.0%;background:#3B7DD8"}, []]]], ["div", {"class": "res"}, ["접수 대기 변화 ", ["b", {}, ["−6분 (−60.0%)"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 400 110", "role": "img"}, [["line", {"class": "g-grid", "x1": "50", "y1": "4", "x2": "50", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "50", "y": "104", "text-anchor": "middle"}, ["0"]], ["line", {"class": "g-grid", "x1": "170", "y1": "4", "x2": "170", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "170", "y": "104", "text-anchor": "middle"}, ["10"]], ["line", {"class": "g-grid", "x1": "290", "y1": "4", "x2": "290", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "290", "y": "104", "text-anchor": "middle"}, ["20"]], ["text", {"class": "t-sub", "x": "0", "y": "30"}, ["이전"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "12", "width": "120", "height": "26", "rx": "2", "fill": "#3B7DD8", "opacity": ".45"}, []], ["text", {"x": "178", "y": "31", "style": "font-size:16px;font-weight:700;fill:#13293D"}, ["10분"]], ["text", {"class": "t-sub", "x": "0", "y": "70"}, ["이후"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "52", "width": "48", "height": "26", "rx": "2", "fill": "#3B7DD8"}, []], ["text", {"x": "106", "y": "71", "style": "font-size:18px;font-weight:800;fill:#13293D"}, ["4분"]]]]]]]], ["section", {"class": "sb-p sb-act", "data-step": "2"}, [["div", {"class": "band doc"}, [["span", {}, ["대상: 진료 대기"]], ["span", {}, ["3월 1차 도입"]]]], ["div", {"class": "body"}, [["h4", {}, ["15분 단위 진료 예약 슬롯"]], ["div", {"style": "display:flex;align-items:baseline;justify-content:space-between"}, [["div", {"class": "money"}, ["3,000", ["small", {}, ["만 원"]]]], ["span", {"class": "share"}, ["투자의 16.7%"]]]], ["div", {"class": "sb-track", "style": "height:10px"}, [["i", {"class": "k-grow-x", "style": "width:16.7%;background:#17907A"}, []]]], ["div", {"class": "res"}, ["진료 대기 변화 ", ["b", {}, ["−7분 (−28.0%)"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 400 110", "role": "img"}, [["line", {"class": "g-grid", "x1": "50", "y1": "4", "x2": "50", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "50", "y": "104", "text-anchor": "middle"}, ["0"]], ["line", {"class": "g-grid", "x1": "170", "y1": "4", "x2": "170", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "170", "y": "104", "text-anchor": "middle"}, ["10"]], ["line", {"class": "g-grid", "x1": "290", "y1": "4", "x2": "290", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "290", "y": "104", "text-anchor": "middle"}, ["20"]], ["text", {"class": "t-sub", "x": "0", "y": "30"}, ["이전"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "12", "width": "300", "height": "26", "rx": "2", "fill": "#17907A", "opacity": ".45"}, []], ["text", {"x": "358", "y": "31", "style": "font-size:16px;font-weight:700;fill:#13293D"}, ["25분"]], ["text", {"class": "t-sub", "x": "0", "y": "70"}, ["이후"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "52", "width": "216", "height": "26", "rx": "2", "fill": "#17907A"}, []], ["text", {"x": "274", "y": "71", "style": "font-size:18px;font-weight:800;fill:#13293D"}, ["18분"]]]]]]]], ["section", {"class": "sb-p sb-act", "data-step": "3"}, [["div", {"class": "band pay"}, [["span", {}, ["대상: 수납 대기"]], ["span", {}, ["3월 1차 도입"]]]], ["div", {"class": "body"}, [["h4", {}, ["키오스크 6대·모바일 수납"]], ["div", {"style": "display:flex;align-items:baseline;justify-content:space-between"}, [["div", {"class": "money"}, ["6,000", ["small", {}, ["만 원"]]]], ["span", {"class": "share"}, ["투자의 33.3%"]]]], ["div", {"class": "sb-track", "style": "height:10px"}, [["i", {"class": "k-grow-x", "style": "width:33.3%;background:#E2A417"}, []]]], ["div", {"class": "res"}, ["수납 대기 변화 ", ["b", {}, ["−3분 (−42.9%)"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 400 110", "role": "img"}, [["line", {"class": "g-grid", "x1": "50", "y1": "4", "x2": "50", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "50", "y": "104", "text-anchor": "middle"}, ["0"]], ["line", {"class": "g-grid", "x1": "170", "y1": "4", "x2": "170", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "170", "y": "104", "text-anchor": "middle"}, ["10"]], ["line", {"class": "g-grid", "x1": "290", "y1": "4", "x2": "290", "y2": "86"}, []], ["text", {"class": "t-axis", "x": "290", "y": "104", "text-anchor": "middle"}, ["20"]], ["text", {"class": "t-sub", "x": "0", "y": "30"}, ["이전"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "12", "width": "84", "height": "26", "rx": "2", "fill": "#E2A417", "opacity": ".45"}, []], ["text", {"x": "142", "y": "31", "style": "font-size:16px;font-weight:700;fill:#13293D"}, ["7분"]], ["text", {"class": "t-sub", "x": "0", "y": "70"}, ["이후"]], ["rect", {"class": "k-grow-x", "x": "50", "y": "52", "width": "48", "height": "26", "rx": "2", "fill": "#E2A417"}, []], ["text", {"x": "106", "y": "71", "style": "font-size:18px;font-weight:800;fill:#13293D"}, ["4분"]]]]]]]], ["section", {"class": "sb-p", "data-step": "4", "style": "grid-column:1/-1;gap:8px"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "도입 일정과 측정 기준", ["small", {}, ["합계 1억 8,000만 원 = 9,000 + 3,000 + 6,000만 원"]]]], ["div", {"class": "sb-tl"}, [["div", {"class": "ms"}, [["b", {}, ["2025년 하반기"]], "이전 값 (평균)"]], ["div", {}, [["b", {}, ["2026년 1–2월"]], "도입 전"]], ["div", {"class": "go"}, [["b", {}, ["3월"]], "세 조치 1차 도입"]], ["div", {"class": "st"}, [["b", {}, ["4월"]], "안정화"]], ["div", {"class": "st"}, [["b", {}, ["5월"]], "안정화"]], ["div", {"class": "ms"}, [["b", {}, ["6월"]], "이후 값 측정"]]]], ["p", {"class": "sb-note"}, ["단계 변화는 같은 기간 대상 단계의 수치이며, 원본은 조치별 효과를 따로 분리해 제시하지 않습니다. 투자 비율 = 조치별 투자 ÷ 18,000만 원 (계산)."]]]]]]]}, {"id": "stages", "chapter": "결과", "title": "세 단계 모두 줄었고, **진료 대기 −7분**이 가장 컸습니다", "lead": "접수 10 → 4분, 진료 25 → 18분, 수납 7 → 4분, 합계 42 → 26분(−16분, −38.1%)", "steps": ["단계별 변화", "감소분 구성", "남은 대기 구성"], "message": "진료 대기는 가장 많이 줄었지만 남은 대기의 69.2%를 차지합니다.", "message_label": "시사점", "source": "원본 4번 슬라이드, 구성비는 계산", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.4fr 1fr;grid-template-rows:1.7fr 1fr"}, [["section", {"class": "sb-p", "data-step": "1", "style": "grid-row:1/3"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "단계별 평균 대기", ["small", {}, ["이전 2025년 하반기 평균, 이후 2026년 6월"]]]], ["table", {"class": "sb-tbl"}, [["thead", {}, [["tr", {}, [["th", {}, ["단계"]], ["th", {"class": "r"}, ["이전"]], ["th", {"class": "r"}, ["이후"]], ["th", {}, [["span", {"class": "sb-legend"}, [["span", {}, [["i", {"style": "background:#AFBCC1"}, []], "이전"]], ["span", {}, [["i", {"style": "background:#0A6C8F"}, []], "이후"]], ["span", {}, ["0–25분"]]]]]], ["th", {"class": "r"}, ["변화"]], ["th", {"class": "r"}, ["감소율 ", ["span", {"class": "sb-calc"}, ["계산"]]]]]]]], ["tbody", {}, [["tr", {"class": "", "data-step": "1"}, [["td", {}, [["span", {"class": "sb-stage"}, [["i", {"style": "background:#3B7DD8"}, []], ["span", {}, ["접수 대기", ["small", {}, ["모바일 사전 접수 앱"]]]]]]]], ["td", {"class": "r"}, ["10분"]], ["td", {"class": "r"}, [["b", {}, ["4분"]]]], ["td", {}, [["div", {"class": "sb-pair"}, [["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x pre", "style": "width:40.0%"}, []]]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x", "style": "width:16.0%"}, []]]]]]]], ["td", {"class": "r"}, [["b", {}, ["−6분"]]]], ["td", {"class": "r"}, ["−60.0%"]]]], ["tr", {"class": "hl", "data-step": "1"}, [["td", {}, [["span", {"class": "sb-stage"}, [["i", {"style": "background:#17907A"}, []], ["span", {}, ["진료 대기", ["small", {}, ["15분 단위 진료 예약 슬롯"]]]]]]]], ["td", {"class": "r"}, ["25분"]], ["td", {"class": "r"}, [["b", {}, ["18분"]]]], ["td", {}, [["div", {"class": "sb-pair"}, [["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x pre", "style": "width:100.0%"}, []]]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x", "style": "width:72.0%"}, []]]]]]]], ["td", {"class": "r"}, [["b", {}, ["−7분"]]]], ["td", {"class": "r"}, ["−28.0%"]]]], ["tr", {"class": "", "data-step": "1"}, [["td", {}, [["span", {"class": "sb-stage"}, [["i", {"style": "background:#E2A417"}, []], ["span", {}, ["수납 대기", ["small", {}, ["키오스크 6대·모바일 수납"]]]]]]]], ["td", {"class": "r"}, ["7분"]], ["td", {"class": "r"}, [["b", {}, ["4분"]]]], ["td", {}, [["div", {"class": "sb-pair"}, [["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x pre", "style": "width:28.0%"}, []]]], ["div", {"class": "sb-track"}, [["i", {"class": "k-grow-x", "style": "width:16.0%"}, []]]]]]]], ["td", {"class": "r"}, [["b", {}, ["−3분"]]]], ["td", {"class": "r"}, ["−42.9%"]]]], ["tr", {"class": "tot", "data-step": "1"}, [["td", {}, ["합계"]], ["td", {"class": "r"}, ["42분"]], ["td", {"class": "r"}, ["26분"]], ["td", {}, [["span", {"class": "sb-quiet", "style": "font-size:13px;font-weight:400"}, ["세 단계 합, 진료 시간 제외"]]]], ["td", {"class": "r"}, ["−16분"]], ["td", {"class": "r"}, ["−38.1%"]]]]]]]], ["div", {"style": "display:flex;justify-content:space-between;align-items:center;gap:12px"}, [["p", {"class": "sb-read"}, ["줄어든 시간은 ", ["b", {}, ["진료 대기"]], "가, 줄어든 비율은 ", ["b", {}, ["접수 대기"]], "가 가장 큽니다."]], ["button", {"class": "sb-btn", "data-goto": "dept"}, ["진료과별 상세 보기"]]]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "42분에서 26분까지", ["small", {}, ["단계별 감소, 분"]]]], ["svg", {"class": "sb-svg sb-wf", "viewBox": "0 0 560 290", "role": "img", "aria-label": "42분에서 접수 −6, 진료 −7, 수납 −3, 26분"}, [["line", {"class": "g-grid", "x1": "40", "y1": "250.0", "x2": "550", "y2": "250.0"}, []], ["text", {"class": "t-axis", "x": "32", "y": "254.0", "text-anchor": "end"}, ["0"]], ["line", {"class": "g-grid", "x1": "40", "y1": "198.0", "x2": "550", "y2": "198.0"}, []], ["text", {"class": "t-axis", "x": "32", "y": "202.0", "text-anchor": "end"}, ["10"]], ["line", {"class": "g-grid", "x1": "40", "y1": "146.0", "x2": "550", "y2": "146.0"}, []], ["text", {"class": "t-axis", "x": "32", "y": "150.0", "text-anchor": "end"}, ["20"]], ["line", {"class": "g-grid", "x1": "40", "y1": "94.0", "x2": "550", "y2": "94.0"}, []], ["text", {"class": "t-axis", "x": "32", "y": "98.0", "text-anchor": "end"}, ["30"]], ["line", {"class": "g-grid", "x1": "40", "y1": "42.0", "x2": "550", "y2": "42.0"}, []], ["text", {"class": "t-axis", "x": "32", "y": "46.0", "text-anchor": "end"}, ["40"]], ["rect", {"class": "k-grow-y", "x": "60", "y": "31.6", "width": "70", "height": "218.4", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-delta", "x": "95", "y": "23.6", "text-anchor": "middle"}, ["42분"]], ["text", {"class": "t-sub", "x": "95", "y": "272", "text-anchor": "middle"}, ["이전"]], ["rect", {"class": "k-grow-y", "x": "160", "y": "31.6", "width": "70", "height": "31.2", "rx": "2", "fill": "#3B7DD8"}, []], ["text", {"class": "t-delta", "x": "195", "y": "23.6", "text-anchor": "middle"}, ["−6분"]], ["text", {"class": "t-sub", "x": "195", "y": "272", "text-anchor": "middle"}, ["접수"]], ["line", {"x1": "130", "y1": "31.6", "x2": "160", "y2": "31.6", "stroke": "#8C9AA1", "stroke-dasharray": "3 3"}, []], ["rect", {"class": "k-grow-y", "x": "260", "y": "62.8", "width": "70", "height": "36.4", "rx": "2", "fill": "#17907A"}, []], ["text", {"class": "t-delta", "x": "295", "y": "54.8", "text-anchor": "middle"}, ["−7분"]], ["text", {"class": "t-sub", "x": "295", "y": "272", "text-anchor": "middle"}, ["진료"]], ["line", {"x1": "230", "y1": "62.8", "x2": "260", "y2": "62.8", "stroke": "#8C9AA1", "stroke-dasharray": "3 3"}, []], ["rect", {"class": "k-grow-y", "x": "360", "y": "99.2", "width": "70", "height": "15.6", "rx": "2", "fill": "#E2A417"}, []], ["text", {"class": "t-delta", "x": "395", "y": "91.2", "text-anchor": "middle"}, ["−3분"]], ["text", {"class": "t-sub", "x": "395", "y": "272", "text-anchor": "middle"}, ["수납"]], ["line", {"x1": "330", "y1": "99.2", "x2": "360", "y2": "99.2", "stroke": "#8C9AA1", "stroke-dasharray": "3 3"}, []], ["rect", {"class": "k-grow-y", "x": "460", "y": "114.8", "width": "70", "height": "135.2", "rx": "2", "fill": "#0A6C8F"}, []], ["text", {"class": "t-delta", "x": "495", "y": "106.8", "text-anchor": "middle"}, ["26분"]], ["text", {"class": "t-sub", "x": "495", "y": "272", "text-anchor": "middle"}, ["이후"]], ["line", {"x1": "40", "y1": "250", "x2": "550", "y2": "250", "stroke": "#13293D", "stroke-width": "1.5"}, []]]], ["p", {"class": "sb-note"}, ["감소분 16분 중 진료 7분(43.8%), 접수 6분(37.5%), 수납 3분(18.8%) ", ["span", {"class": "sb-calc"}, ["계산"]]]]]], ["section", {"class": "sb-p", "data-step": "3"}, [["h3", {"class": "sb-h"}, [["i", {"style": "background:#C76A12"}, []], "남은 대기의 구성", ["small", {}, ["단계 ÷ 합계 ", ["span", {"class": "sb-calc"}, ["계산"]]]]]], ["div", {"style": "display:grid;grid-template-columns:86px 1fr;align-items:center;gap:10px;font-size:14px"}, [["span", {}, [["b", {}, ["이전 42분"]]]], ["div", {"class": "sb-strip", "style": "height:42px"}, [["span", {"class": "k-grow-x", "style": "flex:10;background:#3B7DD8;"}, ["23.8%"]], ["span", {"class": "k-grow-x", "style": "flex:25;background:#17907A;"}, ["59.5%"]], ["span", {"class": "k-grow-x", "style": "flex:7;background:#E2A417;color:#13293D"}, ["16.7%"]]]]]], ["div", {"style": "display:grid;grid-template-columns:86px 1fr;align-items:center;gap:10px;font-size:14px"}, [["span", {}, [["b", {}, ["이후 26분"]]]], ["div", {"class": "sb-strip", "style": "height:42px"}, [["span", {"class": "k-grow-x", "style": "flex:4;background:#3B7DD8;"}, ["15.4%"]], ["span", {"class": "k-grow-x", "style": "flex:18;background:#17907A;"}, ["69.2%"]], ["span", {"class": "k-grow-x", "style": "flex:4;background:#E2A417;color:#13293D"}, ["15.4%"]]]]]], ["p", {"class": "sb-read"}, ["진료 대기 비중은 59.5%에서 ", ["b", {}, ["69.2%"]], "로 커졌습니다. 남은 대기의 대부분이 진료 대기입니다."]]]]]]]}, {"id": "trend", "chapter": "결과", "title": "3월 도입 직후 한 달에 **7분** 줄었고, 4월부터 목표 아래입니다", "lead": "2026년 월평균 대기 1월 41분, 2월 40분, 3월 33분, 4월 29분, 5월 27분, 6월 26분", "steps": ["도입 전 (1–2월)", "도입 후 하락 (3–5월)", "6월 26분 안착"], "message": "큰 하락은 도입 시점과 겹치고, 4–5월 안정화 기간에도 줄어 6월 26분에 이르렀습니다.", "message_label": "시사점", "source": "원본 7번 슬라이드, 일정 5번", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:2.6fr 1fr"}, [["section", {"class": "sb-p"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "월평균 외래 대기시간, 2026년", ["small", {}, ["단위 분, 세로축 0부터, 전월 대비·목표 대비는 계산"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 1000 540", "role": "img", "aria-label": "2026년 1월부터 6월까지 월평균 대기 41, 40, 33, 29, 27, 26분"}, [["rect", {"x": "370", "y": "40", "width": "160", "height": "360", "fill": "#13293D", "opacity": ".06"}, []], ["rect", {"x": "530", "y": "40", "width": "320", "height": "360", "fill": "#0A6C8F", "opacity": ".06"}, []], ["text", {"class": "t-sub", "x": "450", "y": "30", "text-anchor": "middle", "style": "font-weight:700;fill:#13293D"}, ["세 조치 1차 도입"]], ["text", {"class": "t-sub", "x": "690.0", "y": "30", "text-anchor": "middle", "style": "font-weight:700;fill:#0B4A63"}, ["안정화"]], ["line", {"class": "g-grid", "x1": "70", "y1": "400.0", "x2": "960", "y2": "400.0"}, []], ["text", {"class": "t-axis", "x": "60", "y": "405.0", "text-anchor": "end"}, ["0"]], ["line", {"class": "g-grid", "x1": "70", "y1": "320.0", "x2": "960", "y2": "320.0"}, []], ["text", {"class": "t-axis", "x": "60", "y": "325.0", "text-anchor": "end"}, ["10"]], ["line", {"class": "g-grid", "x1": "70", "y1": "240.0", "x2": "960", "y2": "240.0"}, []], ["text", {"class": "t-axis", "x": "60", "y": "245.0", "text-anchor": "end"}, ["20"]], ["line", {"class": "g-grid", "x1": "70", "y1": "160.0", "x2": "960", "y2": "160.0"}, []], ["text", {"class": "t-axis", "x": "60", "y": "165.0", "text-anchor": "end"}, ["30"]], ["line", {"class": "g-grid", "x1": "70", "y1": "80.0", "x2": "960", "y2": "80.0"}, []], ["text", {"class": "t-axis", "x": "60", "y": "85.0", "text-anchor": "end"}, ["40"]], ["text", {"class": "t-axis", "x": "60", "y": "30", "text-anchor": "end"}, ["분"]], ["line", {"x1": "70", "y1": "64.0", "x2": "960", "y2": "64.0", "stroke": "#8C9AA1", "stroke-width": "2", "stroke-dasharray": "3 5"}, []], ["text", {"class": "t-sub", "x": "76", "y": "56.0", "text-anchor": "start"}, ["이전 값: 2025년 하반기 평균 42분"]], ["line", {"class": "g-target", "x1": "70", "y1": "160.0", "x2": "960", "y2": "160.0"}, []], ["text", {"class": "t-target", "x": "960", "y": "152.0", "text-anchor": "end"}, ["목표 30분 이하"]], ["line", {"x1": "70", "y1": "400", "x2": "960", "y2": "400", "stroke": "#13293D", "stroke-width": "1.5"}, []], ["text", {"class": "t-lab", "x": "130", "y": "428", "text-anchor": "middle"}, ["1월"]], ["text", {"class": "t-lab", "x": "290", "y": "428", "text-anchor": "middle"}, ["2월"]], ["text", {"class": "t-lab", "x": "450", "y": "428", "text-anchor": "middle"}, ["3월"]], ["text", {"class": "t-lab", "x": "610", "y": "428", "text-anchor": "middle"}, ["4월"]], ["text", {"class": "t-lab", "x": "770", "y": "428", "text-anchor": "middle"}, ["5월"]], ["text", {"class": "t-lab", "x": "930", "y": "428", "text-anchor": "middle"}, ["6월"]], ["text", {"class": "t-sub", "x": "60", "y": "466", "text-anchor": "end"}, ["전월 대비"]], ["rect", {"x": "84", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "130", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["—"]], ["rect", {"x": "244", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "290", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["−1분"]], ["rect", {"x": "404", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#F7E8D8"}, []], ["text", {"x": "450", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#C76A12"}, ["−7분"]], ["rect", {"x": "564", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "610", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["−4분"]], ["rect", {"x": "724", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "770", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["−2분"]], ["rect", {"x": "884", "y": "446", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "930", "y": "467", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["−1분"]], ["text", {"class": "t-sub", "x": "60", "y": "506", "text-anchor": "end"}, ["목표 대비"]], ["rect", {"x": "84", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "130", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["+11분"]], ["rect", {"x": "244", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "290", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["+10분"]], ["rect", {"x": "404", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#EEF2F3"}, []], ["text", {"x": "450", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#56666F"}, ["+3분"]], ["rect", {"x": "564", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "610", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#fff"}, ["−1분"]], ["rect", {"x": "724", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "770", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#fff"}, ["−3분"]], ["rect", {"x": "884", "y": "486", "width": "92", "height": "30", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "930", "y": "507", "text-anchor": "middle", "style": "font-size:16px;font-weight:700;fill:#fff"}, ["−4분"]], ["g", {"data-step": "1"}, [["path", {"d": "M 130 400 L 130 72.0 L 290 80.0 L 290 400 Z", "fill": "#56666F", "opacity": ".10"}, []], ["path", {"d": "M 130 72.0 L 290 80.0", "fill": "none", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["circle", {"cx": "130", "cy": "72.0", "r": "7", "fill": "#fff", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["text", {"class": "t-delta", "x": "130", "y": "102.0", "text-anchor": "middle"}, ["41분"]], ["circle", {"cx": "290", "cy": "80.0", "r": "7", "fill": "#fff", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["text", {"class": "t-delta", "x": "290", "y": "110.0", "text-anchor": "middle"}, ["40분"]]]], ["g", {"data-step": "2"}, [["path", {"d": "M 290 400 L 290 80.0 L 450 136.0 L 610 168.0 L 770 184.0 L 930 192.0 L 930 400 Z", "fill": "#0A6C8F", "opacity": ".10"}, []], ["path", {"class": "k-draw", "pathLength": "1", "d": "M 290 80.0 L 450 136.0 L 610 168.0 L 770 184.0 L 930 192.0", "fill": "none", "stroke": "#0A6C8F", "stroke-width": "3.5", "stroke-linejoin": "round"}, []], ["circle", {"cx": "450", "cy": "136.0", "r": "7", "fill": "#fff", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["circle", {"cx": "610", "cy": "168.0", "r": "7", "fill": "#fff", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["circle", {"cx": "770", "cy": "184.0", "r": "7", "fill": "#fff", "stroke": "#0A6C8F", "stroke-width": "3"}, []], ["text", {"class": "t-delta", "x": "464", "y": "126.0", "text-anchor": "start"}, ["33분"]], ["text", {"class": "t-delta", "x": "610", "y": "198.0", "text-anchor": "middle"}, ["29분"]], ["text", {"class": "t-delta", "x": "770", "y": "214.0", "text-anchor": "middle"}, ["27분"]], ["text", {"x": "360.0", "y": "138.0", "text-anchor": "end", "style": "font-size:20px;font-weight:800;fill:#C76A12"}, ["−7분"]]]], ["g", {"data-step": "3"}, [["circle", {"class": "k-beat", "cx": "930", "cy": "192.0", "r": "11", "fill": "#0A6C8F"}, []], ["text", {"x": "930", "y": "238.0", "text-anchor": "middle", "style": "font-size:24px;font-weight:800;fill:#0A6C8F"}, ["26분"]], ["text", {"class": "t-sub", "x": "610", "y": "220.0", "text-anchor": "middle"}, ["처음 목표 이하"]]]]]]]], ["section", {"class": "sb-p", "style": "justify-content:space-between"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "추이에서 읽을 점", ["small", {}, [["span", {"class": "sb-calc"}, ["계산"]]]]]], ["div", {"class": "sb-stat", "data-step": "1"}, [["b", {}, ["40.5분"]], ["span", {}, ["1–2월 평균. 도입 전에는 2025년 하반기(42분)와 비슷했습니다"]]]], ["div", {"class": "sb-stat", "data-step": "2"}, [["b", {"class": "warn"}, ["−7분"]], ["span", {}, ["2월 40분 → 3월 33분. 여섯 달 중 가장 큰 월간 하락으로, 세 조치 1차 도입과 같은 달입니다"]]]], ["div", {"class": "sb-stat", "data-step": "2"}, [["b", {}, ["−14분"]], ["span", {}, ["2월 → 6월 누적 하락 (40 → 26분)"]]]], ["div", {"class": "sb-stat", "data-step": "3"}, [["b", {"class": "acc"}, ["−4, −2, −1분"]], ["span", {}, ["4·5·6월 월간 하락 폭. 계속 줄었지만 하락 폭은 작아지고 있습니다"]]]]]]]]]}, {"id": "satisfaction", "chapter": "효과", "title": "대기 만족도가 **2.6 → 3.9점**으로 가장 크게 올랐습니다", "lead": "대기 만족도 +1.3점, 전반 만족도 +0.8점, 재방문 의향 71% → 84%, 노쇼율 9.0% → 6.5%", "steps": ["만족도", "재방문 의향", "노쇼율"], "message": "환자가 느끼는 대기와 예약 이행이 함께 좋아졌습니다.", "message_label": "시사점", "source": "원본 8번 슬라이드 (2026년 6월 1,200명, 이전 2025년 12월), 노쇼율 2번", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.7fr 1fr 1fr;grid-template-rows:1fr auto"}, [["section", {"class": "sb-p", "data-step": "1"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "만족도 (5점 만점)", ["small", {}, ["이전 2025년 12월 조사, 이후 2026년 6월 1,200명"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 620 430", "role": "img", "aria-label": "대기 만족도 2.6에서 3.9점, 전반 만족도 3.4에서 4.2점"}, [["line", {"class": "g-grid", "x1": "150", "y1": "50", "x2": "150", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "150", "y": "404", "text-anchor": "middle"}, ["0점"]], ["line", {"class": "g-grid", "x1": "236", "y1": "50", "x2": "236", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "236", "y": "404", "text-anchor": "middle"}, ["1점"]], ["line", {"class": "g-grid", "x1": "322", "y1": "50", "x2": "322", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "322", "y": "404", "text-anchor": "middle"}, ["2점"]], ["line", {"class": "g-grid", "x1": "408", "y1": "50", "x2": "408", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "408", "y": "404", "text-anchor": "middle"}, ["3점"]], ["line", {"class": "g-grid", "x1": "494", "y1": "50", "x2": "494", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "494", "y": "404", "text-anchor": "middle"}, ["4점"]], ["line", {"class": "g-grid", "x1": "580", "y1": "50", "x2": "580", "y2": "380"}, []], ["text", {"class": "t-axis", "x": "580", "y": "404", "text-anchor": "middle"}, ["5점"]], ["text", {"class": "t-lab", "x": "0", "y": "136", "style": "font-size:18px"}, ["대기 만족도"]], ["rect", {"x": "150", "y": "112", "width": "430", "height": "36", "rx": "18", "fill": "#EEF2F3"}, []], ["line", {"class": "k-grow-x", "x1": "373.6", "y1": "130", "x2": "485.4", "y2": "130", "stroke": "#0A6C8F", "stroke-width": "8", "opacity": ".35"}, []], ["circle", {"cx": "373.6", "cy": "130", "r": "13", "fill": "#AFBCC1"}, []], ["circle", {"class": "k-in-scale", "cx": "485.4", "cy": "130", "r": "15", "fill": "#0A6C8F"}, []], ["text", {"class": "t-sub", "x": "381.6", "y": "100", "text-anchor": "end", "style": "font-size:15px"}, ["이전 2.6"]], ["text", {"x": "477.4", "y": "100", "text-anchor": "start", "style": "font-size:19px;font-weight:800;fill:#0A6C8F"}, ["이후 3.9"]], ["text", {"x": "429.5", "y": "178", "text-anchor": "middle", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["+1.3점"]], ["text", {"class": "t-lab", "x": "0", "y": "296", "style": "font-size:18px"}, ["전반 만족도"]], ["rect", {"x": "150", "y": "272", "width": "430", "height": "36", "rx": "18", "fill": "#EEF2F3"}, []], ["line", {"class": "k-grow-x", "x1": "442.4", "y1": "290", "x2": "511.2", "y2": "290", "stroke": "#0A6C8F", "stroke-width": "8", "opacity": ".35"}, []], ["circle", {"cx": "442.4", "cy": "290", "r": "13", "fill": "#AFBCC1"}, []], ["circle", {"class": "k-in-scale", "cx": "511.2", "cy": "290", "r": "15", "fill": "#0A6C8F"}, []], ["text", {"class": "t-sub", "x": "450.4", "y": "260", "text-anchor": "end", "style": "font-size:15px"}, ["이전 3.4"]], ["text", {"x": "503.2", "y": "260", "text-anchor": "start", "style": "font-size:19px;font-weight:800;fill:#0A6C8F"}, ["이후 4.2"]], ["text", {"x": "476.79999999999995", "y": "338", "text-anchor": "middle", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["+0.8점"]]]], ["p", {"class": "sb-read"}, ["대기 만족도가 ", ["b", {}, ["+1.3점"]], "으로 전반 만족도(+0.8점)보다 더 크게 올랐습니다.", ["span", {"class": "sb-calc"}, ["계산 3.9 − 2.6, 4.2 − 3.4"]]]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "재방문 의향", ["small", {}, ["같은 설문"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 320 430", "role": "img"}, [["line", {"class": "g-grid", "x1": "20", "y1": "70", "x2": "300", "y2": "70"}, []], ["text", {"class": "t-axis", "x": "300", "y": "64", "text-anchor": "end"}, ["100%"]], ["rect", {"class": "k-grow-y", "x": "45", "y": "159.9", "width": "100", "height": "220.1", "rx": "3", "fill": "#AFBCC1"}, []], ["rect", {"class": "k-grow-y", "x": "175", "y": "119.6", "width": "100", "height": "260.4", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "95", "y": "147.9", "text-anchor": "middle", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["71%"]], ["text", {"x": "225", "y": "107.6", "text-anchor": "middle", "style": "font-size:26px;font-weight:800;fill:#0A6C8F"}, ["84%"]], ["line", {"x1": "20", "y1": "380", "x2": "300", "y2": "380", "stroke": "#13293D", "stroke-width": "1.5"}, []], ["text", {"class": "t-sub", "x": "95", "y": "406", "text-anchor": "middle", "style": "font-size:15px"}, ["이전"]], ["text", {"class": "t-sub", "x": "225", "y": "406", "text-anchor": "middle", "style": "font-size:15px"}, ["이후"]]]], ["p", {"class": "sb-read"}, [["b", {}, ["+13%p"]], " 상승 ", ["span", {"class": "sb-calc"}, ["계산 84 − 71"]]]]]], ["section", {"class": "sb-p", "data-step": "3"}, [["h3", {"class": "sb-h"}, [["i", {"style": "background:#C76A12"}, []], "예약 부도(노쇼)율", ["small", {}, ["낮을수록 좋음"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 320 430", "role": "img"}, [["line", {"class": "g-grid", "x1": "20", "y1": "70", "x2": "300", "y2": "70"}, []], ["text", {"class": "t-axis", "x": "300", "y": "64", "text-anchor": "end"}, ["10%"]], ["rect", {"class": "k-grow-y", "x": "45", "y": "101.0", "width": "100", "height": "279.0", "rx": "3", "fill": "#AFBCC1"}, []], ["rect", {"class": "k-grow-y", "x": "175", "y": "178.5", "width": "100", "height": "201.5", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "95", "y": "89.0", "text-anchor": "middle", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["9.0%"]], ["text", {"x": "225", "y": "166.5", "text-anchor": "middle", "style": "font-size:26px;font-weight:800;fill:#0A6C8F"}, ["6.5%"]], ["line", {"x1": "20", "y1": "380", "x2": "300", "y2": "380", "stroke": "#13293D", "stroke-width": "1.5"}, []], ["text", {"class": "t-sub", "x": "95", "y": "406", "text-anchor": "middle", "style": "font-size:15px"}, ["이전"]], ["text", {"class": "t-sub", "x": "225", "y": "406", "text-anchor": "middle", "style": "font-size:15px"}, ["이후"]]]], ["p", {"class": "sb-read"}, [["b", {}, ["−2.5%p"]], " 하락 ", ["span", {"class": "sb-calc"}, ["계산 9.0 − 6.5"]]]], ["p", {"class": "sb-note"}, ["원본 핵심 요약 수치, 측정 기간은 원본에 없습니다. 막대 높이는 0–10% 눈금입니다."]]]], ["div", {"class": "sb-base", "style": "grid-column:1/-1"}, [["span", {"class": "h"}, ["비교 기준"]], ["span", {}, [["b", {}, ["2025년 12월"]], "이전 만족도·재방문 조사 (응답 수는 원본에 없음)"]], ["span", {}, [["b", {}, ["2026년 6월, 1,200명"]], "이후 설문 응답"]], ["span", {}, [["b", {}, ["6개월"]], "두 조사 사이 간격 ", ["span", {"class": "sb-calc"}, ["계산"]]]], ["span", {}, [["b", {}, ["기간 미기재"]], "노쇼율 9.0% → 6.5%"]]]]]]]}, {"id": "remaining", "chapter": "과제", "title": "65세 이상 모바일 접수 이용률은 **12%**에 그칩니다", "lead": "모바일 사전 접수 38%, 키오스크·모바일 수납 52%, 65세 이상 환자 모바일 접수 12%", "steps": ["이용률", "고령 환자 격차", "남은 과제"], "message": "고령 환자는 여전히 창구에서 기다리며, 현장 안내가 필요합니다.", "message_label": "과제", "source": "원본 9번 슬라이드, 격차·100명 환산은 계산", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.15fr 1fr;grid-template-rows:1.5fr 1fr"}, [["section", {"class": "sb-p", "data-step": "1", "style": "grid-row:1/3"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "새 접수·수납 방식 이용률", ["small", {}, ["원본 9번 슬라이드"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 680 460", "role": "img", "aria-label": "이용률 모바일 사전 접수 38%, 키오스크·모바일 수납 52%, 65세 이상 모바일 접수 12%"}, [["line", {"class": "g-grid", "x1": "190.0", "y1": "20", "x2": "190.0", "y2": "410"}, []], ["text", {"class": "t-axis", "x": "190.0", "y": "436", "text-anchor": "middle"}, ["0%"]], ["line", {"class": "g-grid", "x1": "295.0", "y1": "20", "x2": "295.0", "y2": "410"}, []], ["text", {"class": "t-axis", "x": "295.0", "y": "436", "text-anchor": "middle"}, ["25%"]], ["line", {"class": "g-grid", "x1": "400.0", "y1": "20", "x2": "400.0", "y2": "410"}, []], ["text", {"class": "t-axis", "x": "400.0", "y": "436", "text-anchor": "middle"}, ["50%"]], ["line", {"class": "g-grid", "x1": "505.0", "y1": "20", "x2": "505.0", "y2": "410"}, []], ["text", {"class": "t-axis", "x": "505.0", "y": "436", "text-anchor": "middle"}, ["75%"]], ["line", {"class": "g-grid", "x1": "610.0", "y1": "20", "x2": "610.0", "y2": "410"}, []], ["text", {"class": "t-axis", "x": "610.0", "y": "436", "text-anchor": "middle"}, ["100%"]], ["text", {"class": "t-lab", "x": "0", "y": "76", "style": "font-size:17px"}, ["모바일 사전 접수"]], ["text", {"class": "t-sub", "x": "0", "y": "100", "style": "font-size:14px"}, ["전체 환자"]], ["rect", {"class": "k-grow-x", "x": "190", "y": "40", "width": "159.6", "height": "84", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "361.6", "y": "94", "style": "font-size:32px;font-weight:800;fill:#0A6C8F"}, ["38%"]], ["text", {"class": "t-lab", "x": "0", "y": "201", "style": "font-size:17px"}, ["키오스크·모바일 수납"]], ["text", {"class": "t-sub", "x": "0", "y": "225", "style": "font-size:14px"}, ["전체 환자"]], ["rect", {"class": "k-grow-x", "x": "190", "y": "165", "width": "218.4", "height": "84", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "420.4", "y": "219", "style": "font-size:32px;font-weight:800;fill:#0A6C8F"}, ["52%"]], ["text", {"class": "t-lab", "x": "0", "y": "326", "style": "font-size:17px"}, ["모바일 사전 접수"]], ["text", {"class": "t-sub", "x": "0", "y": "350", "style": "font-size:14px"}, ["65세 이상 환자"]], ["rect", {"class": "k-grow-x", "x": "190", "y": "290", "width": "50.4", "height": "84", "rx": "3", "fill": "#C76A12"}, []], ["text", {"x": "252.4", "y": "344", "style": "font-size:32px;font-weight:800;fill:#C76A12"}, ["12%"]], ["line", {"x1": "349.6", "y1": "124", "x2": "349.6", "y2": "400", "stroke": "#C76A12", "stroke-width": "2", "stroke-dasharray": "4 4"}, []], ["text", {"x": "359.6", "y": "392", "style": "font-size:18px;font-weight:800;fill:#C76A12"}, ["26%p 낮음"]]]], ["p", {"class": "sb-read"}, ["65세 이상의 모바일 접수 이용률은 전체(38%)보다 ", ["b", {}, ["26%p"]], " 낮습니다.", ["span", {"class": "sb-calc"}, ["계산 38 − 12"]]]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {"style": "background:#C76A12"}, []], "65세 이상 환자 100명으로 보면", ["small", {}, [["span", {"class": "sb-calc"}, ["계산 100 × 12%"]]]]]], ["div", {"style": "display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;flex:1;min-height:0"}, [["div", {"class": "sb-waffle k-in-scale", "style": "width:236px"}, [["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {"class": "on"}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []], ["i", {}, []]]], ["div", {"style": "display:flex;flex-direction:column;gap:14px"}, [["div", {"class": "sb-stat", "style": "padding:0;border:0"}, [["b", {"class": "acc"}, ["12명"]], ["span", {}, ["모바일로 미리 접수"]]]], ["div", {"class": "sb-stat", "style": "padding:0;border:0"}, [["b", {"class": "warn"}, ["88명"]], ["span", {}, ["모바일 사전 접수를 쓰지 않음"]]]], ["p", {"class": "sb-note"}, ["65세 이상 이용률 12%를 100명에 적용한 환산입니다."]]]]]]]], ["section", {"class": "sb-p", "data-step": "3"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "남은 과제", ["small", {}, ["원본 9번 슬라이드"]]]], ["div", {"style": "display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr;align-items:stretch;flex:1;gap:6px"}, [["div", {"class": "sb-node warn"}, ["고령 환자는 여전히 창구 대기", ["small", {}, ["모바일 접수 12%"]]]], ["div", {"class": "sb-harrow"}, []], ["div", {"class": "sb-node"}, ["현장 안내 필요", ["small", {}, ["창구 앞 디지털 접수·수납 안내"]]]], ["div", {"class": "sb-harrow"}, []], ["div", {"class": "sb-node", "style": "border-left-color:#0A6C8F"}, ["하반기 요청", ["small", {}, ["안내 인력 4명 배치"]]]]]]]]]]]}, {"id": "ask", "chapter": "요청", "title": "안내 인력 4명, **연 1억 6,000만 원** 예산 승인을 요청합니다", "lead": "하반기 목표 평균 대기 22분, 디지털 안내 인력 4명 배치, 검사실(채혈·영상) 대기 개선 착수", "steps": ["승인 요청", "하반기 목표", "예산 산정", "검사실 개선"], "message": "안내 인력 예산 1억 6,000만 원을 승인해 주시면 하반기 22분 목표에 착수합니다.", "message_label": "요청", "source": "원본 10번 슬라이드. ※ 가상 자료: 실제 병원·환자·성과가 아닙니다.", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.1fr 1fr 1fr;grid-template-rows:auto 1fr"}, [["div", {"class": "sb-ask k-in-up", "data-step": "1", "style": "grid-column:1/-1;padding:20px 26px"}, [["span", {"class": "tag"}, ["승인 요청"]], ["span", {"class": "what", "style": "font-size:28px"}, ["고령 환자 디지털 안내 인력 예산 연 1억 6,000만 원", ["small", {}, ["4명 배치, 1인당 연 4,000만 원 기준"]]]], ["span", {"class": "why"}, [["span", {}, [["b", {}, ["4명"]], "안내 인력"]], ["span", {}, [["b", {}, ["22분"]], "하반기 목표"]]]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "하반기 목표", ["small", {}, ["평균 외래 대기, 분"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 520 300", "role": "img", "aria-label": "42분, 26분, 하반기 목표 22분"}, [["line", {"class": "g-grid", "x1": "110", "y1": "10", "x2": "110", "y2": "250"}, []], ["text", {"class": "t-axis", "x": "110", "y": "272", "text-anchor": "middle"}, ["0"]], ["line", {"class": "g-grid", "x1": "190", "y1": "10", "x2": "190", "y2": "250"}, []], ["text", {"class": "t-axis", "x": "190", "y": "272", "text-anchor": "middle"}, ["10"]], ["line", {"class": "g-grid", "x1": "270", "y1": "10", "x2": "270", "y2": "250"}, []], ["text", {"class": "t-axis", "x": "270", "y": "272", "text-anchor": "middle"}, ["20"]], ["line", {"class": "g-grid", "x1": "350", "y1": "10", "x2": "350", "y2": "250"}, []], ["text", {"class": "t-axis", "x": "350", "y": "272", "text-anchor": "middle"}, ["30"]], ["line", {"class": "g-grid", "x1": "430", "y1": "10", "x2": "430", "y2": "250"}, []], ["text", {"class": "t-axis", "x": "430", "y": "272", "text-anchor": "middle"}, ["40"]], ["line", {"class": "g-target", "x1": "350", "y1": "10", "x2": "350", "y2": "250"}, []], ["text", {"class": "t-sub", "x": "0", "y": "54", "style": "font-size:15px;font-weight:700;fill:#13293D"}, ["2025 하반기"]], ["rect", {"class": "k-grow-x", "x": "110", "y": "22", "width": "336", "height": "50", "rx": "3", "fill": "#AFBCC1"}, []], ["text", {"x": "436", "y": "56", "text-anchor": "end", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["42분"]], ["text", {"class": "t-sub", "x": "0", "y": "132", "style": "font-size:15px;font-weight:700;fill:#13293D"}, ["2026년 6월"]], ["rect", {"class": "k-grow-x", "x": "110", "y": "100", "width": "208", "height": "50", "rx": "3", "fill": "#0A6C8F"}, []], ["text", {"x": "308", "y": "134", "text-anchor": "end", "style": "font-size:22px;font-weight:800;fill:#fff"}, ["26분"]], ["text", {"class": "t-sub", "x": "0", "y": "210", "style": "font-size:15px;font-weight:700;fill:#13293D"}, ["하반기 목표"]], ["rect", {"class": "k-grow-x", "x": "110", "y": "178", "width": "176", "height": "50", "rx": "3", "fill": "none", "stroke": "#13293D", "stroke-width": "2", "stroke-dasharray": "6 4", "fill-opacity": ".0"}, []], ["text", {"x": "296", "y": "212", "style": "font-size:22px;font-weight:800;fill:#13293D"}, ["22분"]], ["text", {"class": "t-target", "x": "356", "y": "292"}, ["목표 30분 (상반기)"]]]], ["p", {"class": "sb-read"}, ["6월 26분에서 ", ["b", {}, ["4분"]], " 더 줄이는 목표입니다.", ["span", {"class": "sb-calc"}, ["계산 26 − 22"]]]]]], ["section", {"class": "sb-p", "data-step": "3", "style": "justify-content:space-between"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "요청 예산의 산정", ["small", {}, ["연간"]]]], ["div", {"class": "sb-person"}, [["svg", {"viewBox": "0 0 44 56", "aria-hidden": "true"}, [["circle", {"cx": "22", "cy": "13", "r": "10", "fill": "#0A6C8F"}, []], ["path", {"d": "M3 54 C3 34 41 34 41 54 Z", "fill": "#0A6C8F"}, []]]], ["svg", {"viewBox": "0 0 44 56", "aria-hidden": "true"}, [["circle", {"cx": "22", "cy": "13", "r": "10", "fill": "#0A6C8F"}, []], ["path", {"d": "M3 54 C3 34 41 34 41 54 Z", "fill": "#0A6C8F"}, []]]], ["svg", {"viewBox": "0 0 44 56", "aria-hidden": "true"}, [["circle", {"cx": "22", "cy": "13", "r": "10", "fill": "#0A6C8F"}, []], ["path", {"d": "M3 54 C3 34 41 34 41 54 Z", "fill": "#0A6C8F"}, []]]], ["svg", {"viewBox": "0 0 44 56", "aria-hidden": "true"}, [["circle", {"cx": "22", "cy": "13", "r": "10", "fill": "#0A6C8F"}, []], ["path", {"d": "M3 54 C3 34 41 34 41 54 Z", "fill": "#0A6C8F"}, []]]]]], ["table", {"class": "sb-tbl", "style": "height:auto"}, [["tbody", {}, [["tr", {}, [["td", {}, ["배치 인원"]], ["td", {"class": "r"}, [["b", {}, ["4명"]]]]]], ["tr", {}, [["td", {}, ["1인당 연간 비용"]], ["td", {"class": "r"}, [["b", {}, ["4,000만 원"]]]]]], ["tr", {"class": "tot"}, [["td", {}, ["합계 (4 × 4,000만)"]], ["td", {"class": "r"}, ["1억 6,000만 원"]]]]]]]], ["div", {"class": "sb-stat", "style": "border:0;padding:4px 0"}, [["b", {"class": "warn"}, ["12%"]], ["span", {}, ["배치 근거: 65세 이상 환자의 모바일 접수 이용률 (원본 9번)"]]]]]], ["section", {"class": "sb-p", "data-step": "4"}, [["h3", {"class": "sb-h"}, [["i", {"style": "background:#C76A12"}, []], "함께 착수: 검사실 대기", ["small", {}, ["요청 예산과 별도"]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 440 300", "role": "img", "aria-label": "현재 지표는 접수, 진료, 수납 대기. 검사실 대기는 포함되지 않음"}, [["path", {"d": "M 10 40 V 28 H 430 V 40", "fill": "none", "stroke": "#13293D", "stroke-width": "1.5"}, []], ["text", {"x": "220", "y": "18", "text-anchor": "middle", "style": "font-size:14px;font-weight:700;fill:#13293D"}, ["보고한 대기시간 지표"]], ["rect", {"x": "10", "y": "50", "width": "136", "height": "54", "rx": "3", "fill": "#3B7DD8"}, []], ["text", {"x": "78", "y": "83", "text-anchor": "middle", "style": "font-size:17px;font-weight:700;fill:#fff"}, ["접수 대기"]], ["rect", {"x": "152", "y": "50", "width": "136", "height": "54", "rx": "3", "fill": "#17907A"}, []], ["text", {"x": "220", "y": "83", "text-anchor": "middle", "style": "font-size:17px;font-weight:700;fill:#fff"}, ["진료 대기"]], ["rect", {"x": "294", "y": "50", "width": "136", "height": "54", "rx": "3", "fill": "#E2A417"}, []], ["text", {"x": "362", "y": "83", "text-anchor": "middle", "style": "font-size:17px;font-weight:700;fill:#13293D"}, ["수납 대기"]], ["path", {"class": "sb-flowline", "d": "M 220 104 V 170", "stroke": "#C76A12", "stroke-width": "2.5", "stroke-dasharray": "7 6", "fill": "none"}, []], ["rect", {"x": "90", "y": "170", "width": "260", "height": "70", "rx": "4", "fill": "#FBF1E6", "stroke": "#C76A12", "stroke-width": "2", "stroke-dasharray": "7 5"}, []], ["text", {"x": "220", "y": "200", "text-anchor": "middle", "style": "font-size:18px;font-weight:800;fill:#13293D"}, ["검사실 대기 (채혈·영상)"]], ["text", {"x": "220", "y": "224", "text-anchor": "middle", "style": "font-size:14px;fill:#9A4E0B"}, ["현재 지표 밖, 하반기 개선 착수"]], ["text", {"x": "220", "y": "280", "text-anchor": "middle", "class": "t-sub"}, ["검사실의 동선 위치는 개념 표시입니다"]]]], ["div", {"style": "display:flex;justify-content:space-between;align-items:center;gap:10px"}, [["p", {"class": "sb-note"}, ["검사실 개선의 예산·일정은 원본에 없습니다."]], ["button", {"class": "sb-btn", "data-goto": "defs"}, ["수치 기준 보기"]]]]]]]]]}, {"id": "dept", "chapter": "자료실", "backup": true, "title": "모든 과가 줄었지만 **내과(33분)**는 아직 목표 30분 위입니다", "lead": "감소율 33.3~40.0%, 내과 55 → 33분(−22분)이 가장 큰 폭, 안과 30 → 20분", "steps": ["과별 비교", "과별 변화표"], "message": "전체 목표는 달성했지만 내과는 과 단위로 한 번 더 볼 필요가 있습니다.", "message_label": "자료", "source": "원본 6번 슬라이드, 감소율·평균은 계산", "duration": 30, "reveal": "spotlight", "body": [["div", {"class": "sb", "style": "grid-template-columns:1.25fr 1fr"}, [["section", {"class": "sb-p", "data-step": "1"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "진료과별 평균 대기", ["small", {}, [["span", {"class": "sb-legend", "style": "display:inline-flex"}, [["span", {}, [["i", {"style": "background:#AFBCC1"}, []], "이전"]], ["span", {}, [["i", {"style": "background:#0A6C8F"}, []], "이후"]], ["span", {}, [["i", {"style": "background:#C76A12"}, []], "이후, 목표 30분 초과"]]]]]]]], ["svg", {"class": "sb-svg", "viewBox": "0 0 760 430", "role": "img", "aria-label": "진료과별 평균 대기 이전과 이후"}, [["line", {"class": "g-grid", "x1": "130.0", "y1": "26", "x2": "130.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "130.0", "y": "412", "text-anchor": "middle"}, ["0분"]], ["line", {"class": "g-grid", "x1": "226.0", "y1": "26", "x2": "226.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "226.0", "y": "412", "text-anchor": "middle"}, ["10분"]], ["line", {"class": "g-grid", "x1": "322.0", "y1": "26", "x2": "322.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "322.0", "y": "412", "text-anchor": "middle"}, ["20분"]], ["line", {"class": "g-grid", "x1": "418.0", "y1": "26", "x2": "418.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "418.0", "y": "412", "text-anchor": "middle"}, ["30분"]], ["line", {"class": "g-grid", "x1": "514.0", "y1": "26", "x2": "514.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "514.0", "y": "412", "text-anchor": "middle"}, ["40분"]], ["line", {"class": "g-grid", "x1": "610.0", "y1": "26", "x2": "610.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "610.0", "y": "412", "text-anchor": "middle"}, ["50분"]], ["line", {"class": "g-grid", "x1": "706.0", "y1": "26", "x2": "706.0", "y2": "390"}, []], ["text", {"class": "t-axis", "x": "706.0", "y": "412", "text-anchor": "middle"}, ["60분"]], ["line", {"class": "g-target", "x1": "418.0", "y1": "26", "x2": "418.0", "y2": "390"}, []], ["text", {"class": "t-target", "x": "418.0", "y": "16", "text-anchor": "middle"}, ["목표 30분"]], ["text", {"class": "t-lab", "x": "0", "y": "66"}, ["내과"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "36", "width": "528.0", "height": "20", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-sub", "x": "666.0", "y": "52"}, ["55분"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "60", "width": "316.8", "height": "26", "rx": "2", "fill": "#C76A12"}, []], ["text", {"x": "426.0", "y": "80", "style": "font-size:17px;font-weight:800;fill:#C76A12"}, ["33분"]], ["text", {"class": "t-lab", "x": "0", "y": "138"}, ["정형외과"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "108", "width": "460.8", "height": "20", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-sub", "x": "598.8", "y": "124"}, ["48분"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "132", "width": "278.4", "height": "26", "rx": "2", "fill": "#0A6C8F"}, []], ["text", {"x": "426.0", "y": "152", "style": "font-size:17px;font-weight:800;fill:#0A6C8F"}, ["29분"]], ["text", {"class": "t-lab", "x": "0", "y": "210"}, ["소아청소년과"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "180", "width": "364.8", "height": "20", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-sub", "x": "502.8", "y": "196"}, ["38분"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "204", "width": "230.4", "height": "26", "rx": "2", "fill": "#0A6C8F"}, []], ["text", {"x": "368.4", "y": "224", "style": "font-size:17px;font-weight:800;fill:#0A6C8F"}, ["24분"]], ["text", {"class": "t-lab", "x": "0", "y": "282"}, ["피부과"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "252", "width": "374.4", "height": "20", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-sub", "x": "512.4", "y": "268"}, ["39분"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "276", "width": "230.4", "height": "26", "rx": "2", "fill": "#0A6C8F"}, []], ["text", {"x": "368.4", "y": "296", "style": "font-size:17px;font-weight:800;fill:#0A6C8F"}, ["24분"]], ["text", {"class": "t-lab", "x": "0", "y": "354"}, ["안과"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "324", "width": "288.0", "height": "20", "rx": "2", "fill": "#AFBCC1"}, []], ["text", {"class": "t-sub", "x": "426.0", "y": "340"}, ["30분"]], ["rect", {"class": "k-grow-x", "x": "130", "y": "348", "width": "192.0", "height": "26", "rx": "2", "fill": "#0A6C8F"}, []], ["text", {"x": "330.0", "y": "368", "style": "font-size:17px;font-weight:800;fill:#0A6C8F"}, ["20분"]]]], ["p", {"class": "sb-note"}, ["이전 2025년 하반기 평균, 이후 2026년 6월. 주황 점선 = 목표 30분."]]]], ["section", {"class": "sb-p", "data-step": "2"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "과별 변화", ["small", {}, ["감소율 = 변화 ÷ 이전 ", ["span", {"class": "sb-calc"}, ["계산"]]]]]], ["table", {"class": "sb-tbl"}, [["thead", {}, [["tr", {}, [["th", {}, ["진료과"]], ["th", {"class": "r"}, ["이전"]], ["th", {"class": "r"}, ["이후"]], ["th", {"class": "r"}, ["변화"]], ["th", {"class": "r"}, ["감소율"]]]]]], ["tbody", {}, [["tr", {"class": "hl"}, [["td", {}, ["내과"]], ["td", {"class": "r"}, ["55분"]], ["td", {"class": "r"}, [["b", {}, ["33분"]]]], ["td", {"class": "r"}, ["−22분"]], ["td", {"class": "r"}, ["−40.0%"]]]], ["tr", {"class": ""}, [["td", {}, ["정형외과"]], ["td", {"class": "r"}, ["48분"]], ["td", {"class": "r"}, [["b", {}, ["29분"]]]], ["td", {"class": "r"}, ["−19분"]], ["td", {"class": "r"}, ["−39.6%"]]]], ["tr", {"class": ""}, [["td", {}, ["소아청소년과"]], ["td", {"class": "r"}, ["38분"]], ["td", {"class": "r"}, [["b", {}, ["24분"]]]], ["td", {"class": "r"}, ["−14분"]], ["td", {"class": "r"}, ["−36.8%"]]]], ["tr", {"class": ""}, [["td", {}, ["피부과"]], ["td", {"class": "r"}, ["39분"]], ["td", {"class": "r"}, [["b", {}, ["24분"]]]], ["td", {"class": "r"}, ["−15분"]], ["td", {"class": "r"}, ["−38.5%"]]]], ["tr", {"class": ""}, [["td", {}, ["안과"]], ["td", {"class": "r"}, ["30분"]], ["td", {"class": "r"}, [["b", {}, ["20분"]]]], ["td", {"class": "r"}, ["−10분"]], ["td", {"class": "r"}, ["−33.3%"]]]], ["tr", {"class": "tot"}, [["td", {}, ["5개 과 단순 평균"]], ["td", {"class": "r"}, ["42분"]], ["td", {"class": "r"}, ["26분"]], ["td", {"class": "r"}, ["−16분"]], ["td", {"class": "r"}, ["−38.1%"]]]]]]]], ["p", {"class": "sb-note"}, ["5개 과 단순 평균(210 ÷ 5, 130 ÷ 5)은 전체 평균 42분 → 26분과 같습니다."]]]]]]]}, {"id": "defs", "chapter": "자료실", "backup": true, "title": "수치의 정의, 기간과 남은 확인 사항", "lead": "보고서의 모든 수치는 원본 PPT 10장에서 가져왔고, 계산 값은 화면마다 [계산]으로 표시했습니다", "steps": ["정의와 기간"], "reveal": "none", "message": "노쇼율과 이용률의 기간·분모, 이전 만족도 조사의 응답자 수는 원본에서 확인되지 않습니다.", "message_label": "확인 필요", "source": "원본 전체. ※ 가상 자료: 실제 병원·환자·성과가 아닙니다.", "duration": 30, "body": [["div", {"class": "sb", "style": "grid-template-columns:1fr"}, [["section", {"class": "sb-p", "data-step": "1"}, [["h3", {"class": "sb-h"}, [["i", {}, []], "지표별 정의와 기간", ["small", {}, ["주황 = 원본에서 확인되지 않은 부분"]]]], ["table", {"class": "sb-def"}, [["thead", {}, [["tr", {}, [["th", {}, ["지표"]], ["th", {}, ["정의와 기간"]], ["th", {}, ["근거와 남은 확인"]]]]]], ["tbody", {}, [["tr", {}, [["td", {}, ["외래 대기시간"]], ["td", {}, ["접수 대기 + 진료 대기 + 수납 대기의 합. 진료 시간은 제외"]], ["td", {"class": ""}, ["원본 2번 슬라이드 발표자 메모"]]]], ["tr", {}, [["td", {}, ["이전 / 이후"]], ["td", {}, ["이전 = 2025년 하반기 평균, 이후 = 2026년 6월"]], ["td", {"class": ""}, ["원본 4번 슬라이드 발표자 메모"]]]], ["tr", {}, [["td", {}, ["월별 추이"]], ["td", {}, ["2026년 1–6월 월평균. 1–2월은 도입 전"]], ["td", {"class": ""}, ["원본 7번 슬라이드, 도입 시점은 5번 메모"]]]], ["tr", {}, [["td", {}, ["민원"]], ["td", {}, ["2025년 하반기 6개월, 412건 중 대기 관련 186건"]], ["td", {"class": ""}, ["원본 3번 슬라이드와 발표자 메모"]]]], ["tr", {}, [["td", {}, ["만족도·재방문 의향"]], ["td", {}, ["이후 = 2026년 6월 설문 1,200명 응답, 이전 = 2025년 12월 조사"]], ["td", {"class": "open"}, ["이전 조사 응답자 수는 원본에 없음"]]]], ["tr", {}, [["td", {}, ["노쇼율"]], ["td", {}, ["9.0% → 6.5%"]], ["td", {"class": "open"}, ["측정 기간과 분모 정의가 원본에 없음"]]]], ["tr", {}, [["td", {}, ["이용률"]], ["td", {}, ["모바일 사전 접수 38%, 키오스크·모바일 수납 52%, 65세 이상 12%"]], ["td", {"class": "open"}, ["측정 기간과 분모 정의가 원본에 없음"]]]], ["tr", {}, [["td", {}, ["조치 일정"]], ["td", {}, ["세 조치 모두 3월 1차 도입, 4–5월 안정화"]], ["td", {"class": ""}, ["원본 5번 슬라이드 발표자 메모"]]]], ["tr", {}, [["td", {}, ["안내 인력 예산"]], ["td", {}, ["4명 × 1인당 연 4,000만 원 = 연 1억 6,000만 원"]], ["td", {"class": ""}, ["원본 10번 슬라이드와 발표자 메모"]]]], ["tr", {}, [["td", {}, ["계산 표시 값"]], ["td", {}, ["감소율, 구성비, 전월 대비, 26%p 격차, 100명 환산 등은 원본 수치로 계산"]], ["td", {"class": ""}, ["각 화면의 [계산] 표시"]]]]]]]]]]]]]}]}</script><script>/* Offline player. Deck content is data, never executable markup. */
+(() => {
+  'use strict';
+  const deck = JSON.parse(document.getElementById('deck-data').textContent);
+  const settings = {width:1600,height:900,motion:'key',playback:'manual',font:'system',end:'stop',...deck.settings};
+  const english=deck.language==='en';
+  const stage = document.getElementById('stage');
+  const viewport = document.getElementById('viewport');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  // Resolve player controls once, before any scene content exists, so scene ids can never shadow them.
+  const ui = {};
+  ['chapter-nav','prev','next','position','announcement','play','replay','open-outline','outline-dialog','outline-close','outline-list',
+   'bookmark-current','open-bookmarks','bookmarks-dialog','bookmarks-close','bookmarks-list','return-bookmark','return-origin',
+   'fullscreen','print','print-confirm','print-close','print-pages','supplements-dialog'].forEach(id=>{ui[id]=document.getElementById(id);});
+  const byId = id => ui[id];
+  // Card scenes reveal items; composed scenes reveal their named steps.
+  const labelsOf = scene => scene.items ? scene.items.map(item => item.label) : scene.steps;
+  const plain = value => value.split('**').length%2 ? value.split('**').join('') : value;
+  // Backup scenes sit after the main sequence: reachable by chapter tab, contents or data-goto, never by Next.
+  const order = deck.scenes.map((_, index) => index).sort((a, b) => Number(Boolean(deck.scenes[a].backup)) - Number(Boolean(deck.scenes[b].backup)) || a - b);
+  const steps = order.flatMap(sceneIndex => labelsOf(deck.scenes[sceneIndex]).map((_, itemIndex) => ({sceneIndex, itemIndex})));
+  const mainCount = steps.filter(step => !deck.scenes[step.sceneIndex].backup).length;
+  const firstStep = id => steps.findIndex(step => deck.scenes[step.sceneIndex].id === id);
+  let position = 0, timer = null, playing = false, returnTo = null, shownScene = -1;
+  // Optional editor support: data provenance of rendered nodes, refreshed every render.
+  const view = {editing:false, revealAll:false, targets:[], hooks:[]};
+  const track = (node, ref, editable) => view.targets.push({node, ref, editable});
+  const chapterTabs = [];
+  const bookmarks=[];
+  const text = (tag, className, value) => {
+    const node = document.createElement(tag); node.className = className; node.textContent = value || ''; return node;
+  };
+  const svgNode = (tag, attrs) => {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value)); return node;
+  };
+  function fit() {
+    const rect = viewport.getBoundingClientRect();
+    const scale = Math.min(rect.width/settings.width, rect.height/settings.height);
+    stage.style.width = settings.width + 'px'; stage.style.height = settings.height + 'px';
+    stage.style.transform = `translate(${(rect.width-settings.width*scale)/2}px,${(rect.height-settings.height*scale)/2}px) scale(${scale})`;
+  }
+  function diagram(scene, visibleCount) {
+    const box = text('div', 'motion-box', '');
+    const svg = svgNode('svg', {viewBox:'0 0 600 360',role:'img','aria-label':scene.motion_caption || scene.title});
+    const colors = ['#355b37','#3158db','#7f9e53','#b5c886'];
+    const count = scene.items.length;
+    scene.items.forEach((item, index) => {
+      const x = count === 1 ? 300 : 80+index*(440/(count-1));
+      const on = index < visibleCount;
+      const state = (on?' on':'')+(index===visibleCount-1?' active':'');
+      if (scene.motion === 'lines' && index > 0) {
+        svg.append(svgNode('path',{d:`M ${x-440/(count-1)+25} 175 H ${x-25}`,stroke:'#3158db','stroke-width':4,fill:'none',class:'motion-link'+state}));
+      }
+      if (scene.motion === 'planes') {
+        svg.append(svgNode('rect',{x:x-50,y:95+index*12,width:100,height:150-index*10,rx:14,fill:colors[index],class:'motion-plane'+state}));
+      } else {
+        svg.append(svgNode('circle',{cx:x,cy:175,r:scene.motion==='points'?26:20,fill:colors[index],class:'motion-point'+state}));
+      }
+      const label=svgNode('text',{x,y:285,'text-anchor':'middle',class:'motion-label'});
+      label.textContent=item.label; svg.append(label);
+    });
+    box.append(svg,text('p','motion-caption',scene.motion_caption || '개념 예시 · 실측 수치 아님'));
+    return box;
+  }
+  // Charts are data, not decoration: linear scales from zero, exact labels in
+  // text nodes, and full visibility whenever motion is reduced or printed.
+  // Show every source decimal (up to 6) so labels stay exact; ticks pass their own precision.
+  const decimals = value => Math.min(6,(String(value).split('.')[1]||'').length);
+  const numberFormat = (value,digits=decimals(value)) => Number(value).toLocaleString(english?'en-US':'ko-KR',{maximumFractionDigits:digits});
+  const percent = value => (Math.round(value*10)/10).toFixed(1)+'%';
+  function niceMax(value){
+    if(value<=0) return 1;
+    const power=10**Math.floor(Math.log10(value)), unit=value/power;
+    return ([1,1.2,2,2.4,3,4,5,6,8,10].find(step=>unit<=step))*power; // each divides evenly into 4 ticks
+  }
+  function svgText(svg, x, y, value, className, anchor='middle'){
+    const node=svgNode('text',{x,y,'text-anchor':anchor,class:className}); node.textContent=value; svg.append(node); return node;
+  }
+  function chart(scene, visibleCount, entering, currentStep=Infinity) {
+    const spec=scene.chart, data=spec.data, linked=Boolean(scene.items)&&data.length===scene.items.length;
+    // spec.steps maps each datum to a composed-scene step; otherwise data follow card items when counts match.
+    const stepOf=Array.isArray(spec.steps)?index=>spec.steps[index]:null;
+    const shown=index=>stepOf?stepOf(index)<=currentStep:!linked || index<visibleCount;
+    const active=index=>stepOf?stepOf(index)===currentStep:linked&&index===visibleCount-1;
+    const state=index=>(shown(index)?' on':'')+(active(index)?' active':'');
+    const highlight=new Set((spec.highlight||[]).map(value=>typeof value==='number'?value:data.findIndex(item=>item.label===value)));
+    const tone=index=>highlight.has(index)?' is-highlight':'';
+    const display=item=>item.display || numberFormat(item.value)+(spec.unit||'');
+    // Linked charts animate the newly revealed datum; unlinked charts animate once on scene entry.
+    const box=text('figure',`chart-box chart-type-${spec.type}${!linked&&entering?' enter':''}`,'');
+    if(spec.title) box.append(text('figcaption','chart-title',spec.title));
+    const svg=svgNode('svg',{viewBox:'0 0 640 380',role:'group','aria-label':spec.title || scene.title});
+    const notes=[];
+    if(spec.type==='bar' || spec.type==='line' || spec.type==='waterfall'){
+      // Waterfall: totals stand on zero, deltas float from the running total.
+      let running=0;
+      const spans=data.map((item,index)=>{
+        const total=(item.kind || (index===0?'total':'delta'))==='total', from=total?0:running, to=total?item.value:running+item.value;
+        running=to; return {from,to,kind:total?'total':item.value>=0?'up':'down'};
+      });
+      const peak=spec.type==='waterfall'?Math.max(...spans.map(span=>Math.max(span.from,span.to))):Math.max(...data.map(item=>item.value));
+      const max=niceMax(peak), left=56, right=616, top=36, bottom=300;
+      const y=value=>bottom-(value/max)*(bottom-top), step=(right-left)/data.length;
+      for(let tick=0;tick<=4;tick++){
+        const value=max*tick/4;
+        svg.append(svgNode('path',{d:`M ${left} ${y(value)} H ${right}`,class:'chart-grid'}));
+        svgText(svg,left-10,y(value)+5,numberFormat(value,Math.max(0,2-Math.floor(Math.log10(max)))),'chart-axis','end');
+      }
+      if(spec.type==='line'){
+        const points=data.map((item,index)=>[left+step*(index+.5),y(item.value)]);
+        svg.append(svgNode('path',{d:`M ${points[0][0]} ${bottom} `+points.map(p=>`L ${p[0]} ${p[1]}`).join(' ')+` L ${points.at(-1)[0]} ${bottom} Z`,class:'chart-area'+(data.every((_,i)=>shown(i))?' on':'')}));
+        points.slice(1).forEach((point,index)=>svg.append(svgNode('path',{d:`M ${points[index][0]} ${points[index][1]} L ${point[0]} ${point[1]}`,class:'chart-line'+state(index+1)})));
+        points.forEach((point,index)=>svg.append(svgNode('circle',{cx:point[0],cy:point[1],r:9,class:'chart-dot'+state(index)})));
+        points.forEach((point,index)=>svgText(svg,point[0],point[1]-20,display(data[index]),'chart-value'+state(index)));
+      } else if(spec.type==='waterfall'){
+        const width=Math.min(76,step*.6);
+        spans.forEach((span,index)=>{
+          const x=left+step*(index+.5), high=Math.max(span.from,span.to), item=data[index];
+          svg.append(svgNode('rect',{x:x-width/2,y:y(high),width,height:Math.max(Math.abs(y(span.from)-y(span.to)),1),rx:4,style:`--i:${index}`,class:`chart-bar wf-${span.kind}`+state(index)}));
+          if(index<spans.length-1) svg.append(svgNode('path',{d:`M ${x+width/2} ${y(span.to)} H ${x+step-width/2}`,class:'chart-connector'+state(index+1)}));
+          const label=item.display || (span.kind==='total'?'':item.value>=0?'+':'')+numberFormat(item.value)+(spec.unit||'');
+          svgText(svg,x,y(high)-12,label,'chart-value'+state(index));
+        });
+      } else {
+        const width=Math.min(84,step*.62);
+        data.forEach((item,index)=>{
+          const x=left+step*(index+.5), height=bottom-y(item.value);
+          svg.append(svgNode('rect',{x:x-width/2,y:y(item.value),width,height:Math.max(height,0),rx:6,style:`--i:${index}`,class:'chart-bar series-0'+tone(index)+state(index)}));
+          svgText(svg,x,y(item.value)-12,display(item),'chart-value'+state(index));
+        });
+      }
+      data.forEach((item,index)=>svgText(svg,left+step*(index+.5),bottom+30,item.label,'chart-label'+state(index)));
+      svg.append(svgNode('path',{d:`M ${left} ${bottom} H ${right}`,class:'chart-baseline'}));
+    } else if(spec.type==='funnel'){
+      const max=Math.max(...data.map(item=>item.value)), rowHeight=Math.min(84,340/data.length), barLeft=150, barWidth=330;
+      let clamped=false;
+      data.forEach((item,index)=>{
+        const top=20+index*rowHeight, exact=max?item.value/max:0, ratio=Math.max(exact,.015);
+        if(ratio>exact) clamped=true;
+        const width=barWidth*ratio, x=barLeft+(barWidth-width)/2;
+        svg.append(svgNode('rect',{x,y:top,width,height:rowHeight*.62,rx:5,style:`--i:${index}`,class:'chart-funnel series-0'+tone(index)+state(index)}));
+        svgText(svg,barLeft-14,top+rowHeight*.42,item.label,'chart-label'+state(index),'end');
+        svgText(svg,barLeft+barWidth+14,top+rowHeight*.42,display(item),'chart-value'+state(index),'start');
+        if(index>0 && data[index-1].value>0) svgText(svg,barLeft+barWidth+14,top-rowHeight*.12,'↓ '+percent(item.value/data[index-1].value*100),'chart-rate'+state(index),'start');
+      });
+      if(clamped) notes.push(english?'Bar widths are to scale; very small values use a minimum visible width.':'막대 너비는 실제 비율입니다. 아주 작은 값은 보이도록 최소 너비로 표시했습니다.');
+    } else if(spec.type==='donut'){
+      const total=data.reduce((sum,item)=>sum+item.value,0), cx=190, cy=190, radius=140, inner=86;
+      let angle=-Math.PI/2;
+      const point=(r,a)=>`${cx+r*Math.cos(a)} ${cy+r*Math.sin(a)}`;
+      data.forEach((item,index)=>{
+        const sweep=item.value/total*Math.PI*2, end=angle+sweep, large=sweep>Math.PI?1:0;
+        const d=`M ${point(radius,angle)} A ${radius} ${radius} 0 ${large} 1 ${point(radius,end)} L ${point(inner,end)} A ${inner} ${inner} 0 ${large} 0 ${point(inner,angle)} Z`;
+        svg.append(svgNode('path',{d,class:`chart-slice series-${index%6}`+state(index)}));
+        // Label and value sit on separate lines so long labels never collide with numbers.
+        const legendY=64+index*Math.min(72,290/data.length);
+        svg.append(svgNode('rect',{x:372,y:legendY-14,width:16,height:16,rx:4,class:`chart-key series-${index%6}`+state(index)}));
+        svgText(svg,398,legendY,item.label,'chart-label'+state(index),'start');
+        svgText(svg,398,legendY+26,`${display(item)} · ${percent(item.value/total*100)}`,'chart-value'+state(index),'start');
+        angle=end;
+      });
+      if(spec.center) svgText(svg,cx,cy+10,spec.center,'chart-center');
+    }
+    box.append(svg);
+    for(const note of [spec.note,...notes].filter(Boolean)) box.append(text('p','chart-note',note));
+    return box;
+  }
+  function setPlaying(value) {
+    clearTimeout(timer); timer=null;
+    const last = position>=mainCount ? steps.length-1 : mainCount-1;
+    playing = value && !reduced.matches && (position < last || (settings.end === 'loop' && position < mainCount));
+    const button = byId('play');
+    button.disabled=reduced.matches;
+    button.textContent=playing?(english?'Pause':'일시 정지'):(english?'Autoplay':'자동 재생'); button.setAttribute('aria-pressed',String(playing));
+    if (playing) timer=setTimeout(next,deck.scenes[steps[position].sceneIndex].duration*1000 || 7000);
+  }
+  // Rebuild a validated composed-scene tree with DOM calls only; collect step, chart and jump hooks.
+  function buildTree(nodes, parent, inSvg, hooks, path=[]){
+    nodes.forEach((node,index)=>{
+      if(typeof node==='string'){parent.append(document.createTextNode(node));return;}
+      const [tag,attrs,children]=node, svg=inSvg||tag==='svg', here=[...path,index];
+      const element=svg?document.createElementNS('http://www.w3.org/2000/svg',tag):document.createElement(tag);
+      for(const [name,value] of Object.entries(attrs)) element.setAttribute(name,value);
+      if(attrs['data-step']) hooks.stepped.push([element,Number(attrs['data-step'])]);
+      if(attrs['data-chart']) hooks.charts.push([element,JSON.parse(attrs['data-chart'])]);
+      if(attrs['data-goto']){element.setAttribute('type','button');element.addEventListener('click',()=>{if(!view.editing)jump(attrs['data-goto']);});}
+      // Elements are memo targets; plain-text HTML leaves are editable text.
+      track(element,{path:here},!svg&&!attrs['data-chart']&&children.length>0&&children.every(child=>typeof child==='string'));
+      buildTree(children,element,svg,hooks,here); parent.append(element);
+    });
+  }
+  function composed(scene, itemIndex, showAll){
+    const reveal=scene.reveal || 'spotlight';
+    const body=text('div',`scene-body composed reveal-${reveal}`,''), hooks={stepped:[],charts:[]};
+    buildTree(scene.body,body,false,hooks);
+    const current=showAll||reveal==='none'?Infinity:itemIndex+1;
+    hooks.charts.forEach(([element,spec])=>element.append(chart({chart:spec,title:scene.title},Infinity,false,current)));
+    // Spotlight keeps later panels readable but dimmed; build hides them until their step.
+    hooks.stepped.forEach(([element,step])=>{
+      if(step<current) element.classList.add('on');
+      else if(step===current){element.classList.add('on');element.classList.add('focus');}
+      else element.classList.add(reveal==='build'?'pending':'dim');
+      if(reveal==='build') element.setAttribute('aria-hidden',String(step>current));
+    });
+    return body;
+  }
+  function buildChapters(){
+    const nav=byId('chapter-nav'); if(!nav) return;
+    nav.replaceChildren(); chapterTabs.length=0; const seen=new Set(); let divided=false;
+    order.forEach(sceneIndex=>{
+      const scene=deck.scenes[sceneIndex]; if(!scene.chapter || seen.has(scene.chapter)) return;
+      seen.add(scene.chapter);
+      if(scene.backup&&!divided){divided=true;nav.append(text('span','chapter-divider',english?'Backup':'자료실'));}
+      const button=text('button','chapter-tab'+(scene.backup?' backup':''),scene.chapter);button.type='button';
+      chapterTabs.push([button,scene.chapter]);
+      button.addEventListener('click',()=>{setPlaying(false);navigate(firstStep(scene.id));});
+      nav.append(button);
+    });
+    document.body.classList.toggle('has-chapters',nav.children.length>0);
+  }
+  function jump(id){
+    const target=firstStep(id); if(target<0) return;
+    if(returnTo===null) returnTo=position;
+    setPlaying(false); go(target);
+  }
+  function navigate(index){returnTo=null;go(index);}
+  function returnToOrigin(){
+    if(returnTo===null) return;
+    const target=returnTo; returnTo=null; go(target);
+  }
+  function render() {
+    const {sceneIndex,itemIndex}=steps[position], scene=deck.scenes[sceneIndex];
+    view.targets=[];
+    const labels=labelsOf(scene), inBackup=position>=mainCount;
+    const hasChart = Boolean(scene.chart);
+    const motionEnabled = !scene.body && !hasChart && settings.motion!=='none' && scene.motion && scene.motion!=='none';
+    // is-entering marks the first render of a scene, so scene-entrance motion does not replay on every step.
+    const entering=shownScene!==sceneIndex; shownScene=sceneIndex;
+    stage.replaceChildren(); stage.className=(settings.font==='serif'?'serif':'')+(scene.body?' composed-scene':'')+(entering?' is-entering':'');
+    stage.setAttribute('data-scene',scene.id); // lets deck css style one scene: [data-scene="id"]
+    document.body.classList.toggle('motion-none',settings.motion==='none');
+    document.body.classList.toggle('motion-rich',settings.motion==='rich');
+    const top=text('div','deck-top',''); const mark=text('span','deck-mark','');
+    mark.append(document.createElement('i'),document.createTextNode(deck.title));
+    const trail=[scene.chapter,`${itemIndex+1}/${labels.length} ${english?'steps':'단계'}`].filter(Boolean).join(' · ');
+    top.append(mark,text('span','breadcrumb',trail),...(deck.version?[text('span','version-tag',deck.version)]:[]),text('span','page-count',inBackup?(english?'Backup':'자료'):`${String(order.indexOf(sceneIndex)+1).padStart(2,'0')} / ${String(order.filter(i=>!deck.scenes[i].backup).length).padStart(2,'0')}`));
+    // **word** in a title marks emphasis; everything else stays plain text.
+    const title=text('h1','scene-title','');
+    const parts=scene.title.split('**');
+    if(parts.length%2===0||view.editing) title.append(document.createTextNode(scene.title));
+    else parts.forEach((part,index)=>{if(part) title.append(index%2?text('em','',part):document.createTextNode(part));});
+    stage.append(top);
+    if(scene.eyebrow){const eyebrow=text('p','eyebrow',scene.eyebrow);stage.append(eyebrow);track(eyebrow,{field:'eyebrow'},true);}
+    stage.append(title); track(title,{field:'title'},true);
+    if(scene.lead){const lead=text('p',scene.body?'lead summary':'lead',scene.lead);stage.append(lead);track(lead,{field:'lead'},true);}
+    const showAll=reduced.matches||settings.motion==='none'||view.revealAll;
+    if(scene.body){
+      stage.append(composed(scene,itemIndex,showAll));
+    } else {
+    const body=text('div',`scene-body ${scene.layout || 'cards'}${hasChart?' has-chart':motionEnabled?'':' no-motion'}`,'');
+    const list=text('div','item-list','');
+    scene.items.forEach((item,index)=>{
+      const visible=showAll||index<=itemIndex;
+      const card=text('section','item'+(visible?' on':'')+(index===itemIndex?' active':''),'');
+      card.setAttribute('aria-hidden',String(!visible));
+      card.append(text('span','item-index',String(index+1).padStart(2,'0')));
+      const content=document.createElement('div');
+      if(item.value){const value=text('strong','item-value',item.value);content.append(value);track(value,{field:'items',index,key:'value'},true);}
+      const label=text('h2','',item.label), itemBody=text('p','',item.body);
+      content.append(label,itemBody);card.append(content); list.append(card);
+      track(label,{field:'items',index,key:'label'},true); if(item.body) track(itemBody,{field:'items',index,key:'body'},true);
+    });
+    const visibleCount=showAll?scene.items.length:itemIndex+1;
+    body.append(list);
+    if(hasChart) body.append(chart(scene,visibleCount,!showAll&&itemIndex===0)); else if(motionEnabled) body.append(diagram(scene,visibleCount));
+    stage.append(body);
+    }
+    const bottom=text('footer','scene-bottom',''), message=text('p','message','');
+    if(scene.message_label) message.append(text('span','message-label',scene.message_label));
+    const messageText=text('span','message-text',scene.message); message.append(messageText);
+    track(messageText,{field:'message'},true);
+    bottom.append(message,text('p','source',scene.source || ''));
+    stage.append(bottom);
+    const lastMain=mainCount-1, atEnd=inBackup?position===steps.length-1:position===lastMain;
+    byId('prev').disabled=position===0||position===mainCount;
+    byId('next').disabled=atEnd && (inBackup || settings.end==='stop');
+    byId('position').textContent=inBackup?`${english?'Backup':'자료'} · ${plain(scene.title)}`:`${position+1} / ${mainCount} ${english?'steps':'단계'}${position===lastMain?(english?' · End':' · 끝'):''}`;
+    byId('announcement').textContent=`${plain(scene.title)}. ${labels[itemIndex]}`;
+    view.hooks.forEach(hook=>hook({scene,sceneIndex,itemIndex}));
+    if(returnTo===position) returnTo=null;
+    const back=byId('return-origin'); if(back) back.hidden=returnTo===null;
+    for(const [tab,chapter] of chapterTabs){
+      const on=chapter===scene.chapter; tab.classList.toggle('active',on);
+      if(on) tab.setAttribute('aria-current','true'); else tab.removeAttribute('aria-current');
+    }
+    fit(); setPlaying(playing);
+  }
+  function go(index){position=Math.max(0,Math.min(steps.length-1,index));render();}
+  function next(){
+    if(position>=mainCount){if(position<steps.length-1)go(position+1);else setPlaying(false);return;}
+    if(position<mainCount-1)go(position+1);else if(settings.end==='loop')go(0);else setPlaying(false);
+  }
+  function previous(){go(Math.max(position>=mainCount?mainCount:0,position-1));}
+  function openDialog(id){
+    setPlaying(false);
+    const dialog=byId(id);
+    if(typeof dialog.showModal==='function')dialog.showModal();else dialog.open=true;
+    const first=dialog.children?.[0]?.children?.find?.(node=>node.tagName==='button') || dialog.children?.[0]?.children?.[1];
+    first?.focus?.();
+  }
+  function closeDialog(id,returnId){
+    const dialog=byId(id);
+    if(typeof dialog.close==='function')dialog.close();else dialog.open=false;
+    byId(returnId)?.focus();
+  }
+  function bookmarkLabel(index){
+    const step=steps[index],scene=deck.scenes[step.sceneIndex],labels=labelsOf(scene);
+    return `${String(order.indexOf(step.sceneIndex)+1).padStart(2,'0')} · ${plain(scene.title)} · ${step.itemIndex+1}/${labels.length} ${labels[step.itemIndex]}`;
+  }
+  function updateBookmarks(){
+    const root=byId('bookmarks-list');root.replaceChildren();
+    if(!bookmarks.length)root.append(text('p','empty-bookmarks',english?'No questions marked yet.':'표시한 질문이 없습니다.'));
+    bookmarks.forEach((stepIndex,index)=>{
+      const row=text('div','bookmark-row','');
+      const jump=text('button','bookmark-jump',bookmarkLabel(stepIndex));jump.type='button';
+      jump.setAttribute('aria-label',(english?'Return to ':'질문 위치로 이동: ')+bookmarkLabel(stepIndex));
+      jump.addEventListener('click',()=>{navigate(stepIndex);closeDialog('bookmarks-dialog','open-bookmarks');});
+      const remove=text('button','bookmark-remove',english?'Remove':'삭제');remove.type='button';
+      remove.setAttribute('aria-label',(english?'Remove ':'질문 표시 삭제: ')+bookmarkLabel(stepIndex));
+      remove.addEventListener('click',()=>{bookmarks.splice(index,1);updateBookmarks();});
+      row.append(jump,remove);root.append(row);
+    });
+    byId('return-bookmark').disabled=!bookmarks.length;
+    byId('open-bookmarks').textContent=(english?'Question list':'질문 목록')+(bookmarks.length?` (${bookmarks.length})`:'');
+  }
+  function markQuestion(){
+    setPlaying(false);
+    if(!bookmarks.includes(position))bookmarks.push(position);
+    updateBookmarks();
+    byId('announcement').textContent=(english?'Question marked: ':'질문 표시: ')+bookmarkLabel(position);
+  }
+  function returnToLatest(){
+    if(!bookmarks.length)return;
+    setPlaying(false);navigate(bookmarks[bookmarks.length-1]);
+  }
+  function buildOutline(){
+    const root=byId('outline-list');root.replaceChildren();
+    let stepIndex=0, divided=false;
+    order.forEach((sceneIndex,orderIndex)=>{
+      const scene=deck.scenes[sceneIndex];
+      if(scene.backup&&!divided){divided=true;root.append(text('h2','outline-divider',english?'Backup and reference':'자료실 · 백업'));}
+      const group=text('section','outline-scene'+(scene.backup?' backup':''),'');
+      group.append(text('h2','',`${String(orderIndex+1).padStart(2,'0')} · ${plain(scene.title)}`));
+      const list=text('div','outline-steps','');
+      labelsOf(scene).forEach((label,itemIndex)=>{
+        const target=stepIndex++;
+        const button=text('button','outline-step',`${itemIndex+1}. ${label}`);button.type='button';
+        button.setAttribute('aria-label',(english?'Go to ':'이동: ')+bookmarkLabel(target));
+        button.addEventListener('click',()=>{navigate(target);closeDialog('outline-dialog','open-outline');});list.append(button);
+      });
+      group.append(list);root.append(group);
+    });
+  }
+  // Build one complete scene per printed page, independent of the current reveal.
+  function preparePrint(){
+    setPlaying(false);
+    const original=position, editing=view.editing, revealAll=view.revealAll;
+    view.editing=false; view.revealAll=false;
+    let root=byId('print-pages');
+    if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);ui['print-pages']=root;}
+    root.replaceChildren();
+    let end=-1;
+    try{
+      for(const sceneIndex of order){
+        end+=labelsOf(deck.scenes[sceneIndex]).length;position=end;render();
+        const page=text('article','print-page','');
+        const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
+        const scale=Math.min(1046/settings.width,699/settings.height);
+        copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
+        // zoom shrinks the layout box too; transform alone leaves a 1600×900 box that print pagination clips.
+        if(globalThis.CSS?.supports?.('zoom','0.5')){copy.style.zoom=String(scale);copy.style.transform='none';}
+        else copy.style.transform=`scale(${scale})`;
+        page.append(copy);root.append(page);
+      }
+    }finally{position=original;view.editing=editing;view.revealAll=revealAll;render();}
+  }
+  addEventListener('beforeprint',preparePrint);
+  byId('print')?.addEventListener('click',()=>{
+    preparePrint();document.body.classList.add('print-preview');
+    byId('print-confirm').focus();
+  });
+  byId('print-confirm')?.addEventListener('click',()=>window.print());
+  byId('print-close')?.addEventListener('click',()=>{
+    document.body.classList.remove('print-preview');byId('print').focus();fit();
+  });
+  byId('prev').addEventListener('click',previous);
+  byId('return-origin')?.addEventListener('click',returnToOrigin);
+  byId('next').addEventListener('click',next);
+  byId('play').addEventListener('click',()=>setPlaying(!playing));
+  byId('play').hidden=settings.playback==='manual';
+  byId('replay').addEventListener('click',()=>{setPlaying(false);returnTo=null;go(0);});
+  byId('open-outline').addEventListener('click',()=>openDialog('outline-dialog'));
+  byId('outline-close').addEventListener('click',()=>closeDialog('outline-dialog','open-outline'));
+  byId('bookmark-current').addEventListener('click',markQuestion);
+  byId('open-bookmarks').addEventListener('click',()=>{updateBookmarks();openDialog('bookmarks-dialog');});
+  byId('bookmarks-close').addEventListener('click',()=>closeDialog('bookmarks-dialog','open-bookmarks'));
+  byId('return-bookmark').addEventListener('click',returnToLatest);
+  byId('fullscreen').addEventListener('click',async()=>{
+    try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}
+    catch{byId('announcement').textContent='이 환경에서는 전체 화면을 사용할 수 없습니다.';}
+  });
+  addEventListener('keydown',event=>{
+    if(document.body.classList.contains('print-preview')){
+      if(event.key==='Escape')byId('print-close').click();return;
+    }
+    if(byId('supplements-dialog')?.open)return;
+    if(byId('outline-dialog').open||byId('bookmarks-dialog').open){
+      if(event.key==='Escape'){
+        if(byId('outline-dialog').open)closeDialog('outline-dialog','open-outline');
+        if(byId('bookmarks-dialog').open)closeDialog('bookmarks-dialog','open-bookmarks');
+      }
+      return;
+    }
+    if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest('input,textarea,select,[contenteditable]'))return;
+    // Arrow navigation still works after clicking a control. Space/Enter keep
+    // their native button/link activation instead of triggering two actions.
+    if(event.target.closest('button,a')&&[' ','Enter'].includes(event.key))return;
+    if(['ArrowRight','PageDown',' '].includes(event.key)){event.preventDefault();next();}
+    else if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();previous();}
+    else if(event.key==='Home'){event.preventDefault();navigate(0);}
+    else if(event.key==='End'){event.preventDefault();go(mainCount-1);}
+    else if(event.key==='Backspace'&&returnTo!==null){event.preventDefault();returnToOrigin();}
+    else if(event.key.toLowerCase()==='a'&&settings.playback!=='manual')setPlaying(!playing);
+    else if(event.key.toLowerCase()==='g'){event.preventDefault();openDialog('outline-dialog');}
+    else if(event.key==='B'){event.preventDefault();updateBookmarks();openDialog('bookmarks-dialog');}
+    else if(event.key.toLowerCase()==='b'){event.preventDefault();markQuestion();}
+    else if(event.key.toLowerCase()==='r'){event.preventDefault();returnToLatest();}
+    else if(event.key==='Escape')setPlaying(false);
+  });
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
+  addEventListener('ppt-open-supplement',()=>setPlaying(false));
+  addEventListener('resize',fit); reduced.addEventListener('change',()=>{setPlaying(false);render();});
+  function stepFromHash(){
+    const params={};
+    for(const pair of String(globalThis.location?.hash||'').replace(/^#/,'').split('&')){const [key,value='']=pair.split('=');try{params[key]=decodeURIComponent(value);}catch{}}
+    const first=firstStep(params.scene||''); if(first<0) return null;
+    const scene=deck.scenes[steps[first].sceneIndex], step=Math.min(Math.max(1,Number(params.step)||1),labelsOf(scene).length);
+    return first+step-1;
+  }
+  view.hooks.push(({scene,itemIndex})=>{
+    const hash=`#scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
+    try{if(globalThis.location&&globalThis.location.hash!==hash)globalThis.history?.replaceState?.(null,'',hash);}catch{}
+  });
+  addEventListener('hashchange',()=>{const target=stepFromHash();if(target!==null&&target!==position){setPlaying(false);go(target);}});
+  globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep,
+    steps:()=>steps.map(({sceneIndex,itemIndex})=>({scene:deck.scenes[sceneIndex].id,step:itemIndex+1,backup:Boolean(deck.scenes[sceneIndex].backup)}))};
+  const linked=stepFromHash(); if(linked!==null) position=linked;
+  buildChapters();buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
+})();
+
+/* Optional in-browser review: edit text in place, leave memos for the author, save an updated HTML or export the changes.
+   Text is edited as plain text only (contenteditable=plaintext-only); structure, styles and chart data stay locked. */
+(() => {
+  'use strict';
+  const api = globalThis.__pptPlayer;
+  if (!api) return;
+  const {deck, view} = api;
+  const english = deck.language === 'en';
+  const t = (ko, en) => (english ? en : ko);
+  const review = deck.review || (deck.review = {edits: [], memos: []});
+  let memoMode = false, memoTarget = null;
+
+  const make = (tag, className, textValue) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (textValue !== undefined) node.textContent = textValue;
+    node.setAttribute('data-editor-ui', '');
+    return node;
+  };
+  const sceneById = id => deck.scenes.find(scene => scene.id === id);
+  const currentScene = () => deck.scenes[api.current().sceneIndex];
+  const refKey = ref => ref.path ? 'path:' + ref.path.join('.') : ref.field === 'items' ? `items:${ref.index}:${ref.key}` : 'field:' + ref.field;
+  const figures = value => String(value).match(/\d(?:[\d.,]*\d)?\s*[%A-Za-z가-힣$₩€]?/g) || [];
+
+  // Read and write the deck value a rendered node came from.
+  function treeNode(scene, path) {
+    let node = null, list = scene.body;
+    for (const index of path) { node = list[index]; list = node[2]; }
+    return node;
+  }
+  function readValue(scene, ref) {
+    if (ref.path) return treeNode(scene, ref.path)[2].join('');
+    if (ref.field === 'items') return scene.items[ref.index][ref.key] || '';
+    return scene[ref.field] || '';
+  }
+  function writeValue(scene, ref, value) {
+    if (ref.path) treeNode(scene, ref.path)[2] = [value];
+    else if (ref.field === 'items') scene.items[ref.index][ref.key] = value;
+    else scene[ref.field] = value;
+  }
+
+  function commit(target, value) {
+    const scene = currentScene(), key = refKey(target.ref);
+    const before = readValue(scene, target.ref);
+    if (before === value) return;
+    writeValue(scene, target.ref, value);
+    const index = review.edits.findIndex(edit => edit.scene === scene.id && edit.key === key);
+    if (index < 0) review.edits.push({scene: scene.id, key, ref: target.ref, before, after: value});
+    else review.edits[index].after = value;
+    const edit = review.edits.find(item => item.scene === scene.id && item.key === key);
+    if (edit.before === edit.after) review.edits.splice(review.edits.indexOf(edit), 1);
+    else edit.numeric = JSON.stringify(figures(edit.before)) !== JSON.stringify(figures(edit.after));
+    updateCounts();
+  }
+
+  // Controls
+  // A separate top-right review bar keeps the playback controls uncluttered.
+  const bar = make('div', 'editor-bar');
+  bar.setAttribute('role', 'toolbar'); bar.setAttribute('aria-label', t('검토 도구', 'Review tools'));
+  document.body.append(bar);
+  const editButton = make('button', 'editor-toggle', t('편집', 'Edit'));
+  const memoButton = make('button', 'editor-toggle', t('메모', 'Memo'));
+  const reviewButton = make('button', 'editor-review', t('검토', 'Review'));
+  for (const button of [editButton, memoButton, reviewButton]) { button.type = 'button'; button.setAttribute('aria-pressed', 'false'); }
+  reviewButton.removeAttribute('aria-pressed');
+  bar.append(editButton, memoButton, reviewButton);
+  const banner = make('p', 'editor-banner');
+  banner.setAttribute('role', 'status');
+  document.body.append(banner);
+
+  // Memo dialog
+  const memoDialog = make('dialog', 'jump-dialog editor-dialog');
+  memoDialog.id = 'memo-dialog';
+  const memoHeader = make('header'), memoTitle = make('strong', '', t('수정 요청 메모', 'Change request'));
+  const memoClose = make('button', '', '×'); memoClose.type = 'button'; memoClose.setAttribute('aria-label', t('닫기', 'Close'));
+  memoHeader.append(memoTitle, memoClose);
+  const memoTargetText = make('p', 'memo-target');
+  const memoInput = make('textarea', 'memo-input');
+  memoInput.setAttribute('rows', '4');
+  memoInput.setAttribute('placeholder', t('예: 이 문장을 더 짧게, 수치 출처 확인, 차트를 막대로 바꾸기', 'e.g. shorten this, check the source, use a bar chart'));
+  const memoActions = make('div', 'editor-actions');
+  const memoSave = make('button', 'primary', t('메모 저장', 'Save memo')); memoSave.type = 'button';
+  const memoDelete = make('button', '', t('메모 삭제', 'Delete memo')); memoDelete.type = 'button';
+  memoActions.append(memoSave, memoDelete);
+  memoDialog.append(memoHeader, memoTargetText, memoInput, memoActions);
+  document.body.append(memoDialog);
+
+  // Review dialog
+  const reviewDialog = make('dialog', 'jump-dialog editor-dialog');
+  reviewDialog.id = 'review-dialog';
+  const reviewHeader = make('header'), reviewTitle = make('strong', '', t('수정과 메모', 'Edits and memos'));
+  const reviewClose = make('button', '', '×'); reviewClose.type = 'button'; reviewClose.setAttribute('aria-label', t('닫기', 'Close'));
+  reviewHeader.append(reviewTitle, reviewClose);
+  const reviewList = make('div', 'review-list');
+  const reviewActions = make('div', 'editor-actions');
+  const saveHtmlButton = make('button', 'primary', t('수정본 HTML 저장', 'Save edited HTML')); saveHtmlButton.type = 'button';
+  const exportButton = make('button', '', t('수정 내역 내보내기 (JSON)', 'Export changes (JSON)')); exportButton.type = 'button';
+  reviewActions.append(saveHtmlButton, exportButton);
+  const reviewNote = make('p', 'review-note', t('수정 내역 JSON을 작성자(AI)에게 전달하면 원본에 반영하고 숫자가 바뀐 항목은 다시 검수합니다.', 'Give the JSON to the author (AI) to apply the changes to the source; changed numbers are re-verified.'));
+  reviewDialog.append(reviewHeader, reviewList, reviewActions, reviewNote);
+  document.body.append(reviewDialog);
+
+  const open = dialog => { api.setPlaying(false); if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.open = true; };
+  const close = dialog => { if (typeof dialog.close === 'function') dialog.close(); else dialog.open = false; };
+
+  function updateCounts() {
+    const numeric = review.edits.filter(edit => edit.numeric).length;
+    reviewButton.textContent = t('검토', 'Review') + (review.edits.length || review.memos.length ? ` (${review.edits.length + review.memos.length})` : '');
+    banner.textContent = numeric ? t(`숫자가 바뀐 수정 ${numeric}건: 차트·합계와 맞는지 작성자 재검수가 필요합니다.`, `${numeric} edit(s) changed numbers: the author must re-verify charts and totals.`) : '';
+    banner.hidden = !numeric;
+  }
+
+  function snippet(scene, ref) {
+    const value = readValue(scene, ref) || '';
+    return value.length > 60 ? value.slice(0, 60) + '…' : value;
+  }
+  function stepLabel() {
+    const {sceneIndex, itemIndex} = api.current();
+    return api.labelsOf(deck.scenes[sceneIndex])[itemIndex];
+  }
+
+  function openMemo(target) {
+    const scene = currentScene();
+    const existing = review.memos.find(memo => memo.scene === scene.id && memo.key === refKey(target.ref));
+    memoTarget = {scene: scene.id, ref: target.ref, key: refKey(target.ref)};
+    memoTargetText.textContent = `${scene.id} · ${stepLabel()} · ${snippet(scene, target.ref) || t('(요소)', '(element)')}`;
+    memoInput.value = existing ? existing.note : '';
+    memoDelete.hidden = !existing;
+    open(memoDialog);
+    memoInput.focus?.();
+  }
+  memoSave.addEventListener('click', () => {
+    const note = memoInput.value.trim();
+    if (!note || !memoTarget) { close(memoDialog); return; }
+    const existing = review.memos.find(memo => memo.scene === memoTarget.scene && memo.key === memoTarget.key);
+    if (existing) existing.note = note;
+    else review.memos.push({...memoTarget, step: stepLabel(), target: snippet(sceneById(memoTarget.scene), memoTarget.ref), note});
+    close(memoDialog); updateCounts(); api.render();
+  });
+  memoDelete.addEventListener('click', () => {
+    const index = review.memos.findIndex(memo => memo.scene === memoTarget?.scene && memo.key === memoTarget?.key);
+    if (index >= 0) review.memos.splice(index, 1);
+    close(memoDialog); updateCounts(); api.render();
+  });
+  memoClose.addEventListener('click', () => close(memoDialog));
+  reviewClose.addEventListener('click', () => close(reviewDialog));
+
+  function renderReview() {
+    reviewList.replaceChildren();
+    if (!review.edits.length && !review.memos.length) reviewList.append(make('p', 'empty-bookmarks', t('아직 수정이나 메모가 없습니다. 편집(E) 또는 메모(M)를 켜고 화면을 클릭하세요.', 'No edits or memos yet. Turn on Edit (E) or Memo (M) and click the slide.')));
+    for (const edit of review.edits) {
+      const row = make('div', 'review-row' + (edit.numeric ? ' numeric' : ''));
+      row.append(make('b', '', `${t('수정', 'Edit')} · ${edit.scene}${edit.numeric ? t(' · 숫자 변경', ' · number changed') : ''}`), make('span', 'before', edit.before), make('span', 'after', edit.after));
+      reviewList.append(row);
+    }
+    for (const memo of review.memos) {
+      const row = make('div', 'review-row memo');
+      const jump = make('button', 'bookmark-jump', t('이동', 'Go')); jump.type = 'button';
+      jump.addEventListener('click', () => { close(reviewDialog); api.go(api.firstStep(memo.scene)); });
+      row.append(make('b', '', `${t('메모', 'Memo')} · ${memo.scene} · ${memo.step}`), make('span', 'after', memo.note), make('span', 'before', memo.target), jump);
+      reviewList.append(row);
+    }
+  }
+
+  function exportReview() {
+    return {format: 'ppt-to-html-review', version: 1, deck: deck.title, exported: new Date().toISOString(),
+      edits: review.edits.map(({scene, ref, before, after, numeric}) => ({scene, ...ref, before, after, numeric: Boolean(numeric)})),
+      memos: review.memos.map(({scene, ref, step, target, note}) => ({scene, ...ref, step, target, note}))};
+  }
+  const safeJson = value => JSON.stringify(value).replace(/&/g, '\\u0026').replace(/</g, '\\u003c').replace(/>/g, '\\u003e');
+  // A copy of this file with the edited deck data; runtime-rendered parts are cleared and rebuilt on open.
+  function savedHtml() {
+    const copy = document.documentElement.cloneNode(true);
+    for (const selector of ['#stage', '#chapter-nav', '#outline-list', '#bookmarks-list', '#position', '#announcement']) copy.querySelector(selector)?.replaceChildren();
+    copy.querySelectorAll('[data-editor-ui], #print-pages').forEach(node => node.remove());
+    copy.querySelectorAll('dialog[open]').forEach(node => node.removeAttribute('open'));
+    const body = copy.querySelector('body');
+    body.className = [...document.body.classList].filter(name => name.startsWith('theme-')).join(' ');
+    copy.querySelector('#deck-data').textContent = safeJson(deck);
+    const head = [...document.childNodes].filter(node => node !== document.documentElement).map(node =>
+      node.nodeType === 8 ? `<!--${node.data}-->` : node.nodeType === 10 ? '<!doctype html>' : '').join('\n');
+    return head + '\n' + copy.outerHTML;
+  }
+  function download(name, content, type) {
+    const blob = new Blob([content], {type});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob); link.download = name;
+    document.body.append(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  }
+  const baseName = () => deck.title.replace(/[\\/:*?"<>|]+/g, ' ').trim().slice(0, 60) || 'presentation';
+  saveHtmlButton.addEventListener('click', () => download(`${baseName()}-${t('수정본', 'edited')}.html`, savedHtml(), 'text/html'));
+  exportButton.addEventListener('click', () => download('deck-edits.json', JSON.stringify(exportReview(), null, 2), 'application/json'));
+
+  function setEditing(on) {
+    view.editing = on; view.revealAll = on;
+    if (on && memoMode) setMemo(false);
+    editButton.setAttribute('aria-pressed', String(on));
+    document.body.classList.toggle('editing', on);
+    api.setPlaying(false); api.render();
+  }
+  function setMemo(on) {
+    memoMode = on;
+    if (on && view.editing) setEditing(false);
+    memoButton.setAttribute('aria-pressed', String(on));
+    document.body.classList.toggle('memo-mode', on);
+    api.setPlaying(false);
+  }
+  editButton.addEventListener('click', () => setEditing(!view.editing));
+  memoButton.addEventListener('click', () => setMemo(!memoMode));
+  reviewButton.addEventListener('click', () => { renderReview(); open(reviewDialog); });
+
+  // After each render: make text editable, mark edits and memos.
+  view.hooks.push(({scene}) => {
+    for (const target of view.targets) {
+      const key = refKey(target.ref);
+      if (view.editing && target.editable) {
+        target.node.setAttribute('contenteditable', 'plaintext-only');
+        target.node.setAttribute('spellcheck', 'false');
+        target.node.addEventListener('input', () => commit(target, target.node.textContent));
+        target.node.addEventListener('keydown', event => { if (event.isComposing || event.keyCode === 229) return; if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); target.node.blur?.(); } });
+      }
+      if (review.edits.some(edit => edit.scene === scene.id && edit.key === key)) target.node.classList.add('was-edited');
+      const memoIndex = review.memos.findIndex(memo => memo.scene === scene.id && memo.key === key);
+      if (memoIndex >= 0) { target.node.classList.add('has-memo'); target.node.setAttribute('data-memo', String(memoIndex + 1)); }
+    }
+  });
+  // In memo mode a click on the slide picks the nearest tracked element instead of activating it.
+  document.getElementById('stage').addEventListener('click', event => {
+    if (!memoMode) return;
+    let node = event.target;
+    while (node && node.id !== 'stage') {
+      const target = view.targets.find(item => item.node === node);
+      if (target) { event.preventDefault(); event.stopPropagation(); openMemo(target); return; }
+      node = node.parentNode;
+    }
+  }, true);
+  addEventListener('keydown', event => {
+    if (event.altKey || event.ctrlKey || event.metaKey || event.target?.closest?.('input,textarea,select,[contenteditable]')) return;
+    if (document.body.classList.contains('print-preview') || memoDialog.open || reviewDialog.open || document.querySelector?.('dialog[open]')) return;
+    if (event.key.toLowerCase() === 'e') { event.preventDefault(); setEditing(!view.editing); }
+    else if (event.key.toLowerCase() === 'm') { event.preventDefault(); setMemo(!memoMode); }
+  });
+  globalThis.__pptEditor = {exportReview, savedHtml, setEditing, setMemo, review};
+  updateCounts();
+  api.render();
+})();
+</script></body></html>

@@ -1,4 +1,4 @@
-"""Screenshot every step of a built presentation, flag overflow, and optionally print a PDF.
+"""Screenshot every step of a built presentation, flag overflow and sparse slides, and optionally print a PDF.
 
 Uses a locally installed Chromium browser (Edge or Chrome) over the DevTools protocol with the Python
 standard library only. Each step is opened through the player's #scene=<id>&step=<n> link.
@@ -45,6 +45,29 @@ OVERFLOW_JS = r"""(() => {
   }
   return found.slice(0, 25);
 })()"""
+
+# Share of the slide (32 x 18 cells) that holds no text, graphic, image or strong fill. Faint (build-hidden) parts do not count.
+EMPTY_JS = r"""(() => {
+  const box = document.getElementById('stage').getBoundingClientRect(), cols = 32, rows = 18, filled = new Uint8Array(cols * rows);
+  const cw = box.width / cols, ch = box.height / rows;
+  const mark = r => {
+    if (r.width < 1 || r.height < 1 || r.right < box.left || r.left > box.right || r.bottom < box.top || r.top > box.bottom) return;
+    const x0 = Math.max(0, Math.floor((r.left - box.left) / cw)), x1 = Math.min(cols - 1, Math.floor((r.right - box.left - .01) / cw));
+    const y0 = Math.max(0, Math.floor((r.top - box.top) / ch)), y1 = Math.min(rows - 1, Math.floor((r.bottom - box.top - .01) / ch));
+    for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) filled[y * cols + x] = 1;
+  };
+  const shown = el => { for (let e = el; e && e.id !== 'viewport'; e = e.parentElement) { const s = getComputedStyle(e); if (s.visibility === 'hidden' || s.display === 'none' || +s.opacity < .15) return false; } return true; };
+  const dark = c => { const m = c.match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < .3)) return false; return (.2126 * m[0] + .7152 * m[1] + .0722 * m[2]) / 255 < .8; };
+  const stage = document.getElementById('stage'), walker = document.createTreeWalker(stage, NodeFilter.SHOW_TEXT);
+  for (let n; (n = walker.nextNode());) { if (!n.textContent.trim() || !shown(n.parentElement)) continue; const range = document.createRange(); range.selectNodeContents(n); for (const r of range.getClientRects()) mark(r); }
+  const skip = new Set(['svg', 'g', 'defs', 'clippath', 'mask', 'lineargradient', 'radialgradient', 'stop', 'text', 'tspan', 'title', 'desc', 'marker', 'pattern', 'symbol']);
+  for (const el of stage.querySelectorAll('*')) {
+    const tag = el.tagName.toLowerCase(), graphic = el.closest('svg') && !skip.has(tag);
+    if ((graphic || tag === 'img' || dark(getComputedStyle(el).backgroundColor)) && shown(el)) mark(el.getBoundingClientRect());
+  }
+  return Math.round(filled.reduce((sum, f) => sum + !f, 0) / filled.length * 100);
+})()"""
+SPARSE = 45  # percent; dense report slides measure about 25-40
 
 
 def find_browser(explicit):
@@ -165,7 +188,7 @@ def main():
     parser.add_argument('html', type=Path)
     parser.add_argument('--out', type=Path, required=True, help='folder for PNG screenshots and report.json')
     parser.add_argument('--width', type=int, default=1600)
-    parser.add_argument('--height', type=int, default=982, help='window height; the default leaves room for the control bar')
+    parser.add_argument('--height', type=int, help='window height; by default the window is sized so the slide renders at its deck size')
     parser.add_argument('--reduced', action='store_true', help='emulate reduced motion (every step fully revealed)')
     parser.add_argument('--wait', type=float, default=0.9, help='seconds to wait after each step for transitions')
     parser.add_argument('--pdf', type=Path, help='also print the deck to this PDF')
@@ -175,11 +198,11 @@ def main():
     sys.stdout.reconfigure(encoding='utf-8')
     args.out.mkdir(parents=True, exist_ok=True)
     url = args.html.resolve().as_uri()
-    browser = Browser(find_browser(args.browser), args.width, args.height)
+    browser = Browser(find_browser(args.browser), args.width, args.height or 982)
     report = {'file': str(args.html), 'reduced_motion': args.reduced, 'steps': []}
     try:
         browser.call('Page.enable')
-        browser.call('Emulation.setDeviceMetricsOverride', width=args.width, height=args.height, deviceScaleFactor=1, mobile=False)
+        browser.call('Emulation.setDeviceMetricsOverride', width=args.width, height=args.height or 982, deviceScaleFactor=1, mobile=False)
         if args.reduced:
             browser.call('Emulation.setEmulatedMedia', features=[{'name': 'prefers-reduced-motion', 'value': 'reduce'}])
         browser.call('Page.navigate', url=url)
@@ -187,6 +210,12 @@ def main():
             if browser.evaluate('Boolean(globalThis.__pptPlayer)'):
                 break
             time.sleep(0.2)
+        if not args.height and browser.evaluate('Boolean(globalThis.__pptPlayer)'):
+            # Controls and chapter tabs take window height; grow the window so the slide is not scaled down.
+            size = browser.evaluate("(() => { const s = __pptPlayer.deck.settings || {}; return {w: s.width || 1600, h: s.height || 900, chrome: innerHeight - document.getElementById('viewport').clientHeight}; })()")
+            height = round(size['h'] * args.width / size['w'] + size['chrome'])
+            browser.call('Emulation.setDeviceMetricsOverride', width=args.width, height=height, deviceScaleFactor=1, mobile=False)
+            time.sleep(0.3)
         steps = browser.evaluate('__pptPlayer.steps()') or []
         if args.stage_only:  # slide-only images: hide controls, chapter tabs and the review toolbar
             browser.evaluate("document.querySelectorAll('[data-editor-ui], .controls, #chapter-nav').forEach(node => node.style.visibility = 'hidden')")
@@ -202,6 +231,7 @@ def main():
                     browser.evaluate(f'location.hash = {json.dumps(target)}')
                     time.sleep(args.wait * attempt)
                     issues = browser.evaluate(OVERFLOW_JS) or []
+                    empty = browser.evaluate(EMPTY_JS)
                     clip = {}
                     if args.stage_only:
                         box = browser.evaluate("(() => { const r = document.getElementById('stage').getBoundingClientRect(); return {x: r.x, y: r.y, width: r.width, height: r.height}; })()")
@@ -212,11 +242,14 @@ def main():
                     if attempt == 2:
                         raise SystemExit(f'Step {index} ({step["scene"]} {step["step"]}) failed twice: {error}. Partial results are in report.json.')
             (args.out / name).write_bytes(base64.b64decode(shot))
-            report['steps'].append({**step, 'file': name, 'issues': issues})
+            last = index == len(steps) or steps[index]['scene'] != step['scene']  # fully revealed step of its scene
+            if last and empty is not None and empty >= SPARSE:
+                issues = issues + [['sparse', f'{empty}% of the slide is empty']]
+            report['steps'].append({**step, 'file': name, 'empty_pct': empty, 'issues': issues})
             # Keep a usable report even if a later step fails.
             (args.out / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
             flag = f"  ⚠ {len(issues)} layout issue(s)" if issues else ''
-            print(f"{index:02d} {step['scene']} step {step['step']}{' (backup)' if step['backup'] else ''}{flag}  [{time.time() - started:.0f}s]")
+            print(f"{index:02d} {step['scene']} step {step['step']}{' (backup)' if step['backup'] else ''}  empty {empty}%{flag}  [{time.time() - started:.0f}s]")
         if args.pdf:
             pdf = browser.call('Page.printToPDF', printBackground=True, preferCSSPageSize=True)['data']
             args.pdf.parent.mkdir(parents=True, exist_ok=True)
