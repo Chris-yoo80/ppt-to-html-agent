@@ -21,7 +21,7 @@
   const steps = order.flatMap(sceneIndex => labelsOf(deck.scenes[sceneIndex]).map((_, itemIndex) => ({sceneIndex, itemIndex})));
   const mainCount = steps.filter(step => !deck.scenes[step.sceneIndex].backup).length;
   const firstStep = id => steps.findIndex(step => deck.scenes[step.sceneIndex].id === id);
-  let position = 0, timer = null, playing = false, returnTo = null;
+  let position = 0, timer = null, playing = false, returnTo = null, shownScene = -1;
   // Optional editor support: data provenance of rendered nodes, refreshed every render.
   const view = {editing:false, revealAll:false, targets:[], hooks:[]};
   const track = (node, ref, editable) => view.targets.push({node, ref, editable});
@@ -235,7 +235,9 @@
     const labels=labelsOf(scene), inBackup=position>=mainCount;
     const hasChart = Boolean(scene.chart);
     const motionEnabled = !scene.body && !hasChart && settings.motion!=='none' && scene.motion && scene.motion!=='none';
-    stage.replaceChildren(); stage.className=(settings.font==='serif'?'serif':'')+(scene.body?' composed-scene':'');
+    // is-entering marks the first render of a scene, so scene-entrance motion does not replay on every step.
+    const entering=shownScene!==sceneIndex; shownScene=sceneIndex;
+    stage.replaceChildren(); stage.className=(settings.font==='serif'?'serif':'')+(scene.body?' composed-scene':'')+(entering?' is-entering':'');
     stage.setAttribute('data-scene',scene.id); // lets deck css style one scene: [data-scene="id"]
     document.body.classList.toggle('motion-none',settings.motion==='none');
     document.body.classList.toggle('motion-rich',settings.motion==='rich');

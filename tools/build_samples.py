@@ -23,11 +23,16 @@ from build_deck import build  # noqa: E402
 OUT = ROOT / 'docs/samples'
 SAMPLES = [
     {'slug': 'lumi-q3', 'deck': 'examples/samples/lumi-q3/deck.json', 'pptx': 'examples/samples/lumi-q3/source.pptx',
-     'supplements': [('채널 성과표', 'examples/samples/lumi-q3/supplement-channel.html')], 'thumb': 'conclusion',
-     'ko': ('루미 텀블러 3분기 마케팅 결과', '보온 텀블러라는 제품에서 디자인을 끌어낸 덱. 목표선 위로 넘친 텀블러 게이지, 광고비와 매출을 같은 눈금에 맞댄 막대, 예산 비율 띠.',
-            '내용에 맞춘 디자인 · frontend-design 스킬 활용'),
-     'en': ('Lumi tumbler Q3 marketing results', 'Design drawn from the product itself: a tumbler gauge overflowing its target line, spend and revenue on one scale, a budget-share band.',
-            'Content-led design with the frontend-design skill')},
+     'supplements': [('채널 성과표', 'examples/samples/lumi-q3/supplement-channel.html')], 'thumb': 'channels',
+     'ko': ('루미 텀블러 3분기 마케팅 결과', '원본 10장을 화면을 꽉 채운 장면 7개로 압축한 덱. 채널 매트릭스, 목표선을 넘친 텀블러 게이지, 누적 목표 돌파 막대. 장면이 열리면 패널이 차례로 올라오고 막대가 자랍니다.',
+            '꽉 찬 보고서형 · 모션 · frontend-design 스킬 활용'),
+     'en': ('Lumi tumbler Q3 marketing results', 'Ten source slides condensed into seven full scenes: a channel matrix, a tumbler gauge overflowing its target, a cumulative-target bar. Panels rise in sequence and bars grow as each scene opens.',
+            'Dense report layout, motion, frontend-design skill')},
+    {'slug': 'saebom-round3', 'deck': 'examples/samples/saebom-round3/deck.json', 'pptx': 'examples/samples/saebom-round3/source.pptx', 'thumb': 'summary',
+     'ko': ('새봄병원 외래 대기시간 단축 (3차)', '화면 채우기·모션 규칙을 넣은 스킬로 맥락 없는 AI가 다시 만든 덱. 접수·진료·수납 단계 막대, 65세 이상 100명 칸 그림, 월별 추이와 자료실까지 화면을 꽉 채웠습니다.',
+            '맥락 없는 AI 제작 · 같은 원본 3차 (최신)'),
+     'en': ('Saebom hospital outpatient waits (run 3)', 'Rebuilt by a context-free agent with the fill-the-slide and motion rules: stage bars for reception, consultation and payment, a 100-patient grid and a full backup section.',
+            'Context-free agent, same source, run 3 (latest)')},
     {'slug': 'saebom-round1', 'deck': 'examples/samples/saebom-round1/deck.json', 'pptx': 'examples/samples/saebom-round1/source.pptx', 'thumb': 'summary',
      'ko': ('새봄병원 외래 대기시간 단축 (1차)', '맥락 없는 AI가 스킬 지침만 읽고 만든 덱. 모든 대기시간을 같은 분 눈금자로, 민원 412건을 칸 그림으로 보여줍니다.',
             '맥락 없는 AI 제작 · 같은 원본 1차'),
@@ -97,7 +102,7 @@ def refresh_media():
         folder = OUT / sample['slug']
         shots = folder / '_shots'
         subprocess.run([sys.executable, str(SCRIPTS / 'capture_steps.py'), str(folder / 'presentation.html'), '--out', str(shots),
-                        '--reduced', '--stage-only', '--width', '960', '--height', '622', '--wait', '0.6', '--pdf', str(folder / 'presentation.pdf')], check=True)
+                        '--reduced', '--stage-only', '--width', '960', '--wait', '0.6', '--pdf', str(folder / 'presentation.pdf')], check=True)
         thumb = next(path for path in sorted(shots.glob('*.png')) if f"-{sample['thumb']}-" in path.name)
         shutil.copyfile(thumb, folder / 'thumb.png')
         shutil.rmtree(shots)
