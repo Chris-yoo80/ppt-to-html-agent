@@ -10,6 +10,8 @@ Use the user's source material to build an HTML presentation with deliberate nar
 
 ## Establish the brief
 
+Before a new deck, run `scripts/check_update.py` once, unless the user or their organization does not want the tool to contact the internet. If it reports an update, tell the user in one line with the version and the Changes link, then continue; replace the installed skill only if they ask (delete the old folder, then install the new one; do not copy over it). If it says "Up to date" or "not checked", or the host blocks it, carry on without mentioning it and do not work around the block.
+
 Read [references/intake.md](references/intake.md) before starting a new deck. Ask the required settings together in a short numbered form. Reuse settings already supplied; ask only for missing values. Let the user choose the recommended preset as one answer. Do not start rendering a new deck until these settings are answered or the user explicitly delegates their choice. Continue source inspection while awaiting answers.
 
 Inspect the source with the tools available in the host. Extract text, tables, figures, slide order and relevant notes; use slide rendering when available to inspect spatial relationships. Report unavailable extraction or rendering capabilities. Do not claim extraction succeeded when only part of the source was read. For unreadable sources, identify the specific limitation and request an accessible export.
