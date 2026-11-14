@@ -63,3 +63,19 @@ body.print-preview .print-page{background:white;margin:0 auto 24px;box-shadow:0 
 .chart-bar.on,.chart-funnel.on,.chart-slice.on,.chart-key.on,.chart-line.on,.chart-dot.on,.chart-value.on,.chart-label.on,.chart-rate.on{opacity:1}
 .chart-bar.active,.chart-funnel.active,.chart-slice.active{filter:drop-shadow(0 6px 10px #20251f30)}
 @media print{.chart-bar,.chart-funnel,.chart-slice,.chart-key,.chart-line,.chart-dot,.chart-value,.chart-label,.chart-rate{opacity:1}.chart-box{box-shadow:none}}
+.presenter-panel{display:none}
+body.presenter-mode #viewport{right:min(420px,36vw)}
+body.presenter-mode .presenter-panel{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:82px;width:min(420px,36vw);padding:18px 20px;background:#1d2329;color:#eef1f4;overflow:auto;font-size:15px;line-height:1.5;z-index:4}
+body.presenter-mode.has-chapters .presenter-panel{top:46px}
+.presenter-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.presenter-clock{margin:0;font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.presenter-reset{border:1px solid #5a6570;background:transparent;color:#eef1f4;border-radius:6px;padding:6px 10px;font-size:13px}
+.presenter-now{margin:0;font-size:19px;font-weight:700}
+.presenter-panel h2{margin:8px 0 0;font-size:13px;letter-spacing:.06em;color:#9aa6b2}
+.presenter-steps{margin:0;padding-left:22px;color:#9aa6b2}
+.presenter-steps li.current{color:#fff;font-weight:700}
+.presenter-notes{white-space:pre-wrap;font-size:17px;line-height:1.6;background:#262d35;border-radius:8px;padding:12px 14px}
+.presenter-next{margin:0;font-size:16px;color:#cfd6dd}
+body.presenter-mode .editor-bar,body.presenter-mode #presenter{display:none!important}
+@media print{.presenter-panel{display:none!important}}
+#position{max-width:min(300px,30vw);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

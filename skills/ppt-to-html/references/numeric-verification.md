@@ -13,6 +13,21 @@ Compare the output to the authorized workbook and its metric definitions. Genera
 
 Final reports must have one row for **each** item: **Item / Passed or Needs review / Evidence or unresolved issue** (Korean: **항목 / 통과 또는 확인 필요 / 근거·남은 확인**). A missing status is not a pass. Distinguish source calculation tests from browser observations; JSON/XML checks do not prove Excel desktop or saved-PDF behavior.
 
+## Recompute every displayed calculation
+
+Write `numbers.json` next to the deck: each source value once (with the slide or sheet it came from) and one check per figure the slides show that is calculated rather than copied (differences, ratios, shares, growth, totals, conversions). Then run:
+
+```
+python <skill-directory>/scripts/check_numbers.py work/deck.json work/numbers.json
+```
+
+```json
+{"values": {"before": {"value": 42, "source": "slide 3"}, "after": {"value": 26, "source": "slide 3"}},
+ "checks": [{"scene": "summary", "label": "reduction", "expr": "(after / before - 1) * 100", "decimals": 1, "suffix": "%", "show": "-38.1%"}]}
+```
+
+Expressions allow numbers, value names, `+ - * /`, parentheses and `abs/min/max/round`. The result is rounded half-up to `decimals`, formatted with thousands separators plus `prefix`, `suffix` and `sign: true` (adds "+"), and must equal `show`; `show` must also appear on that scene (`"scene": "*"` searches all scenes). Use `"minus": "unicode"` when the slide writes "−". Every failure is a real mismatch to fix on the slide or in the check. The tool also lists slide numbers that no value or check accounts for; review each by hand or add it. A passing run proves arithmetic and placement, not that the source values were read correctly.
+
 ## Generic unit comparisons
 
 Use `scripts/unit_audit.py` for declared comparisons beyond the KRW-only campaign formatter. It checks dimensions and exact rational conversions using Python's standard library: m/mm/cm/km, m²/cm²/mm², m³/L/mL, g/kg/t, s/min/h, km/h↔m/s, item/h, KRW/kg, Wh/kWh/J, W/kW, %↔ratio and KRW/thousand/ten-thousand/million KRW. Products use `*` or `·`, one `/`, and exponents `2`, `3`, `^2`, `^3`, `²`, `³`. Units are case-sensitive; unknown symbols (even matching source/display labels) need review. No arbitrary expression execution.

@@ -11,6 +11,7 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # sibling modules also load under python -I
 from deck_model import validate_deck
 from scene_markup import parse_scene_html, tree_to_html
 

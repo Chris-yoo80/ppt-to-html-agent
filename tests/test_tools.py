@@ -73,6 +73,54 @@ class ToolTests(unittest.TestCase):
     def setUp(self):
         self.deck = json.loads((ROOT / 'examples/library/deck.json').read_text(encoding='utf-8'))
 
+    def test_presenter_notes_are_optional_text_and_can_be_left_out(self):
+        deck = json.loads((ROOT / 'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        deck['scenes'][0]['notes'] = '숫자는 견적서 기준이라고 말하기'
+        self.assertIn('견적서 기준이라고', build(deck))
+        self.assertNotIn('견적서 기준이라고', build(deck, notes=False))
+        self.assertIn('notes', deck['scenes'][0], 'leaving notes out does not change the source deck')
+        for bad in (['list'], 'x' * 4001):
+            broken = copy.deepcopy(deck)
+            broken['scenes'][0]['notes'] = bad
+            with self.assertRaises(ValueError):
+                validate_deck(broken)
+
+    def test_pdf_page_setting_is_slide_or_a4(self):
+        deck = copy.deepcopy(self.deck)
+        for page in ('slide', 'a4'):
+            deck.setdefault('settings', {})['page'] = page
+            validate_deck(deck)
+        self.assertIn('A4 가로', build(deck))
+        deck['settings']['page'] = 'letter'
+        with self.assertRaises(ValueError):
+            validate_deck(deck)
+
+    def test_number_check_recomputes_figures_and_finds_them_on_slides(self):
+        import subprocess
+        import tempfile
+        spec = {'values': {'revenue': {'value': 45000, 'source': 'slide 7'}, 'spend': 12000, 'q4': 50000},
+                'checks': [{'scene': 'summary', 'label': 'ROAS', 'expr': 'revenue / spend * 100', 'suffix': '%', 'show': '375%'},
+                           {'scene': 'plan', 'expr': '(q4 / revenue - 1) * 100', 'decimals': 1, 'sign': True, 'suffix': '%', 'show': '+11.1%'}]}
+        script = ROOT / 'skills/ppt-to-html/scripts/check_numbers.py'
+        with tempfile.TemporaryDirectory() as folder:
+            numbers = Path(folder) / 'numbers.json'
+
+            def run():
+                numbers.write_text(json.dumps(spec), encoding='utf-8')
+                return subprocess.run([sys.executable, str(script), str(ROOT / 'examples/samples/lumi-q3/deck.json'), str(numbers)],
+                                      capture_output=True, text=True, encoding='utf-8')
+            result = run()
+            self.assertEqual(result.returncode, 0, result.stdout)
+            self.assertIn('2 checks, 0 failed', result.stdout)
+            spec['checks'][1]['show'] = '+12.1%'
+            spec['checks'].append({'scene': 'summary', 'expr': "__import__('os').getcwd()", 'show': 'x'})
+            spec['checks'].append({'scene': 'summary', 'expr': 'revenue / spend * 100', 'suffix': '%', 'show': '999%'})
+            result = run()
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('recomputed value differs', result.stdout)
+            self.assertIn('unsupported expression', result.stdout)
+            self.assertIn('4 checks, 3 failed', result.stdout)
+
     def test_single_file_output_keeps_user_text_inert(self):
         self.deck['title'] = '</title><script>globalThis.UNSAFE=true</script>'
         self.deck['scenes'][0]['items'][0]['body'] = '</script><img src=x onerror=alert(1)> & 한글'

@@ -14,7 +14,7 @@ The extractor follows presentation relationship order, not slide filenames. It r
 
 The AI reads the extracted material and authors the outline; the builder does not autonomously decide the narrative. Store the brief, source trace and editable JSON in the user's working folder.
 
-On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text through PowerShell. Do not pipe a non-ASCII Python program into Python under the default console encoding. Write a UTF-8 script file, use ASCII `\uXXXX` escapes, or explicitly set the pipe encoding first. After text edits, read the saved JSON and HTML back and compare the requested string exactly; a successful build alone does not detect replacement `?` characters.
+On Windows, set `PYTHONIOENCODING=utf-8` before printing Korean from Python to the console (the default code page cannot print some characters), and preserve UTF-8 when transferring Korean or other non-ASCII text through PowerShell. Do not pipe a non-ASCII Python program into Python under the default console encoding. Write a UTF-8 script file, use ASCII `\uXXXX` escapes, or explicitly set the pipe encoding first. After text edits, read the saved JSON and HTML back and compare the requested string exactly; a successful build alone does not detect replacement `?` characters.
 
 ```json
 {
@@ -37,6 +37,8 @@ On Windows, preserve UTF-8 when transferring Korean or other non-ASCII text thro
 }
 ```
 
+- `page` (in `settings`): `slide` prints one scene per page at the slide's size; `a4` fits each scene on A4 landscape.
+- `notes` (per scene, optional, up to 4,000 characters): presenter notes shown only in the presenter view. They are stored in the HTML file; `build_deck.py --no-notes` builds a copy without them.
 - `language` (top level, not in `settings`): `ko` or `en`; it sets the player's interface language and the page `lang`.
 - `font`: `system` (system Korean sans-serif), `serif` (system serif), or `story` (bundled Story Sans review subset derived from Pretendard). The subset covers the current public example; other characters fall back to system fonts. Use a suitably licensed complete font for arbitrary documents needing consistent typography. Custom font packaging requires adapting the source and checking redistribution permission; the dropdown request alone does not install a font.
 - `motion`: `none`, `key` (diagram motion), `rich` (also animate cards). These settings drive card scenes. Composed scenes animate through classes the player sets on every `[data-step]` element — `on` (revealed), `focus` (current step), `dim` (later, spotlight) and `pending` (later, build) — and mark the first render of a scene with `is-entering` on the stage. Use the kit motion classes below, or write transitions and `@keyframes` on those classes in the deck `css` with a `prefers-reduced-motion` fallback. Scene motion is `none`, `points`, `lines`, or `planes`. Other custom motion requires additional implementation.
@@ -98,14 +100,14 @@ Card scenes (`items`) suit short talks. For reports, reviews and proposals, writ
 }
 ```
 
-- `title`: the conclusion, not a topic. Wrap key words in `**…**` to color them.
+- `title`: the conclusion, not a topic. Optionally wrap the key figure in `**…**` to color it; skip it when the design calls for a plain headline.
 - `lead`: one line of key figures; it renders as a summary bar.
 - `steps`: one label per reveal step (1–12). Every number 1…N must appear on at least one `data-step` element.
 - `reveal`: `spotlight` (default; the current step gets an outline, later steps stay readable but dimmed), `build` (later steps hidden) or `none`.
 - `message` + `message_label`: the bottom bar, e.g. `Key Message` or `시사점`.
 - `chapter`: label for the chapter tab bar. Consecutive scenes with the same chapter share a tab.
 - `backup: true`: the scene is outside the main Next sequence and appears under 자료실/Backup. Link to it with `<button data-goto="scene-id">label</button>`; the player shows a Back control that returns to the exact step.
-- Deck level: `settings.theme` is `default`, `consulting` (dense panels, index tabs on top, solid key-message bar) or `executive` (storytelling, spotlight, chapter tabs at the bottom). `version` and `css` are optional. Put a client's exact brand colors in `css` by overriding the variables below; do not edit the bundled presets.
+- Deck level: `settings.theme` is `default`, `consulting` (dense panels, index tabs on top, solid key-message bar) or `executive` (storytelling, spotlight, chapter tabs at the bottom). `version` and `css` are optional. Put a client's exact brand colors in `css` by overriding the variables below on `body` (for example `body.theme-default{--k-accent:#…}`; the kit sets its defaults on `:root`, so `body` wins); do not edit the bundled presets.
 
 ### Allowed markup
 
@@ -121,7 +123,7 @@ The builder converts `html` into a validated element tree, so only these are acc
 
 Design the deck for its content first (see "Design each deck for its content" in SKILL.md). Write your own classes in the deck `css` and use them in scene HTML; target one scene with `[data-scene="scene-id"] …`. Use host design skills when available. The kit below is a shortcut for common parts, not a required look.
 
-Deck and inline CSS run offline and are validated: no `@import`, `@font-face`, remote `url()`, `image-set()`, backslash escapes or comments. Write characters literally (`content:"—"`, not `"\2014"`), embed images as `data:image/…`, and give every `@keyframes` a `@media (prefers-reduced-motion: reduce)` fallback. Entrance animations must be finite; loop only ambient diagram motion.
+Deck and inline CSS run offline and are validated: no `@import`, `@font-face`, `@namespace`, remote `url()`, `image-set()`, `image()`, `element()`, `cross-fade()`, `expression()`, `src:`, `behavior:`, `-moz-binding`, backslash escapes or comments. Write characters literally (`content:"—"`, not `"\2014"`), embed images as `data:image/…`, and give every `@keyframes` a `@media (prefers-reduced-motion: reduce)` fallback. Entrance animations must be finite; loop only ambient diagram motion.
 
 ### Component kit
 
@@ -143,6 +145,8 @@ All classes use CSS variables (`--k-accent --k-accent-dark --k-accent-2 --k-soft
 | Band-headed panel | `<section class="k-panel"><div class="k-band">Header — the point</div>…</section>` |
 | Filled rows | `<ul class="k-rows"><li>label<b>value</b></li>…</ul>`: rows stretch to fill the panel with dashed separators; the `<b>` sits on the right |
 | Stat strip | `<div class="k-stats"><div class="k-stat"><b>+5,000만</b><span>what it means<br/>how it was computed</span></div>…</div>` |
+
+Inline SVG scales to fit its box and keeps its aspect ratio, so a drawing whose `viewBox` shape differs from its panel leaves empty bands (letterboxing) and its text size drifts between scenes. Give each SVG a `viewBox` close to the pixel size it will occupy (for example `0 0 820 420` for a panel about 820×420 at 1600×900), and let charts that should stretch use `preserveAspectRatio="none"` only for shapes without text.
 
 ### Motion classes
 
@@ -208,4 +212,4 @@ python <skill-directory>/scripts/capture_steps.py <output/presentation.html> --o
 
 It takes about 2–3 seconds per step, so give the command a long timeout (or run it in the background). It opens each step in a local Edge/Chrome/Chromium (standard library only), saves PNGs, keeps a partial `report.json` if interrupted, prints the deck to PDF on request and lists elements that leave the slide or are clipped inside a panel in `report.json`, and records `empty_pct` for every step: the share of the slide with no text, graphic or strong fill. The last step of a scene at 45% or more is flagged `sparse`; fill it with source evidence or merge it with a neighbouring scene (dense report slides measure about 25–40%). The measure counts text, SVG shapes, images and fills darker than about 80% luminance on a 32 × 18 grid; pale fills, table rules and the empty interior of a correct line chart count as empty, so text-only tables and line charts read higher. Treat a flag as a prompt to look at the screenshot, not a target: never distort a correct chart or pad with decoration to lower the number. The window is sized so the slide is captured at its deck size (for example 1600×900) even with chapter tabs. Look at every PNG yourself; an empty issue list does not prove the layout is right. The overflow check sees the screen, not paper: open the PDF and look at every page too (it should show the whole slide, including charts and the bottom message bar).
 
-Then open the HTML through an authorized browser workflow. Inspect every step at the actual target size; check for clipping and errors. Exercise direct jumps from Contents, multiple question bookmarks, latest-mark return, bookmark-list selection and keyboard-only operation. Open and close each supporting resource after marking a question, then confirm the exact reveal and marks remain. Browser verification is not provided by these scripts. Print / PDF previews all scenes with every item visible, one scene per A4 landscape page. Reduced-motion and explicit motion=none show all items in the current scene while preserving its navigation step. A saved PDF still needs separate rendering/page-count inspection. MP4 export is deferred.
+Then open the HTML through an authorized browser workflow. Inspect every step at the actual target size; check for clipping and errors. Exercise direct jumps from Contents, multiple question bookmarks, latest-mark return, bookmark-list selection and keyboard-only operation. Open and close each supporting resource after marking a question, then confirm the exact reveal and marks remain. `scripts/check_player.py <output/presentation.html>` performs the standard playback checks in a real browser and prints a pass/fail table; supporting resources, the presenter window and keyboard-only use of dialogs still need a manual pass. Print / PDF previews all scenes with every item visible, one scene per page at the slide size (`settings.page`: `slide`, the default, or `a4` for A4 landscape). Reduced-motion and explicit motion=none show all items in the current scene while preserving its navigation step. A saved PDF still needs separate rendering/page-count inspection. MP4 export is deferred.
