@@ -52,7 +52,8 @@ RESERVED_IDS = {'stage', 'viewport', 'deck-data', 'chapter-nav', 'prev', 'next',
                 'bookmark-current', 'open-bookmarks', 'return-bookmark', 'return-origin', 'fullscreen', 'print', 'print-confirm',
                 'print-close', 'print-toolbar', 'print-pages', 'announcement', 'outline-dialog', 'outline-close', 'outline-list',
                 'outline-title', 'bookmarks-dialog', 'bookmarks-close', 'bookmarks-list', 'bookmarks-title', 'supplements-dialog',
-                'supplement-tabs', 'supplement-frame', 'open-supplements', 'close-supplements', 'supplements-title', 'font-license'}
+                'supplement-tabs', 'supplement-frame', 'open-supplements', 'close-supplements', 'supplements-title', 'font-license',
+                'presenter', 'print-page-size'}
 
 
 class MarkupError(ValueError):
