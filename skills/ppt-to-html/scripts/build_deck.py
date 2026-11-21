@@ -3,6 +3,7 @@ import argparse
 import base64
 import html
 import json
+import re
 from pathlib import Path
 
 import copy
@@ -24,6 +25,23 @@ def runtime_deck(deck):
     runtime.pop('css', None)
     runtime.pop('review', None)  # review data belongs to a saved copy, not a fresh build
     return runtime
+
+
+def third_party_notices(deck):
+    """License notices for bundled free assets the deck actually uses (Lucide icons, ColorBrewer colors)."""
+    design = ASSETS / 'design'
+    text = json.dumps([deck.get('css', ''), [scene.get('html', '') for scene in deck['scenes']]], ensure_ascii=False).lower()
+    notices = ''
+    if 'lucide' in text:
+        notices += '\n\nThird-party icons: Lucide (lucide.dev)\n' + (design / 'LICENSE-lucide.txt').read_text(encoding='utf-8')
+    palettes = json.loads((design / 'palettes.json').read_text(encoding='utf-8'))['colorbrewer']
+    # Greys, white and black are too common to signal ColorBrewer use.
+    brewer = {color for schemes in palettes.values() for name, sizes in schemes.items() if name != 'Greys'
+              for colors in sizes.values() for color in colors} - {'#ffffff', '#000000'}
+    if len(brewer & set(re.findall(r'#[0-9a-f]{6}', text))) >= 3:
+        notices += ('\n\nThis product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).\n'
+                    + (design / 'LICENSE-colorbrewer.txt').read_text(encoding='utf-8'))
+    return notices
 
 
 def build(deck, notes=True):
@@ -63,7 +81,7 @@ def build(deck, notes=True):
     legal_notice = ('Copyright (c) 2026 Chris-yoo80. Embedded runtime from PPT to HTML Agent.\n'
                     'This completed presentation may be shared under the Presentation Output Exception.\n'
                     'Retain this notice and the license below. Standalone tool redistribution follows the Package terms.\n\n'
-                    + license_text).replace('--', '- -')
+                    + license_text + third_party_notices(deck)).replace('--', '- -')
     return f'''<!doctype html>
 <!--
 {legal_notice}

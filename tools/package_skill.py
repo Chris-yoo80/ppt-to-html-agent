@@ -17,6 +17,7 @@ def main():
     for directory, suffixes in [('references', {'.md'}), ('scripts', {'.py'}), ('assets', {'.css', '.js', '.html', '.json'})]:
         files.extend(path for path in (SKILL / directory).iterdir() if path.is_file() and path.suffix in suffixes)
     files.extend(path for path in (SKILL/'assets/fonts').iterdir() if path.is_file() and path.suffix in {'.woff2','.txt','.json'})
+    files.extend(path for path in (SKILL/'assets/design').iterdir() if path.is_file() and path.suffix in {'.txt','.json'})
     # Stored entries avoid zlib-version differences across Windows/Linux hosts.
     with zipfile.ZipFile(OUTPUT, 'w', compression=zipfile.ZIP_STORED) as archive:
         for path in sorted(files, key=lambda item: item.relative_to(SKILL).as_posix()):

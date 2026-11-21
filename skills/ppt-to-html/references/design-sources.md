@@ -5,6 +5,16 @@ Use these to choose a visual direction that fits the content. Two kinds of sourc
 - **Look only**: study layout, hierarchy, color and rhythm, then rebuild with newly authored HTML/CSS/SVG. Never copy text, images, icons, templates, DOM or CSS from these.
 - **Reuse under license**: code, icons, palettes or data can be embedded if the license allows it. Before reusing, open the source, confirm the current license, and record it in `design-reference.json` (Reference Design Mode). Keep required notices in the deck. Licenses below were correct when written; the source is authoritative.
 
+## Bundled with the skill (offline, licenses handled)
+
+| Need | Bundled asset | How |
+|---|---|---|
+| Icons | Lucide 1.70.0, 2,029 icons (ISC; Feather-derived icons MIT) | `python scripts/design_assets.py icons <english words>` to search, `icon <name> --size 28` prints inline SVG using `currentColor` |
+| Categorical colors | ColorBrewer qualitative sets (Set2, Dark2, Paired…), Okabe-Ito (color-blind safe) | `palettes` lists all, `palette Set2 5` prints colors |
+| Sequential and diverging colors | ColorBrewer (Blues, YlGnBu, RdBu, BrBG…), viridis | same |
+
+The builder adds the Lucide notice to a deck that contains `lucide` icons and the ColorBrewer acknowledgement when its colors appear; keep those notices. Regenerate the data only with `tools/build_design_assets.py`, which verifies package integrity.
+
 Prefer installed design skills first (for example frontend-design for the overall direction, ui-ux-pro-max for style/palette/type options, dataviz for chart choice and color). Then use this list for anything they do not cover.
 
 ## Look only
@@ -26,7 +36,7 @@ Prefer installed design skills first (for example frontend-design for the overal
 | Design systems | IBM Carbon (including data-visualization guidance) | Apache-2.0 |
 | Design systems | Material components | Apache-2.0 |
 | UI patterns | shadcn/ui, Tabler | MIT |
-| Icons (inline SVG) | Lucide | ISC |
+| Icons (inline SVG) | Lucide (bundled; see above) | ISC |
 | Icons (inline SVG) | Tabler Icons, Heroicons | MIT |
 | Illustrations | unDraw | unDraw license (free, no attribution) |
 | Illustrations | Storyset | free with attribution |

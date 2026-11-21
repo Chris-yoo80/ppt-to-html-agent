@@ -85,6 +85,46 @@ class ToolTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 validate_deck(broken)
 
+    def test_bundled_icons_pass_the_validator_and_bring_their_licenses(self):
+        sys.path.insert(0, str(ROOT / 'skills/ppt-to-html/scripts'))
+        import design_assets
+        deck = json.loads((ROOT / 'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        plain = build(deck)
+        self.assertNotIn('Lucide', plain)
+        self.assertNotIn('Cynthia Brewer', plain)
+        names = list(json.loads((ROOT / 'skills/ppt-to-html/assets/design/lucide-icons.json').read_text(encoding='utf-8'))['icons'])
+        self.assertGreater(len(names), 1500)
+        sample = names[::40]  # every shape type the set uses must survive validation
+        deck['scenes'][0]['html'] += ''.join(design_assets.icon_svg(name, 28, 2, 'k-ico') for name in sample)
+        built = build(deck)
+        self.assertIn('Third-party icons: Lucide', built)
+        self.assertIn('ISC License', built)
+        self.assertIn('lucide-' + sample[0], built)
+        deck['css'] = (deck.get('css') or '') + '.a{color:#66c2a5}.b{color:#fc8d62}.c{color:#8da0cb}'
+        self.assertIn('developed by Cynthia Brewer', build(deck))
+        with zipfile.ZipFile(ROOT / 'docs/downloads/ppt-to-html.zip') as archive:
+            members = set(archive.namelist())
+        for name in ('lucide-icons.json', 'palettes.json', 'LICENSE-lucide.txt', 'LICENSE-colorbrewer.txt'):
+            self.assertIn('ppt-to-html/assets/design/' + name, members)
+
+    def test_icon_search_and_palettes(self):
+        sys.path.insert(0, str(ROOT / 'skills/ppt-to-html/scripts'))
+        import design_assets
+        self.assertEqual(design_assets.search(['coffee'])[0][1], 'coffee')
+        self.assertTrue(any(name == 'truck' for _, name, _ in design_assets.search(['delivery'])))
+        rows, data = design_assets.palettes()
+        self.assertEqual(data['colorbrewer']['qualitative']['Set2']['3'], ['#66c2a5', '#fc8d62', '#8da0cb'])
+        self.assertEqual(len(data['okabe-ito']), 8)
+        self.assertTrue(all(len(colors) == int(n) for _, schemes in data['colorbrewer'].items() for sizes in schemes.values() for n, colors in sizes.items()))
+
+    def test_player_control_ids_are_reserved(self):
+        deck = json.loads((ROOT / 'examples/composed-report/deck.json').read_text(encoding='utf-8'))
+        for reserved in ('presenter', 'print-page-size'):
+            broken = copy.deepcopy(deck)
+            broken['scenes'][0]['html'] += f"<div id='{reserved}'>x</div>"
+            with self.assertRaises(ValueError):
+                validate_deck(broken)
+
     def test_pdf_page_setting_is_slide_or_a4(self):
         deck = copy.deepcopy(self.deck)
         for page in ('slide', 'a4'):
