@@ -1,6 +1,9 @@
 """Validate the small, portable scene format used by the bundled player."""
 import math
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # sibling modules also load under python -I
 from scene_markup import MarkupError, check_css, parse_scene_html
 
 THEMES = ('default', 'consulting', 'executive')
@@ -41,6 +44,7 @@ def validate_deck(deck):
     require(settings.get('motion', 'key') in ('none', 'key', 'rich'), 'motion: none, key or rich required')
     require(settings.get('playback', 'manual') in ('manual', 'both', 'auto'), 'playback: manual, both or auto required')
     require(settings.get('end', 'stop') in ('stop', 'loop'), 'end: stop or loop required')
+    require(settings.get('page', 'slide') in ('slide', 'a4'), 'page: slide or a4 required')
     require(settings.get('font', 'system') in ('system', 'serif', 'story'), 'font: system, serif or story required')
     require(settings.get('theme', 'default') in THEMES, 'theme: default, consulting or executive required')
     require(type(settings.get('review', True)) is bool, 'review: true or false required')
@@ -72,6 +76,7 @@ def validate_deck(deck):
                 validate_chart(scene['chart'], prefix + '.chart', require, string)
         for optional in ('eyebrow', 'lead', 'source', 'motion_caption', 'message_label'):
             require(optional not in scene or isinstance(scene[optional], str), f'{prefix}.{optional}: text required')
+        require('notes' not in scene or (isinstance(scene['notes'], str) and len(scene['notes']) <= 4000), f'{prefix}.notes: text up to 4,000 characters required')
         if 'chapter' in scene:
             require(isinstance(scene['chapter'], str) and 0 < len(scene['chapter'].strip()) <= 24, f'{prefix}.chapter: 1–24 characters required')
         require(type(scene.get('backup', False)) is bool, f'{prefix}.backup: true or false required')

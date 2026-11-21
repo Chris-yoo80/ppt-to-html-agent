@@ -11,7 +11,7 @@
   const ui = {};
   ['chapter-nav','prev','next','position','announcement','play','replay','open-outline','outline-dialog','outline-close','outline-list',
    'bookmark-current','open-bookmarks','bookmarks-dialog','bookmarks-close','bookmarks-list','return-bookmark','return-origin',
-   'fullscreen','print','print-confirm','print-close','print-pages','supplements-dialog'].forEach(id=>{ui[id]=document.getElementById(id);});
+   'fullscreen','presenter','print','print-confirm','print-close','print-pages','supplements-dialog'].forEach(id=>{ui[id]=document.getElementById(id);});
   const byId = id => ui[id];
   // Card scenes reveal items; composed scenes reveal their named steps.
   const labelsOf = scene => scene.items ? scene.items.map(item => item.label) : scene.steps;
@@ -370,13 +370,19 @@
     let root=byId('print-pages');
     if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);ui['print-pages']=root;}
     root.replaceChildren();
+    const slidePage=settings.page!=='a4';
+    let size=document.getElementById('print-page-size');
+    if(slidePage&&!size){size=document.createElement('style');size.id='print-page-size';(document.head||document.documentElement).append(size);}
+    if(size)size.textContent=slidePage?`@page{size:${settings.width}px ${settings.height}px;margin:0}`:'';
     let end=-1;
     try{
       for(const sceneIndex of order){
         end+=labelsOf(deck.scenes[sceneIndex]).length;position=end;render();
         const page=text('article','print-page','');
         const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
-        const scale=Math.min(1046/settings.width,699/settings.height);
+        // Default pages match the slide (16:9 stays 16:9); settings.page "a4" fits each slide on A4 landscape.
+        const scale=slidePage?1:Math.min(1046/settings.width,699/settings.height);
+        if(slidePage){page.style.width=settings.width+'px';page.style.height=settings.height+'px';}
         copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
         // zoom shrinks the layout box too; transform alone leaves a 1600×900 box that print pagination clips.
         if(globalThis.CSS?.supports?.('zoom','0.5')){copy.style.zoom=String(scale);copy.style.transform='none';}
@@ -436,6 +442,7 @@
     else if(event.key==='B'){event.preventDefault();updateBookmarks();openDialog('bookmarks-dialog');}
     else if(event.key.toLowerCase()==='b'){event.preventDefault();markQuestion();}
     else if(event.key.toLowerCase()==='r'){event.preventDefault();returnToLatest();}
+    else if(event.key.toLowerCase()==='p'&&!presenterMode){event.preventDefault();openPresenter();}
     else if(event.key==='Escape')setPlaying(false);
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
@@ -449,12 +456,55 @@
     return first+step-1;
   }
   view.hooks.push(({scene,itemIndex})=>{
-    const hash=`#scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
+    const hash=`#${presenterMode?'presenter&':''}scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
     try{if(globalThis.location&&globalThis.location.hash!==hash)globalThis.history?.replaceState?.(null,'',hash);}catch{}
   });
   addEventListener('hashchange',()=>{const target=stepFromHash();if(target!==null&&target!==position){setPlaying(false);go(target);}});
   globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep,
     steps:()=>steps.map(({sceneIndex,itemIndex})=>({scene:deck.scenes[sceneIndex].id,step:itemIndex+1,backup:Boolean(deck.scenes[sceneIndex].backup)}))};
+  // Presenter view: the same file opened with #presenter shows notes, next step and a timer beside the slide.
+  // The audience window and the presenter window follow each other through postMessage (works for local files).
+  const presenterMode=/(^#|&)presenter(&|$)/.test(String(globalThis.location?.hash||''));
+  let partner=presenterMode?globalThis.opener||null:null, syncing=false;
+  const MESSAGE='ppt-to-html-position';
+  const tell=()=>{try{if(partner&&!partner.closed)partner.postMessage({type:MESSAGE,position},'*');}catch{}};
+  addEventListener('message',event=>{
+    const data=event.data;
+    if(!partner||event.source!==partner||!data||data.type!==MESSAGE||!Number.isInteger(data.position))return;
+    if(data.position<0||data.position>=steps.length||data.position===position)return;
+    syncing=true;try{setPlaying(false);go(data.position);}finally{syncing=false;}
+  });
+  view.hooks.push(()=>{if(!syncing)tell();});
+  function openPresenter(){
+    const url=String(location.href).split('#')[0]+`#presenter&scene=${encodeURIComponent(deck.scenes[steps[position].sceneIndex].id)}&step=${steps[position].itemIndex+1}`;
+    const opened=open(url,'ppt-to-html-presenter','width=1280,height=760');
+    if(opened){partner=opened;setTimeout(tell,800);}
+  }
+  byId('presenter')?.addEventListener('click',openPresenter);
+  if(presenterMode){
+    document.body.classList.add('presenter-mode');
+    const panel=text('aside','presenter-panel',''),started=Date.now();
+    panel.setAttribute('aria-label',english?'Presenter view':'발표자 화면');
+    const clock=text('p','presenter-clock',''),now=text('p','presenter-now',''),upcoming=text('p','presenter-next',''),
+      stepsList=text('ol','presenter-steps',''),notes=text('div','presenter-notes','');
+    const reset=text('button','presenter-reset',english?'Reset timer':'타이머 초기화');reset.type='button';
+    let base=started;reset.addEventListener('click',()=>{base=Date.now();tick();});
+    const tick=()=>{const seconds=Math.floor((Date.now()-base)/1000);clock.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;};
+    setInterval(tick,1000);tick();
+    const head=text('div','presenter-head','');head.append(clock,reset);
+    panel.append(head,now,stepsList,text('h2','',english?'Notes':'발표 메모'),notes,text('h2','',english?'Next':'다음'),upcoming);
+    document.body.append(panel);
+    view.hooks.push(({scene,itemIndex})=>{
+      const labels=labelsOf(scene);
+      now.textContent=`${plain(scene.title)}`;
+      stepsList.replaceChildren(...labels.map((label,index)=>{const li=text('li',index===itemIndex?'current':'',label);return li;}));
+      notes.textContent=scene.notes||(english?'No notes for this scene.':'이 장면에는 메모가 없습니다.');
+      const following=steps[position+1];
+      upcoming.textContent=following?(following.sceneIndex===steps[position].sceneIndex
+        ?`${english?'Step':'단계'}: ${labels[following.itemIndex]}`
+        :`${plain(deck.scenes[following.sceneIndex].title)}`):(english?'End of presentation':'발표 끝');
+    });
+  }
   const linked=stepFromHash(); if(linked!==null) position=linked;
   buildChapters();buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();

@@ -41,7 +41,20 @@ OVERFLOW_JS = r"""(() => {
     if (!r.width && !r.height) continue;
     if (r.right > box.right + 1 || r.bottom > box.bottom + 1 || r.left < box.left - 1 || r.top < box.top - 1) found.push(['outside the slide', name(el)]);
     const cs = getComputedStyle(el);
-    if ([cs.overflow, cs.overflowX, cs.overflowY].includes('hidden') && (el.scrollHeight > el.clientHeight + 2 || el.scrollWidth > el.clientWidth + 2)) found.push(['content clipped', name(el)]);
+    if ([cs.overflow, cs.overflowX, cs.overflowY].includes('hidden') && (el.scrollHeight > el.clientHeight + 2 || el.scrollWidth > el.clientWidth + 2)) {
+      const cut = [el.scrollHeight - el.clientHeight > 2 ? `${el.scrollHeight - el.clientHeight}px below` : '', el.scrollWidth - el.clientWidth > 2 ? `${el.scrollWidth - el.clientWidth}px to the right` : ''].filter(Boolean).join(', ');
+      const label = (el.querySelector('h2,h3,h4,.k-band,.k-panel-head') || el).textContent.trim().replace(/\s+/g, ' ').slice(0, 40);
+      found.push(['content clipped', `${name(el)} "${label}" (${cut} hidden; at x=${Math.round(r.left - box.left)}, y=${Math.round(r.top - box.top)})`]);
+    }
+  }
+  // SVG content drawn outside its viewBox is cut off by the SVG viewport.
+  for (const svg of stage.querySelectorAll('svg')) {
+    const vb = svg.viewBox && svg.viewBox.baseVal;
+    if (!vb || !vb.width || getComputedStyle(svg).overflow === 'visible' || !svg.getBoundingClientRect().width) continue;
+    let b; try { b = svg.getBBox(); } catch (error) { continue; }
+    const slack = Math.max(2, vb.width * .01);
+    if (b.width && (b.x < vb.x - slack || b.y < vb.y - slack || b.x + b.width > vb.x + vb.width + slack || b.y + b.height > vb.y + vb.height + slack))
+      found.push(['drawing cut off at its SVG edge', name(svg.parentElement || svg)]);
   }
   return found.slice(0, 25);
 })()"""
@@ -57,13 +70,20 @@ EMPTY_JS = r"""(() => {
     for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) filled[y * cols + x] = 1;
   };
   const shown = el => { for (let e = el; e && e.id !== 'viewport'; e = e.parentElement) { const s = getComputedStyle(e); if (s.visibility === 'hidden' || s.display === 'none' || +s.opacity < .15) return false; } return true; };
+  const lum = c => { const m = c.match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < .3)) return null; return (.2126 * m[0] + .7152 * m[1] + .0722 * m[2]) / 255; };
+  const backdrop = el => { for (let e = el.parentElement; e; e = e.parentElement) { const l = lum(getComputedStyle(e).backgroundColor); if (l !== null) return l; } return 1; };
+  const area = box.width * box.height;
+  // Strong fills count; so do small tinted marks (chips, dots, bars) and bordered table cells, which read as content.
+  const filledIn = el => { const cs = getComputedStyle(el), l = lum(cs.backgroundColor), r = el.getBoundingClientRect();
+    if (l !== null && (l < .8 || (r.width * r.height < area * .01 && Math.abs(l - backdrop(el)) > .03))) return true;
+    return (el.tagName === 'TD' || el.tagName === 'TH') && ['Top', 'Bottom', 'Left', 'Right'].some(side => parseFloat(cs['border' + side + 'Width']) > 0 && cs['border' + side + 'Style'] !== 'none'); };
   const dark = c => { const m = c.match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < .3)) return false; return (.2126 * m[0] + .7152 * m[1] + .0722 * m[2]) / 255 < .8; };
   const stage = document.getElementById('stage'), walker = document.createTreeWalker(stage, NodeFilter.SHOW_TEXT);
   for (let n; (n = walker.nextNode());) { if (!n.textContent.trim() || !shown(n.parentElement)) continue; const range = document.createRange(); range.selectNodeContents(n); for (const r of range.getClientRects()) mark(r); }
   const skip = new Set(['svg', 'g', 'defs', 'clippath', 'mask', 'lineargradient', 'radialgradient', 'stop', 'text', 'tspan', 'title', 'desc', 'marker', 'pattern', 'symbol']);
   for (const el of stage.querySelectorAll('*')) {
     const tag = el.tagName.toLowerCase(), graphic = el.closest('svg') && !skip.has(tag);
-    if ((graphic || tag === 'img' || dark(getComputedStyle(el).backgroundColor)) && shown(el)) mark(el.getBoundingClientRect());
+    if ((graphic || tag === 'img' || filledIn(el)) && shown(el)) mark(el.getBoundingClientRect());
   }
   return Math.round(filled.reduce((sum, f) => sum + !f, 0) / filled.length * 100);
 })()"""
@@ -159,12 +179,15 @@ class Browser:
         page = next(target for target in targets if target.get('type') == 'page')
         self.ws = Socket(page['webSocketDebuggerUrl'])
         self.sequence = 0
+        self.events = []  # protocol events seen while waiting for replies (e.g. script errors)
 
     def call(self, method, **params):
         self.sequence += 1
         self.ws.send(json.dumps({'id': self.sequence, 'method': method, 'params': params}))
         while True:
             message = json.loads(self.ws.recv())
+            if 'method' in message and len(self.events) < 500:
+                self.events.append(message)
             if message.get('id') == self.sequence:
                 if 'error' in message:
                     raise RuntimeError(f"{method}: {message['error'].get('message')}")
@@ -222,7 +245,7 @@ def main():
         if not steps:
             raise SystemExit('This file has no ppt-to-html player (built with an older skill?).')
         started = time.time()
-        print(f'{len(steps)} steps; about {max(1, round(len(steps) * (args.wait + 1.5) / 60))} min. Run it with a long command timeout.')
+        print(f'{len(steps)} steps; usually 1-3 s each, longer for heavy scenes. Run it with a long command timeout or in the background.')
         for index, step in enumerate(steps, 1):
             target = f"#scene={urllib.parse.quote(step['scene'])}&step={step['step']}"
             name = f"{index:02d}-{step['scene']}-{step['step']}.png"

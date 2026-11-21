@@ -20,7 +20,7 @@ class Node {
   click(){if(!this.disabled)this.listeners.click?.({target:this});}
   focus(){}
 }
-function launch(deck,{reduced=false,editor=false,hash=''}={}){
+function launch(deck,{reduced=false,editor=false,hash='',opener=null}={}){
   const buttons=['play','prev','next','replay','fullscreen','print','print-confirm','print-close','open-outline','outline-close','bookmark-current','open-bookmarks','bookmarks-close','return-bookmark','return-origin'];
   const dialogs=['outline-dialog','bookmarks-dialog'];
   const ids=Object.fromEntries(['deck-data','stage','viewport','position','announcement','outline-list','bookmarks-list','chapter-nav',...dialogs,...buttons].map(id=>[id,new Node(buttons.includes(id)?'button':dialogs.includes(id)?'dialog':'div')]));
@@ -32,7 +32,7 @@ function launch(deck,{reduced=false,editor=false,hash=''}={}){
   // Several scripts may listen to the same event (player + editor); dispatch to all of them.
   const lists={};const listen=(type,fn)=>{(lists[type]||(lists[type]=[])).push(fn);events[type]=(...args)=>lists[type].forEach(f=>f(...args));};
   const location={hash},history={replaceState(_,__,value){location.hash=value;}};
-  const ctx={document:doc,window:{print(){}},location,history,matchMedia:()=>media,addEventListener:listen,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id)};
+  const ctx={document:doc,window:{print(){}},location,history,opener,matchMedia:()=>media,addEventListener:listen,setTimeout:fn=>{timers.set(++seq,fn);return seq;},clearTimeout:id=>timers.delete(id),setInterval:()=>0};
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/player.js'),'utf8'),ctx);
   if(editor)vm.runInContext(fs.readFileSync(path.join(root,'skills/ppt-to-html/assets/editor.js'),'utf8'),ctx);
@@ -305,4 +305,37 @@ test('composed charts follow their step mapping and bars share one colour with o
   assert.deepEqual(bars().map(isOn),[true,false,false]);p.ids.next.click();assert.deepEqual(bars().map(isOn),[true,true,false]);
   assert.ok(bars().every(n=>n.attributes.class.includes('series-0')));
   assert.deepEqual(bars().map(n=>n.attributes.class.includes('is-highlight')),[false,true,false]);
+});
+
+test('printed pages match the slide size by default and fit A4 landscape on request',()=>{
+  const deck=composedFixture(),p=launch(deck);p.ids.print.click();
+  const size=p.doc.documentElement.children.find(n=>n.id==='print-page-size');
+  assert.equal(size.textContent,'@page{size:1600px 900px;margin:0}');
+  const pages=p.doc.body.children.find(n=>n.id==='print-pages').children;
+  assert.ok(pages.every(page=>page.style.width==='1600px'&&page.style.height==='900px'&&(page.children[0].style.zoom==='1'||page.children[0].style.transform==='scale(1)')));
+  const a4=composedFixture();a4.settings.page='a4';const q=launch(a4);q.ids.print.click();
+  assert.equal(q.doc.documentElement.children.find(n=>n.id==='print-page-size'),undefined);
+  const a4pages=q.doc.body.children.find(n=>n.id==='print-pages').children;
+  assert.ok(a4pages.every(page=>page.style.width===undefined&&/^scale\(0\.\d+\)$/.test(page.children[0].style.transform)),'A4 pages shrink each slide to fit');
+});
+
+test('presenter view shows notes, steps and what comes next, and follows the audience window',()=>{
+  const deck=composedFixture();deck.scenes[2].notes='투자 근거는 견적서 3쪽.';
+  const opener={posted:[],closed:false,postMessage(message){this.posted.push(message);}};
+  const p=launch(deck,{hash:'#presenter&scene=investment&step=1',opener});
+  assert.ok(p.doc.body.classList.contains('presenter-mode'));
+  const panel=p.doc.body.children.find(n=>n.className==='presenter-panel'),texts=()=>collect(panel).map(n=>n.textContent);
+  assert.ok(texts().includes('투자 근거는 견적서 3쪽.'));
+  assert.ok(texts().some(t=>String(t).startsWith('단계: ')),'next step inside the scene is named');
+  assert.match(p.ctx.location.hash,/^#presenter&scene=investment&step=1$/);
+  assert.equal(opener.posted.at(-1).position,6,'the presenter tells the audience window where it is');
+  p.ids.next.click();assert.equal(opener.posted.at(-1).position,7);
+  const sent=opener.posted.length;
+  p.events.message({source:opener,data:{type:'ppt-to-html-position',position:0}});
+  assert.equal(p.ids.position.textContent,'1 / 13 단계');assert.equal(opener.posted.length,sent,'no echo back');
+  for(const bad of [{source:{},data:{type:'ppt-to-html-position',position:3}},{source:opener,data:{type:'other',position:3}},{source:opener,data:{type:'ppt-to-html-position',position:999}},{source:opener,data:{type:'ppt-to-html-position',position:'3'}}]){
+    p.events.message(bad);assert.equal(p.ids.position.textContent,'1 / 13 단계');
+  }
+  const audience=launch(composedFixture());assert.ok(!audience.doc.body.classList.contains('presenter-mode'));
+  assert.equal(audience.doc.body.children.find(n=>n.className==='presenter-panel'),undefined,'the audience window never shows notes');
 });

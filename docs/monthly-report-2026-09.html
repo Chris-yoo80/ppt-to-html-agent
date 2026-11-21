@@ -168,6 +168,22 @@ body.print-preview .print-page{background:white;margin:0 auto 24px;box-shadow:0 
 .chart-bar.on,.chart-funnel.on,.chart-slice.on,.chart-key.on,.chart-line.on,.chart-dot.on,.chart-value.on,.chart-label.on,.chart-rate.on{opacity:1}
 .chart-bar.active,.chart-funnel.active,.chart-slice.active{filter:drop-shadow(0 6px 10px #20251f30)}
 @media print{.chart-bar,.chart-funnel,.chart-slice,.chart-key,.chart-line,.chart-dot,.chart-value,.chart-label,.chart-rate{opacity:1}.chart-box{box-shadow:none}}
+.presenter-panel{display:none}
+body.presenter-mode #viewport{right:min(420px,36vw)}
+body.presenter-mode .presenter-panel{display:flex;flex-direction:column;gap:10px;position:fixed;top:0;right:0;bottom:82px;width:min(420px,36vw);padding:18px 20px;background:#1d2329;color:#eef1f4;overflow:auto;font-size:15px;line-height:1.5;z-index:4}
+body.presenter-mode.has-chapters .presenter-panel{top:46px}
+.presenter-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.presenter-clock{margin:0;font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.presenter-reset{border:1px solid #5a6570;background:transparent;color:#eef1f4;border-radius:6px;padding:6px 10px;font-size:13px}
+.presenter-now{margin:0;font-size:19px;font-weight:700}
+.presenter-panel h2{margin:8px 0 0;font-size:13px;letter-spacing:.06em;color:#9aa6b2}
+.presenter-steps{margin:0;padding-left:22px;color:#9aa6b2}
+.presenter-steps li.current{color:#fff;font-weight:700}
+.presenter-notes{white-space:pre-wrap;font-size:17px;line-height:1.6;background:#262d35;border-radius:8px;padding:12px 14px}
+.presenter-next{margin:0;font-size:16px;color:#cfd6dd}
+body.presenter-mode .editor-bar,body.presenter-mode #presenter{display:none!important}
+@media print{.presenter-panel{display:none!important}}
+#position{max-width:min(300px,30vw);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Finite entrances: no unattended decorative looping. */
 @keyframes point-in{from{opacity:.12;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
@@ -437,11 +453,11 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
 <span id="position" role="status" aria-live="polite"></span><button id="next" type="button" aria-label="다음 단계">→</button>
 <button id="play" type="button" aria-pressed="false">자동 재생</button><button id="replay" type="button">처음부터</button>
 <button id="open-outline" type="button" aria-haspopup="dialog">목차</button><button id="bookmark-current" type="button">질문 표시</button><button id="open-bookmarks" type="button" aria-haspopup="dialog">질문 목록</button><button id="return-bookmark" type="button" disabled>질문 복귀</button><button id="return-origin" type="button" hidden>↩ 돌아가기</button>
-<button id="fullscreen" type="button">전체 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 · G 목차 · B 질문 표시 · R 복귀</span></nav>
+<button id="fullscreen" type="button">전체 화면</button><button id="presenter" type="button">발표자 화면</button><button id="print" type="button">인쇄 / PDF</button><span class="keyhint">← → 단계 · G 목차 · B 질문 표시 · R 복귀 · P 발표자</span></nav>
 <dialog id="outline-dialog" class="jump-dialog" aria-labelledby="outline-title"><header><strong id="outline-title">목차와 단계</strong><button id="outline-close" type="button" aria-label="목차 닫기">×</button></header><div id="outline-list"></div></dialog>
 <dialog id="bookmarks-dialog" class="jump-dialog" aria-labelledby="bookmarks-title"><header><strong id="bookmarks-title">질문 북마크</strong><button id="bookmarks-close" type="button" aria-label="질문 북마크 닫기">×</button></header><div id="bookmarks-list"></div></dialog>
 
-<aside id="print-toolbar" aria-label="인쇄 미리보기"><p>전체 장면 · 모든 설명 단계 · A4 가로. 인쇄 창에서 PDF 저장을 선택하세요. 추가 자료는 별도로 출력합니다.</p><button id="print-confirm" type="button">인쇄 / PDF로 저장</button><button id="print-close" type="button">발표로 돌아가기</button></aside>
+<aside id="print-toolbar" aria-label="인쇄 미리보기"><p>전체 장면 · 모든 설명 단계 · 슬라이드 크기 그대로 한 장씩. 인쇄 창에서 PDF 저장을 선택하세요. 추가 자료는 별도로 출력합니다.</p><button id="print-confirm" type="button">인쇄 / PDF로 저장</button><button id="print-close" type="button">발표로 돌아가기</button></aside>
 <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
 <script type="application/json" id="deck-data">{"title": "가상 월간 매출 · 2026-09", "language": "ko", "settings": {"width": 1600, "height": 900, "font": "system", "motion": "key", "playback": "both", "end": "stop"}, "scenes": [{"id": "title", "eyebrow": "월간 매출 / 가상 데이터", "title": "가상 월간 매출 · 2026-09", "lead": "검토한 발표 구조를 유지하고 다음 달 원본으로 다시 생성합니다.", "layout": "cards", "motion": "none", "items": [{"label": "기간", "value": "2026-09", "body": "4개 주간 기간입니다."}, {"label": "원본 범위", "value": "Sales!A1:D13", "body": "가상 원본 12개 행입니다."}], "message": "새로 만든 가상 데이터이며 회사·고객 정보가 없습니다.", "source": "2026-09.xlsx / Sales!A1:D13", "duration": 7}, {"id": "summary", "eyebrow": "01 / EXECUTIVE SUMMARY", "title": "월간 결과 요약", "lead": "매출·주문·평균 주문금액은 월 전체 범위를 사용합니다.", "layout": "compare", "motion": "none", "items": [{"label": "매출", "value": "7,099.5만원", "body": "70,995,000 KRW"}, {"label": "주문", "value": "1,218", "body": "건수·전체 채널입니다."}, {"label": "평균 주문금액", "value": "5.8만원", "body": "매출 ÷ 주문; 합계의 비율입니다."}], "message": "원본 값을 먼저 합산하고 표시할 때만 반올림합니다.", "source": "2026-09.xlsx / Sales!A1:D13", "duration": 8}, {"id": "channels", "eyebrow": "02 / CHANNEL MIX", "title": "채널별 매출 구성", "lead": "모든 채널에 같은 월간 필터를 적용합니다.", "layout": "compare", "motion": "planes", "items": [{"label": "Online", "value": "3,342.0만원", "body": "주문 561건 · 매출 비중 47.1%"}, {"label": "Marketplace", "value": "2,286.6만원", "body": "주문 419건 · 매출 비중 32.2%"}, {"label": "Partner", "value": "1,470.9만원", "body": "주문 238건 · 매출 비중 20.7%"}], "message": "채널 비중의 분모는 월 전체 매출입니다.", "source": "2026-09.xlsx / Sales!A1:D13", "duration": 8}, {"id": "timeline", "eyebrow": "03 / WEEKLY TIMELINE", "title": "주간 매출 흐름", "lead": "매월 같은 4단계 타임라인 구조를 유지합니다.", "layout": "compare", "motion": "lines", "motion_caption": "주간 흐름", "items": [{"label": "2026-09 W1", "value": "1,580.6만원", "body": "주문 278건"}, {"label": "2026-09 W2", "value": "1,701.6만원", "body": "주문 295건"}, {"label": "2026-09 W3", "value": "1,842.2만원", "body": "주문 314건"}, {"label": "2026-09 W4", "value": "1,975.1만원", "body": "주문 331건"}], "message": "주차 표기는 원본 파일 값을 그대로 사용합니다.", "source": "2026-09.xlsx / Sales!A1:D13", "duration": 8}, {"id": "conclusion", "eyebrow": "04 / CONCLUSION", "title": "다음 달에도 유지할 기준", "lead": "지표 정의와 발표 구조를 유지하고 검토한 원본만 교체합니다.", "layout": "flow", "motion": "lines", "items": [{"label": "원본 교체", "body": "새 월 JSON과 엑셀을 추가합니다."}, {"label": "재생성", "body": "같은 생성 명령을 실행합니다."}, {"label": "검수", "body": "단위·분모·필터·반올림·출처를 확인합니다."}], "message": "지난달 합계를 다음 달에 그대로 남기지 않습니다.", "source": "2026-09.xlsx / Sales!A1:D13", "duration": 8}]}</script><script>/* Offline player. Deck content is data, never executable markup. */
 (() => {
@@ -456,7 +472,7 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
   const ui = {};
   ['chapter-nav','prev','next','position','announcement','play','replay','open-outline','outline-dialog','outline-close','outline-list',
    'bookmark-current','open-bookmarks','bookmarks-dialog','bookmarks-close','bookmarks-list','return-bookmark','return-origin',
-   'fullscreen','print','print-confirm','print-close','print-pages','supplements-dialog'].forEach(id=>{ui[id]=document.getElementById(id);});
+   'fullscreen','presenter','print','print-confirm','print-close','print-pages','supplements-dialog'].forEach(id=>{ui[id]=document.getElementById(id);});
   const byId = id => ui[id];
   // Card scenes reveal items; composed scenes reveal their named steps.
   const labelsOf = scene => scene.items ? scene.items.map(item => item.label) : scene.steps;
@@ -815,13 +831,19 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
     let root=byId('print-pages');
     if(!root){root=text('div','','');root.id='print-pages';document.body.append(root);ui['print-pages']=root;}
     root.replaceChildren();
+    const slidePage=settings.page!=='a4';
+    let size=document.getElementById('print-page-size');
+    if(slidePage&&!size){size=document.createElement('style');size.id='print-page-size';(document.head||document.documentElement).append(size);}
+    if(size)size.textContent=slidePage?`@page{size:${settings.width}px ${settings.height}px;margin:0}`:'';
     let end=-1;
     try{
       for(const sceneIndex of order){
         end+=labelsOf(deck.scenes[sceneIndex]).length;position=end;render();
         const page=text('article','print-page','');
         const copy=stage.cloneNode(true);copy.removeAttribute('id');copy.className+=' print-stage';
-        const scale=Math.min(1046/settings.width,699/settings.height);
+        // Default pages match the slide (16:9 stays 16:9); settings.page "a4" fits each slide on A4 landscape.
+        const scale=slidePage?1:Math.min(1046/settings.width,699/settings.height);
+        if(slidePage){page.style.width=settings.width+'px';page.style.height=settings.height+'px';}
         copy.style.width=settings.width+'px';copy.style.height=settings.height+'px';
         // zoom shrinks the layout box too; transform alone leaves a 1600×900 box that print pagination clips.
         if(globalThis.CSS?.supports?.('zoom','0.5')){copy.style.zoom=String(scale);copy.style.transform='none';}
@@ -881,6 +903,7 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
     else if(event.key==='B'){event.preventDefault();updateBookmarks();openDialog('bookmarks-dialog');}
     else if(event.key.toLowerCase()==='b'){event.preventDefault();markQuestion();}
     else if(event.key.toLowerCase()==='r'){event.preventDefault();returnToLatest();}
+    else if(event.key.toLowerCase()==='p'&&!presenterMode){event.preventDefault();openPresenter();}
     else if(event.key==='Escape')setPlaying(false);
   });
   document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});
@@ -894,12 +917,55 @@ body.memo-mode #stage :hover{outline:2px solid rgba(226,104,28,.55);outline-offs
     return first+step-1;
   }
   view.hooks.push(({scene,itemIndex})=>{
-    const hash=`#scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
+    const hash=`#${presenterMode?'presenter&':''}scene=${encodeURIComponent(scene.id)}&step=${itemIndex+1}`;
     try{if(globalThis.location&&globalThis.location.hash!==hash)globalThis.history?.replaceState?.(null,'',hash);}catch{}
   });
   addEventListener('hashchange',()=>{const target=stepFromHash();if(target!==null&&target!==position){setPlaying(false);go(target);}});
   globalThis.__pptPlayer={deck,view,render,setPlaying,go,current:()=>({...steps[position],position}),labelsOf,firstStep,
     steps:()=>steps.map(({sceneIndex,itemIndex})=>({scene:deck.scenes[sceneIndex].id,step:itemIndex+1,backup:Boolean(deck.scenes[sceneIndex].backup)}))};
+  // Presenter view: the same file opened with #presenter shows notes, next step and a timer beside the slide.
+  // The audience window and the presenter window follow each other through postMessage (works for local files).
+  const presenterMode=/(^#|&)presenter(&|$)/.test(String(globalThis.location?.hash||''));
+  let partner=presenterMode?globalThis.opener||null:null, syncing=false;
+  const MESSAGE='ppt-to-html-position';
+  const tell=()=>{try{if(partner&&!partner.closed)partner.postMessage({type:MESSAGE,position},'*');}catch{}};
+  addEventListener('message',event=>{
+    const data=event.data;
+    if(!partner||event.source!==partner||!data||data.type!==MESSAGE||!Number.isInteger(data.position))return;
+    if(data.position<0||data.position>=steps.length||data.position===position)return;
+    syncing=true;try{setPlaying(false);go(data.position);}finally{syncing=false;}
+  });
+  view.hooks.push(()=>{if(!syncing)tell();});
+  function openPresenter(){
+    const url=String(location.href).split('#')[0]+`#presenter&scene=${encodeURIComponent(deck.scenes[steps[position].sceneIndex].id)}&step=${steps[position].itemIndex+1}`;
+    const opened=open(url,'ppt-to-html-presenter','width=1280,height=760');
+    if(opened){partner=opened;setTimeout(tell,800);}
+  }
+  byId('presenter')?.addEventListener('click',openPresenter);
+  if(presenterMode){
+    document.body.classList.add('presenter-mode');
+    const panel=text('aside','presenter-panel',''),started=Date.now();
+    panel.setAttribute('aria-label',english?'Presenter view':'발표자 화면');
+    const clock=text('p','presenter-clock',''),now=text('p','presenter-now',''),upcoming=text('p','presenter-next',''),
+      stepsList=text('ol','presenter-steps',''),notes=text('div','presenter-notes','');
+    const reset=text('button','presenter-reset',english?'Reset timer':'타이머 초기화');reset.type='button';
+    let base=started;reset.addEventListener('click',()=>{base=Date.now();tick();});
+    const tick=()=>{const seconds=Math.floor((Date.now()-base)/1000);clock.textContent=`${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`;};
+    setInterval(tick,1000);tick();
+    const head=text('div','presenter-head','');head.append(clock,reset);
+    panel.append(head,now,stepsList,text('h2','',english?'Notes':'발표 메모'),notes,text('h2','',english?'Next':'다음'),upcoming);
+    document.body.append(panel);
+    view.hooks.push(({scene,itemIndex})=>{
+      const labels=labelsOf(scene);
+      now.textContent=`${plain(scene.title)}`;
+      stepsList.replaceChildren(...labels.map((label,index)=>{const li=text('li',index===itemIndex?'current':'',label);return li;}));
+      notes.textContent=scene.notes||(english?'No notes for this scene.':'이 장면에는 메모가 없습니다.');
+      const following=steps[position+1];
+      upcoming.textContent=following?(following.sceneIndex===steps[position].sceneIndex
+        ?`${english?'Step':'단계'}: ${labels[following.itemIndex]}`
+        :`${plain(deck.scenes[following.sceneIndex].title)}`):(english?'End of presentation':'발표 끝');
+    });
+  }
   const linked=stepFromHash(); if(linked!==null) position=linked;
   buildChapters();buildOutline();updateBookmarks();render(); if(settings.playback==='auto')setPlaying(true);
 })();
