@@ -69,6 +69,7 @@ def main():
             if browser.evaluate('Boolean(globalThis.__pptPlayer)'):
                 break
             time.sleep(0.2)
+        time.sleep(0.5)  # first paint and fonts on a cold browser
         p = Player(browser)
         if not p.js('Boolean(globalThis.__pptPlayer)'):
             raise SystemExit('This file has no ppt-to-html player (built with an older skill?).')
@@ -79,7 +80,12 @@ def main():
         p.key('Home')
         seen = [p.position()]
         for _ in range(main_count + 1):
-            p.key('ArrowRight', 0.08)
+            before = p.position()
+            p.key('ArrowRight', 0.05)
+            for _ in range(20):  # wait for the step to settle instead of trusting a fixed pause
+                if p.position() != before:
+                    break
+                time.sleep(0.05)
             seen.append(p.position())
         expected = list(range(main_count)) + [main_count - 1] * 2 if settings.get('end', 'stop') == 'stop' else None
         if expected:
